@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <SatelliteResourceLanguages>ru</SatelliteResourceLanguages>
+    <ResourceLanguages>ru</ResourceLanguages>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="TableTransformerOld.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DevExpress.Data" Version="23.1.5" />
+    <PackageReference Include="DevExpress.RichEdit.Core" Version="23.1.5" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.54" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+</Project>

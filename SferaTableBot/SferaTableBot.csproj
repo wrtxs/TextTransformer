@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>SferaTableBot</AssemblyTitle>
+    <Product>SferaTableBot</Product>
+    <Copyright>Copyright ©  2023</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Nullable>enable</Nullable>
+    <SatelliteResourceLanguages>ru</SatelliteResourceLanguages>
+    <ResourceLanguages>ru</ResourceLanguages>
+    <ApplicationIcon>Resources\tg-bot.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\tg-bot.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.5.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="7.0.5" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Telegram.Bot" Version="19.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TransfromService\TransfromService.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v23.1">
+      <HintPath>..\..\..\..\..\..\Program Files\DevExpress 23.1\Components\Bin\Standard\DevExpress.Data.v23.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v23.1.Core">
+      <HintPath>..\..\..\..\..\..\Program Files\DevExpress 23.1\Components\Bin\Standard\DevExpress.Printing.v23.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v23.1.Core">
+      <HintPath>..\..\..\..\..\..\Program Files\DevExpress 23.1\Components\Bin\Framework\DevExpress.RichEdit.v23.1.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
