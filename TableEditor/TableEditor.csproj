@@ -5,9 +5,11 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>1.0.16</Version>
-		<ApplicationIcon>app.ico</ApplicationIcon>
+		<Version>1.0.18</Version>
+		<ApplicationIcon>Resources\app.ico</ApplicationIcon>
 		<AssemblyName>TableEditor.v$(Version)</AssemblyName>
+		<!--<AssemblyProduct>TableEditor.v$(Version)</AssemblyProduct>
+		<AssemblyTitle>TableEditor.v$(Version)</AssemblyTitle>-->
 		<AppendTargetFrameworkToOutputFileName>false</AppendTargetFrameworkToOutputFileName>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<SatelliteResourceLanguages>ru</SatelliteResourceLanguages>
@@ -15,7 +17,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Include="app.ico" />
+	  <Content Include="Resources\app.ico" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,14 +1,19 @@
-﻿using DevExpress.XtraBars.Ribbon;
+﻿using DevExpress.XtraBars;
+using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.API.Layout;
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using DevExpress.XtraRichEdit.API.Native;
-using DevExpress.XtraBars;
+using DevExpress.XtraRichEdit.Export;
+using DevExpress.XtraRichEdit.Export.Html;
+using DevExpress.XtraRichEdit.Model;
+using DevExpress.XtraRichEdit.Services;
+using TableEditor.RichTextEdit.CustomCommands;
+using TransfromService.RichText;
+using Table = DevExpress.XtraRichEdit.API.Native.Table;
+using TableLayoutType = DevExpress.XtraRichEdit.API.Native.TableLayoutType;
 
-namespace TableEditor
+namespace TableEditor.RichTextEdit
 {
     public partial class RtfDocUserControl : XtraUserControl
     {
@@ -38,9 +43,30 @@ namespace TableEditor
 
             SetLandscapePage();
 
-            clipboardRibbonPageGroup1.ItemLinks.Remove(pasteSpecialItem1);
-            
+            //RichEditControlCompatibility.EnableMSWordCompatibleFieldParser = true;
+            //RichEditControlCompatibility.UseThemeFonts = false;
+
+            var clipboardFormats = richEditControl.Options.ClipboardFormats;
+
+            clipboardFormats.PlainText = RichEditClipboardMode.Enabled;
+            clipboardFormats.Rtf = RichEditClipboardMode.Enabled;
+            clipboardFormats.Html = RichEditClipboardMode.Enabled;
+
+            richEditControl.Options.Export.Html.SetCommonExportOptions();
+            SetCustomCommands();
+
+            //richEditControl.Options.DocumentCapabilities.InlinePictures = DocumentCapability.Enabled;
+            //clipboardRibbonPageGroup1.ItemLinks.Remove(pasteSpecialItem1);
+
             ribbonControl.SelectedPage = homeRibbonPage1;
+        }
+
+        private void SetCustomCommands()
+        {
+            var commandFactory = new CustomRichEditCommandFactoryService(richEditControl,
+                richEditControl.GetService<IRichEditCommandFactoryService>());
+            richEditControl.RemoveService(typeof(IRichEditCommandFactoryService));
+            richEditControl.AddService(typeof(IRichEditCommandFactoryService), commandFactory);
         }
 
         private void SetLandscapePage()
@@ -77,7 +103,7 @@ namespace TableEditor
 
         public void AutoFitTable()
         {
-            var doc = GetDocument();
+            //var doc = GetDocument();
             var table = GetFirstTable();
 
             if (table == null)
@@ -111,7 +137,8 @@ namespace TableEditor
             richEditControl.ActiveViewType = RichEditViewType.Simple;
         }
 
-        public RichEditControl RichEdit { get { return richEditControl; } }
+        public DevExpress.XtraRichEdit.RichEditControl RichEditControl => richEditControl;
+
         int PageCount
         {
             get { return _pageCount; }
@@ -205,7 +232,7 @@ namespace TableEditor
 
         void RtfDocUserControl_Load(object sender, EventArgs e)
         {
-            RichEdit.DocumentLayout.DocumentFormatted += DocumentLayout_DocumentFormatted;
+            RichEditControl.DocumentLayout.DocumentFormatted += DocumentLayout_DocumentFormatted;
             OnPagesInfoChanged();
             //RichEdit.HyphenationDictionaries.Add(new OpenOfficeHyphenationDictionary(DemoUtils.GetRelativePath("hyph_en_US.dic"), new System.Globalization.CultureInfo("en-US")));
             //LoadDocument("FirstLook.docx");
@@ -214,7 +241,7 @@ namespace TableEditor
         {
             BeginInvoke(new Action(() =>
             {
-                PageCount = RichEdit.DocumentLayout.GetPageCount();
+                PageCount = RichEditControl.DocumentLayout.GetPageCount();
             }));
         }
         void zoomBarEditItem_EditValueChanged(object sender, System.EventArgs e)
@@ -225,7 +252,7 @@ namespace TableEditor
             this._isZoomChanging = true;
             try
             {
-                RichEdit.ActiveView.ZoomFactor = value / 100f;
+                RichEditControl.ActiveView.ZoomFactor = value / 100f;
                 zoomBarEditItem.Caption = String.Format("{0}%", value);
             }
             finally
@@ -237,7 +264,7 @@ namespace TableEditor
         {
             if (this._isZoomChanging)
                 return;
-            int value = (int)Math.Round(RichEdit.ActiveView.ZoomFactor * 100);
+            int value = (int)Math.Round(RichEditControl.ActiveView.ZoomFactor * 100);
             this._isZoomChanging = true;
             try
             {
@@ -256,13 +283,13 @@ namespace TableEditor
 
         void richEditControl_VisiblePagesChanged(object sender, EventArgs e)
         {
-            CurrentPage = RichEdit.ActiveView.GetVisiblePageLayoutInfos()[0].PageIndex + 1;
+            CurrentPage = RichEditControl.ActiveView.GetVisiblePageLayoutInfos()[0].PageIndex + 1;
         }
         void richEditControl_SelectionChanged(object sender, EventArgs e)
         {
-            RangedLayoutElement element = RichEdit.DocumentLayout.GetElement<RangedLayoutElement>(RichEdit.Document.CaretPosition);
+            RangedLayoutElement element = RichEditControl.DocumentLayout.GetElement<RangedLayoutElement>(RichEditControl.Document.CaretPosition);
             if (element != null)
-                CurrentPage = RichEdit.DocumentLayout.GetPageIndex(element) + 1;
+                CurrentPage = RichEditControl.DocumentLayout.GetPageIndex(element) + 1;
         }
 
         void richEditControl_InvalidFormatException(object sender, RichEditInvalidFormatExceptionEventArgs e)
@@ -270,22 +297,22 @@ namespace TableEditor
             XtraMessageBox.Show(string.Format(
                     "Невозможно открыть файл '{0}' поскольку файл имеет недоступимый формат или расширение.\n" +
                     "Удостоверьтесь, что файл не поврежден и расширение файла соответсвует его формату.",
-                    RichEdit.Options.DocumentSaveOptions.CurrentFileName),
+                    RichEditControl.Options.DocumentSaveOptions.CurrentFileName),
                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         void richEditControl_DocumentClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (RichEdit.Modified)
+            if (RichEditControl.Modified)
             {
-                var currentFileName = RichEdit.Options.DocumentSaveOptions.CurrentFileName;
+                var currentFileName = RichEditControl.Options.DocumentSaveOptions.CurrentFileName;
                 var message = !string.IsNullOrEmpty(currentFileName)
                     ? string.Format("Вы хотите сохранить изменения, сделанные для '{0}'?", currentFileName)
                     : "Вы хотите сохранить изменения?";
                 DialogResult result = XtraMessageBox.Show(message, "Сохранение", MessageBoxButtons.YesNoCancel,
                     MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
-                    e.Cancel = !RichEdit.SaveDocument();
+                    e.Cancel = !RichEditControl.SaveDocument();
                 else
                     e.Cancel = result == DialogResult.Cancel;
             }

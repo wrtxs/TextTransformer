@@ -39,21 +39,21 @@ namespace TransfromService
                     tableBuilder.Append("<body>");
                     tableBuilder.Append("<table>");
 
-                    for (int row = 0; row < numRows; row++)
+                    for (var row = 0; row < numRows; row++)
                     {
                         tableBuilder.Append("<tr>");
 
-                        for (int col = 0; col < numCols; col++)
+                        for (var col = 0; col < numCols; col++)
                         {
                             var cell = cells.FirstOrDefault(c => c.X == col && c.Y == row);
                             if (cell != null)
                             {
-                                string cellTag = cell.IsHeader == true ? "th" : "td";
-                                string styleClass = cell.IsHeader == true
+                                var cellTag = cell.IsHeader == true ? "th" : "td";
+                                var styleClass = cell.IsHeader == true
                                     ? $" class=\"{headerStyleClassName}\""
                                     : string.Empty;
 
-                                string cellValue = cell.Items.FirstOrDefault()?.Content?.Value ?? string.Empty;
+                                var cellValue = cell.Items.FirstOrDefault()?.Content?.Value ?? string.Empty;
 
                                 var colSpan = cell.W > 1 ? $" colspan=\"{cell.W}\"" : string.Empty;
                                 var rowSpan = cell.H > 1 ? $" rowspan=\"{cell.H}\"" : string.Empty;

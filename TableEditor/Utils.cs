@@ -1,11 +1,17 @@
 ﻿using System.IO;
 using ActiproSoftware.Text;
 using ActiproSoftware.UI.WinForms.Controls.SyntaxEditor;
+using DevExpress.Map.Kml.Model;
 using Microsoft.Win32;
 using DevExpress.XtraEditors;
+using DevExpress.XtraRichEdit;
+using DevExpress.XtraRichEdit.Export;
+using DevExpress.XtraRichEdit.Export.Html;
 using Newtonsoft.Json.Linq;
 using DevExpress.XtraSplashScreen;
+using TableEditor.RichTextEdit.CustomCommands;
 using TransfromService;
+using TableEditor.RichTextEdit;
 
 namespace TableEditor
 {
@@ -27,7 +33,6 @@ namespace TableEditor
             //WriteValuesToRegistry(key);
             //key?.Close();
         }
-
 
         private static RegistryKey GetRegistryKey(string registryPath, RegistryKeyType keyType)
         {
@@ -130,7 +135,8 @@ namespace TableEditor
             }
         }
 
-        public static void ShowProgressForm(bool useFadeIn = false, bool useFadeOut = false, string caption = null, string description = null)
+        public static void ShowProgressForm(bool useFadeIn = false, bool useFadeOut = false, string caption = null,
+            string description = null)
         {
             ProgressForm.Caption = caption ?? "Пожалуйста подождите";
             ProgressForm.Description = description ?? "Операция выполняется...";

@@ -1,19 +1,14 @@
-﻿using DevExpress.XtraRichEdit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
+using DevExpress.XtraRichEdit;
 
-namespace TableEditor
+namespace TableEditor.RichTextEdit
 {
     internal class RichEditControlExceptionHandler
     {
 
-        readonly RichEditControl control;
+        readonly DevExpress.XtraRichEdit.RichEditControl control;
 
-        public RichEditControlExceptionHandler(RichEditControl control)
+        public RichEditControlExceptionHandler(DevExpress.XtraRichEdit.RichEditControl control)
         {
             this.control = control;
         }

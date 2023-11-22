@@ -136,7 +136,7 @@
             ClientSize = new Size(1139, 568);
             Controls.Add(layoutControl1);
             IconOptions.Image = (Image)resources.GetObject("MainForm.IconOptions.Image");
-            IconOptions.LargeImage = (Image)resources.GetObject("MainForm.IconOptions.LargeImage");
+            IconOptions.LargeImage = Properties.Resources.tablelayout_32x32;
             Name = "MainForm";
             Text = "Редактор таблиц";
             Load += MainForm_Load;

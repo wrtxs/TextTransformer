@@ -8,6 +8,7 @@ using DevExpress.XtraRichEdit;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using TransfromService.JsonData;
+using TransfromService.RichText;
 using static DevExpress.XtraPrinting.Native.ExportOptionsPropertiesNames;
 
 namespace TransfromService
@@ -244,8 +245,10 @@ namespace TransfromService
 
             using (var server = new RichEditDocumentServer())
             {
+                server.Options.Export.Html.SetCommonExportOptions();
+
                 server.HtmlText = htmlData;
-                htmlData = server.HtmlText;
+                htmlData = server.Document.GetHtmlContent(RichTextUtils.TextRange.All, server.Options.Export.Html);
             }
 
             // Вторая трансформация HTML -> JSON
@@ -373,7 +376,10 @@ namespace TransfromService
         /// <returns></returns>
         private string RemoveEmptyValueTags(string cellValue)
         {
-            var cellNodeInnerText = GetHtmlNodeFromText(cellValue).InnerText.Trim();
+            if (cellValue.Contains("<img", StringComparison.OrdinalIgnoreCase))  // Оставляем изображения как есть
+                return cellValue;
+
+            var cellNodeInnerText = Utils.GetHtmlNodeFromText(cellValue).InnerText.Trim();
             cellValue = cellValue.Trim();
 
             return cellValue.Equals("<span>&nbsp;</span>", StringComparison.OrdinalIgnoreCase) ||
@@ -405,14 +411,6 @@ namespace TransfromService
             return cleanedHtml;
         }
 
-        private HtmlNode GetHtmlNodeFromText(string htmlText)
-        {
-            var doc = new HtmlDocument();
-            doc.LoadHtml(htmlText);
-
-            return doc.DocumentNode;
-        }
-
         /// <summary>
         /// Обработать класс стиля
         /// Функция  для тега <span class=""> - заменить значения класса стиля на соответствующие теги
@@ -420,48 +418,49 @@ namespace TransfromService
         /// <returns></returns>
         private string ProcessSpanTagClassAttribute(string html, bool processTextColor)
         {
-            var docNode = GetHtmlNodeFromText(html);
+            return Utils.ProcessSpanTagClassAttribute(html, processTextColor, _styleClassesRegistry);
+            //var docNode = Utils.GetHtmlNodeFromText(html);
 
-            foreach (var spanTag in docNode.Descendants("span").ToList())
-            {
-                ProcessSpanTagClassAttribute(spanTag, processTextColor);
-            }
+            //foreach (var spanTag in docNode.Descendants("span").ToList())
+            //{
+            //    ProcessSpanTagClassAttribute(spanTag, processTextColor);
+            //}
 
-            return docNode.OuterHtml;
+            //return docNode.OuterHtml;
         }
 
-        private void ProcessSpanTagClassAttribute(HtmlNode spanTag, bool processTextColor)
-        {
-            foreach (var className in GetClassAttributeValues(spanTag))
-            {
-                if (_styleClassesRegistry.Items.TryGetValue(className, out var styleClass))
-                {
-                    var innerHtml = spanTag.InnerHtml;
+        //private void ProcessSpanTagClassAttribute(HtmlNode spanTag, bool processTextColor)
+        //{
+        //    foreach (var className in Utils.GetClassAttributeValues(spanTag))
+        //    {
+        //        if (_styleClassesRegistry.Items.TryGetValue(className, out var styleClass))
+        //        {
+        //            var innerHtml = spanTag.InnerHtml;
 
-                    if (processTextColor && styleClass.ParametersDict.TryGetValue("color", out var colorValue))
-                        innerHtml = WrapTag(innerHtml, "font", "color", colorValue.Value);
+        //            if (processTextColor && styleClass.ParametersDict.TryGetValue("color", out var colorValue))
+        //                innerHtml = Utils.WrapTag(innerHtml, "font", "color", colorValue.Value);
 
-                    if (styleClass.ParametersDict.ContainsKey("font-weight") && styleClass
-                            .ParametersDict["font-weight"].Value
-                            .Equals("bold", StringComparison.OrdinalIgnoreCase))
-                        innerHtml = WrapTag(innerHtml, "b");
+        //            if (styleClass.ParametersDict.ContainsKey("font-weight") && styleClass
+        //                    .ParametersDict["font-weight"].Value
+        //                    .Equals("bold", StringComparison.OrdinalIgnoreCase))
+        //                innerHtml = Utils.WrapTag(innerHtml, "b");
 
-                    if (styleClass.ParametersDict.ContainsKey("font-style") && styleClass
-                            .ParametersDict["font-style"].Value
-                            .Equals("italic", StringComparison.OrdinalIgnoreCase))
-                        innerHtml = WrapTag(innerHtml, "em");
-
-
-                    if (styleClass.ParametersDict.ContainsKey("text-decoration") && styleClass
-                            .ParametersDict["text-decoration"].Value
-                            .Equals("underline", StringComparison.OrdinalIgnoreCase))
-                        innerHtml = WrapTag(innerHtml, "u");
+        //            if (styleClass.ParametersDict.ContainsKey("font-style") && styleClass
+        //                    .ParametersDict["font-style"].Value
+        //                    .Equals("italic", StringComparison.OrdinalIgnoreCase))
+        //                innerHtml = Utils.WrapTag(innerHtml, "em");
 
 
-                    spanTag.InnerHtml = innerHtml;
-                }
-            }
-        }
+        //            if (styleClass.ParametersDict.ContainsKey("text-decoration") && styleClass
+        //                    .ParametersDict["text-decoration"].Value
+        //                    .Equals("underline", StringComparison.OrdinalIgnoreCase))
+        //                innerHtml = Utils.WrapTag(innerHtml, "u");
+
+
+        //            spanTag.InnerHtml = innerHtml;
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Обработка тега <span style="...">, убираем атрибут style, заменяя его на:
@@ -469,72 +468,51 @@ namespace TransfromService
         ///  - "font-weight: bolder" на <b/>
         /// </summary>
         /// <param name="html"></param>
+        /// <param name="processTextColor"></param>
         /// <returns></returns>
         private string ProcessSpanTagStyleAttribute(string html, bool processTextColor)
         {
-            var docNode = GetHtmlNodeFromText(html);
+            return Utils.ProcessSpanTagStyleAttribute(html, processTextColor);
+            //var docNode = Utils.GetHtmlNodeFromText(html);
 
-            foreach (var spanTag in docNode.Descendants("span").ToList())
-            {
-                ProcessSpanTagStyleAttribute(spanTag, processTextColor);
-            }
+            //foreach (var spanTag in docNode.Descendants("span").ToList())
+            //{
+            //    ProcessSpanTagStyleAttribute(spanTag, processTextColor);
+            //}
 
-            return docNode.OuterHtml;
+            //return docNode.OuterHtml;
         }
 
-        private void ProcessSpanTagStyleAttribute(HtmlNode spanTag, bool processTextColor)
-        {
-            var colorStyle = spanTag.GetAttributeValue("style", null);
+        //private void ProcessSpanTagStyleAttribute(HtmlNode spanTag, bool processTextColor)
+        //{
+        //    var colorStyle = spanTag.GetAttributeValue("style", null);
 
-            if (colorStyle != null)
-            {
-                var innerHtml = spanTag.InnerHtml;
+        //    if (colorStyle != null)
+        //    {
+        //        var innerHtml = spanTag.InnerHtml;
 
-                if (processTextColor)
-                {
-                    var colorValueMatch = Regex.Match(colorStyle,
-                        @"(?<![-\w])color\s*:\s*(#(?:[0-9a-fA-F]{3}){1,2}|rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\))",
-                        RegexOptions.IgnoreCase);
+        //        if (processTextColor)
+        //        {
+        //            var colorValueMatch = Regex.Match(colorStyle,
+        //                @"(?<![-\w])color\s*:\s*(#(?:[0-9a-fA-F]{3}){1,2}|rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\))",
+        //                RegexOptions.IgnoreCase);
 
-                    if (colorValueMatch.Success)
-                    {
-                        var colorValue = colorValueMatch.Groups[1].Value;
-                        colorValue = Utils.ConvertRgbStringToHexString(colorValue);
-                        innerHtml = WrapTag(innerHtml, "font", "color", colorValue);
-                    }
-                }
+        //            if (colorValueMatch.Success)
+        //            {
+        //                var colorValue = colorValueMatch.Groups[1].Value;
+        //                colorValue = Utils.ConvertRgbStringToHexString(colorValue);
+        //                innerHtml = Utils.WrapTag(innerHtml, "font", "color", colorValue);
+        //            }
+        //        }
 
-                if (colorStyle.Contains("font-weight: bolder", StringComparison.OrdinalIgnoreCase))
-                {
-                    innerHtml = WrapTag(innerHtml, "b");
-                }
+        //        if (colorStyle.Contains("font-weight: bolder", StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            innerHtml = Utils.WrapTag(innerHtml, "b");
+        //        }
 
-                spanTag.InnerHtml = innerHtml;
-            }
-        }
-
-        /// <summary>
-        /// Обрамить содержимое HTML тегом с атрибутами
-        /// </summary>
-        /// <param name="innerHtml"></param>
-        /// <param name="tagName"></param>
-        /// <param name="attributeName"></param>
-        /// <param name="attributeValue"></param>
-        /// <returns></returns>
-        private string WrapTag(string innerHtml, string tagName, string attributeName = null,
-            string attributeValue = null)
-        {
-            var tag = new HtmlNode(HtmlNodeType.Element, new HtmlDocument(), 0)
-            {
-                Name = tagName
-            };
-
-            if (!string.IsNullOrEmpty(attributeName) && !string.IsNullOrEmpty(attributeValue))
-                tag.Attributes.Add(attributeName, attributeValue);
-
-            tag.InnerHtml = innerHtml;
-            return tag.OuterHtml;
-        }
+        //        spanTag.InnerHtml = innerHtml;
+        //    }
+        //}
 
         /// <summary>
         /// Найти заданные теги с заданным стилем и произвести над ними заданное действие
@@ -546,7 +524,7 @@ namespace TransfromService
         /// <returns></returns>
         private string ProcessTagsWithClass(string html, string tag, string className, TagProcessActionType action)
         {
-            var docNode = GetHtmlNodeFromText(html);
+            var docNode = Utils.GetHtmlNodeFromText(html);
 
             var processNodes = docNode.Descendants(tag)
                 .Where(node =>
@@ -585,7 +563,7 @@ namespace TransfromService
 
             foreach (var tag in doc.DocumentNode.Descendants("p").ToList())
             {
-                foreach (var className in GetClassAttributeValues(tag))
+                foreach (var className in Utils.GetClassAttributeValues(tag))
                 {
                     if (_styleClassesRegistry.Items.TryGetValue(className, out var styleClass))
                     {
@@ -599,16 +577,6 @@ namespace TransfromService
 
 
             return doc.DocumentNode.OuterHtml;
-        }
-
-        private string[] GetClassAttributeValues(HtmlNode node)
-        {
-            var classValue = node.GetAttributeValue("class", null);
-
-            if (!string.IsNullOrEmpty(classValue))
-                return classValue.Split(' ');
-
-            return new string[] { };
         }
 
         private string RemovePTagsAtStartAndEnd(string html)
@@ -699,7 +667,7 @@ namespace TransfromService
         /// <returns></returns>
         private string ReplaceTagHavingAttributes(string html, string sourceTag, string targetTag)
         {
-            return ReplaceTagHavingAttributes(GetHtmlNodeFromText(html), sourceTag, targetTag).OuterHtml;
+            return ReplaceTagHavingAttributes(Utils.GetHtmlNodeFromText(html), sourceTag, targetTag).OuterHtml;
         }
 
         private HtmlNode ReplaceTagHavingAttributes(HtmlNode node, string sourceTag, string targetTag)
@@ -719,7 +687,7 @@ namespace TransfromService
 
         private string ReplaceTagsInsideTableCellWithCodeClass(string html, string sourceTag, string targetTag)
         {
-            var docNode = GetHtmlNodeFromText(html);
+            var docNode = Utils.GetHtmlNodeFromText(html);
 
             var tdNodes = docNode.Descendants("td")
                 .Where(td => td.Attributes["class"] != null && td.Attributes["class"].Value.Equals("code", StringComparison.OrdinalIgnoreCase));

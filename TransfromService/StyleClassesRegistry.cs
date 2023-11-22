@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace TransfromService
 {
-    internal class StyleClassesRegistry
+    public class StyleClassesRegistry
     {
         private Dictionary<string, StyleClass> _styleClasses;
 
@@ -101,7 +101,7 @@ namespace TransfromService
             }
         }
 
-        internal class StyleClass
+        public class StyleClass
         {
             public string Name { get; }
 
@@ -137,7 +137,7 @@ namespace TransfromService
             }
         }
 
-        internal class ClassStyleParameter
+        public class ClassStyleParameter
         {
             public ClassStyleParameter(string name, string value)
             {

@@ -10,7 +10,9 @@ using DevExpress.XtraLayout.HitInfo;
 using DevExpress.XtraLayout.Utils;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.API.Native;
+using System.Linq;
 using TransfromService;
+using TransfromService.RichText;
 
 namespace TableEditor
 {
@@ -22,7 +24,7 @@ namespace TableEditor
             //rtfDocUserControl.InsertEmptyTable();
             txtHtml.Document.Language.RegisterIndentProvider(new XmlIndentProvider());
             txtHtml.Document.Language = new XmlSyntaxLanguage();
-            
+
             txtJson.Document.Language.RegisterIndentProvider(new JsonIndentProvider());
             txtJson.Document.Language = new JsonSyntaxLanguage();
 
@@ -35,13 +37,13 @@ namespace TableEditor
 
             //txtHtml.Document.TextChanged += HtmlDocument_TextChanged;
             //txtJson.Document.TextChanged += JsonDocument_TextChanged;
-            
+
             txtJson.PasteDragDrop += TxtJson_PasteDragDrop;
 
             txtHtml.DocumentTextChanged += CodeChanged;
             txtJson.DocumentTextChanged += CodeChanged;
 
-            rtfDocUserControl.RichEdit.ContentChanged += RichEdit_ContentChanged;
+            rtfDocUserControl.RichEditControl.ContentChanged += RichEdit_ContentChanged;
 
             // Убираем ненужные рамки у контролов
             tcgParameters.CustomDraw += TabbedControlGroupOnCustomDraw;
@@ -112,12 +114,10 @@ namespace TableEditor
 
         private void SetHtmlContentToEditor(string html, bool applyTableStyle, bool autoFitTable)
         {
-            var richEditControl = rtfDocUserControl.RichEdit;
+            var richEditControl = rtfDocUserControl.RichEditControl;
 
             richEditControl.Document.BeginUpdate();
             richEditControl.Document.Delete(richEditControl.Document.Range);
-
-            Table firstTable = null;
 
             using (var server = new RichEditDocumentServer())
             {
@@ -127,10 +127,21 @@ namespace TableEditor
                 {
                     const string styleName = "Table Simple 1";
 
-                    if (server.Document.Tables.First != null)
+                    if (server.Document.Tables.Count > 0)
                     {
-                        if (server.Document.TableStyles.Any(style => style.Name.Equals(styleName)))
-                            server.Document.Tables.First.Style = server.Document.TableStyles[styleName];
+                        var tableStyle =
+                            server.Document.TableStyles.FirstOrDefault(style => style.Name.Equals(styleName, StringComparison.OrdinalIgnoreCase));
+
+                        if (tableStyle != null)
+                        {
+                            foreach (var documentTable in server.Document.Tables)
+                            {
+                                documentTable.Style = tableStyle;
+                            }
+                        }
+
+                        //if (server.Document.TableStyles.Any(style => style.Name.Equals(styleName)))
+                        //    server.Document.Tables.First.Style = server.Document.TableStyles[styleName];
                     }
                 }
 
@@ -143,7 +154,7 @@ namespace TableEditor
 
                 //richEditControl.ActiveViewType = RichEditViewType.Simple;
 
-                firstTable = rtfDocUserControl.RichEdit.Document.Tables.First;
+                var firstTable = rtfDocUserControl.RichEditControl.Document.Tables.First;
 
                 if (firstTable != null)
                 {
@@ -196,7 +207,7 @@ namespace TableEditor
             //    cell.BackgroundColor = Color.BlanchedAlmond;
             //}
 
-            var cellPar = rtfDocUserControl.RichEdit.Document.BeginUpdateParagraphs(cell.Range);
+            var cellPar = rtfDocUserControl.RichEditControl.Document.BeginUpdateParagraphs(cell.Range);
 
             if (cellPar.BackColor.GetValueOrDefault().ToArgb().Equals(TransfromService.Utils.CommonTableHeaderColor.ArgbValue))
             {
@@ -207,7 +218,7 @@ namespace TableEditor
                 //cell.PreferredWidthType = WidthType.Fixed;
             }
 
-            rtfDocUserControl.RichEdit.Document.EndUpdateParagraphs(cellPar);
+            rtfDocUserControl.RichEditControl.Document.EndUpdateParagraphs(cellPar);
         }
 
         //private void SetHtmlContentToEditor(string html)
@@ -236,7 +247,7 @@ namespace TableEditor
             cmdCopyJson.Enabled = cmdJson2Editor.Enabled =
                 cmdFormatJson.Enabled = txtJson.Document.CurrentSnapshot.HasContent;
 
-            cmdEditor2Html.Enabled = cmdEditor2Json.Enabled = !rtfDocUserControl.RichEdit.Document.IsEmpty;
+            cmdEditor2Html.Enabled = cmdEditor2Json.Enabled = !rtfDocUserControl.RichEditControl.Document.IsEmpty;
         }
 
         private void AdjustParametersTab()
@@ -377,7 +388,7 @@ namespace TableEditor
 
         private void TransformFromEditorToJson()
         {
-            var htmlData = rtfDocUserControl.RichEdit.HtmlText;
+            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.All, rtfDocUserControl.RichEditControl.Options.Export.Html);
             var transformParams = transformParamsUserControl.GetParameters();
             transformParams.NeedDoubleTransformation = false;
 
@@ -436,7 +447,9 @@ namespace TableEditor
             try
             {
                 Utils.ShowProgressForm();
-                InsertNewHtmlData(rtfDocUserControl.RichEdit.HtmlText, false);
+                InsertNewHtmlData(
+                    rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.All,
+                        rtfDocUserControl.RichEditControl.Options.Export.Html), false);
             }
             catch (Exception exception)
             {

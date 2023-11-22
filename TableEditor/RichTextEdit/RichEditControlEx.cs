@@ -7,9 +7,9 @@ using DevExpress.XtraRichEdit.Internal;
 using DevExpress.XtraRichEdit.Layout;
 using DevExpress.XtraRichEdit.Mouse;
 
-namespace TableEditor
+namespace TableEditor.RichTextEdit
 {
-    internal class ExRichEditControl : RichEditControl
+    internal class RichEditControlEx : DevExpress.XtraRichEdit.RichEditControl
     {
         protected override InnerRichEditControl CreateInnerControl()
         {
@@ -52,7 +52,7 @@ namespace TableEditor
                 //((ExRichEditControl)View.Control).FormatCalculatorEnabled
                 //    ? DevExpress.XtraRichEdit.Utils.RichEditCursors.Hand
                 //    : base.Calculate(hitTestResult, physicalPoint);
-                ((ExRichEditControl)View.Control).FormatCalculatorEnabled
+                ((RichEditControlEx)View.Control).FormatCalculatorEnabled
                     ? ApplyStyleCursor
                     : base.Calculate(hitTestResult, physicalPoint);
         }

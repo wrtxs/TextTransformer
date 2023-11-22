@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using static TransfromService.Html2JsonTransformer;
 
 namespace TransfromService.JsonData
 {
@@ -22,6 +19,6 @@ namespace TransfromService.JsonData
         [JsonProperty("items")] public List<Item> Items { get; set; }
 
         public bool IntersectsByWidth(Cell otherCell) =>
-            X < (otherCell.X + otherCell.W - 1) && (X + W - 1) > otherCell.X;
+            X < (otherCell.X + otherCell.W) && (X + W) > otherCell.X;
     }
 }
