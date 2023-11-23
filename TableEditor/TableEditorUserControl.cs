@@ -348,10 +348,13 @@ namespace TableEditor
             SetHtmlContentToEditor(htmlData, true, false);
         }
 
-        private void CreateTableOnEditorByHtmlData(bool viaJson)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="htmlData"></param>
+        /// <param name="viaJson">Признак необходимости выполнения преобразования через JSON: 1) HTML -> JSON, 2) JSON -> HTML</param>
+        private void CreateTableOnEditorByHtmlData(string htmlData, bool viaJson)
         {
-            string htmlData = txtHtml.Text;
-
             if (viaJson)
             {
                 var transformParams = new Html2JsonTransformParameters
@@ -414,7 +417,7 @@ namespace TableEditor
             txtHtml.Text = htmlData;
 
             if (updateTable)
-                CreateTableOnEditorByHtmlData(ceTransformViaJson.Checked);
+                CreateTableOnEditorByHtmlData(txtHtml.Text, ceTransformViaJson.Checked);
 
             tcgEditors.SelectedTabPage = lcgHtmlEditor;
         }
@@ -429,7 +432,7 @@ namespace TableEditor
             try
             {
                 Utils.ShowProgressForm();
-                CreateTableOnEditorByHtmlData(ceTransformViaJson.Checked);
+                CreateTableOnEditorByHtmlData(txtHtml.Text, ceTransformViaJson.Checked);
             }
             catch (Exception exception)
             {
@@ -440,7 +443,6 @@ namespace TableEditor
                 Utils.CloseProgressForm();
             }
         }
-
 
         private void CmdEditor2HtmlClick(object sender, EventArgs e)
         {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using static DevExpress.XtraPrinting.Native.ExportOptionsPropertiesNames;
 
 namespace TransfromService
 {
@@ -75,6 +76,25 @@ namespace TransfromService
             doc.LoadHtml(htmlText);
 
             return doc.DocumentNode;
+        }
+
+        public static string WriteSpaceForEmptyCell(string cellValue)
+        {
+            var node = GetHtmlNodeFromText(cellValue);
+
+            var nodeInnerText = node.InnerText;
+
+            if (string.IsNullOrEmpty(nodeInnerText))
+            {
+                //if (!string.IsNullOrEmpty(node.InnerHtml))
+                //{
+
+                //}
+
+                node.InnerHtml += "&nbsp;";
+            }
+
+            return node.OuterHtml;
         }
 
         /// <summary>

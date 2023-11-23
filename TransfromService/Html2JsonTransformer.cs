@@ -72,7 +72,7 @@ namespace TransfromService
             if (rows == null)
                 return result;
 
-            int y = 0;
+            var y = 0;
             var colspanMap = new Dictionary<int, int>();
 
             foreach (var row in rows)
@@ -112,19 +112,19 @@ namespace TransfromService
 
                     //string cellValue = GetCellValue(cell, cellValueFormat); // Формируем значение ячейки
                     var isCellHeader = IsCellHeader(cell); // Определяем является ли ячейка заголовком таблицы
-                    string cellValue = GetCellValue(cell, isCellHeader, transformParams); // Формируем значение ячейки
+                    var cellValue = GetCellValue(cell, isCellHeader, transformParams); // Формируем значение ячейки
 
                     var colspan = 1;
                     var rowspan = 1;
 
                     var colspanAttribute = cell.Attributes["colspan"];
-                    if (colspanAttribute != null && int.TryParse(colspanAttribute.Value, out int colspanValue))
+                    if (colspanAttribute != null && int.TryParse(colspanAttribute.Value, out var colspanValue))
                     {
                         colspan = colspanValue;
                     }
 
                     var rowspanAttribute = cell.Attributes["rowspan"];
-                    if (rowspanAttribute != null && int.TryParse(rowspanAttribute.Value, out int rowspanValue))
+                    if (rowspanAttribute != null && int.TryParse(rowspanAttribute.Value, out var rowspanValue))
                     {
                         rowspan = rowspanValue;
                     }
@@ -132,12 +132,7 @@ namespace TransfromService
                     // Вычисляем значение x с учетом объединенных ячеек
                     x = GetXWithColspan(y, x, colspanMap);
 
-                    //if (cellValue.Contains("Описание интеграции и XSD сообщения от ЦФТ"))
-                    //{
-
-                    //}
-
-                    Cell cellData = new Cell
+                    var cellData = new Cell
                     {
                         X = x, // Используем текущее значение x
                         Y = y,
@@ -337,9 +332,16 @@ namespace TransfromService
                     // Убираем пустые теги <span> (формируются для пустых ячеек во встроенном редакторе)
                     cellValue = RemoveEmptyValueTags(cellValue);
 
-                    // Убираем при необходимости bold стиль для заголовков
-                    if (isCellHeader && transformParameters.RemoveBoldStyleForHeaderCells)
-                        cellValue = RemoveBoldTags(cellValue);
+                    // Обрабатываем заголовок
+                    if (isCellHeader)
+                    {
+                        // Удаляем жирный стиль для шрифта
+                        if (transformParameters.RemoveBoldStyleForHeaderCells)
+                            cellValue = RemoveBoldTags(cellValue);
+
+                        // Записываем пробел в пустые ячейки, чтобы избежать надписи "Заголовок столбца"
+                        cellValue = Utils.WriteSpaceForEmptyCell(cellValue);
+                    }
 
                     break;
                 case CellValueFormat.Text:
@@ -348,7 +350,7 @@ namespace TransfromService
                     break;
             }
 
-            cellValue = cellValue.Replace("Export to CSV", String.Empty);//.Trim();
+            cellValue = cellValue.Replace("Export to CSV", string.Empty);//.Trim();
             cellValue = Regex.Replace(cellValue, @"\r\n\t+", string.Empty);
 
             return cellValue;
@@ -848,7 +850,7 @@ namespace TransfromService
                 {
                     // Проверяем каждый класс на наличие background-color со значениями серых цветов
                     // + проверяем, что класс ячейки "highlight-grey"
-                    if (HasBackgroundColorInStyleClass(className, Utils.TableHeaderColors) ||
+                    if (HasBackgroundColorInStyleClass(className) ||
                         className.Equals("highlight-grey", StringComparison.OrdinalIgnoreCase))
                     {
                         return true;
@@ -895,8 +897,8 @@ namespace TransfromService
 
             if (bgcolorAttribute != null)
             {
-                var bgcolorValue = bgcolorAttribute.Value.Trim();
-                if (IsColorRefersToHeaderColors(bgcolorValue)) //bgcolorValue.Equals(Utils.TableHeaderBackgroundColorHexValue, StringComparison.OrdinalIgnoreCase))
+                var bgСolorValue = bgcolorAttribute.Value.Trim();
+                if (IsColorRefersToHeaderColors(bgСolorValue)) //bgcolorValue.Equals(Utils.TableHeaderBackgroundColorHexValue, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
@@ -916,7 +918,7 @@ namespace TransfromService
                 color.HexValue.Equals(colorHexValue, StringComparison.OrdinalIgnoreCase));
         }
 
-        private bool HasBackgroundColorInStyleClass(string className, IReadOnlyList<CellBackgroundColor> targetColors)
+        private bool HasBackgroundColorInStyleClass(string className)
         {
             //PrepareStylesClassesDict();
 
@@ -997,11 +999,11 @@ namespace TransfromService
 
         
         // Метод для определения значения x с учетом объединенных ячеек
-        private int GetXWithColspan(int y, int currentX, Dictionary<int, int> colspanMap)
+        private int GetXWithColspan(int currentY, int currentX, IReadOnlyDictionary<int, int> colspanMap)
         {
             var x = currentX;
 
-            while (colspanMap.ContainsKey(x) && colspanMap[x] > y)
+            while (colspanMap.TryGetValue(x, out var y) && y > currentY)
             {
                 x++;
             }
@@ -1061,9 +1063,9 @@ namespace TransfromService
         public bool RemoveBoldStyleForHeaderCells { get; set; } = true;
 
         /// <summary>
-        /// Признак необходимости двойного преобразования данных: из JSON в HTML и обратно (для корректной обработки стилей)
+        /// Признак необходимости двойного преобразования данных: из JSON в HTML и обратно (для корректной обработки тегов HTML, т.к. HTML редактора лучше воспринимается Сфера.Документы)
         /// </summary>
-        public bool NeedDoubleTransformation { get; set; } = false;
+        public bool NeedDoubleTransformation { get; set; } = true;
 
         public object Clone()
         {

@@ -56,9 +56,13 @@ namespace TableEditor
                 Utils.CloseProgressForm();
             }
         }
+
         private void TransformHtmlToJson()
         {
-            txtJson.Text = Utils.TransformHtml2Json(txtHtml.Text, transformParamsUserControl.GetParameters());
+            var transfromParams = transformParamsUserControl.GetParameters();
+            transfromParams.NeedDoubleTransformation = true;
+
+            txtJson.Text = Utils.TransformHtml2Json(txtHtml.Text, transfromParams);
             //txtJson.Format();
         }
 
