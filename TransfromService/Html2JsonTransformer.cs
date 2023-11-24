@@ -32,20 +32,10 @@ namespace TransfromService
             if (string.IsNullOrEmpty(htmlText.Trim()))
                 return result;
 
-            // Создание JSON-структуры для хранения данных таблицы
-            Root root = new Root
-            {
-                Content = new RootContent
-                {
-                    Table = new Table
-                    {
-                        Cells = new List<Cell>()
-                    }
-                }
-            };
-
             var doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
+
+            string mainTableTitle = null;
 
             _styleClassesRegistry =
                 new StyleClassesRegistry(doc.DocumentNode); // Создаем объект-обработчик стилей документа
@@ -59,12 +49,12 @@ namespace TransfromService
             }
             else
             {
-                var tables = doc.DocumentNode.SelectNodes("//table");
+                mainTable = doc.DocumentNode.SelectSingleNode("//table"); // Получаем первую таблицу
 
-                if (tables == null || tables.Count == 0)
+                if (mainTable == null)
                     return result;
 
-                mainTable = tables[0]; // Берем первую таблицу
+                mainTableTitle = mainTable.GetAttributeValue("title", null);
             }
 
             var rows = mainTable.SelectNodes("//tr");
@@ -72,6 +62,7 @@ namespace TransfromService
             if (rows == null)
                 return result;
 
+            var root = Root.GetRootInstance();
             var y = 0;
             var colspanMap = new Dictionary<int, int>();
 
@@ -176,7 +167,7 @@ namespace TransfromService
                 var doubleTransformParams = (Html2JsonTransformParameters)transformParams.Clone();
                 doubleTransformParams.NeedDoubleTransformation = false;
 
-                result = ExecuteDoubleTransformation(result, doubleTransformParams);
+                result = ExecuteDoubleTransformation(result, mainTableTitle, doubleTransformParams);
             }
 
             return result;
@@ -233,7 +224,7 @@ namespace TransfromService
         /// <param name="jsonData"></param>
         /// <param name="transformParams"></param>
         /// <returns></returns>
-        private string ExecuteDoubleTransformation(string jsonData, Html2JsonTransformParameters transformParams)
+        private string ExecuteDoubleTransformation(string jsonData, string tableTitle, Html2JsonTransformParameters transformParams)
         {
             // Первая трансформация JSON -> HTML
             var htmlData = new Json2HtmlTransformer().Transform(jsonData);
@@ -241,9 +232,10 @@ namespace TransfromService
             using (var server = new RichEditDocumentServer())
             {
                 server.Options.Export.Html.SetCommonExportOptions();
-
                 server.HtmlText = htmlData;
-                htmlData = server.Document.GetHtmlContent(RichTextUtils.TextRange.All, server.Options.Export.Html);
+
+                htmlData = server.Document.GetHtmlContent(RichTextUtils.TextRange.All, tableTitle,
+                    server.Options.Export.Html);
             }
 
             // Вторая трансформация HTML -> JSON

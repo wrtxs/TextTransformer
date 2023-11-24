@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using static TransfromService.Html2JsonTransformer;
 
 namespace TransfromService.JsonData
@@ -10,5 +11,19 @@ namespace TransfromService.JsonData
 
         [JsonProperty("content")]
         public RootContent Content { get; set; }
+
+        public static Root GetRootInstance()
+        {
+            return new Root
+            {
+                Content = new RootContent
+                {
+                    Table = new Table
+                    {
+                        Cells = new List<Cell>()
+                    }
+                }
+            };
+        }
     }
 }

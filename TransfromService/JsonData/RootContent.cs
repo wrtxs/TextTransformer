@@ -8,7 +8,9 @@ namespace TransfromService.JsonData
 {
     internal class RootContent
     {
-        [JsonProperty("table")]
-        public Table Table { get; set; }
+        [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
+        public string Title { get; set; }
+
+        [JsonProperty("table")] public Table Table { get; set; }
     }
 }

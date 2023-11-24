@@ -391,7 +391,7 @@ namespace TableEditor
 
         private void TransformFromEditorToJson()
         {
-            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.All, rtfDocUserControl.RichEditControl.Options.Export.Html);
+            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.All, null, rtfDocUserControl.RichEditControl.Options.Export.Html);
             var transformParams = transformParamsUserControl.GetParameters();
             transformParams.NeedDoubleTransformation = false;
 
@@ -450,7 +450,7 @@ namespace TableEditor
             {
                 Utils.ShowProgressForm();
                 InsertNewHtmlData(
-                    rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.All,
+                    rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.All, null,
                         rtfDocUserControl.RichEditControl.Options.Export.Html), false);
             }
             catch (Exception exception)

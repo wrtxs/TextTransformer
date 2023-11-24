@@ -427,6 +427,9 @@
             richEditBarController1 = new DevExpress.XtraRichEdit.UI.RichEditBarController(components);
             dockManager1 = new DevExpress.XtraBars.Docking.DockManager(components);
             repositoryItemRibbonSearchEdit1 = new DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit();
+            layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)ribbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemFontEditRichEdit1).BeginInit();
@@ -438,18 +441,21 @@
             ((System.ComponentModel.ISupportInitialize)richEditBarController1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dockManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControl1).BeginInit();
+            layoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             SuspendLayout();
             // 
             // richEditControl
             // 
             richEditControl.ActiveViewType = DevExpress.XtraRichEdit.RichEditViewType.Simple;
-            richEditControl.Dock = DockStyle.Fill;
             richEditControl.LayoutUnit = DevExpress.XtraRichEdit.DocumentLayoutUnit.Pixel;
-            richEditControl.Location = new Point(0, 150);
+            richEditControl.Location = new Point(0, 0);
             richEditControl.MenuManager = ribbonControl;
             richEditControl.Name = "richEditControl";
             richEditControl.Options.DocumentSaveOptions.CurrentFormat = DevExpress.XtraRichEdit.DocumentFormat.PlainText;
-            richEditControl.Size = new Size(935, 455);
+            richEditControl.Size = new Size(1014, 295);
             richEditControl.TabIndex = 17;
             richEditControl.MouseUp += richEditControl_MouseUp;
             // 
@@ -463,7 +469,7 @@
             ribbonControl.PageCategories.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageCategory[] { headerFooterToolsRibbonPageCategory1, tableToolsRibbonPageCategory1, floatingPictureToolsRibbonPageCategory1 });
             ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { fileRibbonPage1, homeRibbonPage1, insertRibbonPage1, pageLayoutRibbonPage1, referencesRibbonPage1, mailingsRibbonPage1, reviewRibbonPage1, viewRibbonPage1 });
             ribbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemFontEditRichEdit1, repositoryItemRichEditFontSizeEdit1, displayForReviewModeComboBox1, repositoryItemBorderLineStyle1, repositoryItemBorderLineWeight1, repositoryItemFloatingObjectOutlineWeight1 });
-            ribbonControl.Size = new Size(935, 150);
+            ribbonControl.Size = new Size(1014, 150);
             ribbonControl.StatusBar = ribbonStatusBar1;
             // 
             // undoItem1
@@ -2617,10 +2623,10 @@
             // 
             // ribbonStatusBar1
             // 
-            ribbonStatusBar1.Location = new Point(0, 578);
+            ribbonStatusBar1.Location = new Point(0, 445);
             ribbonStatusBar1.Name = "ribbonStatusBar1";
             ribbonStatusBar1.Ribbon = ribbonControl;
-            ribbonStatusBar1.Size = new Size(935, 27);
+            ribbonStatusBar1.Size = new Size(1014, 27);
             // 
             // richEditBarController1
             // 
@@ -2934,15 +2940,46 @@
             repositoryItemRibbonSearchEdit1.Name = "repositoryItemRibbonSearchEdit1";
             repositoryItemRibbonSearchEdit1.NullText = "Search";
             // 
+            // layoutControl1
+            // 
+            layoutControl1.Controls.Add(richEditControl);
+            layoutControl1.Dock = DockStyle.Fill;
+            layoutControl1.Location = new Point(0, 150);
+            layoutControl1.Name = "layoutControl1";
+            layoutControl1.Root = Root;
+            layoutControl1.Size = new Size(1014, 295);
+            layoutControl1.TabIndex = 19;
+            layoutControl1.Text = "layoutControl1";
+            // 
+            // Root
+            // 
+            Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            Root.GroupBordersVisible = false;
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1 });
+            Root.Name = "Root";
+            Root.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            Root.Size = new Size(1014, 295);
+            Root.TextVisible = false;
+            // 
+            // layoutControlItem1
+            // 
+            layoutControlItem1.Control = richEditControl;
+            layoutControlItem1.Location = new Point(0, 0);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            layoutControlItem1.Size = new Size(1014, 295);
+            layoutControlItem1.TextSize = new Size(0, 0);
+            layoutControlItem1.TextVisible = false;
+            // 
             // RtfDocUserControl
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(layoutControl1);
             Controls.Add(ribbonStatusBar1);
-            Controls.Add(richEditControl);
             Controls.Add(ribbonControl);
             Name = "RtfDocUserControl";
-            Size = new Size(935, 605);
+            Size = new Size(1014, 472);
             ((System.ComponentModel.ISupportInitialize)ribbonControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemFontEditRichEdit1).EndInit();
@@ -2954,6 +2991,10 @@
             ((System.ComponentModel.ISupportInitialize)richEditBarController1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dockManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
+            layoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)Root).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -3329,5 +3370,8 @@
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
         private DevExpress.XtraBars.PopupMenu popupMenu1;
         private DevExpress.XtraBars.BarCheckItem copyFormatItem;
+        private DevExpress.XtraLayout.LayoutControl layoutControl1;
+        private DevExpress.XtraLayout.LayoutControlGroup Root;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
     }
 }

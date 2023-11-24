@@ -14,7 +14,7 @@ namespace TransfromService
             if (string.IsNullOrEmpty(jsonData))
                 return htmlResult;
 
-            Root root = JsonConvert.DeserializeObject<Root>(jsonData);
+            var root = JsonConvert.DeserializeObject<Root>(jsonData);
 
             if (root != null && root.Content != null && root.Content.Table != null && root.Content.Table.Cells != null)
             {
@@ -37,7 +37,9 @@ namespace TransfromService
                         $".{headerStyleClassName}{{background-color:{Utils.CommonTableHeaderColor.HexValue};}}");
                     tableBuilder.Append("</style>");
                     tableBuilder.Append("<body>");
-                    tableBuilder.Append("<table>");
+                    tableBuilder.Append("<table" + (string.IsNullOrEmpty(root.Content.Title)
+                        ? ">"
+                        : $" title='{root.Content.Title}'>"));
 
                     for (var row = 0; row < numRows; row++)
                     {
@@ -72,7 +74,6 @@ namespace TransfromService
                     htmlResult = tableBuilder.ToString();
                 }
             }
-
 
             return htmlResult;
         }

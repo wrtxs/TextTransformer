@@ -68,12 +68,12 @@ namespace TransfromService
         /// <summary>
         /// Получение объекта html из строки
         /// </summary>
-        /// <param name="htmlText"></param>
+        /// <param name="htmlData"></param>
         /// <returns></returns>
-        public static HtmlNode GetHtmlNodeFromText(string htmlText)
+        public static HtmlNode GetHtmlNodeFromText(string htmlData)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(htmlText);
+            doc.LoadHtml(htmlData);
 
             return doc.DocumentNode;
         }
@@ -88,7 +88,6 @@ namespace TransfromService
             {
                 //if (!string.IsNullOrEmpty(node.InnerHtml))
                 //{
-
                 //}
 
                 node.InnerHtml += "&nbsp;";
