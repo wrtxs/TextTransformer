@@ -1,12 +1,8 @@
-﻿using DevExpress.XtraBars;
-using DevExpress.XtraBars.Ribbon;
+﻿using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.API.Layout;
 using DevExpress.XtraRichEdit.API.Native;
-using DevExpress.XtraRichEdit.Export;
-using DevExpress.XtraRichEdit.Export.Html;
-using DevExpress.XtraRichEdit.Model;
 using DevExpress.XtraRichEdit.Services;
 using TableEditor.RichTextEdit.CustomCommands;
 using TransfromService.RichText;
@@ -15,8 +11,11 @@ using TableLayoutType = DevExpress.XtraRichEdit.API.Native.TableLayoutType;
 
 namespace TableEditor.RichTextEdit
 {
-    public partial class RtfDocUserControl : XtraUserControl
+    public partial class RtfDocUserControl : XtraUserControl, ITableTitleService
     {
+        private DevExpress.XtraBars.BarCheckItem _copyFormatItem;
+        private DevExpress.XtraBars.PopupMenu _popupMenu;
+
         bool _isZoomChanging;
         int _pageCount = 1;
         int _currentPage = 1;
@@ -24,12 +23,28 @@ namespace TableEditor.RichTextEdit
         public RtfDocUserControl()
         {
             //OfficeCharts.Instance.ActivateWinFormsCharts();
-
             InitializeComponent();
 
+            Load += RtfDocUserControl_Load;
+
+            // Инициализируем RichEditControl
+            InitializeRichEditControl();
+
+            //RichEditControlCompatibility.EnableMSWordCompatibleFieldParser = true;
+            //RichEditControlCompatibility.UseThemeFonts = false;
+            //richEditControl.Options.DocumentCapabilities.InlinePictures = DocumentCapability.Enabled;
+            //clipboardRibbonPageGroup1.ItemLinks.Remove(pasteSpecialItem1);
+        }
+
+        private void InitializeRichEditControl()
+        {
+            // Устанавливаем обработчик ошибок
             new RichEditControlExceptionHandler(richEditControl).Install();
 
-            this.Load += RtfDocUserControl_Load;
+            richEditControl.Initialize(this);
+
+            richEditControl.Text = string.Empty;
+
             richEditControl.ZoomChanged += richEditControl_ZoomChanged;
             richEditControl.ZoomChanged += richEditControl_ZoomChanged;
             richEditControl.SelectionChanged += richEditControl_SelectionChanged;
@@ -37,43 +52,84 @@ namespace TableEditor.RichTextEdit
             richEditControl.VisiblePagesChanged += richEditControl_VisiblePagesChanged;
             richEditControl.DocumentClosing += richEditControl_DocumentClosing;
 
-            //var ribbonControl = richEditControl.CreateRibbon();
-            //this.Controls.Add(ribbonControl);
-            AppendCustomRibbonItems(ribbonControl);
+            richEditControl.ActiveViewType = RichEditViewType.Simple;
+            //richEditControl.LayoutUnit = DocumentLayoutUnit.Pixel;
+            //richEditControl.Location = new Point(0, 0);
+            //richEditControl.MenuManager = ribbonControl;
+            //richEditControl.Name = "richEditControl";
+            richEditControl.Options.DocumentSaveOptions.CurrentFormat = DocumentFormat.OpenXml;
+            //richEditControl.Size = new Size(1014, 295);
+            //richEditControl.TabIndex = 17;
+            richEditControl.MouseUp += richEditControl_MouseUp;
 
-            SetLandscapePage();
+            // Устанавливаем альбомную ориентацию
+            SetLandscapeOrientation();
 
-            //RichEditControlCompatibility.EnableMSWordCompatibleFieldParser = true;
-            //RichEditControlCompatibility.UseThemeFonts = false;
-
+            // Устанавливаем параметры работы с буфером обмена и параметры экспорта
             var clipboardFormats = richEditControl.Options.ClipboardFormats;
-
             clipboardFormats.PlainText = RichEditClipboardMode.Enabled;
             clipboardFormats.Rtf = RichEditClipboardMode.Enabled;
             clipboardFormats.Html = RichEditClipboardMode.Enabled;
 
             richEditControl.Options.Export.Html.SetCommonExportOptions();
-            SetCustomCommands();
 
-            //richEditControl.Options.DocumentCapabilities.InlinePictures = DocumentCapability.Enabled;
-            //clipboardRibbonPageGroup1.ItemLinks.Remove(pasteSpecialItem1);
+            // Добавляем дополнительные команды ("Формат по образцу") и переопределяем панель команд
+            AdjsutCommandsBar();
+
+            // Создаем строку состояния
+            CreateStatusBar();
+
+            // Переопределяем стандартные команды (копирование в буфер обмена)
+            RedefineStandartCommands();
 
             ribbonControl.SelectedPage = homeRibbonPage1;
+            ribbonControl.ForceInitialize();
         }
 
-        private void SetCustomCommands()
+        private void AdjsutCommandsBar()
+        {
+            clipboardRibbonPageGroup1.Text = @"Буфер обмена";
+
+            // Добавляем команду Формат по образцу
+            _copyFormatItem = new DevExpress.XtraBars.BarCheckItem();
+            ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { _copyFormatItem });
+
+            _copyFormatItem.Caption = @"Формат по образцу";
+            _copyFormatItem.Id = 302;
+            _copyFormatItem.ImageOptions.Image = Properties.Resources.applyStyleIco;
+            _copyFormatItem.Name = "copyFormatItem";
+            _copyFormatItem.RibbonStyle = RibbonItemStyles.SmallWithText |
+                                          RibbonItemStyles.SmallWithoutText;
+            _copyFormatItem.CheckedChanged += copyFormatItem_CheckedChanged;
+            clipboardRibbonPageGroup1.ItemLinks.Add(_copyFormatItem);
+
+            // Добавляем всплывающее меню для команды Вставка (с элементом Специальная вставка)
+            _popupMenu = new DevExpress.XtraBars.PopupMenu(components);
+            ((System.ComponentModel.ISupportInitialize)_popupMenu).BeginInit();
+            pasteItem1.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+            pasteItem1.CloseRadialMenuOnItemClick = true;
+            pasteItem1.CloseSubMenuOnClickMode = DevExpress.Utils.DefaultBoolean.True;
+            pasteItem1.DropDownControl = _popupMenu;
+            clipboardRibbonPageGroup1.ItemLinks.Remove(pasteSpecialItem1);
+            _popupMenu.ItemLinks.Add(pasteSpecialItem1);
+            _popupMenu.Name = "popupMenu";
+            _popupMenu.Ribbon = ribbonControl;
+            ((System.ComponentModel.ISupportInitialize)_popupMenu).EndInit();
+        }
+
+        private void SetLandscapeOrientation()
+        {
+            richEditControl.Options.DocumentCapabilities.Undo = DocumentCapability.Disabled;
+            richEditControl.Document.Sections[0].Page.Landscape = true;
+            richEditControl.Options.DocumentCapabilities.Undo = DocumentCapability.Enabled;
+        }
+
+        private void RedefineStandartCommands()
         {
             var commandFactory = new CustomRichEditCommandFactoryService(richEditControl,
                 richEditControl.GetService<IRichEditCommandFactoryService>());
             richEditControl.RemoveService(typeof(IRichEditCommandFactoryService));
             richEditControl.AddService(typeof(IRichEditCommandFactoryService), commandFactory);
-        }
-
-        private void SetLandscapePage()
-        {
-            richEditControl.Options.DocumentCapabilities.Undo = DocumentCapability.Disabled;
-            richEditControl.Document.Sections[0].Page.Landscape = true;
-            richEditControl.Options.DocumentCapabilities.Undo = DocumentCapability.Enabled;
         }
 
         //public void InsertEmptyTable()
@@ -112,8 +168,8 @@ namespace TableEditor.RichTextEdit
             table.BeginUpdate();
 
             table.TableLayout = TableLayoutType.Autofit;
-            table.ForEachRow((row, index) => { row.HeightType = HeightType.Auto; });
-            table.ForEachCell(((cell, rowIndex, cellIndex) => { cell.PreferredWidthType = WidthType.Auto; }));
+            table.ForEachRow((row, _) => row.HeightType = HeightType.Auto);
+            table.ForEachCell(((cell, _, _) => cell.PreferredWidthType = WidthType.Auto));
 
             //table.TableLayout = TableLayoutType.Autofit;
 
@@ -137,11 +193,11 @@ namespace TableEditor.RichTextEdit
             richEditControl.ActiveViewType = RichEditViewType.Simple;
         }
 
-        public DevExpress.XtraRichEdit.RichEditControl RichEditControl => richEditControl;
+        public RichEditControl RichEditControl => richEditControl;
 
         int PageCount
         {
-            get { return _pageCount; }
+            get => _pageCount;
             set
             {
                 if (_pageCount == value)
@@ -150,6 +206,7 @@ namespace TableEditor.RichTextEdit
                 OnPagesInfoChanged();
             }
         }
+
         int CurrentPage
         {
             get { return _currentPage; }
@@ -162,72 +219,117 @@ namespace TableEditor.RichTextEdit
             }
         }
 
-        #region AppendCustomRibbonItems
-        private DevExpress.XtraBars.BarStaticItem pagesBarItem;
-        private DevExpress.XtraBars.BarEditItem zoomBarEditItem;
-        private DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar repositoryItemZoomTrackBar1;
+        #region Status bar
 
-        void AppendCustomRibbonItems(RibbonControl ribbonControl1)
+        private RibbonStatusBar _ribbonStatusBar;
+        private DevExpress.XtraBars.BarEditItem _barEditItemTableTitle;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit _txtTableTitle;
+        private DevExpress.XtraBars.BarStaticItem _pagesBarItem;
+        private DevExpress.XtraBars.BarEditItem _zoomBarEditItem;
+        private DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar _repositoryItemZoomTrackBar1;
+
+        private void CreateStatusBar()
         {
-            this.pagesBarItem = new DevExpress.XtraBars.BarStaticItem();
-            this.zoomBarEditItem = new DevExpress.XtraBars.BarEditItem();
-            this.repositoryItemZoomTrackBar1 = new DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar();
+            // Создаем панель статуса
+            _ribbonStatusBar = new RibbonStatusBar();
+            ribbonControl.StatusBar = _ribbonStatusBar;
 
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-                this.pagesBarItem,
-                this.zoomBarEditItem,
+            _ribbonStatusBar.Location = new Point(0, 445);
+            _ribbonStatusBar.Name = "ribbonStatusBar1";
+            _ribbonStatusBar.Ribbon = ribbonControl;
+            _ribbonStatusBar.Size = new Size(1014, 27);
+            Controls.Add(_ribbonStatusBar);
+
+            // Добавляем дополнительные элементы в строку состояния
+            AppendStatusBarItems();
+        }
+
+        void AppendStatusBarItems()
+        {
+            // txtTableTitle
+            _txtTableTitle = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            ((System.ComponentModel.ISupportInitialize)_txtTableTitle).BeginInit();
+            ribbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[]
+            {
+                repositoryItemFontEditRichEdit1, repositoryItemRichEditFontSizeEdit1, displayForReviewModeComboBox1,
+                repositoryItemBorderLineStyle1, repositoryItemBorderLineWeight1,
+                repositoryItemFloatingObjectOutlineWeight1, _txtTableTitle
             });
 
-            ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-                this.repositoryItemZoomTrackBar1,
+            _txtTableTitle.AutoHeight = false;
+            _txtTableTitle.Name = "txtTableTitle";
+            ((System.ComponentModel.ISupportInitialize)_txtTableTitle).EndInit();
+
+            // barEditItemTableTitle
+            _barEditItemTableTitle = new DevExpress.XtraBars.BarEditItem();
+            ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { _barEditItemTableTitle });
+
+            _barEditItemTableTitle.Caption = @"Заголовок таблицы";
+            _barEditItemTableTitle.Edit = _txtTableTitle;
+            _barEditItemTableTitle.EditWidth = 360;
+            _barEditItemTableTitle.Id = 304;
+            _barEditItemTableTitle.Name = "barEditItemTableTitle";
+            _ribbonStatusBar.ItemLinks.Add(_barEditItemTableTitle, true);
+
+            _pagesBarItem = new DevExpress.XtraBars.BarStaticItem();
+            _zoomBarEditItem = new DevExpress.XtraBars.BarEditItem();
+            _repositoryItemZoomTrackBar1 = new DevExpress.XtraEditors.Repository.RepositoryItemZoomTrackBar();
+
+            ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[]
+            {
+                _pagesBarItem,
+                _zoomBarEditItem,
+            });
+
+            ribbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[]
+            {
+                _repositoryItemZoomTrackBar1,
             });
 
             // 
             // pagesBarItem
             // 
-            DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-            DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-            this.pagesBarItem.Id = 246;
-            this.pagesBarItem.Name = "pagesBarItem";
-            toolTipItem1.Text = "Номер страницы в документе.";
+            var superToolTip1 = new DevExpress.Utils.SuperToolTip();
+            var toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+            _pagesBarItem.Id = 246;
+            _pagesBarItem.Name = "pagesBarItem";
+            toolTipItem1.Text = @"Номер страницы в документе.";
             superToolTip1.Items.Add(toolTipItem1);
-            this.pagesBarItem.SuperTip = superToolTip1;
-
+            _pagesBarItem.SuperTip = superToolTip1;
             // 
             // zoomBarEditItem
             // 
-            this.zoomBarEditItem.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            this.zoomBarEditItem.Caption = "100%";
-            this.zoomBarEditItem.Edit = this.repositoryItemZoomTrackBar1;
-            this.zoomBarEditItem.EditValue = 100;
-            this.zoomBarEditItem.EditWidth = 150;
-            this.zoomBarEditItem.Id = 245;
-            this.zoomBarEditItem.Name = "zoomBarEditItem";
-            this.zoomBarEditItem.EditValueChanged += this.zoomBarEditItem_EditValueChanged;
-
+            _zoomBarEditItem.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            _zoomBarEditItem.Caption = @"100%";
+            _zoomBarEditItem.Edit = _repositoryItemZoomTrackBar1;
+            _zoomBarEditItem.EditValue = 100;
+            _zoomBarEditItem.EditWidth = 150;
+            _zoomBarEditItem.Id = 245;
+            _zoomBarEditItem.Name = "zoomBarEditItem";
+            _zoomBarEditItem.EditValueChanged += this.zoomBarEditItem_EditValueChanged;
 
             // 
             // repositoryItemZoomTrackBar1
             // 
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemZoomTrackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(_repositoryItemZoomTrackBar1)).BeginInit();
 
-            this.repositoryItemZoomTrackBar1.AllowUseMiddleValue = true;
-            this.repositoryItemZoomTrackBar1.LargeChange = 50;
-            this.repositoryItemZoomTrackBar1.Maximum = 500;
-            this.repositoryItemZoomTrackBar1.Middle = 100;
-            this.repositoryItemZoomTrackBar1.Minimum = 10;
-            this.repositoryItemZoomTrackBar1.Name = "repositoryItemZoomTrackBar1";
-            this.repositoryItemZoomTrackBar1.SmallChange = 10;
-            this.repositoryItemZoomTrackBar1.SnapToMiddle = 2;
+            _repositoryItemZoomTrackBar1.AllowUseMiddleValue = true;
+            _repositoryItemZoomTrackBar1.LargeChange = 50;
+            _repositoryItemZoomTrackBar1.Maximum = 500;
+            _repositoryItemZoomTrackBar1.Middle = 100;
+            _repositoryItemZoomTrackBar1.Minimum = 10;
+            _repositoryItemZoomTrackBar1.Name = "repositoryItemZoomTrackBar1";
+            _repositoryItemZoomTrackBar1.SmallChange = 10;
+            _repositoryItemZoomTrackBar1.SnapToMiddle = 2;
 
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemZoomTrackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(_repositoryItemZoomTrackBar1)).EndInit();
 
-            this.ribbonStatusBar1.ItemLinks.Add(this.pagesBarItem);
-            this.ribbonStatusBar1.ItemLinks.Add(this.zoomBarEditItem);
+            _ribbonStatusBar.ItemLinks.Add(_pagesBarItem, true);
+            _ribbonStatusBar.ItemLinks.Add(_zoomBarEditItem);
 
-            this.ribbonStatusBar1.Ribbon = ribbonControl1;
-
+            //this.ribbonStatusBar1.Ribbon = ribbonControl;
         }
+
         #endregion
 
         void RtfDocUserControl_Load(object sender, EventArgs e)
@@ -237,29 +339,29 @@ namespace TableEditor.RichTextEdit
             //RichEdit.HyphenationDictionaries.Add(new OpenOfficeHyphenationDictionary(DemoUtils.GetRelativePath("hyph_en_US.dic"), new System.Globalization.CultureInfo("en-US")));
             //LoadDocument("FirstLook.docx");
         }
+
         void DocumentLayout_DocumentFormatted(object sender, EventArgs e)
         {
-            BeginInvoke(new Action(() =>
-            {
-                PageCount = RichEditControl.DocumentLayout.GetPageCount();
-            }));
+            BeginInvoke(() => { PageCount = RichEditControl.DocumentLayout.GetPageCount(); });
         }
-        void zoomBarEditItem_EditValueChanged(object sender, System.EventArgs e)
+
+        void zoomBarEditItem_EditValueChanged(object sender, EventArgs e)
         {
             if (this._isZoomChanging)
                 return;
-            int value = Convert.ToInt32(zoomBarEditItem.EditValue);
+            int value = Convert.ToInt32(_zoomBarEditItem.EditValue);
             this._isZoomChanging = true;
             try
             {
                 RichEditControl.ActiveView.ZoomFactor = value / 100f;
-                zoomBarEditItem.Caption = String.Format("{0}%", value);
+                _zoomBarEditItem.Caption = $@"{value}%";
             }
             finally
             {
                 this._isZoomChanging = false;
             }
         }
+
         void richEditControl_ZoomChanged(object sender, EventArgs e)
         {
             if (this._isZoomChanging)
@@ -268,26 +370,29 @@ namespace TableEditor.RichTextEdit
             this._isZoomChanging = true;
             try
             {
-                zoomBarEditItem.EditValue = value;
-                zoomBarEditItem.Caption = String.Format("{0}%", value);
+                _zoomBarEditItem.EditValue = value;
+                _zoomBarEditItem.Caption = $@"{value}%";
             }
             finally
             {
                 this._isZoomChanging = false;
             }
         }
+
         void OnPagesInfoChanged()
         {
-            pagesBarItem.Caption = String.Format("Страница {0} из {1}", CurrentPage, PageCount);
+            _pagesBarItem.Caption = $@"Страница {CurrentPage} из {PageCount}";
         }
 
         void richEditControl_VisiblePagesChanged(object sender, EventArgs e)
         {
             CurrentPage = RichEditControl.ActiveView.GetVisiblePageLayoutInfos()[0].PageIndex + 1;
         }
+
         void richEditControl_SelectionChanged(object sender, EventArgs e)
         {
-            RangedLayoutElement element = RichEditControl.DocumentLayout.GetElement<RangedLayoutElement>(RichEditControl.Document.CaretPosition);
+            RangedLayoutElement element =
+                RichEditControl.DocumentLayout.GetElement<RangedLayoutElement>(RichEditControl.Document.CaretPosition);
             if (element != null)
                 CurrentPage = RichEditControl.DocumentLayout.GetPageIndex(element) + 1;
         }
@@ -322,7 +427,7 @@ namespace TableEditor.RichTextEdit
 
         private void copyFormatItem_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (copyFormatItem.Checked)
+            if (_copyFormatItem.Checked)
             {
                 SaveSelectedRange();
                 richEditControl.FormatCalculatorEnabled = true;
@@ -333,22 +438,22 @@ namespace TableEditor.RichTextEdit
             }
         }
 
-        DocumentRange sourceSelectedRange;
+        private DocumentRange _sourceSelectedRange;
 
         private void SaveSelectedRange()
         {
             var selection = richEditControl.Document.Selection;
             var subDocument = selection.BeginUpdateDocument();
-            sourceSelectedRange = subDocument.CreateRange(selection.Start, richEditControl.Document.Selection.Length);
+            _sourceSelectedRange = subDocument.CreateRange(selection.Start, richEditControl.Document.Selection.Length);
             selection.EndUpdateDocument(subDocument);
         }
 
         private void richEditControl_MouseUp(object sender, MouseEventArgs e)
         {
-            if (copyFormatItem.Checked)
+            if (_copyFormatItem.Checked)
             {
                 ApplyFormatToSelectedText();
-                copyFormatItem.Checked = false;
+                _copyFormatItem.Checked = false;
             }
         }
 
@@ -358,25 +463,29 @@ namespace TableEditor.RichTextEdit
 
             richEditControl.BeginUpdate();
             var targetSubDocument = targetSelectedRange.BeginUpdateDocument();
-            var subDocument = sourceSelectedRange.BeginUpdateDocument();
+            var subDocument = _sourceSelectedRange.BeginUpdateDocument();
 
             var targetCharactersProperties = targetSubDocument.BeginUpdateCharacters(targetSelectedRange);
-            var sourceCharactersProperties = subDocument.BeginUpdateCharacters(sourceSelectedRange);
+            var sourceCharactersProperties = subDocument.BeginUpdateCharacters(_sourceSelectedRange);
             targetCharactersProperties.Assign(sourceCharactersProperties);
             subDocument.EndUpdateCharacters(sourceCharactersProperties);
             targetSubDocument.EndUpdateCharacters(targetCharactersProperties);
 
             var targetParagraphProperties = targetSubDocument.BeginUpdateParagraphs(targetSelectedRange);
-            var sourceParagraphProperties = subDocument.BeginUpdateParagraphs(sourceSelectedRange);
+            var sourceParagraphProperties = subDocument.BeginUpdateParagraphs(_sourceSelectedRange);
             targetParagraphProperties.Assign(sourceParagraphProperties);
             subDocument.EndUpdateParagraphs(sourceParagraphProperties);
             targetSubDocument.EndUpdateParagraphs(targetParagraphProperties);
 
-            sourceSelectedRange.EndUpdateDocument(subDocument);
+            _sourceSelectedRange.EndUpdateDocument(subDocument);
             targetSelectedRange.EndUpdateDocument(targetSubDocument);
             richEditControl.EndUpdate();
         }
 
         #endregion
+
+        public string GetTableTitle() => _barEditItemTableTitle.EditValue as string;
+
+        public void SetTableTitle(string tableTitle) => _barEditItemTableTitle.EditValue = tableTitle;
     }
 }

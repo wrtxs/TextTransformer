@@ -9,8 +9,24 @@ using DevExpress.XtraRichEdit.Mouse;
 
 namespace TableEditor.RichTextEdit
 {
-    internal class RichEditControlEx : DevExpress.XtraRichEdit.RichEditControl
+    internal class RichEditControlEx : RichEditControl
     {
+        private ITableTitleService _tableTitleService;
+
+        public RichEditControlEx(ITableTitleService tableTitleService)
+        {
+           Initialize(tableTitleService);
+        }
+        public RichEditControlEx()
+        {
+        }
+
+        public void Initialize(ITableTitleService tableTitleService)
+        {
+            _tableTitleService = tableTitleService;
+        }
+
+
         protected override InnerRichEditControl CreateInnerControl()
         {
             return new ExInnerRichEditControl(this);
@@ -55,6 +71,11 @@ namespace TableEditor.RichTextEdit
                 ((RichEditControlEx)View.Control).FormatCalculatorEnabled
                     ? ApplyStyleCursor
                     : base.Calculate(hitTestResult, physicalPoint);
+        }
+
+        public string GetTableTitle()
+        {
+            return _tableTitleService.GetTableTitle();
         }
     }
 }

@@ -5,7 +5,7 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>1.0.18</Version>
+		<Version>1.0.20</Version>
 		<ApplicationIcon>Resources\app.ico</ApplicationIcon>
 		<AssemblyName>TableEditor.v$(Version)</AssemblyName>
 		<!--<AssemblyProduct>TableEditor.v$(Version)</AssemblyProduct>

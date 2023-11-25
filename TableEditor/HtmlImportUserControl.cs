@@ -2,7 +2,6 @@
 using ActiproSoftware.Text.Languages.JavaScript.Implementation;
 using ActiproSoftware.Text.Languages.Xml.Implementation;
 using DevExpress.XtraEditors;
-using TransfromService;
 
 namespace TableEditor
 {

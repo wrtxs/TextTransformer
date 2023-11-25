@@ -35,9 +35,8 @@ namespace TransfromService.RichText
                 new CustomUriProvider(),
                 exportOptions);
 
-            // Записываем имя таблицы
-            if (!string.IsNullOrEmpty(firstTableTitle))
-                htmlData = SetFirstTableTitle(htmlData, firstTableTitle);
+            // Записываем или удаляем имя таблицы
+            htmlData = SetFirstTableTitle(htmlData, firstTableTitle);
 
             return htmlData;
         }
@@ -58,8 +57,8 @@ namespace TransfromService.RichText
 
                 if (table != null)
                 {
-                    if (tableTitle != null)
-                        table.Attributes["title"].Value = tableTitle;
+                    if (!string.IsNullOrEmpty(tableTitle))
+                        table.SetAttributeValue("title", tableTitle);
                     else
                         table.Attributes.Remove("title");
 

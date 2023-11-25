@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
-using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraRichEdit;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using TransfromService.JsonData;
 using TransfromService.RichText;
-using static DevExpress.XtraPrinting.Native.ExportOptionsPropertiesNames;
 
 namespace TransfromService
 {
@@ -19,7 +17,7 @@ namespace TransfromService
 
         //private HtmlNode _htmlRoot;
 
-        private readonly HashSet<string> _noProcessStyleClasses = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        private readonly ISet<string> _noProcessStyleClasses = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "auto-cursor-target",
             "external-link"
@@ -62,7 +60,7 @@ namespace TransfromService
             if (rows == null)
                 return result;
 
-            var root = Root.GetRootInstance();
+            var root = Root.GetRootInstance(mainTableTitle);
             var y = 0;
             var colspanMap = new Dictionary<int, int>();
 
@@ -222,6 +220,7 @@ namespace TransfromService
         /// Выполнение двойной трансформации 1) JSON -> HTML, 2) HTML -> JSON
         /// </summary>
         /// <param name="jsonData"></param>
+        /// <param name="tableTitle"></param>
         /// <param name="transformParams"></param>
         /// <returns></returns>
         private string ExecuteDoubleTransformation(string jsonData, string tableTitle, Html2JsonTransformParameters transformParams)

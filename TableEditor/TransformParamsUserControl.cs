@@ -16,9 +16,9 @@ namespace TableEditor
         public Html2JsonTransformParameters GetParameters()
         {
             CellValueFormat cellValueFormat;
-            bool processTextColor = ceProcessTextColor.CheckState == CheckState.Checked;
-            bool replaceTabsBySpaces = ceReplaceTabsBySpaces.CheckState == CheckState.Checked;
-            bool removeFormatting = ceRemoveFormatting.CheckState == CheckState.Checked;
+            var processTextColor = ceProcessTextColor.CheckState == CheckState.Checked;
+            var replaceTabsBySpaces = ceReplaceTabsBySpaces.CheckState == CheckState.Checked;
+            var removeFormatting = ceRemoveFormatting.CheckState == CheckState.Checked;
 
             switch (rgCellValueFormat.SelectedIndex)
             {

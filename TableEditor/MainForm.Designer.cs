@@ -139,6 +139,7 @@
             IconOptions.LargeImage = Properties.Resources.tablelayout_32x32;
             Name = "MainForm";
             Text = "Редактор таблиц";
+            WindowState = FormWindowState.Maximized;
             Load += MainForm_Load;
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
             layoutControl1.ResumeLayout(false);

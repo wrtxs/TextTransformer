@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation1 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
             DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup1 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
             DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
             DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
@@ -46,20 +47,14 @@
             DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
             DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
             DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup2 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
-            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation1 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RtfDocUserControl));
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
+            layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            Root = new DevExpress.XtraLayout.LayoutControlGroup();
             richEditControl = new RichEditControlEx();
+            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            richEditBarController = new DevExpress.XtraRichEdit.UI.RichEditBarController(components);
+            commonRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.CommonRibbonPageGroup();
+            fileRibbonPage1 = new DevExpress.XtraRichEdit.UI.FileRibbonPage();
             undoItem1 = new DevExpress.XtraRichEdit.UI.UndoItem();
             redoItem1 = new DevExpress.XtraRichEdit.UI.RedoItem();
             fileNewItem1 = new DevExpress.XtraRichEdit.UI.FileNewItem();
@@ -69,21 +64,20 @@
             quickPrintItem1 = new DevExpress.XtraRichEdit.UI.QuickPrintItem();
             printItem1 = new DevExpress.XtraRichEdit.UI.PrintItem();
             printPreviewItem1 = new DevExpress.XtraRichEdit.UI.PrintPreviewItem();
+            infoRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.InfoRibbonPageGroup();
             encryptDocumentItem1 = new DevExpress.XtraRichEdit.UI.EncryptDocumentItem();
             showDocumentPropertiesFormItem1 = new DevExpress.XtraRichEdit.UI.ShowDocumentPropertiesFormItem();
+            clipboardRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.ClipboardRibbonPageGroup();
+            homeRibbonPage1 = new DevExpress.XtraRichEdit.UI.HomeRibbonPage();
             pasteItem1 = new DevExpress.XtraRichEdit.UI.PasteItem();
-            popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
-            pasteSpecialItem1 = new DevExpress.XtraRichEdit.UI.PasteSpecialItem();
             cutItem1 = new DevExpress.XtraRichEdit.UI.CutItem();
             copyItem1 = new DevExpress.XtraRichEdit.UI.CopyItem();
-            barButtonGroup1 = new DevExpress.XtraBars.BarButtonGroup();
+            pasteSpecialItem1 = new DevExpress.XtraRichEdit.UI.PasteSpecialItem();
+            fontRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.FontRibbonPageGroup();
             changeFontNameItem1 = new DevExpress.XtraRichEdit.UI.ChangeFontNameItem();
-            repositoryItemFontEditRichEdit1 = new DevExpress.XtraRichEdit.UI.RepositoryItemFontEditRichEdit();
             changeFontSizeItem1 = new DevExpress.XtraRichEdit.UI.ChangeFontSizeItem();
-            repositoryItemRichEditFontSizeEdit1 = new DevExpress.XtraRichEdit.Design.RepositoryItemRichEditFontSizeEdit();
             fontSizeIncreaseItem1 = new DevExpress.XtraRichEdit.UI.FontSizeIncreaseItem();
             fontSizeDecreaseItem1 = new DevExpress.XtraRichEdit.UI.FontSizeDecreaseItem();
-            barButtonGroup2 = new DevExpress.XtraBars.BarButtonGroup();
             toggleFontBoldItem1 = new DevExpress.XtraRichEdit.UI.ToggleFontBoldItem();
             toggleFontItalicItem1 = new DevExpress.XtraRichEdit.UI.ToggleFontItalicItem();
             toggleFontUnderlineItem1 = new DevExpress.XtraRichEdit.UI.ToggleFontUnderlineItem();
@@ -92,44 +86,44 @@
             toggleFontDoubleStrikeoutItem1 = new DevExpress.XtraRichEdit.UI.ToggleFontDoubleStrikeoutItem();
             toggleFontSuperscriptItem1 = new DevExpress.XtraRichEdit.UI.ToggleFontSuperscriptItem();
             toggleFontSubscriptItem1 = new DevExpress.XtraRichEdit.UI.ToggleFontSubscriptItem();
-            barButtonGroup3 = new DevExpress.XtraBars.BarButtonGroup();
             changeFontColorItem1 = new DevExpress.XtraRichEdit.UI.ChangeFontColorItem();
             changeFontHighlightColorItem1 = new DevExpress.XtraRichEdit.UI.ChangeFontHighlightColorItem();
-            changeTextCaseItem1 = new DevExpress.XtraRichEdit.UI.ChangeTextCaseItem();
             makeTextUpperCaseItem1 = new DevExpress.XtraRichEdit.UI.MakeTextUpperCaseItem();
             makeTextLowerCaseItem1 = new DevExpress.XtraRichEdit.UI.MakeTextLowerCaseItem();
             capitalizeEachWordCaseItem1 = new DevExpress.XtraRichEdit.UI.CapitalizeEachWordCaseItem();
             toggleTextCaseItem1 = new DevExpress.XtraRichEdit.UI.ToggleTextCaseItem();
+            changeTextCaseItem1 = new DevExpress.XtraRichEdit.UI.ChangeTextCaseItem();
             clearFormattingItem1 = new DevExpress.XtraRichEdit.UI.ClearFormattingItem();
-            barButtonGroup4 = new DevExpress.XtraBars.BarButtonGroup();
+            barButtonGroup1 = new DevExpress.XtraBars.BarButtonGroup();
+            repositoryItemFontEditRichEdit1 = new DevExpress.XtraRichEdit.UI.RepositoryItemFontEditRichEdit();
+            repositoryItemRichEditFontSizeEdit1 = new DevExpress.XtraRichEdit.Design.RepositoryItemRichEditFontSizeEdit();
+            barButtonGroup2 = new DevExpress.XtraBars.BarButtonGroup();
+            barButtonGroup3 = new DevExpress.XtraBars.BarButtonGroup();
+            paragraphRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.ParagraphRibbonPageGroup();
             toggleBulletedListItem1 = new DevExpress.XtraRichEdit.UI.ToggleBulletedListItem();
             toggleNumberingListItem1 = new DevExpress.XtraRichEdit.UI.ToggleNumberingListItem();
             toggleMultiLevelListItem1 = new DevExpress.XtraRichEdit.UI.ToggleMultiLevelListItem();
+            decreaseIndentItem1 = new DevExpress.XtraRichEdit.UI.DecreaseIndentItem();
+            increaseIndentItem1 = new DevExpress.XtraRichEdit.UI.IncreaseIndentItem();
             rtlToggleBulletedListItem1 = new DevExpress.XtraRichEdit.UI.RtlToggleBulletedListItem();
             rtlToggleNumberingListItem1 = new DevExpress.XtraRichEdit.UI.RtlToggleNumberingListItem();
             rtlToggleMultiLevelListItem1 = new DevExpress.XtraRichEdit.UI.RtlToggleMultiLevelListItem();
-            barButtonGroup5 = new DevExpress.XtraBars.BarButtonGroup();
-            decreaseIndentItem1 = new DevExpress.XtraRichEdit.UI.DecreaseIndentItem();
-            increaseIndentItem1 = new DevExpress.XtraRichEdit.UI.IncreaseIndentItem();
             rtlDecreaseIndentItem1 = new DevExpress.XtraRichEdit.UI.RtlDecreaseIndentItem();
             rtlIncreaseIndentItem1 = new DevExpress.XtraRichEdit.UI.RtlIncreaseIndentItem();
             toggleParagraphLeftToRightItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphLeftToRightItem();
             toggleParagraphRightToLeftItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphRightToLeftItem();
-            toggleShowWhitespaceItem1 = new DevExpress.XtraRichEdit.UI.ToggleShowWhitespaceItem();
-            barButtonGroup6 = new DevExpress.XtraBars.BarButtonGroup();
             toggleParagraphAlignmentLeftItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentLeftItem();
             toggleParagraphAlignmentCenterItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentCenterItem();
             toggleParagraphAlignmentRightItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentRightItem();
             toggleParagraphAlignmentJustifyItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentJustifyItem();
-            toggleParagraphAlignmentArabicJustifyGroupItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentArabicJustifyGroupItem();
             toggleParagraphAlignmentArabicJustifyItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentArabicJustifyItem();
             toggleParagraphAlignmentJustifyLowItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentJustifyLowItem();
             toggleParagraphAlignmentJustifyMediumItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentJustifyMediumItem();
             toggleParagraphAlignmentJustifyHighItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentJustifyHighItem();
+            toggleParagraphAlignmentArabicJustifyGroupItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentArabicJustifyGroupItem();
             toggleParagraphAlignmentDistributeItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentDistributeItem();
             toggleParagraphAlignmentThaiDistributeItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphAlignmentThaiDistributeItem();
-            barButtonGroup7 = new DevExpress.XtraBars.BarButtonGroup();
-            changeParagraphLineSpacingItem1 = new DevExpress.XtraRichEdit.UI.ChangeParagraphLineSpacingItem();
+            toggleShowWhitespaceItem1 = new DevExpress.XtraRichEdit.UI.ToggleShowWhitespaceItem();
             setSingleParagraphSpacingItem1 = new DevExpress.XtraRichEdit.UI.SetSingleParagraphSpacingItem();
             setSesquialteralParagraphSpacingItem1 = new DevExpress.XtraRichEdit.UI.SetSesquialteralParagraphSpacingItem();
             setDoubleParagraphSpacingItem1 = new DevExpress.XtraRichEdit.UI.SetDoubleParagraphSpacingItem();
@@ -138,61 +132,80 @@
             removeSpacingBeforeParagraphItem1 = new DevExpress.XtraRichEdit.UI.RemoveSpacingBeforeParagraphItem();
             addSpacingAfterParagraphItem1 = new DevExpress.XtraRichEdit.UI.AddSpacingAfterParagraphItem();
             removeSpacingAfterParagraphItem1 = new DevExpress.XtraRichEdit.UI.RemoveSpacingAfterParagraphItem();
+            changeParagraphLineSpacingItem1 = new DevExpress.XtraRichEdit.UI.ChangeParagraphLineSpacingItem();
             changeParagraphBackColorItem1 = new DevExpress.XtraRichEdit.UI.ChangeParagraphBackColorItem();
+            barButtonGroup4 = new DevExpress.XtraBars.BarButtonGroup();
+            barButtonGroup5 = new DevExpress.XtraBars.BarButtonGroup();
+            barButtonGroup6 = new DevExpress.XtraBars.BarButtonGroup();
+            barButtonGroup7 = new DevExpress.XtraBars.BarButtonGroup();
+            stylesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.StylesRibbonPageGroup();
             galleryChangeStyleItem1 = new DevExpress.XtraRichEdit.UI.GalleryChangeStyleItem();
+            editingRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.EditingRibbonPageGroup();
             findItem1 = new DevExpress.XtraRichEdit.UI.FindItem();
             replaceItem1 = new DevExpress.XtraRichEdit.UI.ReplaceItem();
+            pagesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.PagesRibbonPageGroup();
+            insertRibbonPage1 = new DevExpress.XtraRichEdit.UI.InsertRibbonPage();
             insertPageBreakItem21 = new DevExpress.XtraRichEdit.UI.InsertPageBreakItem2();
+            tablesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TablesRibbonPageGroup();
             insertTableItem1 = new DevExpress.XtraRichEdit.UI.InsertTableItem();
+            illustrationsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.IllustrationsRibbonPageGroup();
             insertFloatingPictureItem1 = new DevExpress.XtraRichEdit.UI.InsertFloatingPictureItem();
+            linksRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.LinksRibbonPageGroup();
             insertBookmarkItem1 = new DevExpress.XtraRichEdit.UI.InsertBookmarkItem();
             insertHyperlinkItem1 = new DevExpress.XtraRichEdit.UI.InsertHyperlinkItem();
+            headerFooterRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.HeaderFooterRibbonPageGroup();
             editPageHeaderItem1 = new DevExpress.XtraRichEdit.UI.EditPageHeaderItem();
             editPageFooterItem1 = new DevExpress.XtraRichEdit.UI.EditPageFooterItem();
             insertPageNumberItem1 = new DevExpress.XtraRichEdit.UI.InsertPageNumberItem();
             insertPageCountItem1 = new DevExpress.XtraRichEdit.UI.InsertPageCountItem();
+            textRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TextRibbonPageGroup();
             insertTextBoxItem1 = new DevExpress.XtraRichEdit.UI.InsertTextBoxItem();
             insertObjectItem1 = new DevExpress.XtraRichEdit.UI.InsertObjectItem();
+            symbolsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.SymbolsRibbonPageGroup();
             insertSymbolItem1 = new DevExpress.XtraRichEdit.UI.InsertSymbolItem();
-            changeSectionPageMarginsItem1 = new DevExpress.XtraRichEdit.UI.ChangeSectionPageMarginsItem();
+            pageSetupRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.PageSetupRibbonPageGroup();
+            pageLayoutRibbonPage1 = new DevExpress.XtraRichEdit.UI.PageLayoutRibbonPage();
             setNormalSectionPageMarginsItem1 = new DevExpress.XtraRichEdit.UI.SetNormalSectionPageMarginsItem();
             setNarrowSectionPageMarginsItem1 = new DevExpress.XtraRichEdit.UI.SetNarrowSectionPageMarginsItem();
             setModerateSectionPageMarginsItem1 = new DevExpress.XtraRichEdit.UI.SetModerateSectionPageMarginsItem();
             setWideSectionPageMarginsItem1 = new DevExpress.XtraRichEdit.UI.SetWideSectionPageMarginsItem();
             showPageMarginsSetupFormItem1 = new DevExpress.XtraRichEdit.UI.ShowPageMarginsSetupFormItem();
-            changeSectionPageOrientationItem1 = new DevExpress.XtraRichEdit.UI.ChangeSectionPageOrientationItem();
+            changeSectionPageMarginsItem1 = new DevExpress.XtraRichEdit.UI.ChangeSectionPageMarginsItem();
             setPortraitPageOrientationItem1 = new DevExpress.XtraRichEdit.UI.SetPortraitPageOrientationItem();
             setLandscapePageOrientationItem1 = new DevExpress.XtraRichEdit.UI.SetLandscapePageOrientationItem();
+            changeSectionPageOrientationItem1 = new DevExpress.XtraRichEdit.UI.ChangeSectionPageOrientationItem();
             changeSectionPaperKindItem1 = new DevExpress.XtraRichEdit.UI.ChangeSectionPaperKindItem();
-            changeSectionColumnsItem1 = new DevExpress.XtraRichEdit.UI.ChangeSectionColumnsItem();
             setSectionOneColumnItem1 = new DevExpress.XtraRichEdit.UI.SetSectionOneColumnItem();
             setSectionTwoColumnsItem1 = new DevExpress.XtraRichEdit.UI.SetSectionTwoColumnsItem();
             setSectionThreeColumnsItem1 = new DevExpress.XtraRichEdit.UI.SetSectionThreeColumnsItem();
             showColumnsSetupFormItem1 = new DevExpress.XtraRichEdit.UI.ShowColumnsSetupFormItem();
-            insertBreakItem1 = new DevExpress.XtraRichEdit.UI.InsertBreakItem();
+            changeSectionColumnsItem1 = new DevExpress.XtraRichEdit.UI.ChangeSectionColumnsItem();
             insertPageBreakItem1 = new DevExpress.XtraRichEdit.UI.InsertPageBreakItem();
             insertColumnBreakItem1 = new DevExpress.XtraRichEdit.UI.InsertColumnBreakItem();
             insertSectionBreakNextPageItem1 = new DevExpress.XtraRichEdit.UI.InsertSectionBreakNextPageItem();
             insertSectionBreakContinuousItem1 = new DevExpress.XtraRichEdit.UI.InsertSectionBreakContinuousItem();
             insertSectionBreakEvenPageItem1 = new DevExpress.XtraRichEdit.UI.InsertSectionBreakEvenPageItem();
             insertSectionBreakOddPageItem1 = new DevExpress.XtraRichEdit.UI.InsertSectionBreakOddPageItem();
-            changeSectionLineNumberingItem1 = new DevExpress.XtraRichEdit.UI.ChangeSectionLineNumberingItem();
+            insertBreakItem1 = new DevExpress.XtraRichEdit.UI.InsertBreakItem();
             setSectionLineNumberingNoneItem1 = new DevExpress.XtraRichEdit.UI.SetSectionLineNumberingNoneItem();
             setSectionLineNumberingContinuousItem1 = new DevExpress.XtraRichEdit.UI.SetSectionLineNumberingContinuousItem();
             setSectionLineNumberingRestartNewPageItem1 = new DevExpress.XtraRichEdit.UI.SetSectionLineNumberingRestartNewPageItem();
             setSectionLineNumberingRestartNewSectionItem1 = new DevExpress.XtraRichEdit.UI.SetSectionLineNumberingRestartNewSectionItem();
             toggleParagraphSuppressLineNumbersItem1 = new DevExpress.XtraRichEdit.UI.ToggleParagraphSuppressLineNumbersItem();
             showLineNumberingFormItem1 = new DevExpress.XtraRichEdit.UI.ShowLineNumberingFormItem();
-            changeHyphenationOptionsItem1 = new DevExpress.XtraRichEdit.UI.ChangeHyphenationOptionsItem();
+            changeSectionLineNumberingItem1 = new DevExpress.XtraRichEdit.UI.ChangeSectionLineNumberingItem();
             setHyphenateDocumentNoneItem1 = new DevExpress.XtraRichEdit.UI.SetHyphenateDocumentNoneItem();
             setHyphenateDocumentAutomaticItem1 = new DevExpress.XtraRichEdit.UI.SetHyphenateDocumentAutomaticItem();
             showHyphenationOptionsFormItem1 = new DevExpress.XtraRichEdit.UI.ShowHyphenationOptionsFormItem();
+            changeHyphenationOptionsItem1 = new DevExpress.XtraRichEdit.UI.ChangeHyphenationOptionsItem();
+            pageBackgroundRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.PageBackgroundRibbonPageGroup();
             changePageColorItem1 = new DevExpress.XtraRichEdit.UI.ChangePageColorItem();
             watermarkItem1 = new DevExpress.XtraRichEdit.UI.WatermarkItem();
             deleteWatermarkItem1 = new DevExpress.XtraRichEdit.UI.DeleteWatermarkItem();
+            tableOfContentsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableOfContentsRibbonPageGroup();
+            referencesRibbonPage1 = new DevExpress.XtraRichEdit.UI.ReferencesRibbonPage();
             insertTableOfContentsItem1 = new DevExpress.XtraRichEdit.UI.InsertTableOfContentsItem();
             updateTableOfContentsItem1 = new DevExpress.XtraRichEdit.UI.UpdateTableOfContentsItem();
-            addParagraphsToTableOfContentItem1 = new DevExpress.XtraRichEdit.UI.AddParagraphsToTableOfContentItem();
             setParagraphHeadingLevelItem1 = new DevExpress.XtraRichEdit.UI.SetParagraphHeadingLevelItem();
             setParagraphHeadingLevelItem2 = new DevExpress.XtraRichEdit.UI.SetParagraphHeadingLevelItem();
             setParagraphHeadingLevelItem3 = new DevExpress.XtraRichEdit.UI.SetParagraphHeadingLevelItem();
@@ -203,72 +216,94 @@
             setParagraphHeadingLevelItem8 = new DevExpress.XtraRichEdit.UI.SetParagraphHeadingLevelItem();
             setParagraphHeadingLevelItem9 = new DevExpress.XtraRichEdit.UI.SetParagraphHeadingLevelItem();
             setParagraphHeadingLevelItem10 = new DevExpress.XtraRichEdit.UI.SetParagraphHeadingLevelItem();
-            insertCaptionPlaceholderItem1 = new DevExpress.XtraRichEdit.UI.InsertCaptionPlaceholderItem();
+            addParagraphsToTableOfContentItem1 = new DevExpress.XtraRichEdit.UI.AddParagraphsToTableOfContentItem();
+            captionsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.CaptionsRibbonPageGroup();
             insertFiguresCaptionItems1 = new DevExpress.XtraRichEdit.UI.InsertFiguresCaptionItems();
             insertTablesCaptionItems1 = new DevExpress.XtraRichEdit.UI.InsertTablesCaptionItems();
             insertEquationsCaptionItems1 = new DevExpress.XtraRichEdit.UI.InsertEquationsCaptionItems();
-            insertTableOfFiguresPlaceholderItem1 = new DevExpress.XtraRichEdit.UI.InsertTableOfFiguresPlaceholderItem();
+            insertCaptionPlaceholderItem1 = new DevExpress.XtraRichEdit.UI.InsertCaptionPlaceholderItem();
             insertTableOfFiguresItems1 = new DevExpress.XtraRichEdit.UI.InsertTableOfFiguresItems();
             insertTableOfTablesItems1 = new DevExpress.XtraRichEdit.UI.InsertTableOfTablesItems();
             insertTableOfEquationsItems1 = new DevExpress.XtraRichEdit.UI.InsertTableOfEquationsItems();
+            insertTableOfFiguresPlaceholderItem1 = new DevExpress.XtraRichEdit.UI.InsertTableOfFiguresPlaceholderItem();
             updateTableOfFiguresItem1 = new DevExpress.XtraRichEdit.UI.UpdateTableOfFiguresItem();
+            notesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.NotesRibbonPageGroup();
             insertFootnoteItem1 = new DevExpress.XtraRichEdit.UI.InsertFootnoteItem();
             insertEndnoteItem1 = new DevExpress.XtraRichEdit.UI.InsertEndnoteItem();
             navigationNotesItem1 = new DevExpress.XtraRichEdit.UI.NavigationNotesItem();
             showNotesItem1 = new DevExpress.XtraRichEdit.UI.ShowNotesItem();
+            mailMergeRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.MailMergeRibbonPageGroup();
+            mailingsRibbonPage1 = new DevExpress.XtraRichEdit.UI.MailingsRibbonPage();
             insertMergeFieldItem1 = new DevExpress.XtraRichEdit.UI.InsertMergeFieldItem();
             showAllFieldCodesItem1 = new DevExpress.XtraRichEdit.UI.ShowAllFieldCodesItem();
             showAllFieldResultsItem1 = new DevExpress.XtraRichEdit.UI.ShowAllFieldResultsItem();
             toggleViewMergedDataItem1 = new DevExpress.XtraRichEdit.UI.ToggleViewMergedDataItem();
+            documentProofingRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentProofingRibbonPageGroup();
+            reviewRibbonPage1 = new DevExpress.XtraRichEdit.UI.ReviewRibbonPage();
             checkSpellingItem1 = new DevExpress.XtraRichEdit.UI.CheckSpellingItem();
             changeLanguageItem1 = new DevExpress.XtraRichEdit.UI.ChangeLanguageItem();
+            documentProtectionRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentProtectionRibbonPageGroup();
             protectDocumentItem1 = new DevExpress.XtraRichEdit.UI.ProtectDocumentItem();
             changeRangeEditingPermissionsItem1 = new DevExpress.XtraRichEdit.UI.ChangeRangeEditingPermissionsItem();
             unprotectDocumentItem1 = new DevExpress.XtraRichEdit.UI.UnprotectDocumentItem();
+            documentCommentRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentCommentRibbonPageGroup();
             newCommentItem1 = new DevExpress.XtraRichEdit.UI.NewCommentItem();
-            deleteCommentsItem1 = new DevExpress.XtraRichEdit.UI.DeleteCommentsItem();
             deleteOneCommentItem1 = new DevExpress.XtraRichEdit.UI.DeleteOneCommentItem();
             deleteAllCommentsShownItem1 = new DevExpress.XtraRichEdit.UI.DeleteAllCommentsShownItem();
             deleteAllCommentsItem1 = new DevExpress.XtraRichEdit.UI.DeleteAllCommentsItem();
+            deleteCommentsItem1 = new DevExpress.XtraRichEdit.UI.DeleteCommentsItem();
             previousCommentItem1 = new DevExpress.XtraRichEdit.UI.PreviousCommentItem();
             nextCommentItem1 = new DevExpress.XtraRichEdit.UI.NextCommentItem();
+            documentTrackingRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentTrackingRibbonPageGroup();
             toggleTrackChangesBarItem1 = new DevExpress.XtraRichEdit.UI.ToggleTrackChangesBarItem();
             changeDisplayForReviewModeItem1 = new DevExpress.XtraRichEdit.UI.ChangeDisplayForReviewModeItem();
-            displayForReviewModeComboBox1 = new DevExpress.XtraRichEdit.UI.DisplayForReviewModeComboBox();
             showMarkupSubItem1 = new DevExpress.XtraRichEdit.UI.ShowMarkupSubItem();
             reviewingPaneItem1 = new DevExpress.XtraRichEdit.UI.ReviewingPaneItem();
+            displayForReviewModeComboBox1 = new DevExpress.XtraRichEdit.UI.DisplayForReviewModeComboBox();
+            documentChangesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentChangesRibbonPageGroup();
             acceptAndMoveToNextSubItem1 = new DevExpress.XtraRichEdit.UI.AcceptAndMoveToNextSubItem();
             rejectAndMoveToNextSubItem1 = new DevExpress.XtraRichEdit.UI.RejectAndMoveToNextSubItem();
             previousChangeItem1 = new DevExpress.XtraRichEdit.UI.PreviousChangeItem();
             nextChangeItem1 = new DevExpress.XtraRichEdit.UI.NextChangeItem();
+            documentViewsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentViewsRibbonPageGroup();
+            viewRibbonPage1 = new DevExpress.XtraRichEdit.UI.ViewRibbonPage();
             switchToSimpleViewItem1 = new DevExpress.XtraRichEdit.UI.SwitchToSimpleViewItem();
             switchToDraftViewItem1 = new DevExpress.XtraRichEdit.UI.SwitchToDraftViewItem();
             switchToPrintLayoutViewItem1 = new DevExpress.XtraRichEdit.UI.SwitchToPrintLayoutViewItem();
+            showRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.ShowRibbonPageGroup();
             toggleShowHorizontalRulerItem1 = new DevExpress.XtraRichEdit.UI.ToggleShowHorizontalRulerItem();
             toggleShowVerticalRulerItem1 = new DevExpress.XtraRichEdit.UI.ToggleShowVerticalRulerItem();
+            zoomRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.ZoomRibbonPageGroup();
             zoomOutItem1 = new DevExpress.XtraRichEdit.UI.ZoomOutItem();
             zoomInItem1 = new DevExpress.XtraRichEdit.UI.ZoomInItem();
+            headerFooterToolsDesignNavigationRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.HeaderFooterToolsDesignNavigationRibbonPageGroup();
+            headerFooterToolsDesignRibbonPage1 = new DevExpress.XtraRichEdit.UI.HeaderFooterToolsDesignRibbonPage();
+            headerFooterToolsRibbonPageCategory1 = new DevExpress.XtraRichEdit.UI.HeaderFooterToolsRibbonPageCategory();
             goToPageHeaderItem1 = new DevExpress.XtraRichEdit.UI.GoToPageHeaderItem();
             goToPageFooterItem1 = new DevExpress.XtraRichEdit.UI.GoToPageFooterItem();
             goToNextHeaderFooterItem1 = new DevExpress.XtraRichEdit.UI.GoToNextHeaderFooterItem();
             goToPreviousHeaderFooterItem1 = new DevExpress.XtraRichEdit.UI.GoToPreviousHeaderFooterItem();
             toggleLinkToPreviousItem1 = new DevExpress.XtraRichEdit.UI.ToggleLinkToPreviousItem();
+            headerFooterToolsDesignOptionsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.HeaderFooterToolsDesignOptionsRibbonPageGroup();
             toggleDifferentFirstPageItem1 = new DevExpress.XtraRichEdit.UI.ToggleDifferentFirstPageItem();
             toggleDifferentOddAndEvenPagesItem1 = new DevExpress.XtraRichEdit.UI.ToggleDifferentOddAndEvenPagesItem();
+            headerFooterToolsDesignCloseRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.HeaderFooterToolsDesignCloseRibbonPageGroup();
             closePageHeaderFooterItem1 = new DevExpress.XtraRichEdit.UI.ClosePageHeaderFooterItem();
+            tableStyleOptionsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableStyleOptionsRibbonPageGroup();
+            tableDesignRibbonPage1 = new DevExpress.XtraRichEdit.UI.TableDesignRibbonPage();
+            tableToolsRibbonPageCategory1 = new DevExpress.XtraRichEdit.UI.TableToolsRibbonPageCategory();
             toggleFirstRowItem1 = new DevExpress.XtraRichEdit.UI.ToggleFirstRowItem();
             toggleLastRowItem1 = new DevExpress.XtraRichEdit.UI.ToggleLastRowItem();
             toggleBandedRowsItem1 = new DevExpress.XtraRichEdit.UI.ToggleBandedRowsItem();
             toggleFirstColumnItem1 = new DevExpress.XtraRichEdit.UI.ToggleFirstColumnItem();
             toggleLastColumnItem1 = new DevExpress.XtraRichEdit.UI.ToggleLastColumnItem();
             toggleBandedColumnsItem1 = new DevExpress.XtraRichEdit.UI.ToggleBandedColumnsItem();
+            tableStylesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableStylesRibbonPageGroup();
             galleryChangeTableStyleItem1 = new DevExpress.XtraRichEdit.UI.GalleryChangeTableStyleItem();
+            tableDrawBordersRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableDrawBordersRibbonPageGroup();
             changeTableBorderLineStyleItem1 = new DevExpress.XtraRichEdit.UI.ChangeTableBorderLineStyleItem();
-            repositoryItemBorderLineStyle1 = new DevExpress.XtraRichEdit.Forms.Design.RepositoryItemBorderLineStyle();
             changeTableBorderLineWeightItem1 = new DevExpress.XtraRichEdit.UI.ChangeTableBorderLineWeightItem();
-            repositoryItemBorderLineWeight1 = new DevExpress.XtraRichEdit.Forms.Design.RepositoryItemBorderLineWeight();
             changeTableBorderColorItem1 = new DevExpress.XtraRichEdit.UI.ChangeTableBorderColorItem();
-            changeTableBordersItem1 = new DevExpress.XtraRichEdit.UI.ChangeTableBordersItem();
             toggleTableCellsBottomBorderItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableCellsBottomBorderItem();
             toggleTableCellsTopBorderItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableCellsTopBorderItem();
             toggleTableCellsLeftBorderItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableCellsLeftBorderItem();
@@ -280,29 +315,38 @@
             toggleTableCellsInsideHorizontalBorderItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableCellsInsideHorizontalBorderItem();
             toggleTableCellsInsideVerticalBorderItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableCellsInsideVerticalBorderItem();
             toggleShowTableGridLinesItem1 = new DevExpress.XtraRichEdit.UI.ToggleShowTableGridLinesItem();
+            changeTableBordersItem1 = new DevExpress.XtraRichEdit.UI.ChangeTableBordersItem();
             changeTableCellsShadingItem1 = new DevExpress.XtraRichEdit.UI.ChangeTableCellsShadingItem();
-            selectTableElementsItem1 = new DevExpress.XtraRichEdit.UI.SelectTableElementsItem();
+            repositoryItemBorderLineStyle1 = new DevExpress.XtraRichEdit.Forms.Design.RepositoryItemBorderLineStyle();
+            repositoryItemBorderLineWeight1 = new DevExpress.XtraRichEdit.Forms.Design.RepositoryItemBorderLineWeight();
+            tableTableRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableTableRibbonPageGroup();
+            tableLayoutRibbonPage1 = new DevExpress.XtraRichEdit.UI.TableLayoutRibbonPage();
             selectTableCellItem1 = new DevExpress.XtraRichEdit.UI.SelectTableCellItem();
             selectTableColumnItem1 = new DevExpress.XtraRichEdit.UI.SelectTableColumnItem();
             selectTableRowItem1 = new DevExpress.XtraRichEdit.UI.SelectTableRowItem();
             selectTableItem1 = new DevExpress.XtraRichEdit.UI.SelectTableItem();
+            selectTableElementsItem1 = new DevExpress.XtraRichEdit.UI.SelectTableElementsItem();
             showTablePropertiesFormItem1 = new DevExpress.XtraRichEdit.UI.ShowTablePropertiesFormItem();
-            deleteTableElementsItem1 = new DevExpress.XtraRichEdit.UI.DeleteTableElementsItem();
+            tableRowsAndColumnsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableRowsAndColumnsRibbonPageGroup();
             showDeleteTableCellsFormItem1 = new DevExpress.XtraRichEdit.UI.ShowDeleteTableCellsFormItem();
             deleteTableColumnsItem1 = new DevExpress.XtraRichEdit.UI.DeleteTableColumnsItem();
             deleteTableRowsItem1 = new DevExpress.XtraRichEdit.UI.DeleteTableRowsItem();
             deleteTableItem1 = new DevExpress.XtraRichEdit.UI.DeleteTableItem();
+            deleteTableElementsItem1 = new DevExpress.XtraRichEdit.UI.DeleteTableElementsItem();
             insertTableRowAboveItem1 = new DevExpress.XtraRichEdit.UI.InsertTableRowAboveItem();
             insertTableRowBelowItem1 = new DevExpress.XtraRichEdit.UI.InsertTableRowBelowItem();
             insertTableColumnToLeftItem1 = new DevExpress.XtraRichEdit.UI.InsertTableColumnToLeftItem();
             insertTableColumnToRightItem1 = new DevExpress.XtraRichEdit.UI.InsertTableColumnToRightItem();
+            tableMergeRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableMergeRibbonPageGroup();
             mergeTableCellsItem1 = new DevExpress.XtraRichEdit.UI.MergeTableCellsItem();
             showSplitTableCellsForm1 = new DevExpress.XtraRichEdit.UI.ShowSplitTableCellsForm();
             splitTableItem1 = new DevExpress.XtraRichEdit.UI.SplitTableItem();
-            toggleTableAutoFitItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableAutoFitItem();
+            tableCellSizeRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableCellSizeRibbonPageGroup();
             toggleTableAutoFitContentsItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableAutoFitContentsItem();
             toggleTableAutoFitWindowItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableAutoFitWindowItem();
             toggleTableFixedColumnWidthItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableFixedColumnWidthItem();
+            toggleTableAutoFitItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableAutoFitItem();
+            tableAlignmentRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableAlignmentRibbonPageGroup();
             toggleTableCellsTopLeftAlignmentItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableCellsTopLeftAlignmentItem();
             toggleTableCellsMiddleLeftAlignmentItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableCellsMiddleLeftAlignmentItem();
             toggleTableCellsBottomLeftAlignmentItem1 = new DevExpress.XtraRichEdit.UI.ToggleTableCellsBottomLeftAlignmentItem();
@@ -336,11 +380,14 @@
             changeTableCellsRotateAll270TextDirectionItem1 = new DevExpress.XtraRichEdit.UI.ChangeTableCellsRotateAll270TextDirectionItem();
             changeTableCellsRotateAsian270TextDirectionItem1 = new DevExpress.XtraRichEdit.UI.ChangeTableCellsRotateAsian270TextDirectionItem();
             showTableOptionsFormItem1 = new DevExpress.XtraRichEdit.UI.ShowTableOptionsFormItem();
+            floatingPictureToolsShapeStylesPageGroup1 = new DevExpress.XtraRichEdit.UI.FloatingPictureToolsShapeStylesPageGroup();
+            floatingPictureToolsFormatPage1 = new DevExpress.XtraRichEdit.UI.FloatingPictureToolsFormatPage();
+            floatingPictureToolsRibbonPageCategory1 = new DevExpress.XtraRichEdit.UI.FloatingPictureToolsRibbonPageCategory();
             changeFloatingObjectFillColorItem1 = new DevExpress.XtraRichEdit.UI.ChangeFloatingObjectFillColorItem();
             changeFloatingObjectOutlineColorItem1 = new DevExpress.XtraRichEdit.UI.ChangeFloatingObjectOutlineColorItem();
             changeFloatingObjectOutlineWeightItem1 = new DevExpress.XtraRichEdit.UI.ChangeFloatingObjectOutlineWeightItem();
             repositoryItemFloatingObjectOutlineWeight1 = new DevExpress.XtraRichEdit.Forms.Design.RepositoryItemFloatingObjectOutlineWeight();
-            changeFloatingObjectTextWrapTypeItem1 = new DevExpress.XtraRichEdit.UI.ChangeFloatingObjectTextWrapTypeItem();
+            floatingPictureToolsArrangePageGroup1 = new DevExpress.XtraRichEdit.UI.FloatingPictureToolsArrangePageGroup();
             setFloatingObjectInlineTextWrapTypeItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectInlineTextWrapTypeItem();
             setFloatingObjectSquareTextWrapTypeItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectSquareTextWrapTypeItem();
             setFloatingObjectTightTextWrapTypeItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectTightTextWrapTypeItem();
@@ -348,7 +395,7 @@
             setFloatingObjectTopAndBottomTextWrapTypeItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectTopAndBottomTextWrapTypeItem();
             setFloatingObjectBehindTextWrapTypeItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectBehindTextWrapTypeItem();
             setFloatingObjectInFrontOfTextWrapTypeItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectInFrontOfTextWrapTypeItem();
-            changeFloatingObjectAlignmentItem1 = new DevExpress.XtraRichEdit.UI.ChangeFloatingObjectAlignmentItem();
+            changeFloatingObjectTextWrapTypeItem1 = new DevExpress.XtraRichEdit.UI.ChangeFloatingObjectTextWrapTypeItem();
             setFloatingObjectTopLeftAlignmentItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectTopLeftAlignmentItem();
             setFloatingObjectTopCenterAlignmentItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectTopCenterAlignmentItem();
             setFloatingObjectTopRightAlignmentItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectTopRightAlignmentItem();
@@ -358,119 +405,396 @@
             setFloatingObjectBottomLeftAlignmentItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectBottomLeftAlignmentItem();
             setFloatingObjectBottomCenterAlignmentItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectBottomCenterAlignmentItem();
             setFloatingObjectBottomRightAlignmentItem1 = new DevExpress.XtraRichEdit.UI.SetFloatingObjectBottomRightAlignmentItem();
-            floatingObjectBringForwardSubItem1 = new DevExpress.XtraRichEdit.UI.FloatingObjectBringForwardSubItem();
+            changeFloatingObjectAlignmentItem1 = new DevExpress.XtraRichEdit.UI.ChangeFloatingObjectAlignmentItem();
             floatingObjectBringForwardItem1 = new DevExpress.XtraRichEdit.UI.FloatingObjectBringForwardItem();
             floatingObjectBringToFrontItem1 = new DevExpress.XtraRichEdit.UI.FloatingObjectBringToFrontItem();
             floatingObjectBringInFrontOfTextItem1 = new DevExpress.XtraRichEdit.UI.FloatingObjectBringInFrontOfTextItem();
-            floatingObjectSendBackwardSubItem1 = new DevExpress.XtraRichEdit.UI.FloatingObjectSendBackwardSubItem();
+            floatingObjectBringForwardSubItem1 = new DevExpress.XtraRichEdit.UI.FloatingObjectBringForwardSubItem();
             floatingObjectSendBackwardItem1 = new DevExpress.XtraRichEdit.UI.FloatingObjectSendBackwardItem();
             floatingObjectSendToBackItem1 = new DevExpress.XtraRichEdit.UI.FloatingObjectSendToBackItem();
             floatingObjectSendBehindTextItem1 = new DevExpress.XtraRichEdit.UI.FloatingObjectSendBehindTextItem();
-            copyFormatItem = new DevExpress.XtraBars.BarCheckItem();
-            headerFooterToolsRibbonPageCategory1 = new DevExpress.XtraRichEdit.UI.HeaderFooterToolsRibbonPageCategory();
-            headerFooterToolsDesignRibbonPage1 = new DevExpress.XtraRichEdit.UI.HeaderFooterToolsDesignRibbonPage();
-            headerFooterToolsDesignNavigationRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.HeaderFooterToolsDesignNavigationRibbonPageGroup();
-            headerFooterToolsDesignOptionsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.HeaderFooterToolsDesignOptionsRibbonPageGroup();
-            headerFooterToolsDesignCloseRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.HeaderFooterToolsDesignCloseRibbonPageGroup();
-            tableToolsRibbonPageCategory1 = new DevExpress.XtraRichEdit.UI.TableToolsRibbonPageCategory();
-            tableDesignRibbonPage1 = new DevExpress.XtraRichEdit.UI.TableDesignRibbonPage();
-            tableStyleOptionsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableStyleOptionsRibbonPageGroup();
-            tableStylesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableStylesRibbonPageGroup();
-            tableDrawBordersRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableDrawBordersRibbonPageGroup();
-            tableLayoutRibbonPage1 = new DevExpress.XtraRichEdit.UI.TableLayoutRibbonPage();
-            tableTableRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableTableRibbonPageGroup();
-            tableRowsAndColumnsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableRowsAndColumnsRibbonPageGroup();
-            tableMergeRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableMergeRibbonPageGroup();
-            tableCellSizeRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableCellSizeRibbonPageGroup();
-            tableAlignmentRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableAlignmentRibbonPageGroup();
-            floatingPictureToolsRibbonPageCategory1 = new DevExpress.XtraRichEdit.UI.FloatingPictureToolsRibbonPageCategory();
-            floatingPictureToolsFormatPage1 = new DevExpress.XtraRichEdit.UI.FloatingPictureToolsFormatPage();
-            floatingPictureToolsShapeStylesPageGroup1 = new DevExpress.XtraRichEdit.UI.FloatingPictureToolsShapeStylesPageGroup();
-            floatingPictureToolsArrangePageGroup1 = new DevExpress.XtraRichEdit.UI.FloatingPictureToolsArrangePageGroup();
-            fileRibbonPage1 = new DevExpress.XtraRichEdit.UI.FileRibbonPage();
-            commonRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.CommonRibbonPageGroup();
-            infoRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.InfoRibbonPageGroup();
-            homeRibbonPage1 = new DevExpress.XtraRichEdit.UI.HomeRibbonPage();
-            clipboardRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.ClipboardRibbonPageGroup();
-            fontRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.FontRibbonPageGroup();
-            paragraphRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.ParagraphRibbonPageGroup();
-            stylesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.StylesRibbonPageGroup();
-            editingRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.EditingRibbonPageGroup();
-            insertRibbonPage1 = new DevExpress.XtraRichEdit.UI.InsertRibbonPage();
-            pagesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.PagesRibbonPageGroup();
-            tablesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TablesRibbonPageGroup();
-            illustrationsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.IllustrationsRibbonPageGroup();
-            linksRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.LinksRibbonPageGroup();
-            headerFooterRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.HeaderFooterRibbonPageGroup();
-            textRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TextRibbonPageGroup();
-            symbolsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.SymbolsRibbonPageGroup();
-            pageLayoutRibbonPage1 = new DevExpress.XtraRichEdit.UI.PageLayoutRibbonPage();
-            pageSetupRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.PageSetupRibbonPageGroup();
-            pageBackgroundRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.PageBackgroundRibbonPageGroup();
-            referencesRibbonPage1 = new DevExpress.XtraRichEdit.UI.ReferencesRibbonPage();
-            tableOfContentsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.TableOfContentsRibbonPageGroup();
-            captionsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.CaptionsRibbonPageGroup();
-            notesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.NotesRibbonPageGroup();
-            mailingsRibbonPage1 = new DevExpress.XtraRichEdit.UI.MailingsRibbonPage();
-            mailMergeRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.MailMergeRibbonPageGroup();
-            reviewRibbonPage1 = new DevExpress.XtraRichEdit.UI.ReviewRibbonPage();
-            documentProofingRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentProofingRibbonPageGroup();
-            documentProtectionRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentProtectionRibbonPageGroup();
-            documentCommentRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentCommentRibbonPageGroup();
-            documentTrackingRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentTrackingRibbonPageGroup();
-            documentChangesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentChangesRibbonPageGroup();
-            viewRibbonPage1 = new DevExpress.XtraRichEdit.UI.ViewRibbonPage();
-            documentViewsRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.DocumentViewsRibbonPageGroup();
-            showRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.ShowRibbonPageGroup();
-            zoomRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.ZoomRibbonPageGroup();
-            ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            richEditBarController1 = new DevExpress.XtraRichEdit.UI.RichEditBarController(components);
-            dockManager1 = new DevExpress.XtraBars.Docking.DockManager(components);
-            repositoryItemRibbonSearchEdit1 = new DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit();
-            layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-            Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            floatingObjectSendBackwardSubItem1 = new DevExpress.XtraRichEdit.UI.FloatingObjectSendBackwardSubItem();
+            ((System.ComponentModel.ISupportInitialize)layoutControl1).BeginInit();
+            layoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)richEditBarController).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemFontEditRichEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRichEditFontSizeEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)displayForReviewModeComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemBorderLineStyle1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemBorderLineWeight1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemFloatingObjectOutlineWeight1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)richEditBarController1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dockManager1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControl1).BeginInit();
-            layoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             SuspendLayout();
+            // 
+            // layoutControl1
+            // 
+            layoutControl1.Controls.Add(richEditControl);
+            layoutControl1.Dock = DockStyle.Fill;
+            layoutControl1.Location = new Point(0, 150);
+            layoutControl1.Name = "layoutControl1";
+            layoutControl1.Root = Root;
+            layoutControl1.Size = new Size(1044, 353);
+            layoutControl1.TabIndex = 0;
+            layoutControl1.Text = "layoutControl1";
+            // 
+            // Root
+            // 
+            Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            Root.GroupBordersVisible = false;
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1 });
+            Root.Name = "Root";
+            Root.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            Root.Size = new Size(1044, 353);
+            Root.TextVisible = false;
             // 
             // richEditControl
             // 
-            richEditControl.ActiveViewType = DevExpress.XtraRichEdit.RichEditViewType.Simple;
-            richEditControl.LayoutUnit = DevExpress.XtraRichEdit.DocumentLayoutUnit.Pixel;
             richEditControl.Location = new Point(0, 0);
             richEditControl.MenuManager = ribbonControl;
             richEditControl.Name = "richEditControl";
             richEditControl.Options.DocumentSaveOptions.CurrentFormat = DevExpress.XtraRichEdit.DocumentFormat.PlainText;
-            richEditControl.Size = new Size(1014, 295);
-            richEditControl.TabIndex = 17;
-            richEditControl.MouseUp += richEditControl_MouseUp;
+            richEditControl.Size = new Size(1044, 353);
+            richEditControl.TabIndex = 4;
+            richEditControl.Text = "richEditControl1";
             // 
-            // ribbonControl
+            // layoutControlItem1
+            // 
+            layoutControlItem1.Control = richEditControl;
+            layoutControlItem1.Location = new Point(0, 0);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            layoutControlItem1.Size = new Size(1044, 353);
+            layoutControlItem1.TextSize = new Size(0, 0);
+            layoutControlItem1.TextVisible = false;
+            // 
+            // ribbonControl1
             // 
             ribbonControl.ExpandCollapseItem.Id = 0;
-            ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl.ExpandCollapseItem, undoItem1, redoItem1, fileNewItem1, fileOpenItem1, fileSaveItem1, fileSaveAsItem1, quickPrintItem1, printItem1, printPreviewItem1, encryptDocumentItem1, showDocumentPropertiesFormItem1, pasteItem1, cutItem1, copyItem1, pasteSpecialItem1, barButtonGroup1, changeFontNameItem1, changeFontSizeItem1, fontSizeIncreaseItem1, fontSizeDecreaseItem1, barButtonGroup2, toggleFontBoldItem1, toggleFontItalicItem1, toggleFontUnderlineItem1, toggleFontDoubleUnderlineItem1, toggleFontStrikeoutItem1, toggleFontDoubleStrikeoutItem1, toggleFontSuperscriptItem1, toggleFontSubscriptItem1, barButtonGroup3, changeFontColorItem1, changeFontHighlightColorItem1, changeTextCaseItem1, makeTextUpperCaseItem1, makeTextLowerCaseItem1, capitalizeEachWordCaseItem1, toggleTextCaseItem1, clearFormattingItem1, barButtonGroup4, toggleBulletedListItem1, toggleNumberingListItem1, toggleMultiLevelListItem1, barButtonGroup5, decreaseIndentItem1, increaseIndentItem1, rtlToggleBulletedListItem1, rtlToggleNumberingListItem1, rtlToggleMultiLevelListItem1, rtlDecreaseIndentItem1, rtlIncreaseIndentItem1, toggleParagraphLeftToRightItem1, toggleParagraphRightToLeftItem1, barButtonGroup6, toggleParagraphAlignmentLeftItem1, toggleParagraphAlignmentCenterItem1, toggleParagraphAlignmentRightItem1, toggleParagraphAlignmentJustifyItem1, toggleParagraphAlignmentArabicJustifyGroupItem1, toggleParagraphAlignmentArabicJustifyItem1, toggleParagraphAlignmentJustifyLowItem1, toggleParagraphAlignmentJustifyMediumItem1, toggleParagraphAlignmentJustifyHighItem1, toggleParagraphAlignmentDistributeItem1, toggleParagraphAlignmentThaiDistributeItem1, toggleShowWhitespaceItem1, barButtonGroup7, changeParagraphLineSpacingItem1, setSingleParagraphSpacingItem1, setSesquialteralParagraphSpacingItem1, setDoubleParagraphSpacingItem1, showLineSpacingFormItem1, addSpacingBeforeParagraphItem1, removeSpacingBeforeParagraphItem1, addSpacingAfterParagraphItem1, removeSpacingAfterParagraphItem1, changeParagraphBackColorItem1, galleryChangeStyleItem1, findItem1, replaceItem1, insertPageBreakItem21, insertTableItem1, insertFloatingPictureItem1, insertBookmarkItem1, insertHyperlinkItem1, editPageHeaderItem1, editPageFooterItem1, insertPageNumberItem1, insertPageCountItem1, insertTextBoxItem1, insertObjectItem1, insertSymbolItem1, changeSectionPageMarginsItem1, setNormalSectionPageMarginsItem1, setNarrowSectionPageMarginsItem1, setModerateSectionPageMarginsItem1, setWideSectionPageMarginsItem1, showPageMarginsSetupFormItem1, changeSectionPageOrientationItem1, setPortraitPageOrientationItem1, setLandscapePageOrientationItem1, changeSectionPaperKindItem1, changeSectionColumnsItem1, setSectionOneColumnItem1, setSectionTwoColumnsItem1, setSectionThreeColumnsItem1, showColumnsSetupFormItem1, insertBreakItem1, insertPageBreakItem1, insertColumnBreakItem1, insertSectionBreakNextPageItem1, insertSectionBreakContinuousItem1, insertSectionBreakEvenPageItem1, insertSectionBreakOddPageItem1, changeSectionLineNumberingItem1, setSectionLineNumberingNoneItem1, setSectionLineNumberingContinuousItem1, setSectionLineNumberingRestartNewPageItem1, setSectionLineNumberingRestartNewSectionItem1, toggleParagraphSuppressLineNumbersItem1, showLineNumberingFormItem1, changeHyphenationOptionsItem1, setHyphenateDocumentNoneItem1, setHyphenateDocumentAutomaticItem1, showHyphenationOptionsFormItem1, changePageColorItem1, watermarkItem1, deleteWatermarkItem1, insertTableOfContentsItem1, updateTableOfContentsItem1, addParagraphsToTableOfContentItem1, setParagraphHeadingLevelItem1, setParagraphHeadingLevelItem2, setParagraphHeadingLevelItem3, setParagraphHeadingLevelItem4, setParagraphHeadingLevelItem5, setParagraphHeadingLevelItem6, setParagraphHeadingLevelItem7, setParagraphHeadingLevelItem8, setParagraphHeadingLevelItem9, setParagraphHeadingLevelItem10, insertCaptionPlaceholderItem1, insertFiguresCaptionItems1, insertTablesCaptionItems1, insertEquationsCaptionItems1, insertTableOfFiguresPlaceholderItem1, insertTableOfFiguresItems1, insertTableOfTablesItems1, insertTableOfEquationsItems1, updateTableOfFiguresItem1, insertFootnoteItem1, insertEndnoteItem1, navigationNotesItem1, showNotesItem1, insertMergeFieldItem1, showAllFieldCodesItem1, showAllFieldResultsItem1, toggleViewMergedDataItem1, checkSpellingItem1, changeLanguageItem1, protectDocumentItem1, changeRangeEditingPermissionsItem1, unprotectDocumentItem1, newCommentItem1, deleteCommentsItem1, deleteOneCommentItem1, deleteAllCommentsShownItem1, deleteAllCommentsItem1, previousCommentItem1, nextCommentItem1, toggleTrackChangesBarItem1, changeDisplayForReviewModeItem1, showMarkupSubItem1, reviewingPaneItem1, acceptAndMoveToNextSubItem1, rejectAndMoveToNextSubItem1, previousChangeItem1, nextChangeItem1, switchToSimpleViewItem1, switchToDraftViewItem1, switchToPrintLayoutViewItem1, toggleShowHorizontalRulerItem1, toggleShowVerticalRulerItem1, zoomOutItem1, zoomInItem1, goToPageHeaderItem1, goToPageFooterItem1, goToNextHeaderFooterItem1, goToPreviousHeaderFooterItem1, toggleLinkToPreviousItem1, toggleDifferentFirstPageItem1, toggleDifferentOddAndEvenPagesItem1, closePageHeaderFooterItem1, toggleFirstRowItem1, toggleLastRowItem1, toggleBandedRowsItem1, toggleFirstColumnItem1, toggleLastColumnItem1, toggleBandedColumnsItem1, galleryChangeTableStyleItem1, changeTableBorderLineStyleItem1, changeTableBorderLineWeightItem1, changeTableBorderColorItem1, changeTableBordersItem1, toggleTableCellsBottomBorderItem1, toggleTableCellsTopBorderItem1, toggleTableCellsLeftBorderItem1, toggleTableCellsRightBorderItem1, resetTableCellsAllBordersItem1, toggleTableCellsAllBordersItem1, toggleTableCellsOutsideBorderItem1, toggleTableCellsInsideBorderItem1, toggleTableCellsInsideHorizontalBorderItem1, toggleTableCellsInsideVerticalBorderItem1, toggleShowTableGridLinesItem1, changeTableCellsShadingItem1, selectTableElementsItem1, selectTableCellItem1, selectTableColumnItem1, selectTableRowItem1, selectTableItem1, showTablePropertiesFormItem1, deleteTableElementsItem1, showDeleteTableCellsFormItem1, deleteTableColumnsItem1, deleteTableRowsItem1, deleteTableItem1, insertTableRowAboveItem1, insertTableRowBelowItem1, insertTableColumnToLeftItem1, insertTableColumnToRightItem1, mergeTableCellsItem1, showSplitTableCellsForm1, splitTableItem1, toggleTableAutoFitItem1, toggleTableAutoFitContentsItem1, toggleTableAutoFitWindowItem1, toggleTableFixedColumnWidthItem1, toggleTableCellsTopLeftAlignmentItem1, toggleTableCellsMiddleLeftAlignmentItem1, toggleTableCellsBottomLeftAlignmentItem1, toggleTableCellsTopCenterAlignmentItem1, toggleTableCellsMiddleCenterAlignmentItem1, toggleTableCellsBottomCenterAlignmentItem1, toggleTableCellsTopRightAlignmentItem1, toggleTableCellsMiddleRightAlignmentItem1, toggleTableCellsBottomRightAlignmentItem1, toggleTableCellsBottomLeftRotate90AlignmentItem1, toggleTableCellsBottomCenterRotate90AlignmentItem1, toggleTableCellsBottomRightRotate90AlignmentItem1, toggleTableCellsMiddleLeftRotate90AlignmentItem1, toggleTableCellsMiddleCenterRotate90AlignmentItem1, toggleTableCellsMiddleRightRotate90AlignmentItem1, toggleTableCellsTopLeftRotate90AlignmentItem1, toggleTableCellsTopCenterRotate90AlignmentItem1, toggleTableCellsTopRightRotate90AlignmentItem1, toggleTableCellsTopRightRotate270AlignmentItem1, toggleTableCellsTopCenterRotate270AlignmentItem1, toggleTableCellsTopLeftRotate270AlignmentItem1, toggleTableCellsMiddleRightRotate270AlignmentItem1, toggleTableCellsMiddleCenterRotate270AlignmentItem1, toggleTableCellsMiddleLeftRotate270AlignmentItem1, toggleTableCellsBottomRightRotate270AlignmentItem1, toggleTableCellsBottomCenterRotate270AlignmentItem1, toggleTableCellsBottomLeftRotate270AlignmentItem1, changeTableCellsHorizontalTextDirectionItem1, changeTableCellsVerticalTextDirectionItem1, changeTableCellsRotateAll90TextDirectionItem1, changeTableCellsRotateAll270TextDirectionItem1, changeTableCellsRotateAsian270TextDirectionItem1, showTableOptionsFormItem1, changeFloatingObjectFillColorItem1, changeFloatingObjectOutlineColorItem1, changeFloatingObjectOutlineWeightItem1, changeFloatingObjectTextWrapTypeItem1, setFloatingObjectInlineTextWrapTypeItem1, setFloatingObjectSquareTextWrapTypeItem1, setFloatingObjectTightTextWrapTypeItem1, setFloatingObjectThroughTextWrapTypeItem1, setFloatingObjectTopAndBottomTextWrapTypeItem1, setFloatingObjectBehindTextWrapTypeItem1, setFloatingObjectInFrontOfTextWrapTypeItem1, changeFloatingObjectAlignmentItem1, setFloatingObjectTopLeftAlignmentItem1, setFloatingObjectTopCenterAlignmentItem1, setFloatingObjectTopRightAlignmentItem1, setFloatingObjectMiddleLeftAlignmentItem1, setFloatingObjectMiddleCenterAlignmentItem1, setFloatingObjectMiddleRightAlignmentItem1, setFloatingObjectBottomLeftAlignmentItem1, setFloatingObjectBottomCenterAlignmentItem1, setFloatingObjectBottomRightAlignmentItem1, floatingObjectBringForwardSubItem1, floatingObjectBringForwardItem1, floatingObjectBringToFrontItem1, floatingObjectBringInFrontOfTextItem1, floatingObjectSendBackwardSubItem1, floatingObjectSendBackwardItem1, floatingObjectSendToBackItem1, floatingObjectSendBehindTextItem1, copyFormatItem });
+            ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl.ExpandCollapseItem, undoItem1, redoItem1, fileNewItem1, fileOpenItem1, fileSaveItem1, fileSaveAsItem1, quickPrintItem1, printItem1, printPreviewItem1, encryptDocumentItem1, showDocumentPropertiesFormItem1, pasteItem1, cutItem1, copyItem1, pasteSpecialItem1, barButtonGroup1, changeFontNameItem1, changeFontSizeItem1, fontSizeIncreaseItem1, fontSizeDecreaseItem1, barButtonGroup2, toggleFontBoldItem1, toggleFontItalicItem1, toggleFontUnderlineItem1, toggleFontDoubleUnderlineItem1, toggleFontStrikeoutItem1, toggleFontDoubleStrikeoutItem1, toggleFontSuperscriptItem1, toggleFontSubscriptItem1, barButtonGroup3, changeFontColorItem1, changeFontHighlightColorItem1, changeTextCaseItem1, makeTextUpperCaseItem1, makeTextLowerCaseItem1, capitalizeEachWordCaseItem1, toggleTextCaseItem1, clearFormattingItem1, barButtonGroup4, toggleBulletedListItem1, toggleNumberingListItem1, toggleMultiLevelListItem1, barButtonGroup5, decreaseIndentItem1, increaseIndentItem1, rtlToggleBulletedListItem1, rtlToggleNumberingListItem1, rtlToggleMultiLevelListItem1, rtlDecreaseIndentItem1, rtlIncreaseIndentItem1, toggleParagraphLeftToRightItem1, toggleParagraphRightToLeftItem1, barButtonGroup6, toggleParagraphAlignmentLeftItem1, toggleParagraphAlignmentCenterItem1, toggleParagraphAlignmentRightItem1, toggleParagraphAlignmentJustifyItem1, toggleParagraphAlignmentArabicJustifyGroupItem1, toggleParagraphAlignmentArabicJustifyItem1, toggleParagraphAlignmentJustifyLowItem1, toggleParagraphAlignmentJustifyMediumItem1, toggleParagraphAlignmentJustifyHighItem1, toggleParagraphAlignmentDistributeItem1, toggleParagraphAlignmentThaiDistributeItem1, toggleShowWhitespaceItem1, barButtonGroup7, changeParagraphLineSpacingItem1, setSingleParagraphSpacingItem1, setSesquialteralParagraphSpacingItem1, setDoubleParagraphSpacingItem1, showLineSpacingFormItem1, addSpacingBeforeParagraphItem1, removeSpacingBeforeParagraphItem1, addSpacingAfterParagraphItem1, removeSpacingAfterParagraphItem1, changeParagraphBackColorItem1, galleryChangeStyleItem1, findItem1, replaceItem1, insertPageBreakItem21, insertTableItem1, insertFloatingPictureItem1, insertBookmarkItem1, insertHyperlinkItem1, editPageHeaderItem1, editPageFooterItem1, insertPageNumberItem1, insertPageCountItem1, insertTextBoxItem1, insertObjectItem1, insertSymbolItem1, changeSectionPageMarginsItem1, setNormalSectionPageMarginsItem1, setNarrowSectionPageMarginsItem1, setModerateSectionPageMarginsItem1, setWideSectionPageMarginsItem1, showPageMarginsSetupFormItem1, changeSectionPageOrientationItem1, setPortraitPageOrientationItem1, setLandscapePageOrientationItem1, changeSectionPaperKindItem1, changeSectionColumnsItem1, setSectionOneColumnItem1, setSectionTwoColumnsItem1, setSectionThreeColumnsItem1, showColumnsSetupFormItem1, insertBreakItem1, insertPageBreakItem1, insertColumnBreakItem1, insertSectionBreakNextPageItem1, insertSectionBreakContinuousItem1, insertSectionBreakEvenPageItem1, insertSectionBreakOddPageItem1, changeSectionLineNumberingItem1, setSectionLineNumberingNoneItem1, setSectionLineNumberingContinuousItem1, setSectionLineNumberingRestartNewPageItem1, setSectionLineNumberingRestartNewSectionItem1, toggleParagraphSuppressLineNumbersItem1, showLineNumberingFormItem1, changeHyphenationOptionsItem1, setHyphenateDocumentNoneItem1, setHyphenateDocumentAutomaticItem1, showHyphenationOptionsFormItem1, changePageColorItem1, watermarkItem1, deleteWatermarkItem1, insertTableOfContentsItem1, updateTableOfContentsItem1, addParagraphsToTableOfContentItem1, setParagraphHeadingLevelItem1, setParagraphHeadingLevelItem2, setParagraphHeadingLevelItem3, setParagraphHeadingLevelItem4, setParagraphHeadingLevelItem5, setParagraphHeadingLevelItem6, setParagraphHeadingLevelItem7, setParagraphHeadingLevelItem8, setParagraphHeadingLevelItem9, setParagraphHeadingLevelItem10, insertCaptionPlaceholderItem1, insertFiguresCaptionItems1, insertTablesCaptionItems1, insertEquationsCaptionItems1, insertTableOfFiguresPlaceholderItem1, insertTableOfFiguresItems1, insertTableOfTablesItems1, insertTableOfEquationsItems1, updateTableOfFiguresItem1, insertFootnoteItem1, insertEndnoteItem1, navigationNotesItem1, showNotesItem1, insertMergeFieldItem1, showAllFieldCodesItem1, showAllFieldResultsItem1, toggleViewMergedDataItem1, checkSpellingItem1, changeLanguageItem1, protectDocumentItem1, changeRangeEditingPermissionsItem1, unprotectDocumentItem1, newCommentItem1, deleteCommentsItem1, deleteOneCommentItem1, deleteAllCommentsShownItem1, deleteAllCommentsItem1, previousCommentItem1, nextCommentItem1, toggleTrackChangesBarItem1, changeDisplayForReviewModeItem1, showMarkupSubItem1, reviewingPaneItem1, acceptAndMoveToNextSubItem1, rejectAndMoveToNextSubItem1, previousChangeItem1, nextChangeItem1, switchToSimpleViewItem1, switchToDraftViewItem1, switchToPrintLayoutViewItem1, toggleShowHorizontalRulerItem1, toggleShowVerticalRulerItem1, zoomOutItem1, zoomInItem1, goToPageHeaderItem1, goToPageFooterItem1, goToNextHeaderFooterItem1, goToPreviousHeaderFooterItem1, toggleLinkToPreviousItem1, toggleDifferentFirstPageItem1, toggleDifferentOddAndEvenPagesItem1, closePageHeaderFooterItem1, toggleFirstRowItem1, toggleLastRowItem1, toggleBandedRowsItem1, toggleFirstColumnItem1, toggleLastColumnItem1, toggleBandedColumnsItem1, galleryChangeTableStyleItem1, changeTableBorderLineStyleItem1, changeTableBorderLineWeightItem1, changeTableBorderColorItem1, changeTableBordersItem1, toggleTableCellsBottomBorderItem1, toggleTableCellsTopBorderItem1, toggleTableCellsLeftBorderItem1, toggleTableCellsRightBorderItem1, resetTableCellsAllBordersItem1, toggleTableCellsAllBordersItem1, toggleTableCellsOutsideBorderItem1, toggleTableCellsInsideBorderItem1, toggleTableCellsInsideHorizontalBorderItem1, toggleTableCellsInsideVerticalBorderItem1, toggleShowTableGridLinesItem1, changeTableCellsShadingItem1, selectTableElementsItem1, selectTableCellItem1, selectTableColumnItem1, selectTableRowItem1, selectTableItem1, showTablePropertiesFormItem1, deleteTableElementsItem1, showDeleteTableCellsFormItem1, deleteTableColumnsItem1, deleteTableRowsItem1, deleteTableItem1, insertTableRowAboveItem1, insertTableRowBelowItem1, insertTableColumnToLeftItem1, insertTableColumnToRightItem1, mergeTableCellsItem1, showSplitTableCellsForm1, splitTableItem1, toggleTableAutoFitItem1, toggleTableAutoFitContentsItem1, toggleTableAutoFitWindowItem1, toggleTableFixedColumnWidthItem1, toggleTableCellsTopLeftAlignmentItem1, toggleTableCellsMiddleLeftAlignmentItem1, toggleTableCellsBottomLeftAlignmentItem1, toggleTableCellsTopCenterAlignmentItem1, toggleTableCellsMiddleCenterAlignmentItem1, toggleTableCellsBottomCenterAlignmentItem1, toggleTableCellsTopRightAlignmentItem1, toggleTableCellsMiddleRightAlignmentItem1, toggleTableCellsBottomRightAlignmentItem1, toggleTableCellsBottomLeftRotate90AlignmentItem1, toggleTableCellsBottomCenterRotate90AlignmentItem1, toggleTableCellsBottomRightRotate90AlignmentItem1, toggleTableCellsMiddleLeftRotate90AlignmentItem1, toggleTableCellsMiddleCenterRotate90AlignmentItem1, toggleTableCellsMiddleRightRotate90AlignmentItem1, toggleTableCellsTopLeftRotate90AlignmentItem1, toggleTableCellsTopCenterRotate90AlignmentItem1, toggleTableCellsTopRightRotate90AlignmentItem1, toggleTableCellsTopRightRotate270AlignmentItem1, toggleTableCellsTopCenterRotate270AlignmentItem1, toggleTableCellsTopLeftRotate270AlignmentItem1, toggleTableCellsMiddleRightRotate270AlignmentItem1, toggleTableCellsMiddleCenterRotate270AlignmentItem1, toggleTableCellsMiddleLeftRotate270AlignmentItem1, toggleTableCellsBottomRightRotate270AlignmentItem1, toggleTableCellsBottomCenterRotate270AlignmentItem1, toggleTableCellsBottomLeftRotate270AlignmentItem1, changeTableCellsHorizontalTextDirectionItem1, changeTableCellsVerticalTextDirectionItem1, changeTableCellsRotateAll90TextDirectionItem1, changeTableCellsRotateAll270TextDirectionItem1, changeTableCellsRotateAsian270TextDirectionItem1, showTableOptionsFormItem1, changeFloatingObjectFillColorItem1, changeFloatingObjectOutlineColorItem1, changeFloatingObjectOutlineWeightItem1, changeFloatingObjectTextWrapTypeItem1, setFloatingObjectInlineTextWrapTypeItem1, setFloatingObjectSquareTextWrapTypeItem1, setFloatingObjectTightTextWrapTypeItem1, setFloatingObjectThroughTextWrapTypeItem1, setFloatingObjectTopAndBottomTextWrapTypeItem1, setFloatingObjectBehindTextWrapTypeItem1, setFloatingObjectInFrontOfTextWrapTypeItem1, changeFloatingObjectAlignmentItem1, setFloatingObjectTopLeftAlignmentItem1, setFloatingObjectTopCenterAlignmentItem1, setFloatingObjectTopRightAlignmentItem1, setFloatingObjectMiddleLeftAlignmentItem1, setFloatingObjectMiddleCenterAlignmentItem1, setFloatingObjectMiddleRightAlignmentItem1, setFloatingObjectBottomLeftAlignmentItem1, setFloatingObjectBottomCenterAlignmentItem1, setFloatingObjectBottomRightAlignmentItem1, floatingObjectBringForwardSubItem1, floatingObjectBringForwardItem1, floatingObjectBringToFrontItem1, floatingObjectBringInFrontOfTextItem1, floatingObjectSendBackwardSubItem1, floatingObjectSendBackwardItem1, floatingObjectSendToBackItem1, floatingObjectSendBehindTextItem1 });
             ribbonControl.Location = new Point(0, 0);
-            ribbonControl.MaxItemId = 304;
+            ribbonControl.MaxItemId = 300;
             ribbonControl.Name = "ribbonControl";
             ribbonControl.PageCategories.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageCategory[] { headerFooterToolsRibbonPageCategory1, tableToolsRibbonPageCategory1, floatingPictureToolsRibbonPageCategory1 });
             ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { fileRibbonPage1, homeRibbonPage1, insertRibbonPage1, pageLayoutRibbonPage1, referencesRibbonPage1, mailingsRibbonPage1, reviewRibbonPage1, viewRibbonPage1 });
             ribbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemFontEditRichEdit1, repositoryItemRichEditFontSizeEdit1, displayForReviewModeComboBox1, repositoryItemBorderLineStyle1, repositoryItemBorderLineWeight1, repositoryItemFloatingObjectOutlineWeight1 });
-            ribbonControl.Size = new Size(1014, 150);
-            ribbonControl.StatusBar = ribbonStatusBar1;
+            ribbonControl.Size = new Size(1044, 150);
+            // 
+            // richEditBarController
+            // 
+            richEditBarController.BarItems.Add(undoItem1);
+            richEditBarController.BarItems.Add(redoItem1);
+            richEditBarController.BarItems.Add(fileNewItem1);
+            richEditBarController.BarItems.Add(fileOpenItem1);
+            richEditBarController.BarItems.Add(fileSaveItem1);
+            richEditBarController.BarItems.Add(fileSaveAsItem1);
+            richEditBarController.BarItems.Add(quickPrintItem1);
+            richEditBarController.BarItems.Add(printItem1);
+            richEditBarController.BarItems.Add(printPreviewItem1);
+            richEditBarController.BarItems.Add(encryptDocumentItem1);
+            richEditBarController.BarItems.Add(showDocumentPropertiesFormItem1);
+            richEditBarController.BarItems.Add(pasteItem1);
+            richEditBarController.BarItems.Add(cutItem1);
+            richEditBarController.BarItems.Add(copyItem1);
+            richEditBarController.BarItems.Add(pasteSpecialItem1);
+            richEditBarController.BarItems.Add(changeFontNameItem1);
+            richEditBarController.BarItems.Add(changeFontSizeItem1);
+            richEditBarController.BarItems.Add(fontSizeIncreaseItem1);
+            richEditBarController.BarItems.Add(fontSizeDecreaseItem1);
+            richEditBarController.BarItems.Add(toggleFontBoldItem1);
+            richEditBarController.BarItems.Add(toggleFontItalicItem1);
+            richEditBarController.BarItems.Add(toggleFontUnderlineItem1);
+            richEditBarController.BarItems.Add(toggleFontDoubleUnderlineItem1);
+            richEditBarController.BarItems.Add(toggleFontStrikeoutItem1);
+            richEditBarController.BarItems.Add(toggleFontDoubleStrikeoutItem1);
+            richEditBarController.BarItems.Add(toggleFontSuperscriptItem1);
+            richEditBarController.BarItems.Add(toggleFontSubscriptItem1);
+            richEditBarController.BarItems.Add(changeFontColorItem1);
+            richEditBarController.BarItems.Add(changeFontHighlightColorItem1);
+            richEditBarController.BarItems.Add(makeTextUpperCaseItem1);
+            richEditBarController.BarItems.Add(makeTextLowerCaseItem1);
+            richEditBarController.BarItems.Add(capitalizeEachWordCaseItem1);
+            richEditBarController.BarItems.Add(toggleTextCaseItem1);
+            richEditBarController.BarItems.Add(changeTextCaseItem1);
+            richEditBarController.BarItems.Add(clearFormattingItem1);
+            richEditBarController.BarItems.Add(toggleBulletedListItem1);
+            richEditBarController.BarItems.Add(toggleNumberingListItem1);
+            richEditBarController.BarItems.Add(toggleMultiLevelListItem1);
+            richEditBarController.BarItems.Add(decreaseIndentItem1);
+            richEditBarController.BarItems.Add(increaseIndentItem1);
+            richEditBarController.BarItems.Add(rtlToggleBulletedListItem1);
+            richEditBarController.BarItems.Add(rtlToggleNumberingListItem1);
+            richEditBarController.BarItems.Add(rtlToggleMultiLevelListItem1);
+            richEditBarController.BarItems.Add(rtlDecreaseIndentItem1);
+            richEditBarController.BarItems.Add(rtlIncreaseIndentItem1);
+            richEditBarController.BarItems.Add(toggleParagraphLeftToRightItem1);
+            richEditBarController.BarItems.Add(toggleParagraphRightToLeftItem1);
+            richEditBarController.BarItems.Add(toggleParagraphAlignmentLeftItem1);
+            richEditBarController.BarItems.Add(toggleParagraphAlignmentCenterItem1);
+            richEditBarController.BarItems.Add(toggleParagraphAlignmentRightItem1);
+            richEditBarController.BarItems.Add(toggleParagraphAlignmentJustifyItem1);
+            richEditBarController.BarItems.Add(toggleParagraphAlignmentArabicJustifyItem1);
+            richEditBarController.BarItems.Add(toggleParagraphAlignmentJustifyLowItem1);
+            richEditBarController.BarItems.Add(toggleParagraphAlignmentJustifyMediumItem1);
+            richEditBarController.BarItems.Add(toggleParagraphAlignmentJustifyHighItem1);
+            richEditBarController.BarItems.Add(toggleParagraphAlignmentArabicJustifyGroupItem1);
+            richEditBarController.BarItems.Add(toggleParagraphAlignmentDistributeItem1);
+            richEditBarController.BarItems.Add(toggleParagraphAlignmentThaiDistributeItem1);
+            richEditBarController.BarItems.Add(toggleShowWhitespaceItem1);
+            richEditBarController.BarItems.Add(setSingleParagraphSpacingItem1);
+            richEditBarController.BarItems.Add(setSesquialteralParagraphSpacingItem1);
+            richEditBarController.BarItems.Add(setDoubleParagraphSpacingItem1);
+            richEditBarController.BarItems.Add(showLineSpacingFormItem1);
+            richEditBarController.BarItems.Add(addSpacingBeforeParagraphItem1);
+            richEditBarController.BarItems.Add(removeSpacingBeforeParagraphItem1);
+            richEditBarController.BarItems.Add(addSpacingAfterParagraphItem1);
+            richEditBarController.BarItems.Add(removeSpacingAfterParagraphItem1);
+            richEditBarController.BarItems.Add(changeParagraphLineSpacingItem1);
+            richEditBarController.BarItems.Add(changeParagraphBackColorItem1);
+            richEditBarController.BarItems.Add(galleryChangeStyleItem1);
+            richEditBarController.BarItems.Add(findItem1);
+            richEditBarController.BarItems.Add(replaceItem1);
+            richEditBarController.BarItems.Add(insertPageBreakItem21);
+            richEditBarController.BarItems.Add(insertTableItem1);
+            richEditBarController.BarItems.Add(insertFloatingPictureItem1);
+            richEditBarController.BarItems.Add(insertBookmarkItem1);
+            richEditBarController.BarItems.Add(insertHyperlinkItem1);
+            richEditBarController.BarItems.Add(editPageHeaderItem1);
+            richEditBarController.BarItems.Add(editPageFooterItem1);
+            richEditBarController.BarItems.Add(insertPageNumberItem1);
+            richEditBarController.BarItems.Add(insertPageCountItem1);
+            richEditBarController.BarItems.Add(insertTextBoxItem1);
+            richEditBarController.BarItems.Add(insertObjectItem1);
+            richEditBarController.BarItems.Add(insertSymbolItem1);
+            richEditBarController.BarItems.Add(setNormalSectionPageMarginsItem1);
+            richEditBarController.BarItems.Add(setNarrowSectionPageMarginsItem1);
+            richEditBarController.BarItems.Add(setModerateSectionPageMarginsItem1);
+            richEditBarController.BarItems.Add(setWideSectionPageMarginsItem1);
+            richEditBarController.BarItems.Add(showPageMarginsSetupFormItem1);
+            richEditBarController.BarItems.Add(changeSectionPageMarginsItem1);
+            richEditBarController.BarItems.Add(setPortraitPageOrientationItem1);
+            richEditBarController.BarItems.Add(setLandscapePageOrientationItem1);
+            richEditBarController.BarItems.Add(changeSectionPageOrientationItem1);
+            richEditBarController.BarItems.Add(changeSectionPaperKindItem1);
+            richEditBarController.BarItems.Add(setSectionOneColumnItem1);
+            richEditBarController.BarItems.Add(setSectionTwoColumnsItem1);
+            richEditBarController.BarItems.Add(setSectionThreeColumnsItem1);
+            richEditBarController.BarItems.Add(showColumnsSetupFormItem1);
+            richEditBarController.BarItems.Add(changeSectionColumnsItem1);
+            richEditBarController.BarItems.Add(insertPageBreakItem1);
+            richEditBarController.BarItems.Add(insertColumnBreakItem1);
+            richEditBarController.BarItems.Add(insertSectionBreakNextPageItem1);
+            richEditBarController.BarItems.Add(insertSectionBreakContinuousItem1);
+            richEditBarController.BarItems.Add(insertSectionBreakEvenPageItem1);
+            richEditBarController.BarItems.Add(insertSectionBreakOddPageItem1);
+            richEditBarController.BarItems.Add(insertBreakItem1);
+            richEditBarController.BarItems.Add(setSectionLineNumberingNoneItem1);
+            richEditBarController.BarItems.Add(setSectionLineNumberingContinuousItem1);
+            richEditBarController.BarItems.Add(setSectionLineNumberingRestartNewPageItem1);
+            richEditBarController.BarItems.Add(setSectionLineNumberingRestartNewSectionItem1);
+            richEditBarController.BarItems.Add(toggleParagraphSuppressLineNumbersItem1);
+            richEditBarController.BarItems.Add(showLineNumberingFormItem1);
+            richEditBarController.BarItems.Add(changeSectionLineNumberingItem1);
+            richEditBarController.BarItems.Add(setHyphenateDocumentNoneItem1);
+            richEditBarController.BarItems.Add(setHyphenateDocumentAutomaticItem1);
+            richEditBarController.BarItems.Add(showHyphenationOptionsFormItem1);
+            richEditBarController.BarItems.Add(changeHyphenationOptionsItem1);
+            richEditBarController.BarItems.Add(changePageColorItem1);
+            richEditBarController.BarItems.Add(watermarkItem1);
+            richEditBarController.BarItems.Add(deleteWatermarkItem1);
+            richEditBarController.BarItems.Add(insertTableOfContentsItem1);
+            richEditBarController.BarItems.Add(updateTableOfContentsItem1);
+            richEditBarController.BarItems.Add(setParagraphHeadingLevelItem1);
+            richEditBarController.BarItems.Add(setParagraphHeadingLevelItem2);
+            richEditBarController.BarItems.Add(setParagraphHeadingLevelItem3);
+            richEditBarController.BarItems.Add(setParagraphHeadingLevelItem4);
+            richEditBarController.BarItems.Add(setParagraphHeadingLevelItem5);
+            richEditBarController.BarItems.Add(setParagraphHeadingLevelItem6);
+            richEditBarController.BarItems.Add(setParagraphHeadingLevelItem7);
+            richEditBarController.BarItems.Add(setParagraphHeadingLevelItem8);
+            richEditBarController.BarItems.Add(setParagraphHeadingLevelItem9);
+            richEditBarController.BarItems.Add(setParagraphHeadingLevelItem10);
+            richEditBarController.BarItems.Add(addParagraphsToTableOfContentItem1);
+            richEditBarController.BarItems.Add(insertFiguresCaptionItems1);
+            richEditBarController.BarItems.Add(insertTablesCaptionItems1);
+            richEditBarController.BarItems.Add(insertEquationsCaptionItems1);
+            richEditBarController.BarItems.Add(insertCaptionPlaceholderItem1);
+            richEditBarController.BarItems.Add(insertTableOfFiguresItems1);
+            richEditBarController.BarItems.Add(insertTableOfTablesItems1);
+            richEditBarController.BarItems.Add(insertTableOfEquationsItems1);
+            richEditBarController.BarItems.Add(insertTableOfFiguresPlaceholderItem1);
+            richEditBarController.BarItems.Add(updateTableOfFiguresItem1);
+            richEditBarController.BarItems.Add(insertFootnoteItem1);
+            richEditBarController.BarItems.Add(insertEndnoteItem1);
+            richEditBarController.BarItems.Add(navigationNotesItem1);
+            richEditBarController.BarItems.Add(showNotesItem1);
+            richEditBarController.BarItems.Add(insertMergeFieldItem1);
+            richEditBarController.BarItems.Add(showAllFieldCodesItem1);
+            richEditBarController.BarItems.Add(showAllFieldResultsItem1);
+            richEditBarController.BarItems.Add(toggleViewMergedDataItem1);
+            richEditBarController.BarItems.Add(checkSpellingItem1);
+            richEditBarController.BarItems.Add(changeLanguageItem1);
+            richEditBarController.BarItems.Add(protectDocumentItem1);
+            richEditBarController.BarItems.Add(changeRangeEditingPermissionsItem1);
+            richEditBarController.BarItems.Add(unprotectDocumentItem1);
+            richEditBarController.BarItems.Add(newCommentItem1);
+            richEditBarController.BarItems.Add(deleteOneCommentItem1);
+            richEditBarController.BarItems.Add(deleteAllCommentsShownItem1);
+            richEditBarController.BarItems.Add(deleteAllCommentsItem1);
+            richEditBarController.BarItems.Add(deleteCommentsItem1);
+            richEditBarController.BarItems.Add(previousCommentItem1);
+            richEditBarController.BarItems.Add(nextCommentItem1);
+            richEditBarController.BarItems.Add(toggleTrackChangesBarItem1);
+            richEditBarController.BarItems.Add(changeDisplayForReviewModeItem1);
+            richEditBarController.BarItems.Add(showMarkupSubItem1);
+            richEditBarController.BarItems.Add(reviewingPaneItem1);
+            richEditBarController.BarItems.Add(acceptAndMoveToNextSubItem1);
+            richEditBarController.BarItems.Add(rejectAndMoveToNextSubItem1);
+            richEditBarController.BarItems.Add(previousChangeItem1);
+            richEditBarController.BarItems.Add(nextChangeItem1);
+            richEditBarController.BarItems.Add(switchToSimpleViewItem1);
+            richEditBarController.BarItems.Add(switchToDraftViewItem1);
+            richEditBarController.BarItems.Add(switchToPrintLayoutViewItem1);
+            richEditBarController.BarItems.Add(toggleShowHorizontalRulerItem1);
+            richEditBarController.BarItems.Add(toggleShowVerticalRulerItem1);
+            richEditBarController.BarItems.Add(zoomOutItem1);
+            richEditBarController.BarItems.Add(zoomInItem1);
+            richEditBarController.BarItems.Add(goToPageHeaderItem1);
+            richEditBarController.BarItems.Add(goToPageFooterItem1);
+            richEditBarController.BarItems.Add(goToNextHeaderFooterItem1);
+            richEditBarController.BarItems.Add(goToPreviousHeaderFooterItem1);
+            richEditBarController.BarItems.Add(toggleLinkToPreviousItem1);
+            richEditBarController.BarItems.Add(toggleDifferentFirstPageItem1);
+            richEditBarController.BarItems.Add(toggleDifferentOddAndEvenPagesItem1);
+            richEditBarController.BarItems.Add(closePageHeaderFooterItem1);
+            richEditBarController.BarItems.Add(toggleFirstRowItem1);
+            richEditBarController.BarItems.Add(toggleLastRowItem1);
+            richEditBarController.BarItems.Add(toggleBandedRowsItem1);
+            richEditBarController.BarItems.Add(toggleFirstColumnItem1);
+            richEditBarController.BarItems.Add(toggleLastColumnItem1);
+            richEditBarController.BarItems.Add(toggleBandedColumnsItem1);
+            richEditBarController.BarItems.Add(galleryChangeTableStyleItem1);
+            richEditBarController.BarItems.Add(changeTableBorderLineStyleItem1);
+            richEditBarController.BarItems.Add(changeTableBorderLineWeightItem1);
+            richEditBarController.BarItems.Add(changeTableBorderColorItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsBottomBorderItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsTopBorderItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsLeftBorderItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsRightBorderItem1);
+            richEditBarController.BarItems.Add(resetTableCellsAllBordersItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsAllBordersItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsOutsideBorderItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsInsideBorderItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsInsideHorizontalBorderItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsInsideVerticalBorderItem1);
+            richEditBarController.BarItems.Add(toggleShowTableGridLinesItem1);
+            richEditBarController.BarItems.Add(changeTableBordersItem1);
+            richEditBarController.BarItems.Add(changeTableCellsShadingItem1);
+            richEditBarController.BarItems.Add(selectTableCellItem1);
+            richEditBarController.BarItems.Add(selectTableColumnItem1);
+            richEditBarController.BarItems.Add(selectTableRowItem1);
+            richEditBarController.BarItems.Add(selectTableItem1);
+            richEditBarController.BarItems.Add(selectTableElementsItem1);
+            richEditBarController.BarItems.Add(showTablePropertiesFormItem1);
+            richEditBarController.BarItems.Add(showDeleteTableCellsFormItem1);
+            richEditBarController.BarItems.Add(deleteTableColumnsItem1);
+            richEditBarController.BarItems.Add(deleteTableRowsItem1);
+            richEditBarController.BarItems.Add(deleteTableItem1);
+            richEditBarController.BarItems.Add(deleteTableElementsItem1);
+            richEditBarController.BarItems.Add(insertTableRowAboveItem1);
+            richEditBarController.BarItems.Add(insertTableRowBelowItem1);
+            richEditBarController.BarItems.Add(insertTableColumnToLeftItem1);
+            richEditBarController.BarItems.Add(insertTableColumnToRightItem1);
+            richEditBarController.BarItems.Add(mergeTableCellsItem1);
+            richEditBarController.BarItems.Add(showSplitTableCellsForm1);
+            richEditBarController.BarItems.Add(splitTableItem1);
+            richEditBarController.BarItems.Add(toggleTableAutoFitContentsItem1);
+            richEditBarController.BarItems.Add(toggleTableAutoFitWindowItem1);
+            richEditBarController.BarItems.Add(toggleTableFixedColumnWidthItem1);
+            richEditBarController.BarItems.Add(toggleTableAutoFitItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsTopLeftAlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsMiddleLeftAlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsBottomLeftAlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsTopCenterAlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsMiddleCenterAlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsBottomCenterAlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsTopRightAlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsMiddleRightAlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsBottomRightAlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsBottomLeftRotate90AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsBottomCenterRotate90AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsBottomRightRotate90AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsMiddleLeftRotate90AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsMiddleCenterRotate90AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsMiddleRightRotate90AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsTopLeftRotate90AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsTopCenterRotate90AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsTopRightRotate90AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsTopRightRotate270AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsTopCenterRotate270AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsTopLeftRotate270AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsMiddleRightRotate270AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsMiddleCenterRotate270AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsMiddleLeftRotate270AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsBottomRightRotate270AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsBottomCenterRotate270AlignmentItem1);
+            richEditBarController.BarItems.Add(toggleTableCellsBottomLeftRotate270AlignmentItem1);
+            richEditBarController.BarItems.Add(changeTableCellsHorizontalTextDirectionItem1);
+            richEditBarController.BarItems.Add(changeTableCellsVerticalTextDirectionItem1);
+            richEditBarController.BarItems.Add(changeTableCellsRotateAll90TextDirectionItem1);
+            richEditBarController.BarItems.Add(changeTableCellsRotateAll270TextDirectionItem1);
+            richEditBarController.BarItems.Add(changeTableCellsRotateAsian270TextDirectionItem1);
+            richEditBarController.BarItems.Add(showTableOptionsFormItem1);
+            richEditBarController.BarItems.Add(changeFloatingObjectFillColorItem1);
+            richEditBarController.BarItems.Add(changeFloatingObjectOutlineColorItem1);
+            richEditBarController.BarItems.Add(changeFloatingObjectOutlineWeightItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectInlineTextWrapTypeItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectSquareTextWrapTypeItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectTightTextWrapTypeItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectThroughTextWrapTypeItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectTopAndBottomTextWrapTypeItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectBehindTextWrapTypeItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectInFrontOfTextWrapTypeItem1);
+            richEditBarController.BarItems.Add(changeFloatingObjectTextWrapTypeItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectTopLeftAlignmentItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectTopCenterAlignmentItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectTopRightAlignmentItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectMiddleLeftAlignmentItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectMiddleCenterAlignmentItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectMiddleRightAlignmentItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectBottomLeftAlignmentItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectBottomCenterAlignmentItem1);
+            richEditBarController.BarItems.Add(setFloatingObjectBottomRightAlignmentItem1);
+            richEditBarController.BarItems.Add(changeFloatingObjectAlignmentItem1);
+            richEditBarController.BarItems.Add(floatingObjectBringForwardItem1);
+            richEditBarController.BarItems.Add(floatingObjectBringToFrontItem1);
+            richEditBarController.BarItems.Add(floatingObjectBringInFrontOfTextItem1);
+            richEditBarController.BarItems.Add(floatingObjectBringForwardSubItem1);
+            richEditBarController.BarItems.Add(floatingObjectSendBackwardItem1);
+            richEditBarController.BarItems.Add(floatingObjectSendToBackItem1);
+            richEditBarController.BarItems.Add(floatingObjectSendBehindTextItem1);
+            richEditBarController.BarItems.Add(floatingObjectSendBackwardSubItem1);
+            richEditBarController.Control = richEditControl;
+            // 
+            // commonRibbonPageGroup1
+            // 
+            commonRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            commonRibbonPageGroup1.ItemLinks.Add(undoItem1);
+            commonRibbonPageGroup1.ItemLinks.Add(redoItem1);
+            commonRibbonPageGroup1.ItemLinks.Add(fileNewItem1, "N");
+            commonRibbonPageGroup1.ItemLinks.Add(fileOpenItem1, "O");
+            commonRibbonPageGroup1.ItemLinks.Add(fileSaveItem1, "S");
+            commonRibbonPageGroup1.ItemLinks.Add(fileSaveAsItem1, "A");
+            commonRibbonPageGroup1.ItemLinks.Add(quickPrintItem1);
+            commonRibbonPageGroup1.ItemLinks.Add(printItem1, "P");
+            commonRibbonPageGroup1.ItemLinks.Add(printPreviewItem1);
+            commonRibbonPageGroup1.Name = "commonRibbonPageGroup1";
+            // 
+            // fileRibbonPage1
+            // 
+            fileRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { commonRibbonPageGroup1, infoRibbonPageGroup1 });
+            fileRibbonPage1.Name = "fileRibbonPage1";
             // 
             // undoItem1
             // 
@@ -517,6 +841,13 @@
             printPreviewItem1.Id = 9;
             printPreviewItem1.Name = "printPreviewItem1";
             // 
+            // infoRibbonPageGroup1
+            // 
+            infoRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            infoRibbonPageGroup1.ItemLinks.Add(encryptDocumentItem1);
+            infoRibbonPageGroup1.ItemLinks.Add(showDocumentPropertiesFormItem1);
+            infoRibbonPageGroup1.Name = "infoRibbonPageGroup1";
+            // 
             // encryptDocumentItem1
             // 
             encryptDocumentItem1.Id = 10;
@@ -527,25 +858,30 @@
             showDocumentPropertiesFormItem1.Id = 11;
             showDocumentPropertiesFormItem1.Name = "showDocumentPropertiesFormItem1";
             // 
+            // clipboardRibbonPageGroup1
+            // 
+            clipboardRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            clipboardRibbonPageGroup1.ItemLinks.Add(pasteItem1, "V");
+            clipboardRibbonPageGroup1.ItemLinks.Add(cutItem1, "X");
+            clipboardRibbonPageGroup1.ItemLinks.Add(copyItem1, "C");
+            clipboardRibbonPageGroup1.ItemLinks.Add(pasteSpecialItem1);
+            clipboardRibbonPageGroup1.Name = "clipboardRibbonPageGroup1";
+            // 
+            // homeRibbonPage1
+            // 
+            homeRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { clipboardRibbonPageGroup1, fontRibbonPageGroup1, paragraphRibbonPageGroup1, stylesRibbonPageGroup1, editingRibbonPageGroup1 });
+            homeRibbonPage1.Name = "homeRibbonPage1";
+            reduceOperation1.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.UntilAvailable;
+            reduceOperation1.GroupName = null;
+            reduceOperation1.ItemLinkIndex = 0;
+            reduceOperation1.ItemLinksCount = 0;
+            reduceOperation1.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+            homeRibbonPage1.ReduceOperations.Add(reduceOperation1);
+            // 
             // pasteItem1
             // 
-            pasteItem1.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
-            pasteItem1.CloseRadialMenuOnItemClick = true;
-            pasteItem1.CloseSubMenuOnClickMode = DevExpress.Utils.DefaultBoolean.True;
-            pasteItem1.DropDownControl = popupMenu1;
             pasteItem1.Id = 19;
             pasteItem1.Name = "pasteItem1";
-            // 
-            // popupMenu1
-            // 
-            popupMenu1.ItemLinks.Add(pasteSpecialItem1);
-            popupMenu1.Name = "popupMenu1";
-            popupMenu1.Ribbon = ribbonControl;
-            // 
-            // pasteSpecialItem1
-            // 
-            pasteSpecialItem1.Id = 22;
-            pasteSpecialItem1.Name = "pasteSpecialItem1";
             // 
             // cutItem1
             // 
@@ -557,15 +893,20 @@
             copyItem1.Id = 21;
             copyItem1.Name = "copyItem1";
             // 
-            // barButtonGroup1
+            // pasteSpecialItem1
             // 
-            barButtonGroup1.Id = 12;
-            barButtonGroup1.ItemLinks.Add(changeFontNameItem1, "FF");
-            barButtonGroup1.ItemLinks.Add(changeFontSizeItem1);
-            barButtonGroup1.ItemLinks.Add(fontSizeIncreaseItem1, "FG");
-            barButtonGroup1.ItemLinks.Add(fontSizeDecreaseItem1, "FK");
-            barButtonGroup1.Name = "barButtonGroup1";
-            barButtonGroup1.Tag = "{97BBE334-159B-44d9-A168-0411957565E8}";
+            pasteSpecialItem1.Id = 22;
+            pasteSpecialItem1.Name = "pasteSpecialItem1";
+            // 
+            // fontRibbonPageGroup1
+            // 
+            fontRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
+            fontRibbonPageGroup1.ItemLinks.Add(barButtonGroup1);
+            fontRibbonPageGroup1.ItemLinks.Add(barButtonGroup2);
+            fontRibbonPageGroup1.ItemLinks.Add(barButtonGroup3);
+            fontRibbonPageGroup1.ItemLinks.Add(changeTextCaseItem1);
+            fontRibbonPageGroup1.ItemLinks.Add(clearFormattingItem1, "E");
+            fontRibbonPageGroup1.Name = "fontRibbonPageGroup1";
             // 
             // changeFontNameItem1
             // 
@@ -573,24 +914,11 @@
             changeFontNameItem1.Id = 23;
             changeFontNameItem1.Name = "changeFontNameItem1";
             // 
-            // repositoryItemFontEditRichEdit1
-            // 
-            repositoryItemFontEditRichEdit1.AutoHeight = false;
-            repositoryItemFontEditRichEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repositoryItemFontEditRichEdit1.Name = "repositoryItemFontEditRichEdit1";
-            // 
             // changeFontSizeItem1
             // 
             changeFontSizeItem1.Edit = repositoryItemRichEditFontSizeEdit1;
             changeFontSizeItem1.Id = 24;
             changeFontSizeItem1.Name = "changeFontSizeItem1";
-            // 
-            // repositoryItemRichEditFontSizeEdit1
-            // 
-            repositoryItemRichEditFontSizeEdit1.AutoHeight = false;
-            repositoryItemRichEditFontSizeEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repositoryItemRichEditFontSizeEdit1.Control = richEditControl;
-            repositoryItemRichEditFontSizeEdit1.Name = "repositoryItemRichEditFontSizeEdit1";
             // 
             // fontSizeIncreaseItem1
             // 
@@ -601,20 +929,6 @@
             // 
             fontSizeDecreaseItem1.Id = 26;
             fontSizeDecreaseItem1.Name = "fontSizeDecreaseItem1";
-            // 
-            // barButtonGroup2
-            // 
-            barButtonGroup2.Id = 13;
-            barButtonGroup2.ItemLinks.Add(toggleFontBoldItem1);
-            barButtonGroup2.ItemLinks.Add(toggleFontItalicItem1);
-            barButtonGroup2.ItemLinks.Add(toggleFontUnderlineItem1);
-            barButtonGroup2.ItemLinks.Add(toggleFontDoubleUnderlineItem1);
-            barButtonGroup2.ItemLinks.Add(toggleFontStrikeoutItem1);
-            barButtonGroup2.ItemLinks.Add(toggleFontDoubleStrikeoutItem1);
-            barButtonGroup2.ItemLinks.Add(toggleFontSuperscriptItem1);
-            barButtonGroup2.ItemLinks.Add(toggleFontSubscriptItem1);
-            barButtonGroup2.Name = "barButtonGroup2";
-            barButtonGroup2.Tag = "{433DA7F0-03E2-4650-9DB5-66DD92D16E39}";
             // 
             // toggleFontBoldItem1
             // 
@@ -656,14 +970,6 @@
             toggleFontSubscriptItem1.Id = 34;
             toggleFontSubscriptItem1.Name = "toggleFontSubscriptItem1";
             // 
-            // barButtonGroup3
-            // 
-            barButtonGroup3.Id = 14;
-            barButtonGroup3.ItemLinks.Add(changeFontColorItem1, "FC");
-            barButtonGroup3.ItemLinks.Add(changeFontHighlightColorItem1, "I");
-            barButtonGroup3.Name = "barButtonGroup3";
-            barButtonGroup3.Tag = "{DF8C5334-EDE3-47c9-A42C-FE9A9247E180}";
-            // 
             // changeFontColorItem1
             // 
             changeFontColorItem1.Id = 35;
@@ -673,12 +979,6 @@
             // 
             changeFontHighlightColorItem1.Id = 36;
             changeFontHighlightColorItem1.Name = "changeFontHighlightColorItem1";
-            // 
-            // changeTextCaseItem1
-            // 
-            changeTextCaseItem1.Id = 37;
-            changeTextCaseItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(makeTextUpperCaseItem1), new DevExpress.XtraBars.LinkPersistInfo(makeTextLowerCaseItem1), new DevExpress.XtraBars.LinkPersistInfo(capitalizeEachWordCaseItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTextCaseItem1) });
-            changeTextCaseItem1.Name = "changeTextCaseItem1";
             // 
             // makeTextUpperCaseItem1
             // 
@@ -700,22 +1000,70 @@
             toggleTextCaseItem1.Id = 41;
             toggleTextCaseItem1.Name = "toggleTextCaseItem1";
             // 
+            // changeTextCaseItem1
+            // 
+            changeTextCaseItem1.Id = 37;
+            changeTextCaseItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(makeTextUpperCaseItem1), new DevExpress.XtraBars.LinkPersistInfo(makeTextLowerCaseItem1), new DevExpress.XtraBars.LinkPersistInfo(capitalizeEachWordCaseItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTextCaseItem1) });
+            changeTextCaseItem1.Name = "changeTextCaseItem1";
+            // 
             // clearFormattingItem1
             // 
             clearFormattingItem1.Id = 42;
             clearFormattingItem1.Name = "clearFormattingItem1";
             // 
-            // barButtonGroup4
+            // barButtonGroup1
             // 
-            barButtonGroup4.Id = 15;
-            barButtonGroup4.ItemLinks.Add(toggleBulletedListItem1, "U");
-            barButtonGroup4.ItemLinks.Add(toggleNumberingListItem1, "N");
-            barButtonGroup4.ItemLinks.Add(toggleMultiLevelListItem1, "M");
-            barButtonGroup4.ItemLinks.Add(rtlToggleBulletedListItem1, "U");
-            barButtonGroup4.ItemLinks.Add(rtlToggleNumberingListItem1, "N");
-            barButtonGroup4.ItemLinks.Add(rtlToggleMultiLevelListItem1, "M");
-            barButtonGroup4.Name = "barButtonGroup4";
-            barButtonGroup4.Tag = "{0B3A7A43-3079-4ce0-83A8-3789F5F6DC9F}";
+            barButtonGroup1.Id = 12;
+            barButtonGroup1.ItemLinks.Add(changeFontNameItem1, "FF");
+            barButtonGroup1.ItemLinks.Add(changeFontSizeItem1);
+            barButtonGroup1.ItemLinks.Add(fontSizeIncreaseItem1, "FG");
+            barButtonGroup1.ItemLinks.Add(fontSizeDecreaseItem1, "FK");
+            barButtonGroup1.Name = "barButtonGroup1";
+            barButtonGroup1.Tag = "{97BBE334-159B-44d9-A168-0411957565E8}";
+            // 
+            // repositoryItemFontEditRichEdit1
+            // 
+            repositoryItemFontEditRichEdit1.AutoHeight = false;
+            repositoryItemFontEditRichEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repositoryItemFontEditRichEdit1.Name = "repositoryItemFontEditRichEdit1";
+            // 
+            // repositoryItemRichEditFontSizeEdit1
+            // 
+            repositoryItemRichEditFontSizeEdit1.AutoHeight = false;
+            repositoryItemRichEditFontSizeEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repositoryItemRichEditFontSizeEdit1.Control = richEditControl;
+            repositoryItemRichEditFontSizeEdit1.Name = "repositoryItemRichEditFontSizeEdit1";
+            // 
+            // barButtonGroup2
+            // 
+            barButtonGroup2.Id = 13;
+            barButtonGroup2.ItemLinks.Add(toggleFontBoldItem1);
+            barButtonGroup2.ItemLinks.Add(toggleFontItalicItem1);
+            barButtonGroup2.ItemLinks.Add(toggleFontUnderlineItem1);
+            barButtonGroup2.ItemLinks.Add(toggleFontDoubleUnderlineItem1);
+            barButtonGroup2.ItemLinks.Add(toggleFontStrikeoutItem1);
+            barButtonGroup2.ItemLinks.Add(toggleFontDoubleStrikeoutItem1);
+            barButtonGroup2.ItemLinks.Add(toggleFontSuperscriptItem1);
+            barButtonGroup2.ItemLinks.Add(toggleFontSubscriptItem1);
+            barButtonGroup2.Name = "barButtonGroup2";
+            barButtonGroup2.Tag = "{433DA7F0-03E2-4650-9DB5-66DD92D16E39}";
+            // 
+            // barButtonGroup3
+            // 
+            barButtonGroup3.Id = 14;
+            barButtonGroup3.ItemLinks.Add(changeFontColorItem1, "FC");
+            barButtonGroup3.ItemLinks.Add(changeFontHighlightColorItem1, "I");
+            barButtonGroup3.Name = "barButtonGroup3";
+            barButtonGroup3.Tag = "{DF8C5334-EDE3-47c9-A42C-FE9A9247E180}";
+            // 
+            // paragraphRibbonPageGroup1
+            // 
+            paragraphRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
+            paragraphRibbonPageGroup1.ItemLinks.Add(barButtonGroup4);
+            paragraphRibbonPageGroup1.ItemLinks.Add(barButtonGroup5);
+            paragraphRibbonPageGroup1.ItemLinks.Add(barButtonGroup6);
+            paragraphRibbonPageGroup1.ItemLinks.Add(barButtonGroup7);
+            paragraphRibbonPageGroup1.Name = "paragraphRibbonPageGroup1";
             // 
             // toggleBulletedListItem1
             // 
@@ -732,6 +1080,16 @@
             toggleMultiLevelListItem1.Id = 45;
             toggleMultiLevelListItem1.Name = "toggleMultiLevelListItem1";
             // 
+            // decreaseIndentItem1
+            // 
+            decreaseIndentItem1.Id = 46;
+            decreaseIndentItem1.Name = "decreaseIndentItem1";
+            // 
+            // increaseIndentItem1
+            // 
+            increaseIndentItem1.Id = 47;
+            increaseIndentItem1.Name = "increaseIndentItem1";
+            // 
             // rtlToggleBulletedListItem1
             // 
             rtlToggleBulletedListItem1.Id = 48;
@@ -746,29 +1104,6 @@
             // 
             rtlToggleMultiLevelListItem1.Id = 50;
             rtlToggleMultiLevelListItem1.Name = "rtlToggleMultiLevelListItem1";
-            // 
-            // barButtonGroup5
-            // 
-            barButtonGroup5.Id = 16;
-            barButtonGroup5.ItemLinks.Add(decreaseIndentItem1, "AO");
-            barButtonGroup5.ItemLinks.Add(increaseIndentItem1, "AI");
-            barButtonGroup5.ItemLinks.Add(rtlDecreaseIndentItem1, "AO");
-            barButtonGroup5.ItemLinks.Add(rtlIncreaseIndentItem1, "AI");
-            barButtonGroup5.ItemLinks.Add(toggleParagraphLeftToRightItem1);
-            barButtonGroup5.ItemLinks.Add(toggleParagraphRightToLeftItem1);
-            barButtonGroup5.ItemLinks.Add(toggleShowWhitespaceItem1);
-            barButtonGroup5.Name = "barButtonGroup5";
-            barButtonGroup5.Tag = "{4747D5AB-2BEB-4ea6-9A1D-8E4FB36F1B40}";
-            // 
-            // decreaseIndentItem1
-            // 
-            decreaseIndentItem1.Id = 46;
-            decreaseIndentItem1.Name = "decreaseIndentItem1";
-            // 
-            // increaseIndentItem1
-            // 
-            increaseIndentItem1.Id = 47;
-            increaseIndentItem1.Name = "increaseIndentItem1";
             // 
             // rtlDecreaseIndentItem1
             // 
@@ -790,24 +1125,6 @@
             toggleParagraphRightToLeftItem1.Id = 54;
             toggleParagraphRightToLeftItem1.Name = "toggleParagraphRightToLeftItem1";
             // 
-            // toggleShowWhitespaceItem1
-            // 
-            toggleShowWhitespaceItem1.Id = 66;
-            toggleShowWhitespaceItem1.Name = "toggleShowWhitespaceItem1";
-            // 
-            // barButtonGroup6
-            // 
-            barButtonGroup6.Id = 17;
-            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentLeftItem1, "AL");
-            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentCenterItem1, "AC");
-            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentRightItem1, "AR");
-            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentJustifyItem1, "AJ");
-            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentArabicJustifyGroupItem1);
-            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentDistributeItem1);
-            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentThaiDistributeItem1);
-            barButtonGroup6.Name = "barButtonGroup6";
-            barButtonGroup6.Tag = "{8E89E775-996E-49a0-AADA-DE338E34732E}";
-            // 
             // toggleParagraphAlignmentLeftItem1
             // 
             toggleParagraphAlignmentLeftItem1.Id = 55;
@@ -827,12 +1144,6 @@
             // 
             toggleParagraphAlignmentJustifyItem1.Id = 58;
             toggleParagraphAlignmentJustifyItem1.Name = "toggleParagraphAlignmentJustifyItem1";
-            // 
-            // toggleParagraphAlignmentArabicJustifyGroupItem1
-            // 
-            toggleParagraphAlignmentArabicJustifyGroupItem1.Id = 59;
-            toggleParagraphAlignmentArabicJustifyGroupItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.KeyTip, toggleParagraphAlignmentArabicJustifyItem1, "", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard, "AJ", ""), new DevExpress.XtraBars.LinkPersistInfo(toggleParagraphAlignmentJustifyLowItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleParagraphAlignmentJustifyMediumItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleParagraphAlignmentJustifyHighItem1) });
-            toggleParagraphAlignmentArabicJustifyGroupItem1.Name = "toggleParagraphAlignmentArabicJustifyGroupItem1";
             // 
             // toggleParagraphAlignmentArabicJustifyItem1
             // 
@@ -854,6 +1165,12 @@
             toggleParagraphAlignmentJustifyHighItem1.Id = 63;
             toggleParagraphAlignmentJustifyHighItem1.Name = "toggleParagraphAlignmentJustifyHighItem1";
             // 
+            // toggleParagraphAlignmentArabicJustifyGroupItem1
+            // 
+            toggleParagraphAlignmentArabicJustifyGroupItem1.Id = 59;
+            toggleParagraphAlignmentArabicJustifyGroupItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.KeyTip, toggleParagraphAlignmentArabicJustifyItem1, "", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard, "AJ", ""), new DevExpress.XtraBars.LinkPersistInfo(toggleParagraphAlignmentJustifyLowItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleParagraphAlignmentJustifyMediumItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleParagraphAlignmentJustifyHighItem1) });
+            toggleParagraphAlignmentArabicJustifyGroupItem1.Name = "toggleParagraphAlignmentArabicJustifyGroupItem1";
+            // 
             // toggleParagraphAlignmentDistributeItem1
             // 
             toggleParagraphAlignmentDistributeItem1.Id = 64;
@@ -864,19 +1181,10 @@
             toggleParagraphAlignmentThaiDistributeItem1.Id = 65;
             toggleParagraphAlignmentThaiDistributeItem1.Name = "toggleParagraphAlignmentThaiDistributeItem1";
             // 
-            // barButtonGroup7
+            // toggleShowWhitespaceItem1
             // 
-            barButtonGroup7.Id = 18;
-            barButtonGroup7.ItemLinks.Add(changeParagraphLineSpacingItem1, "K");
-            barButtonGroup7.ItemLinks.Add(changeParagraphBackColorItem1, "H");
-            barButtonGroup7.Name = "barButtonGroup7";
-            barButtonGroup7.Tag = "{9A8DEAD8-3890-4857-A395-EC625FD02217}";
-            // 
-            // changeParagraphLineSpacingItem1
-            // 
-            changeParagraphLineSpacingItem1.Id = 67;
-            changeParagraphLineSpacingItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setSingleParagraphSpacingItem1), new DevExpress.XtraBars.LinkPersistInfo(setSesquialteralParagraphSpacingItem1), new DevExpress.XtraBars.LinkPersistInfo(setDoubleParagraphSpacingItem1), new DevExpress.XtraBars.LinkPersistInfo(showLineSpacingFormItem1), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.KeyTip, addSpacingBeforeParagraphItem1, "", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard, "B", ""), new DevExpress.XtraBars.LinkPersistInfo(removeSpacingBeforeParagraphItem1), new DevExpress.XtraBars.LinkPersistInfo(addSpacingAfterParagraphItem1), new DevExpress.XtraBars.LinkPersistInfo(removeSpacingAfterParagraphItem1) });
-            changeParagraphLineSpacingItem1.Name = "changeParagraphLineSpacingItem1";
+            toggleShowWhitespaceItem1.Id = 66;
+            toggleShowWhitespaceItem1.Name = "toggleShowWhitespaceItem1";
             // 
             // setSingleParagraphSpacingItem1
             // 
@@ -918,10 +1226,68 @@
             removeSpacingAfterParagraphItem1.Id = 75;
             removeSpacingAfterParagraphItem1.Name = "removeSpacingAfterParagraphItem1";
             // 
+            // changeParagraphLineSpacingItem1
+            // 
+            changeParagraphLineSpacingItem1.Id = 67;
+            changeParagraphLineSpacingItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setSingleParagraphSpacingItem1), new DevExpress.XtraBars.LinkPersistInfo(setSesquialteralParagraphSpacingItem1), new DevExpress.XtraBars.LinkPersistInfo(setDoubleParagraphSpacingItem1), new DevExpress.XtraBars.LinkPersistInfo(showLineSpacingFormItem1), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.KeyTip, addSpacingBeforeParagraphItem1, "", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard, "B", ""), new DevExpress.XtraBars.LinkPersistInfo(removeSpacingBeforeParagraphItem1), new DevExpress.XtraBars.LinkPersistInfo(addSpacingAfterParagraphItem1), new DevExpress.XtraBars.LinkPersistInfo(removeSpacingAfterParagraphItem1) });
+            changeParagraphLineSpacingItem1.Name = "changeParagraphLineSpacingItem1";
+            // 
             // changeParagraphBackColorItem1
             // 
             changeParagraphBackColorItem1.Id = 76;
             changeParagraphBackColorItem1.Name = "changeParagraphBackColorItem1";
+            // 
+            // barButtonGroup4
+            // 
+            barButtonGroup4.Id = 15;
+            barButtonGroup4.ItemLinks.Add(toggleBulletedListItem1, "U");
+            barButtonGroup4.ItemLinks.Add(toggleNumberingListItem1, "N");
+            barButtonGroup4.ItemLinks.Add(toggleMultiLevelListItem1, "M");
+            barButtonGroup4.ItemLinks.Add(rtlToggleBulletedListItem1, "U");
+            barButtonGroup4.ItemLinks.Add(rtlToggleNumberingListItem1, "N");
+            barButtonGroup4.ItemLinks.Add(rtlToggleMultiLevelListItem1, "M");
+            barButtonGroup4.Name = "barButtonGroup4";
+            barButtonGroup4.Tag = "{0B3A7A43-3079-4ce0-83A8-3789F5F6DC9F}";
+            // 
+            // barButtonGroup5
+            // 
+            barButtonGroup5.Id = 16;
+            barButtonGroup5.ItemLinks.Add(decreaseIndentItem1, "AO");
+            barButtonGroup5.ItemLinks.Add(increaseIndentItem1, "AI");
+            barButtonGroup5.ItemLinks.Add(rtlDecreaseIndentItem1, "AO");
+            barButtonGroup5.ItemLinks.Add(rtlIncreaseIndentItem1, "AI");
+            barButtonGroup5.ItemLinks.Add(toggleParagraphLeftToRightItem1);
+            barButtonGroup5.ItemLinks.Add(toggleParagraphRightToLeftItem1);
+            barButtonGroup5.ItemLinks.Add(toggleShowWhitespaceItem1);
+            barButtonGroup5.Name = "barButtonGroup5";
+            barButtonGroup5.Tag = "{4747D5AB-2BEB-4ea6-9A1D-8E4FB36F1B40}";
+            // 
+            // barButtonGroup6
+            // 
+            barButtonGroup6.Id = 17;
+            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentLeftItem1, "AL");
+            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentCenterItem1, "AC");
+            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentRightItem1, "AR");
+            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentJustifyItem1, "AJ");
+            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentArabicJustifyGroupItem1);
+            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentDistributeItem1);
+            barButtonGroup6.ItemLinks.Add(toggleParagraphAlignmentThaiDistributeItem1);
+            barButtonGroup6.Name = "barButtonGroup6";
+            barButtonGroup6.Tag = "{8E89E775-996E-49a0-AADA-DE338E34732E}";
+            // 
+            // barButtonGroup7
+            // 
+            barButtonGroup7.Id = 18;
+            barButtonGroup7.ItemLinks.Add(changeParagraphLineSpacingItem1, "K");
+            barButtonGroup7.ItemLinks.Add(changeParagraphBackColorItem1, "H");
+            barButtonGroup7.Name = "barButtonGroup7";
+            barButtonGroup7.Tag = "{9A8DEAD8-3890-4857-A395-EC625FD02217}";
+            // 
+            // stylesRibbonPageGroup1
+            // 
+            stylesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
+            stylesRibbonPageGroup1.ItemLinks.Add(galleryChangeStyleItem1);
+            stylesRibbonPageGroup1.Name = "stylesRibbonPageGroup1";
             // 
             // galleryChangeStyleItem1
             // 
@@ -934,6 +1300,13 @@
             galleryChangeStyleItem1.Id = 77;
             galleryChangeStyleItem1.Name = "galleryChangeStyleItem1";
             // 
+            // editingRibbonPageGroup1
+            // 
+            editingRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            editingRibbonPageGroup1.ItemLinks.Add(findItem1, "FD");
+            editingRibbonPageGroup1.ItemLinks.Add(replaceItem1, "R");
+            editingRibbonPageGroup1.Name = "editingRibbonPageGroup1";
+            // 
             // findItem1
             // 
             findItem1.Id = 78;
@@ -944,20 +1317,52 @@
             replaceItem1.Id = 79;
             replaceItem1.Name = "replaceItem1";
             // 
+            // pagesRibbonPageGroup1
+            // 
+            pagesRibbonPageGroup1.AllowTextClipping = false;
+            pagesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            pagesRibbonPageGroup1.ItemLinks.Add(insertPageBreakItem21, "B");
+            pagesRibbonPageGroup1.Name = "pagesRibbonPageGroup1";
+            // 
+            // insertRibbonPage1
+            // 
+            insertRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { pagesRibbonPageGroup1, tablesRibbonPageGroup1, illustrationsRibbonPageGroup1, linksRibbonPageGroup1, headerFooterRibbonPageGroup1, textRibbonPageGroup1, symbolsRibbonPageGroup1 });
+            insertRibbonPage1.Name = "insertRibbonPage1";
+            // 
             // insertPageBreakItem21
             // 
             insertPageBreakItem21.Id = 80;
             insertPageBreakItem21.Name = "insertPageBreakItem21";
+            // 
+            // tablesRibbonPageGroup1
+            // 
+            tablesRibbonPageGroup1.AllowTextClipping = false;
+            tablesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            tablesRibbonPageGroup1.ItemLinks.Add(insertTableItem1, "T");
+            tablesRibbonPageGroup1.Name = "tablesRibbonPageGroup1";
             // 
             // insertTableItem1
             // 
             insertTableItem1.Id = 81;
             insertTableItem1.Name = "insertTableItem1";
             // 
+            // illustrationsRibbonPageGroup1
+            // 
+            illustrationsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            illustrationsRibbonPageGroup1.ItemLinks.Add(insertFloatingPictureItem1);
+            illustrationsRibbonPageGroup1.Name = "illustrationsRibbonPageGroup1";
+            // 
             // insertFloatingPictureItem1
             // 
             insertFloatingPictureItem1.Id = 82;
             insertFloatingPictureItem1.Name = "insertFloatingPictureItem1";
+            // 
+            // linksRibbonPageGroup1
+            // 
+            linksRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            linksRibbonPageGroup1.ItemLinks.Add(insertBookmarkItem1, "K");
+            linksRibbonPageGroup1.ItemLinks.Add(insertHyperlinkItem1, "I");
+            linksRibbonPageGroup1.Name = "linksRibbonPageGroup1";
             // 
             // insertBookmarkItem1
             // 
@@ -968,6 +1373,15 @@
             // 
             insertHyperlinkItem1.Id = 84;
             insertHyperlinkItem1.Name = "insertHyperlinkItem1";
+            // 
+            // headerFooterRibbonPageGroup1
+            // 
+            headerFooterRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            headerFooterRibbonPageGroup1.ItemLinks.Add(editPageHeaderItem1, "H");
+            headerFooterRibbonPageGroup1.ItemLinks.Add(editPageFooterItem1, "O");
+            headerFooterRibbonPageGroup1.ItemLinks.Add(insertPageNumberItem1, "NU");
+            headerFooterRibbonPageGroup1.ItemLinks.Add(insertPageCountItem1);
+            headerFooterRibbonPageGroup1.Name = "headerFooterRibbonPageGroup1";
             // 
             // editPageHeaderItem1
             // 
@@ -989,6 +1403,13 @@
             insertPageCountItem1.Id = 88;
             insertPageCountItem1.Name = "insertPageCountItem1";
             // 
+            // textRibbonPageGroup1
+            // 
+            textRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            textRibbonPageGroup1.ItemLinks.Add(insertTextBoxItem1, "X");
+            textRibbonPageGroup1.ItemLinks.Add(insertObjectItem1);
+            textRibbonPageGroup1.Name = "textRibbonPageGroup1";
+            // 
             // insertTextBoxItem1
             // 
             insertTextBoxItem1.Id = 89;
@@ -999,16 +1420,34 @@
             insertObjectItem1.Id = 90;
             insertObjectItem1.Name = "insertObjectItem1";
             // 
+            // symbolsRibbonPageGroup1
+            // 
+            symbolsRibbonPageGroup1.AllowTextClipping = false;
+            symbolsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            symbolsRibbonPageGroup1.ItemLinks.Add(insertSymbolItem1, "U");
+            symbolsRibbonPageGroup1.Name = "symbolsRibbonPageGroup1";
+            // 
             // insertSymbolItem1
             // 
             insertSymbolItem1.Id = 91;
             insertSymbolItem1.Name = "insertSymbolItem1";
             // 
-            // changeSectionPageMarginsItem1
+            // pageSetupRibbonPageGroup1
             // 
-            changeSectionPageMarginsItem1.Id = 92;
-            changeSectionPageMarginsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setNormalSectionPageMarginsItem1), new DevExpress.XtraBars.LinkPersistInfo(setNarrowSectionPageMarginsItem1), new DevExpress.XtraBars.LinkPersistInfo(setModerateSectionPageMarginsItem1), new DevExpress.XtraBars.LinkPersistInfo(setWideSectionPageMarginsItem1), new DevExpress.XtraBars.LinkPersistInfo(showPageMarginsSetupFormItem1, true) });
-            changeSectionPageMarginsItem1.Name = "changeSectionPageMarginsItem1";
+            pageSetupRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
+            pageSetupRibbonPageGroup1.ItemLinks.Add(changeSectionPageMarginsItem1, "M");
+            pageSetupRibbonPageGroup1.ItemLinks.Add(changeSectionPageOrientationItem1, "O");
+            pageSetupRibbonPageGroup1.ItemLinks.Add(changeSectionPaperKindItem1, "SZ");
+            pageSetupRibbonPageGroup1.ItemLinks.Add(changeSectionColumnsItem1, "J");
+            pageSetupRibbonPageGroup1.ItemLinks.Add(insertBreakItem1, "B");
+            pageSetupRibbonPageGroup1.ItemLinks.Add(changeSectionLineNumberingItem1, "LN");
+            pageSetupRibbonPageGroup1.ItemLinks.Add(changeHyphenationOptionsItem1);
+            pageSetupRibbonPageGroup1.Name = "pageSetupRibbonPageGroup1";
+            // 
+            // pageLayoutRibbonPage1
+            // 
+            pageLayoutRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { pageSetupRibbonPageGroup1, pageBackgroundRibbonPageGroup1 });
+            pageLayoutRibbonPage1.Name = "pageLayoutRibbonPage1";
             // 
             // setNormalSectionPageMarginsItem1
             // 
@@ -1035,11 +1474,11 @@
             showPageMarginsSetupFormItem1.Id = 97;
             showPageMarginsSetupFormItem1.Name = "showPageMarginsSetupFormItem1";
             // 
-            // changeSectionPageOrientationItem1
+            // changeSectionPageMarginsItem1
             // 
-            changeSectionPageOrientationItem1.Id = 98;
-            changeSectionPageOrientationItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setPortraitPageOrientationItem1), new DevExpress.XtraBars.LinkPersistInfo(setLandscapePageOrientationItem1) });
-            changeSectionPageOrientationItem1.Name = "changeSectionPageOrientationItem1";
+            changeSectionPageMarginsItem1.Id = 92;
+            changeSectionPageMarginsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setNormalSectionPageMarginsItem1), new DevExpress.XtraBars.LinkPersistInfo(setNarrowSectionPageMarginsItem1), new DevExpress.XtraBars.LinkPersistInfo(setModerateSectionPageMarginsItem1), new DevExpress.XtraBars.LinkPersistInfo(setWideSectionPageMarginsItem1), new DevExpress.XtraBars.LinkPersistInfo(showPageMarginsSetupFormItem1, true) });
+            changeSectionPageMarginsItem1.Name = "changeSectionPageMarginsItem1";
             // 
             // setPortraitPageOrientationItem1
             // 
@@ -1051,16 +1490,16 @@
             setLandscapePageOrientationItem1.Id = 100;
             setLandscapePageOrientationItem1.Name = "setLandscapePageOrientationItem1";
             // 
+            // changeSectionPageOrientationItem1
+            // 
+            changeSectionPageOrientationItem1.Id = 98;
+            changeSectionPageOrientationItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setPortraitPageOrientationItem1), new DevExpress.XtraBars.LinkPersistInfo(setLandscapePageOrientationItem1) });
+            changeSectionPageOrientationItem1.Name = "changeSectionPageOrientationItem1";
+            // 
             // changeSectionPaperKindItem1
             // 
             changeSectionPaperKindItem1.Id = 101;
             changeSectionPaperKindItem1.Name = "changeSectionPaperKindItem1";
-            // 
-            // changeSectionColumnsItem1
-            // 
-            changeSectionColumnsItem1.Id = 102;
-            changeSectionColumnsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setSectionOneColumnItem1), new DevExpress.XtraBars.LinkPersistInfo(setSectionTwoColumnsItem1), new DevExpress.XtraBars.LinkPersistInfo(setSectionThreeColumnsItem1), new DevExpress.XtraBars.LinkPersistInfo(showColumnsSetupFormItem1, true) });
-            changeSectionColumnsItem1.Name = "changeSectionColumnsItem1";
             // 
             // setSectionOneColumnItem1
             // 
@@ -1082,11 +1521,11 @@
             showColumnsSetupFormItem1.Id = 106;
             showColumnsSetupFormItem1.Name = "showColumnsSetupFormItem1";
             // 
-            // insertBreakItem1
+            // changeSectionColumnsItem1
             // 
-            insertBreakItem1.Id = 107;
-            insertBreakItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.KeyTip, insertPageBreakItem1, "", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard, "B", ""), new DevExpress.XtraBars.LinkPersistInfo(insertColumnBreakItem1), new DevExpress.XtraBars.LinkPersistInfo(insertSectionBreakNextPageItem1), new DevExpress.XtraBars.LinkPersistInfo(insertSectionBreakContinuousItem1), new DevExpress.XtraBars.LinkPersistInfo(insertSectionBreakEvenPageItem1), new DevExpress.XtraBars.LinkPersistInfo(insertSectionBreakOddPageItem1) });
-            insertBreakItem1.Name = "insertBreakItem1";
+            changeSectionColumnsItem1.Id = 102;
+            changeSectionColumnsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setSectionOneColumnItem1), new DevExpress.XtraBars.LinkPersistInfo(setSectionTwoColumnsItem1), new DevExpress.XtraBars.LinkPersistInfo(setSectionThreeColumnsItem1), new DevExpress.XtraBars.LinkPersistInfo(showColumnsSetupFormItem1, true) });
+            changeSectionColumnsItem1.Name = "changeSectionColumnsItem1";
             // 
             // insertPageBreakItem1
             // 
@@ -1118,11 +1557,11 @@
             insertSectionBreakOddPageItem1.Id = 113;
             insertSectionBreakOddPageItem1.Name = "insertSectionBreakOddPageItem1";
             // 
-            // changeSectionLineNumberingItem1
+            // insertBreakItem1
             // 
-            changeSectionLineNumberingItem1.Id = 114;
-            changeSectionLineNumberingItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setSectionLineNumberingNoneItem1), new DevExpress.XtraBars.LinkPersistInfo(setSectionLineNumberingContinuousItem1), new DevExpress.XtraBars.LinkPersistInfo(setSectionLineNumberingRestartNewPageItem1), new DevExpress.XtraBars.LinkPersistInfo(setSectionLineNumberingRestartNewSectionItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleParagraphSuppressLineNumbersItem1), new DevExpress.XtraBars.LinkPersistInfo(showLineNumberingFormItem1, true) });
-            changeSectionLineNumberingItem1.Name = "changeSectionLineNumberingItem1";
+            insertBreakItem1.Id = 107;
+            insertBreakItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.KeyTip, insertPageBreakItem1, "", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard, "B", ""), new DevExpress.XtraBars.LinkPersistInfo(insertColumnBreakItem1), new DevExpress.XtraBars.LinkPersistInfo(insertSectionBreakNextPageItem1), new DevExpress.XtraBars.LinkPersistInfo(insertSectionBreakContinuousItem1), new DevExpress.XtraBars.LinkPersistInfo(insertSectionBreakEvenPageItem1), new DevExpress.XtraBars.LinkPersistInfo(insertSectionBreakOddPageItem1) });
+            insertBreakItem1.Name = "insertBreakItem1";
             // 
             // setSectionLineNumberingNoneItem1
             // 
@@ -1154,11 +1593,11 @@
             showLineNumberingFormItem1.Id = 120;
             showLineNumberingFormItem1.Name = "showLineNumberingFormItem1";
             // 
-            // changeHyphenationOptionsItem1
+            // changeSectionLineNumberingItem1
             // 
-            changeHyphenationOptionsItem1.Id = 121;
-            changeHyphenationOptionsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setHyphenateDocumentNoneItem1), new DevExpress.XtraBars.LinkPersistInfo(setHyphenateDocumentAutomaticItem1), new DevExpress.XtraBars.LinkPersistInfo(showHyphenationOptionsFormItem1) });
-            changeHyphenationOptionsItem1.Name = "changeHyphenationOptionsItem1";
+            changeSectionLineNumberingItem1.Id = 114;
+            changeSectionLineNumberingItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setSectionLineNumberingNoneItem1), new DevExpress.XtraBars.LinkPersistInfo(setSectionLineNumberingContinuousItem1), new DevExpress.XtraBars.LinkPersistInfo(setSectionLineNumberingRestartNewPageItem1), new DevExpress.XtraBars.LinkPersistInfo(setSectionLineNumberingRestartNewSectionItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleParagraphSuppressLineNumbersItem1), new DevExpress.XtraBars.LinkPersistInfo(showLineNumberingFormItem1, true) });
+            changeSectionLineNumberingItem1.Name = "changeSectionLineNumberingItem1";
             // 
             // setHyphenateDocumentNoneItem1
             // 
@@ -1175,6 +1614,21 @@
             showHyphenationOptionsFormItem1.Id = 124;
             showHyphenationOptionsFormItem1.Name = "showHyphenationOptionsFormItem1";
             // 
+            // changeHyphenationOptionsItem1
+            // 
+            changeHyphenationOptionsItem1.Id = 121;
+            changeHyphenationOptionsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setHyphenateDocumentNoneItem1), new DevExpress.XtraBars.LinkPersistInfo(setHyphenateDocumentAutomaticItem1), new DevExpress.XtraBars.LinkPersistInfo(showHyphenationOptionsFormItem1) });
+            changeHyphenationOptionsItem1.Name = "changeHyphenationOptionsItem1";
+            // 
+            // pageBackgroundRibbonPageGroup1
+            // 
+            pageBackgroundRibbonPageGroup1.AllowTextClipping = false;
+            pageBackgroundRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            pageBackgroundRibbonPageGroup1.ItemLinks.Add(changePageColorItem1, "PC");
+            pageBackgroundRibbonPageGroup1.ItemLinks.Add(watermarkItem1);
+            pageBackgroundRibbonPageGroup1.ItemLinks.Add(deleteWatermarkItem1);
+            pageBackgroundRibbonPageGroup1.Name = "pageBackgroundRibbonPageGroup1";
+            // 
             // changePageColorItem1
             // 
             changePageColorItem1.Id = 125;
@@ -1190,6 +1644,19 @@
             deleteWatermarkItem1.Id = 127;
             deleteWatermarkItem1.Name = "deleteWatermarkItem1";
             // 
+            // tableOfContentsRibbonPageGroup1
+            // 
+            tableOfContentsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            tableOfContentsRibbonPageGroup1.ItemLinks.Add(insertTableOfContentsItem1, "T");
+            tableOfContentsRibbonPageGroup1.ItemLinks.Add(updateTableOfContentsItem1, "U");
+            tableOfContentsRibbonPageGroup1.ItemLinks.Add(addParagraphsToTableOfContentItem1, "A");
+            tableOfContentsRibbonPageGroup1.Name = "tableOfContentsRibbonPageGroup1";
+            // 
+            // referencesRibbonPage1
+            // 
+            referencesRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { tableOfContentsRibbonPageGroup1, captionsRibbonPageGroup1, notesRibbonPageGroup1 });
+            referencesRibbonPage1.Name = "referencesRibbonPage1";
+            // 
             // insertTableOfContentsItem1
             // 
             insertTableOfContentsItem1.Id = 128;
@@ -1199,12 +1666,6 @@
             // 
             updateTableOfContentsItem1.Id = 129;
             updateTableOfContentsItem1.Name = "updateTableOfContentsItem1";
-            // 
-            // addParagraphsToTableOfContentItem1
-            // 
-            addParagraphsToTableOfContentItem1.Id = 130;
-            addParagraphsToTableOfContentItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem1), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem2), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem3), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem4), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem5), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem6), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem7), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem8), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem9), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem10) });
-            addParagraphsToTableOfContentItem1.Name = "addParagraphsToTableOfContentItem1";
             // 
             // setParagraphHeadingLevelItem1
             // 
@@ -1266,11 +1727,19 @@
             setParagraphHeadingLevelItem10.Name = "setParagraphHeadingLevelItem10";
             setParagraphHeadingLevelItem10.OutlineLevel = 9;
             // 
-            // insertCaptionPlaceholderItem1
+            // addParagraphsToTableOfContentItem1
             // 
-            insertCaptionPlaceholderItem1.Id = 141;
-            insertCaptionPlaceholderItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(insertFiguresCaptionItems1), new DevExpress.XtraBars.LinkPersistInfo(insertTablesCaptionItems1), new DevExpress.XtraBars.LinkPersistInfo(insertEquationsCaptionItems1) });
-            insertCaptionPlaceholderItem1.Name = "insertCaptionPlaceholderItem1";
+            addParagraphsToTableOfContentItem1.Id = 130;
+            addParagraphsToTableOfContentItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem1), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem2), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem3), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem4), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem5), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem6), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem7), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem8), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem9), new DevExpress.XtraBars.LinkPersistInfo(setParagraphHeadingLevelItem10) });
+            addParagraphsToTableOfContentItem1.Name = "addParagraphsToTableOfContentItem1";
+            // 
+            // captionsRibbonPageGroup1
+            // 
+            captionsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            captionsRibbonPageGroup1.ItemLinks.Add(insertCaptionPlaceholderItem1, "C");
+            captionsRibbonPageGroup1.ItemLinks.Add(insertTableOfFiguresPlaceholderItem1, "G");
+            captionsRibbonPageGroup1.ItemLinks.Add(updateTableOfFiguresItem1, "V");
+            captionsRibbonPageGroup1.Name = "captionsRibbonPageGroup1";
             // 
             // insertFiguresCaptionItems1
             // 
@@ -1287,11 +1756,11 @@
             insertEquationsCaptionItems1.Id = 144;
             insertEquationsCaptionItems1.Name = "insertEquationsCaptionItems1";
             // 
-            // insertTableOfFiguresPlaceholderItem1
+            // insertCaptionPlaceholderItem1
             // 
-            insertTableOfFiguresPlaceholderItem1.Id = 145;
-            insertTableOfFiguresPlaceholderItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(insertTableOfFiguresItems1), new DevExpress.XtraBars.LinkPersistInfo(insertTableOfTablesItems1), new DevExpress.XtraBars.LinkPersistInfo(insertTableOfEquationsItems1) });
-            insertTableOfFiguresPlaceholderItem1.Name = "insertTableOfFiguresPlaceholderItem1";
+            insertCaptionPlaceholderItem1.Id = 141;
+            insertCaptionPlaceholderItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(insertFiguresCaptionItems1), new DevExpress.XtraBars.LinkPersistInfo(insertTablesCaptionItems1), new DevExpress.XtraBars.LinkPersistInfo(insertEquationsCaptionItems1) });
+            insertCaptionPlaceholderItem1.Name = "insertCaptionPlaceholderItem1";
             // 
             // insertTableOfFiguresItems1
             // 
@@ -1308,10 +1777,25 @@
             insertTableOfEquationsItems1.Id = 148;
             insertTableOfEquationsItems1.Name = "insertTableOfEquationsItems1";
             // 
+            // insertTableOfFiguresPlaceholderItem1
+            // 
+            insertTableOfFiguresPlaceholderItem1.Id = 145;
+            insertTableOfFiguresPlaceholderItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(insertTableOfFiguresItems1), new DevExpress.XtraBars.LinkPersistInfo(insertTableOfTablesItems1), new DevExpress.XtraBars.LinkPersistInfo(insertTableOfEquationsItems1) });
+            insertTableOfFiguresPlaceholderItem1.Name = "insertTableOfFiguresPlaceholderItem1";
+            // 
             // updateTableOfFiguresItem1
             // 
             updateTableOfFiguresItem1.Id = 149;
             updateTableOfFiguresItem1.Name = "updateTableOfFiguresItem1";
+            // 
+            // notesRibbonPageGroup1
+            // 
+            notesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
+            notesRibbonPageGroup1.ItemLinks.Add(insertFootnoteItem1);
+            notesRibbonPageGroup1.ItemLinks.Add(insertEndnoteItem1);
+            notesRibbonPageGroup1.ItemLinks.Add(navigationNotesItem1);
+            notesRibbonPageGroup1.ItemLinks.Add(showNotesItem1);
+            notesRibbonPageGroup1.Name = "notesRibbonPageGroup1";
             // 
             // insertFootnoteItem1
             // 
@@ -1338,6 +1822,20 @@
             showNotesItem1.Id = 153;
             showNotesItem1.Name = "showNotesItem1";
             // 
+            // mailMergeRibbonPageGroup1
+            // 
+            mailMergeRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            mailMergeRibbonPageGroup1.ItemLinks.Add(insertMergeFieldItem1);
+            mailMergeRibbonPageGroup1.ItemLinks.Add(showAllFieldCodesItem1);
+            mailMergeRibbonPageGroup1.ItemLinks.Add(showAllFieldResultsItem1);
+            mailMergeRibbonPageGroup1.ItemLinks.Add(toggleViewMergedDataItem1, "P");
+            mailMergeRibbonPageGroup1.Name = "mailMergeRibbonPageGroup1";
+            // 
+            // mailingsRibbonPage1
+            // 
+            mailingsRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { mailMergeRibbonPageGroup1 });
+            mailingsRibbonPage1.Name = "mailingsRibbonPage1";
+            // 
             // insertMergeFieldItem1
             // 
             insertMergeFieldItem1.Id = 154;
@@ -1358,6 +1856,18 @@
             toggleViewMergedDataItem1.Id = 157;
             toggleViewMergedDataItem1.Name = "toggleViewMergedDataItem1";
             // 
+            // documentProofingRibbonPageGroup1
+            // 
+            documentProofingRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            documentProofingRibbonPageGroup1.ItemLinks.Add(checkSpellingItem1, "S");
+            documentProofingRibbonPageGroup1.ItemLinks.Add(changeLanguageItem1);
+            documentProofingRibbonPageGroup1.Name = "documentProofingRibbonPageGroup1";
+            // 
+            // reviewRibbonPage1
+            // 
+            reviewRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { documentProofingRibbonPageGroup1, documentProtectionRibbonPageGroup1, documentCommentRibbonPageGroup1, documentTrackingRibbonPageGroup1, documentChangesRibbonPageGroup1 });
+            reviewRibbonPage1.Name = "reviewRibbonPage1";
+            // 
             // checkSpellingItem1
             // 
             checkSpellingItem1.Id = 158;
@@ -1367,6 +1877,14 @@
             // 
             changeLanguageItem1.Id = 159;
             changeLanguageItem1.Name = "changeLanguageItem1";
+            // 
+            // documentProtectionRibbonPageGroup1
+            // 
+            documentProtectionRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            documentProtectionRibbonPageGroup1.ItemLinks.Add(protectDocumentItem1);
+            documentProtectionRibbonPageGroup1.ItemLinks.Add(changeRangeEditingPermissionsItem1);
+            documentProtectionRibbonPageGroup1.ItemLinks.Add(unprotectDocumentItem1);
+            documentProtectionRibbonPageGroup1.Name = "documentProtectionRibbonPageGroup1";
             // 
             // protectDocumentItem1
             // 
@@ -1383,16 +1901,19 @@
             unprotectDocumentItem1.Id = 162;
             unprotectDocumentItem1.Name = "unprotectDocumentItem1";
             // 
+            // documentCommentRibbonPageGroup1
+            // 
+            documentCommentRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            documentCommentRibbonPageGroup1.ItemLinks.Add(newCommentItem1, "C");
+            documentCommentRibbonPageGroup1.ItemLinks.Add(deleteCommentsItem1, "D");
+            documentCommentRibbonPageGroup1.ItemLinks.Add(previousCommentItem1, "V");
+            documentCommentRibbonPageGroup1.ItemLinks.Add(nextCommentItem1, "N");
+            documentCommentRibbonPageGroup1.Name = "documentCommentRibbonPageGroup1";
+            // 
             // newCommentItem1
             // 
             newCommentItem1.Id = 163;
             newCommentItem1.Name = "newCommentItem1";
-            // 
-            // deleteCommentsItem1
-            // 
-            deleteCommentsItem1.Id = 164;
-            deleteCommentsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(deleteOneCommentItem1), new DevExpress.XtraBars.LinkPersistInfo(deleteAllCommentsShownItem1), new DevExpress.XtraBars.LinkPersistInfo(deleteAllCommentsItem1) });
-            deleteCommentsItem1.Name = "deleteCommentsItem1";
             // 
             // deleteOneCommentItem1
             // 
@@ -1409,6 +1930,12 @@
             deleteAllCommentsItem1.Id = 167;
             deleteAllCommentsItem1.Name = "deleteAllCommentsItem1";
             // 
+            // deleteCommentsItem1
+            // 
+            deleteCommentsItem1.Id = 164;
+            deleteCommentsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(deleteOneCommentItem1), new DevExpress.XtraBars.LinkPersistInfo(deleteAllCommentsShownItem1), new DevExpress.XtraBars.LinkPersistInfo(deleteAllCommentsItem1) });
+            deleteCommentsItem1.Name = "deleteCommentsItem1";
+            // 
             // previousCommentItem1
             // 
             previousCommentItem1.Id = 168;
@@ -1418,6 +1945,15 @@
             // 
             nextCommentItem1.Id = 169;
             nextCommentItem1.Name = "nextCommentItem1";
+            // 
+            // documentTrackingRibbonPageGroup1
+            // 
+            documentTrackingRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            documentTrackingRibbonPageGroup1.ItemLinks.Add(toggleTrackChangesBarItem1, "G");
+            documentTrackingRibbonPageGroup1.ItemLinks.Add(changeDisplayForReviewModeItem1, "TD");
+            documentTrackingRibbonPageGroup1.ItemLinks.Add(showMarkupSubItem1, "TM");
+            documentTrackingRibbonPageGroup1.ItemLinks.Add(reviewingPaneItem1);
+            documentTrackingRibbonPageGroup1.Name = "documentTrackingRibbonPageGroup1";
             // 
             // toggleTrackChangesBarItem1
             // 
@@ -1435,13 +1971,6 @@
             changeDisplayForReviewModeItem1.Id = 171;
             changeDisplayForReviewModeItem1.Name = "changeDisplayForReviewModeItem1";
             // 
-            // displayForReviewModeComboBox1
-            // 
-            displayForReviewModeComboBox1.AutoHeight = false;
-            displayForReviewModeComboBox1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            displayForReviewModeComboBox1.Name = "displayForReviewModeComboBox1";
-            displayForReviewModeComboBox1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            // 
             // showMarkupSubItem1
             // 
             showMarkupSubItem1.ActAsDropDown = true;
@@ -1458,6 +1987,22 @@
             // 
             reviewingPaneItem1.Id = 173;
             reviewingPaneItem1.Name = "reviewingPaneItem1";
+            // 
+            // displayForReviewModeComboBox1
+            // 
+            displayForReviewModeComboBox1.AutoHeight = false;
+            displayForReviewModeComboBox1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            displayForReviewModeComboBox1.Name = "displayForReviewModeComboBox1";
+            displayForReviewModeComboBox1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            // 
+            // documentChangesRibbonPageGroup1
+            // 
+            documentChangesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            documentChangesRibbonPageGroup1.ItemLinks.Add(acceptAndMoveToNextSubItem1, "M");
+            documentChangesRibbonPageGroup1.ItemLinks.Add(rejectAndMoveToNextSubItem1, "M");
+            documentChangesRibbonPageGroup1.ItemLinks.Add(previousChangeItem1, "H");
+            documentChangesRibbonPageGroup1.ItemLinks.Add(nextChangeItem1, "F");
+            documentChangesRibbonPageGroup1.Name = "documentChangesRibbonPageGroup1";
             // 
             // acceptAndMoveToNextSubItem1
             // 
@@ -1489,6 +2034,19 @@
             nextChangeItem1.Id = 177;
             nextChangeItem1.Name = "nextChangeItem1";
             // 
+            // documentViewsRibbonPageGroup1
+            // 
+            documentViewsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            documentViewsRibbonPageGroup1.ItemLinks.Add(switchToSimpleViewItem1, "L");
+            documentViewsRibbonPageGroup1.ItemLinks.Add(switchToDraftViewItem1, "E");
+            documentViewsRibbonPageGroup1.ItemLinks.Add(switchToPrintLayoutViewItem1, "P");
+            documentViewsRibbonPageGroup1.Name = "documentViewsRibbonPageGroup1";
+            // 
+            // viewRibbonPage1
+            // 
+            viewRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { documentViewsRibbonPageGroup1, showRibbonPageGroup1, zoomRibbonPageGroup1 });
+            viewRibbonPage1.Name = "viewRibbonPage1";
+            // 
             // switchToSimpleViewItem1
             // 
             switchToSimpleViewItem1.Id = 178;
@@ -1504,6 +2062,13 @@
             switchToPrintLayoutViewItem1.Id = 180;
             switchToPrintLayoutViewItem1.Name = "switchToPrintLayoutViewItem1";
             // 
+            // showRibbonPageGroup1
+            // 
+            showRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            showRibbonPageGroup1.ItemLinks.Add(toggleShowHorizontalRulerItem1);
+            showRibbonPageGroup1.ItemLinks.Add(toggleShowVerticalRulerItem1);
+            showRibbonPageGroup1.Name = "showRibbonPageGroup1";
+            // 
             // toggleShowHorizontalRulerItem1
             // 
             toggleShowHorizontalRulerItem1.Id = 181;
@@ -1514,6 +2079,13 @@
             toggleShowVerticalRulerItem1.Id = 182;
             toggleShowVerticalRulerItem1.Name = "toggleShowVerticalRulerItem1";
             // 
+            // zoomRibbonPageGroup1
+            // 
+            zoomRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            zoomRibbonPageGroup1.ItemLinks.Add(zoomOutItem1);
+            zoomRibbonPageGroup1.ItemLinks.Add(zoomInItem1);
+            zoomRibbonPageGroup1.Name = "zoomRibbonPageGroup1";
+            // 
             // zoomOutItem1
             // 
             zoomOutItem1.Id = 183;
@@ -1523,6 +2095,29 @@
             // 
             zoomInItem1.Id = 184;
             zoomInItem1.Name = "zoomInItem1";
+            // 
+            // headerFooterToolsDesignNavigationRibbonPageGroup1
+            // 
+            headerFooterToolsDesignNavigationRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            headerFooterToolsDesignNavigationRibbonPageGroup1.ItemLinks.Add(goToPageHeaderItem1, "E");
+            headerFooterToolsDesignNavigationRibbonPageGroup1.ItemLinks.Add(goToPageFooterItem1, "G");
+            headerFooterToolsDesignNavigationRibbonPageGroup1.ItemLinks.Add(goToNextHeaderFooterItem1, "X");
+            headerFooterToolsDesignNavigationRibbonPageGroup1.ItemLinks.Add(goToPreviousHeaderFooterItem1, "R");
+            headerFooterToolsDesignNavigationRibbonPageGroup1.ItemLinks.Add(toggleLinkToPreviousItem1, "K");
+            headerFooterToolsDesignNavigationRibbonPageGroup1.Name = "headerFooterToolsDesignNavigationRibbonPageGroup1";
+            // 
+            // headerFooterToolsDesignRibbonPage1
+            // 
+            headerFooterToolsDesignRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { headerFooterToolsDesignNavigationRibbonPageGroup1, headerFooterToolsDesignOptionsRibbonPageGroup1, headerFooterToolsDesignCloseRibbonPageGroup1 });
+            headerFooterToolsDesignRibbonPage1.Name = "headerFooterToolsDesignRibbonPage1";
+            // 
+            // headerFooterToolsRibbonPageCategory1
+            // 
+            headerFooterToolsRibbonPageCategory1.Appearance.BackColor = Color.FromArgb(38, 176, 35);
+            headerFooterToolsRibbonPageCategory1.Appearance.Options.UseBackColor = true;
+            headerFooterToolsRibbonPageCategory1.Control = richEditControl;
+            headerFooterToolsRibbonPageCategory1.Name = "headerFooterToolsRibbonPageCategory1";
+            headerFooterToolsRibbonPageCategory1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { headerFooterToolsDesignRibbonPage1 });
             // 
             // goToPageHeaderItem1
             // 
@@ -1549,6 +2144,13 @@
             toggleLinkToPreviousItem1.Id = 189;
             toggleLinkToPreviousItem1.Name = "toggleLinkToPreviousItem1";
             // 
+            // headerFooterToolsDesignOptionsRibbonPageGroup1
+            // 
+            headerFooterToolsDesignOptionsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            headerFooterToolsDesignOptionsRibbonPageGroup1.ItemLinks.Add(toggleDifferentFirstPageItem1, "A");
+            headerFooterToolsDesignOptionsRibbonPageGroup1.ItemLinks.Add(toggleDifferentOddAndEvenPagesItem1, "V");
+            headerFooterToolsDesignOptionsRibbonPageGroup1.Name = "headerFooterToolsDesignOptionsRibbonPageGroup1";
+            // 
             // toggleDifferentFirstPageItem1
             // 
             toggleDifferentFirstPageItem1.Id = 190;
@@ -1559,10 +2161,40 @@
             toggleDifferentOddAndEvenPagesItem1.Id = 191;
             toggleDifferentOddAndEvenPagesItem1.Name = "toggleDifferentOddAndEvenPagesItem1";
             // 
+            // headerFooterToolsDesignCloseRibbonPageGroup1
+            // 
+            headerFooterToolsDesignCloseRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            headerFooterToolsDesignCloseRibbonPageGroup1.ItemLinks.Add(closePageHeaderFooterItem1, "C");
+            headerFooterToolsDesignCloseRibbonPageGroup1.Name = "headerFooterToolsDesignCloseRibbonPageGroup1";
+            // 
             // closePageHeaderFooterItem1
             // 
             closePageHeaderFooterItem1.Id = 192;
             closePageHeaderFooterItem1.Name = "closePageHeaderFooterItem1";
+            // 
+            // tableStyleOptionsRibbonPageGroup1
+            // 
+            tableStyleOptionsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleFirstRowItem1);
+            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleLastRowItem1);
+            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleBandedRowsItem1);
+            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleFirstColumnItem1);
+            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleLastColumnItem1);
+            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleBandedColumnsItem1);
+            tableStyleOptionsRibbonPageGroup1.Name = "tableStyleOptionsRibbonPageGroup1";
+            // 
+            // tableDesignRibbonPage1
+            // 
+            tableDesignRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { tableStyleOptionsRibbonPageGroup1, tableStylesRibbonPageGroup1, tableDrawBordersRibbonPageGroup1 });
+            tableDesignRibbonPage1.Name = "tableDesignRibbonPage1";
+            // 
+            // tableToolsRibbonPageCategory1
+            // 
+            tableToolsRibbonPageCategory1.Appearance.BackColor = Color.FromArgb(252, 233, 20);
+            tableToolsRibbonPageCategory1.Appearance.Options.UseBackColor = true;
+            tableToolsRibbonPageCategory1.Control = richEditControl;
+            tableToolsRibbonPageCategory1.Name = "tableToolsRibbonPageCategory1";
+            tableToolsRibbonPageCategory1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { tableDesignRibbonPage1, tableLayoutRibbonPage1 });
             // 
             // toggleFirstRowItem1
             // 
@@ -1600,6 +2232,12 @@
             toggleBandedColumnsItem1.Id = 198;
             toggleBandedColumnsItem1.Name = "toggleBandedColumnsItem1";
             // 
+            // tableStylesRibbonPageGroup1
+            // 
+            tableStylesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            tableStylesRibbonPageGroup1.ItemLinks.Add(galleryChangeTableStyleItem1);
+            tableStylesRibbonPageGroup1.Name = "tableStylesRibbonPageGroup1";
+            // 
             // galleryChangeTableStyleItem1
             // 
             galleryChangeTableStyleItem1.CurrentItem = null;
@@ -1616,19 +2254,22 @@
             galleryChangeTableStyleItem1.NewItemLink = null;
             galleryChangeTableStyleItem1.PopupGallery = null;
             // 
+            // tableDrawBordersRibbonPageGroup1
+            // 
+            tableDrawBordersRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
+            tableDrawBordersRibbonPageGroup1.ItemLinks.Add(changeTableBorderLineStyleItem1);
+            tableDrawBordersRibbonPageGroup1.ItemLinks.Add(changeTableBorderLineWeightItem1);
+            tableDrawBordersRibbonPageGroup1.ItemLinks.Add(changeTableBorderColorItem1, "C");
+            tableDrawBordersRibbonPageGroup1.ItemLinks.Add(changeTableBordersItem1, "B");
+            tableDrawBordersRibbonPageGroup1.ItemLinks.Add(changeTableCellsShadingItem1, "H");
+            tableDrawBordersRibbonPageGroup1.Name = "tableDrawBordersRibbonPageGroup1";
+            // 
             // changeTableBorderLineStyleItem1
             // 
             changeTableBorderLineStyleItem1.Edit = repositoryItemBorderLineStyle1;
             changeTableBorderLineStyleItem1.EditWidth = 130;
             changeTableBorderLineStyleItem1.Id = 200;
             changeTableBorderLineStyleItem1.Name = "changeTableBorderLineStyleItem1";
-            // 
-            // repositoryItemBorderLineStyle1
-            // 
-            repositoryItemBorderLineStyle1.AutoHeight = false;
-            repositoryItemBorderLineStyle1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repositoryItemBorderLineStyle1.Control = richEditControl;
-            repositoryItemBorderLineStyle1.Name = "repositoryItemBorderLineStyle1";
             // 
             // changeTableBorderLineWeightItem1
             // 
@@ -1638,23 +2279,10 @@
             changeTableBorderLineWeightItem1.Id = 201;
             changeTableBorderLineWeightItem1.Name = "changeTableBorderLineWeightItem1";
             // 
-            // repositoryItemBorderLineWeight1
-            // 
-            repositoryItemBorderLineWeight1.AutoHeight = false;
-            repositoryItemBorderLineWeight1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repositoryItemBorderLineWeight1.Control = richEditControl;
-            repositoryItemBorderLineWeight1.Name = "repositoryItemBorderLineWeight1";
-            // 
             // changeTableBorderColorItem1
             // 
             changeTableBorderColorItem1.Id = 202;
             changeTableBorderColorItem1.Name = "changeTableBorderColorItem1";
-            // 
-            // changeTableBordersItem1
-            // 
-            changeTableBordersItem1.Id = 203;
-            changeTableBordersItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsBottomBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsTopBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsLeftBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsRightBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(resetTableCellsAllBordersItem1, true), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsAllBordersItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsOutsideBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsInsideBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsInsideHorizontalBorderItem1, true), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsInsideVerticalBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.KeyTip, toggleShowTableGridLinesItem1, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard, "TG", "") });
-            changeTableBordersItem1.Name = "changeTableBordersItem1";
             // 
             // toggleTableCellsBottomBorderItem1
             // 
@@ -1711,16 +2339,43 @@
             toggleShowTableGridLinesItem1.Id = 214;
             toggleShowTableGridLinesItem1.Name = "toggleShowTableGridLinesItem1";
             // 
+            // changeTableBordersItem1
+            // 
+            changeTableBordersItem1.Id = 203;
+            changeTableBordersItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsBottomBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsTopBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsLeftBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsRightBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(resetTableCellsAllBordersItem1, true), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsAllBordersItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsOutsideBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsInsideBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsInsideHorizontalBorderItem1, true), new DevExpress.XtraBars.LinkPersistInfo(toggleTableCellsInsideVerticalBorderItem1), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.KeyTip, toggleShowTableGridLinesItem1, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard, "TG", "") });
+            changeTableBordersItem1.Name = "changeTableBordersItem1";
+            // 
             // changeTableCellsShadingItem1
             // 
             changeTableCellsShadingItem1.Id = 215;
             changeTableCellsShadingItem1.Name = "changeTableCellsShadingItem1";
             // 
-            // selectTableElementsItem1
+            // repositoryItemBorderLineStyle1
             // 
-            selectTableElementsItem1.Id = 216;
-            selectTableElementsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(selectTableCellItem1), new DevExpress.XtraBars.LinkPersistInfo(selectTableColumnItem1), new DevExpress.XtraBars.LinkPersistInfo(selectTableRowItem1), new DevExpress.XtraBars.LinkPersistInfo(selectTableItem1) });
-            selectTableElementsItem1.Name = "selectTableElementsItem1";
+            repositoryItemBorderLineStyle1.AutoHeight = false;
+            repositoryItemBorderLineStyle1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repositoryItemBorderLineStyle1.Control = richEditControl;
+            repositoryItemBorderLineStyle1.Name = "repositoryItemBorderLineStyle1";
+            // 
+            // repositoryItemBorderLineWeight1
+            // 
+            repositoryItemBorderLineWeight1.AutoHeight = false;
+            repositoryItemBorderLineWeight1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repositoryItemBorderLineWeight1.Control = richEditControl;
+            repositoryItemBorderLineWeight1.Name = "repositoryItemBorderLineWeight1";
+            // 
+            // tableTableRibbonPageGroup1
+            // 
+            tableTableRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            tableTableRibbonPageGroup1.ItemLinks.Add(selectTableElementsItem1, "K");
+            tableTableRibbonPageGroup1.ItemLinks.Add(toggleShowTableGridLinesItem1, "TG");
+            tableTableRibbonPageGroup1.ItemLinks.Add(showTablePropertiesFormItem1, "O");
+            tableTableRibbonPageGroup1.Name = "tableTableRibbonPageGroup1";
+            // 
+            // tableLayoutRibbonPage1
+            // 
+            tableLayoutRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { tableTableRibbonPageGroup1, tableRowsAndColumnsRibbonPageGroup1, tableMergeRibbonPageGroup1, tableCellSizeRibbonPageGroup1, tableAlignmentRibbonPageGroup1 });
+            tableLayoutRibbonPage1.Name = "tableLayoutRibbonPage1";
             // 
             // selectTableCellItem1
             // 
@@ -1742,16 +2397,26 @@
             selectTableItem1.Id = 220;
             selectTableItem1.Name = "selectTableItem1";
             // 
+            // selectTableElementsItem1
+            // 
+            selectTableElementsItem1.Id = 216;
+            selectTableElementsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(selectTableCellItem1), new DevExpress.XtraBars.LinkPersistInfo(selectTableColumnItem1), new DevExpress.XtraBars.LinkPersistInfo(selectTableRowItem1), new DevExpress.XtraBars.LinkPersistInfo(selectTableItem1) });
+            selectTableElementsItem1.Name = "selectTableElementsItem1";
+            // 
             // showTablePropertiesFormItem1
             // 
             showTablePropertiesFormItem1.Id = 221;
             showTablePropertiesFormItem1.Name = "showTablePropertiesFormItem1";
             // 
-            // deleteTableElementsItem1
+            // tableRowsAndColumnsRibbonPageGroup1
             // 
-            deleteTableElementsItem1.Id = 222;
-            deleteTableElementsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(showDeleteTableCellsFormItem1), new DevExpress.XtraBars.LinkPersistInfo(deleteTableColumnsItem1), new DevExpress.XtraBars.LinkPersistInfo(deleteTableRowsItem1), new DevExpress.XtraBars.LinkPersistInfo(deleteTableItem1) });
-            deleteTableElementsItem1.Name = "deleteTableElementsItem1";
+            tableRowsAndColumnsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
+            tableRowsAndColumnsRibbonPageGroup1.ItemLinks.Add(deleteTableElementsItem1, "D");
+            tableRowsAndColumnsRibbonPageGroup1.ItemLinks.Add(insertTableRowAboveItem1, "A");
+            tableRowsAndColumnsRibbonPageGroup1.ItemLinks.Add(insertTableRowBelowItem1, "E");
+            tableRowsAndColumnsRibbonPageGroup1.ItemLinks.Add(insertTableColumnToLeftItem1, "L");
+            tableRowsAndColumnsRibbonPageGroup1.ItemLinks.Add(insertTableColumnToRightItem1, "R");
+            tableRowsAndColumnsRibbonPageGroup1.Name = "tableRowsAndColumnsRibbonPageGroup1";
             // 
             // showDeleteTableCellsFormItem1
             // 
@@ -1773,6 +2438,12 @@
             deleteTableItem1.Id = 226;
             deleteTableItem1.Name = "deleteTableItem1";
             // 
+            // deleteTableElementsItem1
+            // 
+            deleteTableElementsItem1.Id = 222;
+            deleteTableElementsItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(showDeleteTableCellsFormItem1), new DevExpress.XtraBars.LinkPersistInfo(deleteTableColumnsItem1), new DevExpress.XtraBars.LinkPersistInfo(deleteTableRowsItem1), new DevExpress.XtraBars.LinkPersistInfo(deleteTableItem1) });
+            deleteTableElementsItem1.Name = "deleteTableElementsItem1";
+            // 
             // insertTableRowAboveItem1
             // 
             insertTableRowAboveItem1.Id = 227;
@@ -1793,6 +2464,14 @@
             insertTableColumnToRightItem1.Id = 230;
             insertTableColumnToRightItem1.Name = "insertTableColumnToRightItem1";
             // 
+            // tableMergeRibbonPageGroup1
+            // 
+            tableMergeRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            tableMergeRibbonPageGroup1.ItemLinks.Add(mergeTableCellsItem1, "M");
+            tableMergeRibbonPageGroup1.ItemLinks.Add(showSplitTableCellsForm1, "P");
+            tableMergeRibbonPageGroup1.ItemLinks.Add(splitTableItem1, "Q");
+            tableMergeRibbonPageGroup1.Name = "tableMergeRibbonPageGroup1";
+            // 
             // mergeTableCellsItem1
             // 
             mergeTableCellsItem1.Id = 231;
@@ -1808,11 +2487,12 @@
             splitTableItem1.Id = 233;
             splitTableItem1.Name = "splitTableItem1";
             // 
-            // toggleTableAutoFitItem1
+            // tableCellSizeRibbonPageGroup1
             // 
-            toggleTableAutoFitItem1.Id = 234;
-            toggleTableAutoFitItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(toggleTableAutoFitContentsItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableAutoFitWindowItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableFixedColumnWidthItem1) });
-            toggleTableAutoFitItem1.Name = "toggleTableAutoFitItem1";
+            tableCellSizeRibbonPageGroup1.AllowTextClipping = false;
+            tableCellSizeRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
+            tableCellSizeRibbonPageGroup1.ItemLinks.Add(toggleTableAutoFitItem1, "F");
+            tableCellSizeRibbonPageGroup1.Name = "tableCellSizeRibbonPageGroup1";
             // 
             // toggleTableAutoFitContentsItem1
             // 
@@ -1828,6 +2508,50 @@
             // 
             toggleTableFixedColumnWidthItem1.Id = 237;
             toggleTableFixedColumnWidthItem1.Name = "toggleTableFixedColumnWidthItem1";
+            // 
+            // toggleTableAutoFitItem1
+            // 
+            toggleTableAutoFitItem1.Id = 234;
+            toggleTableAutoFitItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(toggleTableAutoFitContentsItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableAutoFitWindowItem1), new DevExpress.XtraBars.LinkPersistInfo(toggleTableFixedColumnWidthItem1) });
+            toggleTableAutoFitItem1.Name = "toggleTableAutoFitItem1";
+            // 
+            // tableAlignmentRibbonPageGroup1
+            // 
+            tableAlignmentRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopLeftAlignmentItem1, "TL");
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleLeftAlignmentItem1, "CL");
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomLeftAlignmentItem1, "BL");
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopCenterAlignmentItem1, "TC");
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleCenterAlignmentItem1, "CC");
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomCenterAlignmentItem1, "BC");
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopRightAlignmentItem1, "TR");
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleRightAlignmentItem1, "CR");
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomRightAlignmentItem1, "BR");
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomLeftRotate90AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomCenterRotate90AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomRightRotate90AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleLeftRotate90AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleCenterRotate90AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleRightRotate90AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopLeftRotate90AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopCenterRotate90AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopRightRotate90AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopRightRotate270AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopCenterRotate270AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopLeftRotate270AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleRightRotate270AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleCenterRotate270AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleLeftRotate270AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomRightRotate270AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomCenterRotate270AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomLeftRotate270AlignmentItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(changeTableCellsHorizontalTextDirectionItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(changeTableCellsVerticalTextDirectionItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(changeTableCellsRotateAll90TextDirectionItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(changeTableCellsRotateAll270TextDirectionItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(changeTableCellsRotateAsian270TextDirectionItem1);
+            tableAlignmentRibbonPageGroup1.ItemLinks.Add(showTableOptionsFormItem1, "N");
+            tableAlignmentRibbonPageGroup1.Name = "tableAlignmentRibbonPageGroup1";
             // 
             // toggleTableCellsTopLeftAlignmentItem1
             // 
@@ -1994,6 +2718,27 @@
             showTableOptionsFormItem1.Id = 270;
             showTableOptionsFormItem1.Name = "showTableOptionsFormItem1";
             // 
+            // floatingPictureToolsShapeStylesPageGroup1
+            // 
+            floatingPictureToolsShapeStylesPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            floatingPictureToolsShapeStylesPageGroup1.ItemLinks.Add(changeFloatingObjectFillColorItem1);
+            floatingPictureToolsShapeStylesPageGroup1.ItemLinks.Add(changeFloatingObjectOutlineColorItem1);
+            floatingPictureToolsShapeStylesPageGroup1.ItemLinks.Add(changeFloatingObjectOutlineWeightItem1);
+            floatingPictureToolsShapeStylesPageGroup1.Name = "floatingPictureToolsShapeStylesPageGroup1";
+            // 
+            // floatingPictureToolsFormatPage1
+            // 
+            floatingPictureToolsFormatPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { floatingPictureToolsShapeStylesPageGroup1, floatingPictureToolsArrangePageGroup1 });
+            floatingPictureToolsFormatPage1.Name = "floatingPictureToolsFormatPage1";
+            // 
+            // floatingPictureToolsRibbonPageCategory1
+            // 
+            floatingPictureToolsRibbonPageCategory1.Appearance.BackColor = Color.FromArgb(201, 0, 119);
+            floatingPictureToolsRibbonPageCategory1.Appearance.Options.UseBackColor = true;
+            floatingPictureToolsRibbonPageCategory1.Control = richEditControl;
+            floatingPictureToolsRibbonPageCategory1.Name = "floatingPictureToolsRibbonPageCategory1";
+            floatingPictureToolsRibbonPageCategory1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { floatingPictureToolsFormatPage1 });
+            // 
             // changeFloatingObjectFillColorItem1
             // 
             changeFloatingObjectFillColorItem1.Id = 271;
@@ -2018,11 +2763,14 @@
             repositoryItemFloatingObjectOutlineWeight1.Control = richEditControl;
             repositoryItemFloatingObjectOutlineWeight1.Name = "repositoryItemFloatingObjectOutlineWeight1";
             // 
-            // changeFloatingObjectTextWrapTypeItem1
+            // floatingPictureToolsArrangePageGroup1
             // 
-            changeFloatingObjectTextWrapTypeItem1.Id = 274;
-            changeFloatingObjectTextWrapTypeItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectInlineTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectSquareTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectTightTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectThroughTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectTopAndBottomTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectBehindTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectInFrontOfTextWrapTypeItem1) });
-            changeFloatingObjectTextWrapTypeItem1.Name = "changeFloatingObjectTextWrapTypeItem1";
+            floatingPictureToolsArrangePageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            floatingPictureToolsArrangePageGroup1.ItemLinks.Add(changeFloatingObjectTextWrapTypeItem1, "TW");
+            floatingPictureToolsArrangePageGroup1.ItemLinks.Add(changeFloatingObjectAlignmentItem1, "PO");
+            floatingPictureToolsArrangePageGroup1.ItemLinks.Add(floatingObjectBringForwardSubItem1, "AF");
+            floatingPictureToolsArrangePageGroup1.ItemLinks.Add(floatingObjectSendBackwardSubItem1, "AE");
+            floatingPictureToolsArrangePageGroup1.Name = "floatingPictureToolsArrangePageGroup1";
             // 
             // setFloatingObjectInlineTextWrapTypeItem1
             // 
@@ -2059,11 +2807,11 @@
             setFloatingObjectInFrontOfTextWrapTypeItem1.Id = 281;
             setFloatingObjectInFrontOfTextWrapTypeItem1.Name = "setFloatingObjectInFrontOfTextWrapTypeItem1";
             // 
-            // changeFloatingObjectAlignmentItem1
+            // changeFloatingObjectTextWrapTypeItem1
             // 
-            changeFloatingObjectAlignmentItem1.Id = 282;
-            changeFloatingObjectAlignmentItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectTopLeftAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectTopCenterAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectTopRightAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectMiddleLeftAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectMiddleCenterAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectMiddleRightAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectBottomLeftAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectBottomCenterAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectBottomRightAlignmentItem1) });
-            changeFloatingObjectAlignmentItem1.Name = "changeFloatingObjectAlignmentItem1";
+            changeFloatingObjectTextWrapTypeItem1.Id = 274;
+            changeFloatingObjectTextWrapTypeItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectInlineTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectSquareTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectTightTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectThroughTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectTopAndBottomTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectBehindTextWrapTypeItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectInFrontOfTextWrapTypeItem1) });
+            changeFloatingObjectTextWrapTypeItem1.Name = "changeFloatingObjectTextWrapTypeItem1";
             // 
             // setFloatingObjectTopLeftAlignmentItem1
             // 
@@ -2110,11 +2858,11 @@
             setFloatingObjectBottomRightAlignmentItem1.Id = 291;
             setFloatingObjectBottomRightAlignmentItem1.Name = "setFloatingObjectBottomRightAlignmentItem1";
             // 
-            // floatingObjectBringForwardSubItem1
+            // changeFloatingObjectAlignmentItem1
             // 
-            floatingObjectBringForwardSubItem1.Id = 292;
-            floatingObjectBringForwardSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(floatingObjectBringForwardItem1), new DevExpress.XtraBars.LinkPersistInfo(floatingObjectBringToFrontItem1), new DevExpress.XtraBars.LinkPersistInfo(floatingObjectBringInFrontOfTextItem1) });
-            floatingObjectBringForwardSubItem1.Name = "floatingObjectBringForwardSubItem1";
+            changeFloatingObjectAlignmentItem1.Id = 282;
+            changeFloatingObjectAlignmentItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectTopLeftAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectTopCenterAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectTopRightAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectMiddleLeftAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectMiddleCenterAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectMiddleRightAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectBottomLeftAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectBottomCenterAlignmentItem1), new DevExpress.XtraBars.LinkPersistInfo(setFloatingObjectBottomRightAlignmentItem1) });
+            changeFloatingObjectAlignmentItem1.Name = "changeFloatingObjectAlignmentItem1";
             // 
             // floatingObjectBringForwardItem1
             // 
@@ -2131,11 +2879,11 @@
             floatingObjectBringInFrontOfTextItem1.Id = 295;
             floatingObjectBringInFrontOfTextItem1.Name = "floatingObjectBringInFrontOfTextItem1";
             // 
-            // floatingObjectSendBackwardSubItem1
+            // floatingObjectBringForwardSubItem1
             // 
-            floatingObjectSendBackwardSubItem1.Id = 296;
-            floatingObjectSendBackwardSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(floatingObjectSendBackwardItem1), new DevExpress.XtraBars.LinkPersistInfo(floatingObjectSendToBackItem1), new DevExpress.XtraBars.LinkPersistInfo(floatingObjectSendBehindTextItem1) });
-            floatingObjectSendBackwardSubItem1.Name = "floatingObjectSendBackwardSubItem1";
+            floatingObjectBringForwardSubItem1.Id = 292;
+            floatingObjectBringForwardSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(floatingObjectBringForwardItem1), new DevExpress.XtraBars.LinkPersistInfo(floatingObjectBringToFrontItem1), new DevExpress.XtraBars.LinkPersistInfo(floatingObjectBringInFrontOfTextItem1) });
+            floatingObjectBringForwardSubItem1.Name = "floatingObjectBringForwardSubItem1";
             // 
             // floatingObjectSendBackwardItem1
             // 
@@ -2152,855 +2900,39 @@
             floatingObjectSendBehindTextItem1.Id = 299;
             floatingObjectSendBehindTextItem1.Name = "floatingObjectSendBehindTextItem1";
             // 
-            // copyFormatItem
-            // 
-            copyFormatItem.Caption = "Формат по образцу";
-            copyFormatItem.Id = 302;
-            copyFormatItem.ImageOptions.Image = Properties.Resources.applyStyleIco;
-            copyFormatItem.Name = "copyFormatItem";
-            copyFormatItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
-            copyFormatItem.CheckedChanged += copyFormatItem_CheckedChanged;
-            // 
-            // headerFooterToolsRibbonPageCategory1
-            // 
-            headerFooterToolsRibbonPageCategory1.Appearance.BackColor = Color.FromArgb(38, 176, 35);
-            headerFooterToolsRibbonPageCategory1.Appearance.Options.UseBackColor = true;
-            headerFooterToolsRibbonPageCategory1.Control = richEditControl;
-            headerFooterToolsRibbonPageCategory1.Name = "headerFooterToolsRibbonPageCategory1";
-            headerFooterToolsRibbonPageCategory1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { headerFooterToolsDesignRibbonPage1 });
-            // 
-            // headerFooterToolsDesignRibbonPage1
-            // 
-            headerFooterToolsDesignRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { headerFooterToolsDesignNavigationRibbonPageGroup1, headerFooterToolsDesignOptionsRibbonPageGroup1, headerFooterToolsDesignCloseRibbonPageGroup1 });
-            headerFooterToolsDesignRibbonPage1.Name = "headerFooterToolsDesignRibbonPage1";
-            // 
-            // headerFooterToolsDesignNavigationRibbonPageGroup1
-            // 
-            headerFooterToolsDesignNavigationRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            headerFooterToolsDesignNavigationRibbonPageGroup1.ItemLinks.Add(goToPageHeaderItem1, "E");
-            headerFooterToolsDesignNavigationRibbonPageGroup1.ItemLinks.Add(goToPageFooterItem1, "G");
-            headerFooterToolsDesignNavigationRibbonPageGroup1.ItemLinks.Add(goToNextHeaderFooterItem1, "X");
-            headerFooterToolsDesignNavigationRibbonPageGroup1.ItemLinks.Add(goToPreviousHeaderFooterItem1, "R");
-            headerFooterToolsDesignNavigationRibbonPageGroup1.ItemLinks.Add(toggleLinkToPreviousItem1, "K");
-            headerFooterToolsDesignNavigationRibbonPageGroup1.Name = "headerFooterToolsDesignNavigationRibbonPageGroup1";
-            // 
-            // headerFooterToolsDesignOptionsRibbonPageGroup1
-            // 
-            headerFooterToolsDesignOptionsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            headerFooterToolsDesignOptionsRibbonPageGroup1.ItemLinks.Add(toggleDifferentFirstPageItem1, "A");
-            headerFooterToolsDesignOptionsRibbonPageGroup1.ItemLinks.Add(toggleDifferentOddAndEvenPagesItem1, "V");
-            headerFooterToolsDesignOptionsRibbonPageGroup1.Name = "headerFooterToolsDesignOptionsRibbonPageGroup1";
-            // 
-            // headerFooterToolsDesignCloseRibbonPageGroup1
-            // 
-            headerFooterToolsDesignCloseRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            headerFooterToolsDesignCloseRibbonPageGroup1.ItemLinks.Add(closePageHeaderFooterItem1, "C");
-            headerFooterToolsDesignCloseRibbonPageGroup1.Name = "headerFooterToolsDesignCloseRibbonPageGroup1";
-            // 
-            // tableToolsRibbonPageCategory1
-            // 
-            tableToolsRibbonPageCategory1.Appearance.BackColor = Color.FromArgb(252, 233, 20);
-            tableToolsRibbonPageCategory1.Appearance.Options.UseBackColor = true;
-            tableToolsRibbonPageCategory1.Control = richEditControl;
-            tableToolsRibbonPageCategory1.Name = "tableToolsRibbonPageCategory1";
-            tableToolsRibbonPageCategory1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { tableDesignRibbonPage1, tableLayoutRibbonPage1 });
-            // 
-            // tableDesignRibbonPage1
-            // 
-            tableDesignRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { tableStyleOptionsRibbonPageGroup1, tableStylesRibbonPageGroup1, tableDrawBordersRibbonPageGroup1 });
-            tableDesignRibbonPage1.Name = "tableDesignRibbonPage1";
-            // 
-            // tableStyleOptionsRibbonPageGroup1
-            // 
-            tableStyleOptionsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleFirstRowItem1);
-            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleLastRowItem1);
-            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleBandedRowsItem1);
-            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleFirstColumnItem1);
-            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleLastColumnItem1);
-            tableStyleOptionsRibbonPageGroup1.ItemLinks.Add(toggleBandedColumnsItem1);
-            tableStyleOptionsRibbonPageGroup1.Name = "tableStyleOptionsRibbonPageGroup1";
-            // 
-            // tableStylesRibbonPageGroup1
-            // 
-            tableStylesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            tableStylesRibbonPageGroup1.ItemLinks.Add(galleryChangeTableStyleItem1);
-            tableStylesRibbonPageGroup1.Name = "tableStylesRibbonPageGroup1";
-            // 
-            // tableDrawBordersRibbonPageGroup1
-            // 
-            tableDrawBordersRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
-            tableDrawBordersRibbonPageGroup1.ItemLinks.Add(changeTableBorderLineStyleItem1);
-            tableDrawBordersRibbonPageGroup1.ItemLinks.Add(changeTableBorderLineWeightItem1);
-            tableDrawBordersRibbonPageGroup1.ItemLinks.Add(changeTableBorderColorItem1, "C");
-            tableDrawBordersRibbonPageGroup1.ItemLinks.Add(changeTableBordersItem1, "B");
-            tableDrawBordersRibbonPageGroup1.ItemLinks.Add(changeTableCellsShadingItem1, "H");
-            tableDrawBordersRibbonPageGroup1.Name = "tableDrawBordersRibbonPageGroup1";
-            // 
-            // tableLayoutRibbonPage1
-            // 
-            tableLayoutRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { tableTableRibbonPageGroup1, tableRowsAndColumnsRibbonPageGroup1, tableMergeRibbonPageGroup1, tableCellSizeRibbonPageGroup1, tableAlignmentRibbonPageGroup1 });
-            tableLayoutRibbonPage1.Name = "tableLayoutRibbonPage1";
-            // 
-            // tableTableRibbonPageGroup1
-            // 
-            tableTableRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            tableTableRibbonPageGroup1.ItemLinks.Add(selectTableElementsItem1, "K");
-            tableTableRibbonPageGroup1.ItemLinks.Add(toggleShowTableGridLinesItem1, "TG");
-            tableTableRibbonPageGroup1.ItemLinks.Add(showTablePropertiesFormItem1, "O");
-            tableTableRibbonPageGroup1.Name = "tableTableRibbonPageGroup1";
-            // 
-            // tableRowsAndColumnsRibbonPageGroup1
-            // 
-            tableRowsAndColumnsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
-            tableRowsAndColumnsRibbonPageGroup1.ItemLinks.Add(deleteTableElementsItem1, "D");
-            tableRowsAndColumnsRibbonPageGroup1.ItemLinks.Add(insertTableRowAboveItem1, "A");
-            tableRowsAndColumnsRibbonPageGroup1.ItemLinks.Add(insertTableRowBelowItem1, "E");
-            tableRowsAndColumnsRibbonPageGroup1.ItemLinks.Add(insertTableColumnToLeftItem1, "L");
-            tableRowsAndColumnsRibbonPageGroup1.ItemLinks.Add(insertTableColumnToRightItem1, "R");
-            tableRowsAndColumnsRibbonPageGroup1.Name = "tableRowsAndColumnsRibbonPageGroup1";
-            // 
-            // tableMergeRibbonPageGroup1
-            // 
-            tableMergeRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            tableMergeRibbonPageGroup1.ItemLinks.Add(mergeTableCellsItem1, "M");
-            tableMergeRibbonPageGroup1.ItemLinks.Add(showSplitTableCellsForm1, "P");
-            tableMergeRibbonPageGroup1.ItemLinks.Add(splitTableItem1, "Q");
-            tableMergeRibbonPageGroup1.Name = "tableMergeRibbonPageGroup1";
-            // 
-            // tableCellSizeRibbonPageGroup1
-            // 
-            tableCellSizeRibbonPageGroup1.AllowTextClipping = false;
-            tableCellSizeRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
-            tableCellSizeRibbonPageGroup1.ItemLinks.Add(toggleTableAutoFitItem1, "F");
-            tableCellSizeRibbonPageGroup1.Name = "tableCellSizeRibbonPageGroup1";
-            // 
-            // tableAlignmentRibbonPageGroup1
-            // 
-            tableAlignmentRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopLeftAlignmentItem1, "TL");
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleLeftAlignmentItem1, "CL");
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomLeftAlignmentItem1, "BL");
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopCenterAlignmentItem1, "TC");
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleCenterAlignmentItem1, "CC");
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomCenterAlignmentItem1, "BC");
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopRightAlignmentItem1, "TR");
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleRightAlignmentItem1, "CR");
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomRightAlignmentItem1, "BR");
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomLeftRotate90AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomCenterRotate90AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomRightRotate90AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleLeftRotate90AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleCenterRotate90AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleRightRotate90AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopLeftRotate90AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopCenterRotate90AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopRightRotate90AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopRightRotate270AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopCenterRotate270AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsTopLeftRotate270AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleRightRotate270AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleCenterRotate270AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsMiddleLeftRotate270AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomRightRotate270AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomCenterRotate270AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(toggleTableCellsBottomLeftRotate270AlignmentItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(changeTableCellsHorizontalTextDirectionItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(changeTableCellsVerticalTextDirectionItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(changeTableCellsRotateAll90TextDirectionItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(changeTableCellsRotateAll270TextDirectionItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(changeTableCellsRotateAsian270TextDirectionItem1);
-            tableAlignmentRibbonPageGroup1.ItemLinks.Add(showTableOptionsFormItem1, "N");
-            tableAlignmentRibbonPageGroup1.Name = "tableAlignmentRibbonPageGroup1";
-            // 
-            // floatingPictureToolsRibbonPageCategory1
-            // 
-            floatingPictureToolsRibbonPageCategory1.Appearance.BackColor = Color.FromArgb(201, 0, 119);
-            floatingPictureToolsRibbonPageCategory1.Appearance.Options.UseBackColor = true;
-            floatingPictureToolsRibbonPageCategory1.Control = richEditControl;
-            floatingPictureToolsRibbonPageCategory1.Name = "floatingPictureToolsRibbonPageCategory1";
-            floatingPictureToolsRibbonPageCategory1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { floatingPictureToolsFormatPage1 });
-            // 
-            // floatingPictureToolsFormatPage1
-            // 
-            floatingPictureToolsFormatPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { floatingPictureToolsShapeStylesPageGroup1, floatingPictureToolsArrangePageGroup1 });
-            floatingPictureToolsFormatPage1.Name = "floatingPictureToolsFormatPage1";
-            // 
-            // floatingPictureToolsShapeStylesPageGroup1
-            // 
-            floatingPictureToolsShapeStylesPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            floatingPictureToolsShapeStylesPageGroup1.ItemLinks.Add(changeFloatingObjectFillColorItem1);
-            floatingPictureToolsShapeStylesPageGroup1.ItemLinks.Add(changeFloatingObjectOutlineColorItem1);
-            floatingPictureToolsShapeStylesPageGroup1.ItemLinks.Add(changeFloatingObjectOutlineWeightItem1);
-            floatingPictureToolsShapeStylesPageGroup1.Name = "floatingPictureToolsShapeStylesPageGroup1";
-            // 
-            // floatingPictureToolsArrangePageGroup1
-            // 
-            floatingPictureToolsArrangePageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            floatingPictureToolsArrangePageGroup1.ItemLinks.Add(changeFloatingObjectTextWrapTypeItem1, "TW");
-            floatingPictureToolsArrangePageGroup1.ItemLinks.Add(changeFloatingObjectAlignmentItem1, "PO");
-            floatingPictureToolsArrangePageGroup1.ItemLinks.Add(floatingObjectBringForwardSubItem1, "AF");
-            floatingPictureToolsArrangePageGroup1.ItemLinks.Add(floatingObjectSendBackwardSubItem1, "AE");
-            floatingPictureToolsArrangePageGroup1.Name = "floatingPictureToolsArrangePageGroup1";
-            // 
-            // fileRibbonPage1
-            // 
-            fileRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { commonRibbonPageGroup1, infoRibbonPageGroup1 });
-            fileRibbonPage1.Name = "fileRibbonPage1";
-            // 
-            // commonRibbonPageGroup1
-            // 
-            commonRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            commonRibbonPageGroup1.ItemLinks.Add(undoItem1);
-            commonRibbonPageGroup1.ItemLinks.Add(redoItem1);
-            commonRibbonPageGroup1.ItemLinks.Add(fileNewItem1, "N");
-            commonRibbonPageGroup1.ItemLinks.Add(fileOpenItem1, "O");
-            commonRibbonPageGroup1.ItemLinks.Add(fileSaveItem1, "S");
-            commonRibbonPageGroup1.ItemLinks.Add(fileSaveAsItem1, "A");
-            commonRibbonPageGroup1.ItemLinks.Add(quickPrintItem1);
-            commonRibbonPageGroup1.ItemLinks.Add(printItem1, "P");
-            commonRibbonPageGroup1.ItemLinks.Add(printPreviewItem1);
-            commonRibbonPageGroup1.Name = "commonRibbonPageGroup1";
-            // 
-            // infoRibbonPageGroup1
-            // 
-            infoRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            infoRibbonPageGroup1.ItemLinks.Add(encryptDocumentItem1);
-            infoRibbonPageGroup1.ItemLinks.Add(showDocumentPropertiesFormItem1);
-            infoRibbonPageGroup1.Name = "infoRibbonPageGroup1";
-            // 
-            // homeRibbonPage1
-            // 
-            homeRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { clipboardRibbonPageGroup1, fontRibbonPageGroup1, paragraphRibbonPageGroup1, stylesRibbonPageGroup1, editingRibbonPageGroup1 });
-            homeRibbonPage1.Name = "homeRibbonPage1";
-            reduceOperation1.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.UntilAvailable;
-            reduceOperation1.GroupName = null;
-            reduceOperation1.ItemLinkIndex = 0;
-            reduceOperation1.ItemLinksCount = 0;
-            reduceOperation1.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-            homeRibbonPage1.ReduceOperations.Add(reduceOperation1);
-            // 
-            // clipboardRibbonPageGroup1
-            // 
-            clipboardRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            clipboardRibbonPageGroup1.ItemLinks.Add(pasteItem1, "V");
-            clipboardRibbonPageGroup1.ItemLinks.Add(cutItem1, "X");
-            clipboardRibbonPageGroup1.ItemLinks.Add(copyItem1, "C");
-            clipboardRibbonPageGroup1.ItemLinks.Add(copyFormatItem);
-            clipboardRibbonPageGroup1.Name = "clipboardRibbonPageGroup1";
-            clipboardRibbonPageGroup1.Text = "Буфер обмена";
-            // 
-            // fontRibbonPageGroup1
-            // 
-            fontRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
-            fontRibbonPageGroup1.ItemLinks.Add(barButtonGroup1);
-            fontRibbonPageGroup1.ItemLinks.Add(barButtonGroup2);
-            fontRibbonPageGroup1.ItemLinks.Add(barButtonGroup3);
-            fontRibbonPageGroup1.ItemLinks.Add(changeTextCaseItem1);
-            fontRibbonPageGroup1.ItemLinks.Add(clearFormattingItem1, "E");
-            fontRibbonPageGroup1.Name = "fontRibbonPageGroup1";
-            // 
-            // paragraphRibbonPageGroup1
-            // 
-            paragraphRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
-            paragraphRibbonPageGroup1.ItemLinks.Add(barButtonGroup4);
-            paragraphRibbonPageGroup1.ItemLinks.Add(barButtonGroup5);
-            paragraphRibbonPageGroup1.ItemLinks.Add(barButtonGroup6);
-            paragraphRibbonPageGroup1.ItemLinks.Add(barButtonGroup7);
-            paragraphRibbonPageGroup1.Name = "paragraphRibbonPageGroup1";
-            // 
-            // stylesRibbonPageGroup1
-            // 
-            stylesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
-            stylesRibbonPageGroup1.ItemLinks.Add(galleryChangeStyleItem1);
-            stylesRibbonPageGroup1.Name = "stylesRibbonPageGroup1";
-            // 
-            // editingRibbonPageGroup1
-            // 
-            editingRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            editingRibbonPageGroup1.ItemLinks.Add(findItem1, "FD");
-            editingRibbonPageGroup1.ItemLinks.Add(replaceItem1, "R");
-            editingRibbonPageGroup1.Name = "editingRibbonPageGroup1";
-            // 
-            // insertRibbonPage1
-            // 
-            insertRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { pagesRibbonPageGroup1, tablesRibbonPageGroup1, illustrationsRibbonPageGroup1, linksRibbonPageGroup1, headerFooterRibbonPageGroup1, textRibbonPageGroup1, symbolsRibbonPageGroup1 });
-            insertRibbonPage1.Name = "insertRibbonPage1";
-            // 
-            // pagesRibbonPageGroup1
-            // 
-            pagesRibbonPageGroup1.AllowTextClipping = false;
-            pagesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            pagesRibbonPageGroup1.ItemLinks.Add(insertPageBreakItem21, "B");
-            pagesRibbonPageGroup1.Name = "pagesRibbonPageGroup1";
-            // 
-            // tablesRibbonPageGroup1
-            // 
-            tablesRibbonPageGroup1.AllowTextClipping = false;
-            tablesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            tablesRibbonPageGroup1.ItemLinks.Add(insertTableItem1, "T");
-            tablesRibbonPageGroup1.Name = "tablesRibbonPageGroup1";
-            // 
-            // illustrationsRibbonPageGroup1
-            // 
-            illustrationsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            illustrationsRibbonPageGroup1.ItemLinks.Add(insertFloatingPictureItem1);
-            illustrationsRibbonPageGroup1.Name = "illustrationsRibbonPageGroup1";
-            // 
-            // linksRibbonPageGroup1
-            // 
-            linksRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            linksRibbonPageGroup1.ItemLinks.Add(insertBookmarkItem1, "K");
-            linksRibbonPageGroup1.ItemLinks.Add(insertHyperlinkItem1, "I");
-            linksRibbonPageGroup1.Name = "linksRibbonPageGroup1";
-            // 
-            // headerFooterRibbonPageGroup1
-            // 
-            headerFooterRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            headerFooterRibbonPageGroup1.ItemLinks.Add(editPageHeaderItem1, "H");
-            headerFooterRibbonPageGroup1.ItemLinks.Add(editPageFooterItem1, "O");
-            headerFooterRibbonPageGroup1.ItemLinks.Add(insertPageNumberItem1, "NU");
-            headerFooterRibbonPageGroup1.ItemLinks.Add(insertPageCountItem1);
-            headerFooterRibbonPageGroup1.Name = "headerFooterRibbonPageGroup1";
-            // 
-            // textRibbonPageGroup1
-            // 
-            textRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            textRibbonPageGroup1.ItemLinks.Add(insertTextBoxItem1, "X");
-            textRibbonPageGroup1.ItemLinks.Add(insertObjectItem1);
-            textRibbonPageGroup1.Name = "textRibbonPageGroup1";
-            // 
-            // symbolsRibbonPageGroup1
-            // 
-            symbolsRibbonPageGroup1.AllowTextClipping = false;
-            symbolsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            symbolsRibbonPageGroup1.ItemLinks.Add(insertSymbolItem1, "U");
-            symbolsRibbonPageGroup1.Name = "symbolsRibbonPageGroup1";
-            // 
-            // pageLayoutRibbonPage1
-            // 
-            pageLayoutRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { pageSetupRibbonPageGroup1, pageBackgroundRibbonPageGroup1 });
-            pageLayoutRibbonPage1.Name = "pageLayoutRibbonPage1";
-            // 
-            // pageSetupRibbonPageGroup1
-            // 
-            pageSetupRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
-            pageSetupRibbonPageGroup1.ItemLinks.Add(changeSectionPageMarginsItem1, "M");
-            pageSetupRibbonPageGroup1.ItemLinks.Add(changeSectionPageOrientationItem1, "O");
-            pageSetupRibbonPageGroup1.ItemLinks.Add(changeSectionPaperKindItem1, "SZ");
-            pageSetupRibbonPageGroup1.ItemLinks.Add(changeSectionColumnsItem1, "J");
-            pageSetupRibbonPageGroup1.ItemLinks.Add(insertBreakItem1, "B");
-            pageSetupRibbonPageGroup1.ItemLinks.Add(changeSectionLineNumberingItem1, "LN");
-            pageSetupRibbonPageGroup1.ItemLinks.Add(changeHyphenationOptionsItem1);
-            pageSetupRibbonPageGroup1.Name = "pageSetupRibbonPageGroup1";
-            // 
-            // pageBackgroundRibbonPageGroup1
-            // 
-            pageBackgroundRibbonPageGroup1.AllowTextClipping = false;
-            pageBackgroundRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            pageBackgroundRibbonPageGroup1.ItemLinks.Add(changePageColorItem1, "PC");
-            pageBackgroundRibbonPageGroup1.ItemLinks.Add(watermarkItem1);
-            pageBackgroundRibbonPageGroup1.ItemLinks.Add(deleteWatermarkItem1);
-            pageBackgroundRibbonPageGroup1.Name = "pageBackgroundRibbonPageGroup1";
-            // 
-            // referencesRibbonPage1
-            // 
-            referencesRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { tableOfContentsRibbonPageGroup1, captionsRibbonPageGroup1, notesRibbonPageGroup1 });
-            referencesRibbonPage1.Name = "referencesRibbonPage1";
-            // 
-            // tableOfContentsRibbonPageGroup1
-            // 
-            tableOfContentsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            tableOfContentsRibbonPageGroup1.ItemLinks.Add(insertTableOfContentsItem1, "T");
-            tableOfContentsRibbonPageGroup1.ItemLinks.Add(updateTableOfContentsItem1, "U");
-            tableOfContentsRibbonPageGroup1.ItemLinks.Add(addParagraphsToTableOfContentItem1, "A");
-            tableOfContentsRibbonPageGroup1.Name = "tableOfContentsRibbonPageGroup1";
-            // 
-            // captionsRibbonPageGroup1
-            // 
-            captionsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            captionsRibbonPageGroup1.ItemLinks.Add(insertCaptionPlaceholderItem1, "C");
-            captionsRibbonPageGroup1.ItemLinks.Add(insertTableOfFiguresPlaceholderItem1, "G");
-            captionsRibbonPageGroup1.ItemLinks.Add(updateTableOfFiguresItem1, "V");
-            captionsRibbonPageGroup1.Name = "captionsRibbonPageGroup1";
-            // 
-            // notesRibbonPageGroup1
-            // 
-            notesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.True;
-            notesRibbonPageGroup1.ItemLinks.Add(insertFootnoteItem1);
-            notesRibbonPageGroup1.ItemLinks.Add(insertEndnoteItem1);
-            notesRibbonPageGroup1.ItemLinks.Add(navigationNotesItem1);
-            notesRibbonPageGroup1.ItemLinks.Add(showNotesItem1);
-            notesRibbonPageGroup1.Name = "notesRibbonPageGroup1";
-            // 
-            // mailingsRibbonPage1
-            // 
-            mailingsRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { mailMergeRibbonPageGroup1 });
-            mailingsRibbonPage1.Name = "mailingsRibbonPage1";
-            // 
-            // mailMergeRibbonPageGroup1
-            // 
-            mailMergeRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            mailMergeRibbonPageGroup1.ItemLinks.Add(insertMergeFieldItem1);
-            mailMergeRibbonPageGroup1.ItemLinks.Add(showAllFieldCodesItem1);
-            mailMergeRibbonPageGroup1.ItemLinks.Add(showAllFieldResultsItem1);
-            mailMergeRibbonPageGroup1.ItemLinks.Add(toggleViewMergedDataItem1, "P");
-            mailMergeRibbonPageGroup1.Name = "mailMergeRibbonPageGroup1";
-            // 
-            // reviewRibbonPage1
-            // 
-            reviewRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { documentProofingRibbonPageGroup1, documentProtectionRibbonPageGroup1, documentCommentRibbonPageGroup1, documentTrackingRibbonPageGroup1, documentChangesRibbonPageGroup1 });
-            reviewRibbonPage1.Name = "reviewRibbonPage1";
-            // 
-            // documentProofingRibbonPageGroup1
-            // 
-            documentProofingRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            documentProofingRibbonPageGroup1.ItemLinks.Add(checkSpellingItem1, "S");
-            documentProofingRibbonPageGroup1.ItemLinks.Add(changeLanguageItem1);
-            documentProofingRibbonPageGroup1.Name = "documentProofingRibbonPageGroup1";
-            // 
-            // documentProtectionRibbonPageGroup1
-            // 
-            documentProtectionRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            documentProtectionRibbonPageGroup1.ItemLinks.Add(protectDocumentItem1);
-            documentProtectionRibbonPageGroup1.ItemLinks.Add(changeRangeEditingPermissionsItem1);
-            documentProtectionRibbonPageGroup1.ItemLinks.Add(unprotectDocumentItem1);
-            documentProtectionRibbonPageGroup1.Name = "documentProtectionRibbonPageGroup1";
-            // 
-            // documentCommentRibbonPageGroup1
-            // 
-            documentCommentRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            documentCommentRibbonPageGroup1.ItemLinks.Add(newCommentItem1, "C");
-            documentCommentRibbonPageGroup1.ItemLinks.Add(deleteCommentsItem1, "D");
-            documentCommentRibbonPageGroup1.ItemLinks.Add(previousCommentItem1, "V");
-            documentCommentRibbonPageGroup1.ItemLinks.Add(nextCommentItem1, "N");
-            documentCommentRibbonPageGroup1.Name = "documentCommentRibbonPageGroup1";
-            // 
-            // documentTrackingRibbonPageGroup1
-            // 
-            documentTrackingRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            documentTrackingRibbonPageGroup1.ItemLinks.Add(toggleTrackChangesBarItem1, "G");
-            documentTrackingRibbonPageGroup1.ItemLinks.Add(changeDisplayForReviewModeItem1, "TD");
-            documentTrackingRibbonPageGroup1.ItemLinks.Add(showMarkupSubItem1, "TM");
-            documentTrackingRibbonPageGroup1.ItemLinks.Add(reviewingPaneItem1);
-            documentTrackingRibbonPageGroup1.Name = "documentTrackingRibbonPageGroup1";
-            // 
-            // documentChangesRibbonPageGroup1
-            // 
-            documentChangesRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            documentChangesRibbonPageGroup1.ItemLinks.Add(acceptAndMoveToNextSubItem1, "M");
-            documentChangesRibbonPageGroup1.ItemLinks.Add(rejectAndMoveToNextSubItem1, "M");
-            documentChangesRibbonPageGroup1.ItemLinks.Add(previousChangeItem1, "H");
-            documentChangesRibbonPageGroup1.ItemLinks.Add(nextChangeItem1, "F");
-            documentChangesRibbonPageGroup1.Name = "documentChangesRibbonPageGroup1";
-            // 
-            // viewRibbonPage1
-            // 
-            viewRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { documentViewsRibbonPageGroup1, showRibbonPageGroup1, zoomRibbonPageGroup1 });
-            viewRibbonPage1.Name = "viewRibbonPage1";
-            // 
-            // documentViewsRibbonPageGroup1
-            // 
-            documentViewsRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            documentViewsRibbonPageGroup1.ItemLinks.Add(switchToSimpleViewItem1, "L");
-            documentViewsRibbonPageGroup1.ItemLinks.Add(switchToDraftViewItem1, "E");
-            documentViewsRibbonPageGroup1.ItemLinks.Add(switchToPrintLayoutViewItem1, "P");
-            documentViewsRibbonPageGroup1.Name = "documentViewsRibbonPageGroup1";
-            // 
-            // showRibbonPageGroup1
-            // 
-            showRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            showRibbonPageGroup1.ItemLinks.Add(toggleShowHorizontalRulerItem1);
-            showRibbonPageGroup1.ItemLinks.Add(toggleShowVerticalRulerItem1);
-            showRibbonPageGroup1.Name = "showRibbonPageGroup1";
-            // 
-            // zoomRibbonPageGroup1
-            // 
-            zoomRibbonPageGroup1.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            zoomRibbonPageGroup1.ItemLinks.Add(zoomOutItem1);
-            zoomRibbonPageGroup1.ItemLinks.Add(zoomInItem1);
-            zoomRibbonPageGroup1.Name = "zoomRibbonPageGroup1";
-            // 
-            // ribbonStatusBar1
-            // 
-            ribbonStatusBar1.Location = new Point(0, 445);
-            ribbonStatusBar1.Name = "ribbonStatusBar1";
-            ribbonStatusBar1.Ribbon = ribbonControl;
-            ribbonStatusBar1.Size = new Size(1014, 27);
-            // 
-            // richEditBarController1
-            // 
-            richEditBarController1.BarItems.Add(undoItem1);
-            richEditBarController1.BarItems.Add(redoItem1);
-            richEditBarController1.BarItems.Add(fileNewItem1);
-            richEditBarController1.BarItems.Add(fileOpenItem1);
-            richEditBarController1.BarItems.Add(fileSaveItem1);
-            richEditBarController1.BarItems.Add(fileSaveAsItem1);
-            richEditBarController1.BarItems.Add(quickPrintItem1);
-            richEditBarController1.BarItems.Add(printItem1);
-            richEditBarController1.BarItems.Add(printPreviewItem1);
-            richEditBarController1.BarItems.Add(encryptDocumentItem1);
-            richEditBarController1.BarItems.Add(showDocumentPropertiesFormItem1);
-            richEditBarController1.BarItems.Add(pasteItem1);
-            richEditBarController1.BarItems.Add(cutItem1);
-            richEditBarController1.BarItems.Add(copyItem1);
-            richEditBarController1.BarItems.Add(pasteSpecialItem1);
-            richEditBarController1.BarItems.Add(changeFontNameItem1);
-            richEditBarController1.BarItems.Add(changeFontSizeItem1);
-            richEditBarController1.BarItems.Add(fontSizeIncreaseItem1);
-            richEditBarController1.BarItems.Add(fontSizeDecreaseItem1);
-            richEditBarController1.BarItems.Add(toggleFontBoldItem1);
-            richEditBarController1.BarItems.Add(toggleFontItalicItem1);
-            richEditBarController1.BarItems.Add(toggleFontUnderlineItem1);
-            richEditBarController1.BarItems.Add(toggleFontDoubleUnderlineItem1);
-            richEditBarController1.BarItems.Add(toggleFontStrikeoutItem1);
-            richEditBarController1.BarItems.Add(toggleFontDoubleStrikeoutItem1);
-            richEditBarController1.BarItems.Add(toggleFontSuperscriptItem1);
-            richEditBarController1.BarItems.Add(toggleFontSubscriptItem1);
-            richEditBarController1.BarItems.Add(changeFontColorItem1);
-            richEditBarController1.BarItems.Add(changeFontHighlightColorItem1);
-            richEditBarController1.BarItems.Add(makeTextUpperCaseItem1);
-            richEditBarController1.BarItems.Add(makeTextLowerCaseItem1);
-            richEditBarController1.BarItems.Add(capitalizeEachWordCaseItem1);
-            richEditBarController1.BarItems.Add(toggleTextCaseItem1);
-            richEditBarController1.BarItems.Add(changeTextCaseItem1);
-            richEditBarController1.BarItems.Add(clearFormattingItem1);
-            richEditBarController1.BarItems.Add(toggleBulletedListItem1);
-            richEditBarController1.BarItems.Add(toggleNumberingListItem1);
-            richEditBarController1.BarItems.Add(toggleMultiLevelListItem1);
-            richEditBarController1.BarItems.Add(decreaseIndentItem1);
-            richEditBarController1.BarItems.Add(increaseIndentItem1);
-            richEditBarController1.BarItems.Add(rtlToggleBulletedListItem1);
-            richEditBarController1.BarItems.Add(rtlToggleNumberingListItem1);
-            richEditBarController1.BarItems.Add(rtlToggleMultiLevelListItem1);
-            richEditBarController1.BarItems.Add(rtlDecreaseIndentItem1);
-            richEditBarController1.BarItems.Add(rtlIncreaseIndentItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphLeftToRightItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphRightToLeftItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphAlignmentLeftItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphAlignmentCenterItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphAlignmentRightItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphAlignmentJustifyItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphAlignmentArabicJustifyItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphAlignmentJustifyLowItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphAlignmentJustifyMediumItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphAlignmentJustifyHighItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphAlignmentArabicJustifyGroupItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphAlignmentDistributeItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphAlignmentThaiDistributeItem1);
-            richEditBarController1.BarItems.Add(toggleShowWhitespaceItem1);
-            richEditBarController1.BarItems.Add(setSingleParagraphSpacingItem1);
-            richEditBarController1.BarItems.Add(setSesquialteralParagraphSpacingItem1);
-            richEditBarController1.BarItems.Add(setDoubleParagraphSpacingItem1);
-            richEditBarController1.BarItems.Add(showLineSpacingFormItem1);
-            richEditBarController1.BarItems.Add(addSpacingBeforeParagraphItem1);
-            richEditBarController1.BarItems.Add(removeSpacingBeforeParagraphItem1);
-            richEditBarController1.BarItems.Add(addSpacingAfterParagraphItem1);
-            richEditBarController1.BarItems.Add(removeSpacingAfterParagraphItem1);
-            richEditBarController1.BarItems.Add(changeParagraphLineSpacingItem1);
-            richEditBarController1.BarItems.Add(changeParagraphBackColorItem1);
-            richEditBarController1.BarItems.Add(galleryChangeStyleItem1);
-            richEditBarController1.BarItems.Add(findItem1);
-            richEditBarController1.BarItems.Add(replaceItem1);
-            richEditBarController1.BarItems.Add(insertPageBreakItem21);
-            richEditBarController1.BarItems.Add(insertTableItem1);
-            richEditBarController1.BarItems.Add(insertFloatingPictureItem1);
-            richEditBarController1.BarItems.Add(insertBookmarkItem1);
-            richEditBarController1.BarItems.Add(insertHyperlinkItem1);
-            richEditBarController1.BarItems.Add(editPageHeaderItem1);
-            richEditBarController1.BarItems.Add(editPageFooterItem1);
-            richEditBarController1.BarItems.Add(insertPageNumberItem1);
-            richEditBarController1.BarItems.Add(insertPageCountItem1);
-            richEditBarController1.BarItems.Add(insertTextBoxItem1);
-            richEditBarController1.BarItems.Add(insertObjectItem1);
-            richEditBarController1.BarItems.Add(insertSymbolItem1);
-            richEditBarController1.BarItems.Add(setNormalSectionPageMarginsItem1);
-            richEditBarController1.BarItems.Add(setNarrowSectionPageMarginsItem1);
-            richEditBarController1.BarItems.Add(setModerateSectionPageMarginsItem1);
-            richEditBarController1.BarItems.Add(setWideSectionPageMarginsItem1);
-            richEditBarController1.BarItems.Add(showPageMarginsSetupFormItem1);
-            richEditBarController1.BarItems.Add(changeSectionPageMarginsItem1);
-            richEditBarController1.BarItems.Add(setPortraitPageOrientationItem1);
-            richEditBarController1.BarItems.Add(setLandscapePageOrientationItem1);
-            richEditBarController1.BarItems.Add(changeSectionPageOrientationItem1);
-            richEditBarController1.BarItems.Add(changeSectionPaperKindItem1);
-            richEditBarController1.BarItems.Add(setSectionOneColumnItem1);
-            richEditBarController1.BarItems.Add(setSectionTwoColumnsItem1);
-            richEditBarController1.BarItems.Add(setSectionThreeColumnsItem1);
-            richEditBarController1.BarItems.Add(showColumnsSetupFormItem1);
-            richEditBarController1.BarItems.Add(changeSectionColumnsItem1);
-            richEditBarController1.BarItems.Add(insertPageBreakItem1);
-            richEditBarController1.BarItems.Add(insertColumnBreakItem1);
-            richEditBarController1.BarItems.Add(insertSectionBreakNextPageItem1);
-            richEditBarController1.BarItems.Add(insertSectionBreakContinuousItem1);
-            richEditBarController1.BarItems.Add(insertSectionBreakEvenPageItem1);
-            richEditBarController1.BarItems.Add(insertSectionBreakOddPageItem1);
-            richEditBarController1.BarItems.Add(insertBreakItem1);
-            richEditBarController1.BarItems.Add(setSectionLineNumberingNoneItem1);
-            richEditBarController1.BarItems.Add(setSectionLineNumberingContinuousItem1);
-            richEditBarController1.BarItems.Add(setSectionLineNumberingRestartNewPageItem1);
-            richEditBarController1.BarItems.Add(setSectionLineNumberingRestartNewSectionItem1);
-            richEditBarController1.BarItems.Add(toggleParagraphSuppressLineNumbersItem1);
-            richEditBarController1.BarItems.Add(showLineNumberingFormItem1);
-            richEditBarController1.BarItems.Add(changeSectionLineNumberingItem1);
-            richEditBarController1.BarItems.Add(setHyphenateDocumentNoneItem1);
-            richEditBarController1.BarItems.Add(setHyphenateDocumentAutomaticItem1);
-            richEditBarController1.BarItems.Add(showHyphenationOptionsFormItem1);
-            richEditBarController1.BarItems.Add(changeHyphenationOptionsItem1);
-            richEditBarController1.BarItems.Add(changePageColorItem1);
-            richEditBarController1.BarItems.Add(watermarkItem1);
-            richEditBarController1.BarItems.Add(deleteWatermarkItem1);
-            richEditBarController1.BarItems.Add(insertTableOfContentsItem1);
-            richEditBarController1.BarItems.Add(updateTableOfContentsItem1);
-            richEditBarController1.BarItems.Add(setParagraphHeadingLevelItem1);
-            richEditBarController1.BarItems.Add(setParagraphHeadingLevelItem2);
-            richEditBarController1.BarItems.Add(setParagraphHeadingLevelItem3);
-            richEditBarController1.BarItems.Add(setParagraphHeadingLevelItem4);
-            richEditBarController1.BarItems.Add(setParagraphHeadingLevelItem5);
-            richEditBarController1.BarItems.Add(setParagraphHeadingLevelItem6);
-            richEditBarController1.BarItems.Add(setParagraphHeadingLevelItem7);
-            richEditBarController1.BarItems.Add(setParagraphHeadingLevelItem8);
-            richEditBarController1.BarItems.Add(setParagraphHeadingLevelItem9);
-            richEditBarController1.BarItems.Add(setParagraphHeadingLevelItem10);
-            richEditBarController1.BarItems.Add(addParagraphsToTableOfContentItem1);
-            richEditBarController1.BarItems.Add(insertFiguresCaptionItems1);
-            richEditBarController1.BarItems.Add(insertTablesCaptionItems1);
-            richEditBarController1.BarItems.Add(insertEquationsCaptionItems1);
-            richEditBarController1.BarItems.Add(insertCaptionPlaceholderItem1);
-            richEditBarController1.BarItems.Add(insertTableOfFiguresItems1);
-            richEditBarController1.BarItems.Add(insertTableOfTablesItems1);
-            richEditBarController1.BarItems.Add(insertTableOfEquationsItems1);
-            richEditBarController1.BarItems.Add(insertTableOfFiguresPlaceholderItem1);
-            richEditBarController1.BarItems.Add(updateTableOfFiguresItem1);
-            richEditBarController1.BarItems.Add(insertFootnoteItem1);
-            richEditBarController1.BarItems.Add(insertEndnoteItem1);
-            richEditBarController1.BarItems.Add(navigationNotesItem1);
-            richEditBarController1.BarItems.Add(showNotesItem1);
-            richEditBarController1.BarItems.Add(insertMergeFieldItem1);
-            richEditBarController1.BarItems.Add(showAllFieldCodesItem1);
-            richEditBarController1.BarItems.Add(showAllFieldResultsItem1);
-            richEditBarController1.BarItems.Add(toggleViewMergedDataItem1);
-            richEditBarController1.BarItems.Add(checkSpellingItem1);
-            richEditBarController1.BarItems.Add(changeLanguageItem1);
-            richEditBarController1.BarItems.Add(protectDocumentItem1);
-            richEditBarController1.BarItems.Add(changeRangeEditingPermissionsItem1);
-            richEditBarController1.BarItems.Add(unprotectDocumentItem1);
-            richEditBarController1.BarItems.Add(newCommentItem1);
-            richEditBarController1.BarItems.Add(deleteOneCommentItem1);
-            richEditBarController1.BarItems.Add(deleteAllCommentsShownItem1);
-            richEditBarController1.BarItems.Add(deleteAllCommentsItem1);
-            richEditBarController1.BarItems.Add(deleteCommentsItem1);
-            richEditBarController1.BarItems.Add(previousCommentItem1);
-            richEditBarController1.BarItems.Add(nextCommentItem1);
-            richEditBarController1.BarItems.Add(toggleTrackChangesBarItem1);
-            richEditBarController1.BarItems.Add(changeDisplayForReviewModeItem1);
-            richEditBarController1.BarItems.Add(showMarkupSubItem1);
-            richEditBarController1.BarItems.Add(reviewingPaneItem1);
-            richEditBarController1.BarItems.Add(acceptAndMoveToNextSubItem1);
-            richEditBarController1.BarItems.Add(rejectAndMoveToNextSubItem1);
-            richEditBarController1.BarItems.Add(previousChangeItem1);
-            richEditBarController1.BarItems.Add(nextChangeItem1);
-            richEditBarController1.BarItems.Add(switchToSimpleViewItem1);
-            richEditBarController1.BarItems.Add(switchToDraftViewItem1);
-            richEditBarController1.BarItems.Add(switchToPrintLayoutViewItem1);
-            richEditBarController1.BarItems.Add(toggleShowHorizontalRulerItem1);
-            richEditBarController1.BarItems.Add(toggleShowVerticalRulerItem1);
-            richEditBarController1.BarItems.Add(zoomOutItem1);
-            richEditBarController1.BarItems.Add(zoomInItem1);
-            richEditBarController1.BarItems.Add(goToPageHeaderItem1);
-            richEditBarController1.BarItems.Add(goToPageFooterItem1);
-            richEditBarController1.BarItems.Add(goToNextHeaderFooterItem1);
-            richEditBarController1.BarItems.Add(goToPreviousHeaderFooterItem1);
-            richEditBarController1.BarItems.Add(toggleLinkToPreviousItem1);
-            richEditBarController1.BarItems.Add(toggleDifferentFirstPageItem1);
-            richEditBarController1.BarItems.Add(toggleDifferentOddAndEvenPagesItem1);
-            richEditBarController1.BarItems.Add(closePageHeaderFooterItem1);
-            richEditBarController1.BarItems.Add(toggleFirstRowItem1);
-            richEditBarController1.BarItems.Add(toggleLastRowItem1);
-            richEditBarController1.BarItems.Add(toggleBandedRowsItem1);
-            richEditBarController1.BarItems.Add(toggleFirstColumnItem1);
-            richEditBarController1.BarItems.Add(toggleLastColumnItem1);
-            richEditBarController1.BarItems.Add(toggleBandedColumnsItem1);
-            richEditBarController1.BarItems.Add(galleryChangeTableStyleItem1);
-            richEditBarController1.BarItems.Add(changeTableBorderLineStyleItem1);
-            richEditBarController1.BarItems.Add(changeTableBorderLineWeightItem1);
-            richEditBarController1.BarItems.Add(changeTableBorderColorItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsBottomBorderItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsTopBorderItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsLeftBorderItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsRightBorderItem1);
-            richEditBarController1.BarItems.Add(resetTableCellsAllBordersItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsAllBordersItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsOutsideBorderItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsInsideBorderItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsInsideHorizontalBorderItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsInsideVerticalBorderItem1);
-            richEditBarController1.BarItems.Add(toggleShowTableGridLinesItem1);
-            richEditBarController1.BarItems.Add(changeTableBordersItem1);
-            richEditBarController1.BarItems.Add(changeTableCellsShadingItem1);
-            richEditBarController1.BarItems.Add(selectTableCellItem1);
-            richEditBarController1.BarItems.Add(selectTableColumnItem1);
-            richEditBarController1.BarItems.Add(selectTableRowItem1);
-            richEditBarController1.BarItems.Add(selectTableItem1);
-            richEditBarController1.BarItems.Add(selectTableElementsItem1);
-            richEditBarController1.BarItems.Add(showTablePropertiesFormItem1);
-            richEditBarController1.BarItems.Add(showDeleteTableCellsFormItem1);
-            richEditBarController1.BarItems.Add(deleteTableColumnsItem1);
-            richEditBarController1.BarItems.Add(deleteTableRowsItem1);
-            richEditBarController1.BarItems.Add(deleteTableItem1);
-            richEditBarController1.BarItems.Add(deleteTableElementsItem1);
-            richEditBarController1.BarItems.Add(insertTableRowAboveItem1);
-            richEditBarController1.BarItems.Add(insertTableRowBelowItem1);
-            richEditBarController1.BarItems.Add(insertTableColumnToLeftItem1);
-            richEditBarController1.BarItems.Add(insertTableColumnToRightItem1);
-            richEditBarController1.BarItems.Add(mergeTableCellsItem1);
-            richEditBarController1.BarItems.Add(showSplitTableCellsForm1);
-            richEditBarController1.BarItems.Add(splitTableItem1);
-            richEditBarController1.BarItems.Add(toggleTableAutoFitContentsItem1);
-            richEditBarController1.BarItems.Add(toggleTableAutoFitWindowItem1);
-            richEditBarController1.BarItems.Add(toggleTableFixedColumnWidthItem1);
-            richEditBarController1.BarItems.Add(toggleTableAutoFitItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsTopLeftAlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsMiddleLeftAlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsBottomLeftAlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsTopCenterAlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsMiddleCenterAlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsBottomCenterAlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsTopRightAlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsMiddleRightAlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsBottomRightAlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsBottomLeftRotate90AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsBottomCenterRotate90AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsBottomRightRotate90AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsMiddleLeftRotate90AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsMiddleCenterRotate90AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsMiddleRightRotate90AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsTopLeftRotate90AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsTopCenterRotate90AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsTopRightRotate90AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsTopRightRotate270AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsTopCenterRotate270AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsTopLeftRotate270AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsMiddleRightRotate270AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsMiddleCenterRotate270AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsMiddleLeftRotate270AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsBottomRightRotate270AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsBottomCenterRotate270AlignmentItem1);
-            richEditBarController1.BarItems.Add(toggleTableCellsBottomLeftRotate270AlignmentItem1);
-            richEditBarController1.BarItems.Add(changeTableCellsHorizontalTextDirectionItem1);
-            richEditBarController1.BarItems.Add(changeTableCellsVerticalTextDirectionItem1);
-            richEditBarController1.BarItems.Add(changeTableCellsRotateAll90TextDirectionItem1);
-            richEditBarController1.BarItems.Add(changeTableCellsRotateAll270TextDirectionItem1);
-            richEditBarController1.BarItems.Add(changeTableCellsRotateAsian270TextDirectionItem1);
-            richEditBarController1.BarItems.Add(showTableOptionsFormItem1);
-            richEditBarController1.BarItems.Add(changeFloatingObjectFillColorItem1);
-            richEditBarController1.BarItems.Add(changeFloatingObjectOutlineColorItem1);
-            richEditBarController1.BarItems.Add(changeFloatingObjectOutlineWeightItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectInlineTextWrapTypeItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectSquareTextWrapTypeItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectTightTextWrapTypeItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectThroughTextWrapTypeItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectTopAndBottomTextWrapTypeItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectBehindTextWrapTypeItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectInFrontOfTextWrapTypeItem1);
-            richEditBarController1.BarItems.Add(changeFloatingObjectTextWrapTypeItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectTopLeftAlignmentItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectTopCenterAlignmentItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectTopRightAlignmentItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectMiddleLeftAlignmentItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectMiddleCenterAlignmentItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectMiddleRightAlignmentItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectBottomLeftAlignmentItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectBottomCenterAlignmentItem1);
-            richEditBarController1.BarItems.Add(setFloatingObjectBottomRightAlignmentItem1);
-            richEditBarController1.BarItems.Add(changeFloatingObjectAlignmentItem1);
-            richEditBarController1.BarItems.Add(floatingObjectBringForwardItem1);
-            richEditBarController1.BarItems.Add(floatingObjectBringToFrontItem1);
-            richEditBarController1.BarItems.Add(floatingObjectBringInFrontOfTextItem1);
-            richEditBarController1.BarItems.Add(floatingObjectBringForwardSubItem1);
-            richEditBarController1.BarItems.Add(floatingObjectSendBackwardItem1);
-            richEditBarController1.BarItems.Add(floatingObjectSendToBackItem1);
-            richEditBarController1.BarItems.Add(floatingObjectSendBehindTextItem1);
-            richEditBarController1.BarItems.Add(floatingObjectSendBackwardSubItem1);
-            richEditBarController1.Control = richEditControl;
-            // 
-            // dockManager1
-            // 
-            dockManager1.Form = this;
-            dockManager1.TopZIndexControls.AddRange(new string[] { "DevExpress.XtraBars.BarDockControl", "DevExpress.XtraBars.StandaloneBarDockControl", "System.Windows.Forms.MenuStrip", "System.Windows.Forms.StatusStrip", "System.Windows.Forms.StatusBar", "DevExpress.XtraBars.Ribbon.RibbonStatusBar", "DevExpress.XtraBars.Ribbon.RibbonControl", "DevExpress.XtraBars.Navigation.OfficeNavigationBar", "DevExpress.XtraBars.Navigation.TileNavPane", "DevExpress.XtraBars.TabFormControl", "DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl", "DevExpress.XtraBars.ToolbarForm.ToolbarFormControl" });
-            // 
-            // repositoryItemRibbonSearchEdit1
-            // 
-            repositoryItemRibbonSearchEdit1.AllowFocused = false;
-            repositoryItemRibbonSearchEdit1.AutoHeight = false;
-            repositoryItemRibbonSearchEdit1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            editorButtonImageOptions1.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.True;
-            editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
-            repositoryItemRibbonSearchEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear, "", -1, true, false, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
-            repositoryItemRibbonSearchEdit1.Name = "repositoryItemRibbonSearchEdit1";
-            repositoryItemRibbonSearchEdit1.NullText = "Search";
-            // 
-            // layoutControl1
-            // 
-            layoutControl1.Controls.Add(richEditControl);
-            layoutControl1.Dock = DockStyle.Fill;
-            layoutControl1.Location = new Point(0, 150);
-            layoutControl1.Name = "layoutControl1";
-            layoutControl1.Root = Root;
-            layoutControl1.Size = new Size(1014, 295);
-            layoutControl1.TabIndex = 19;
-            layoutControl1.Text = "layoutControl1";
-            // 
-            // Root
-            // 
-            Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-            Root.GroupBordersVisible = false;
-            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1 });
-            Root.Name = "Root";
-            Root.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            Root.Size = new Size(1014, 295);
-            Root.TextVisible = false;
-            // 
-            // layoutControlItem1
-            // 
-            layoutControlItem1.Control = richEditControl;
-            layoutControlItem1.Location = new Point(0, 0);
-            layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            layoutControlItem1.Size = new Size(1014, 295);
-            layoutControlItem1.TextSize = new Size(0, 0);
-            layoutControlItem1.TextVisible = false;
+            // floatingObjectSendBackwardSubItem1
+            // 
+            floatingObjectSendBackwardSubItem1.Id = 296;
+            floatingObjectSendBackwardSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(floatingObjectSendBackwardItem1), new DevExpress.XtraBars.LinkPersistInfo(floatingObjectSendToBackItem1), new DevExpress.XtraBars.LinkPersistInfo(floatingObjectSendBehindTextItem1) });
+            floatingObjectSendBackwardSubItem1.Name = "floatingObjectSendBackwardSubItem1";
             // 
             // RtfDocUserControl
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(layoutControl1);
-            Controls.Add(ribbonStatusBar1);
             Controls.Add(ribbonControl);
             Name = "RtfDocUserControl";
-            Size = new Size(1014, 472);
+            Size = new Size(1044, 503);
+            ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
+            layoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)Root).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl).EndInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)richEditBarController).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemFontEditRichEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRichEditFontSizeEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)displayForReviewModeComboBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemBorderLineStyle1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemBorderLineWeight1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemFloatingObjectOutlineWeight1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)richEditBarController1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dockManager1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
-            layoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)Root).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
+        private DevExpress.XtraLayout.LayoutControl layoutControl1;
         private RichEditControlEx richEditControl;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl;
         private DevExpress.XtraRichEdit.UI.UndoItem undoItem1;
@@ -3364,14 +3296,8 @@
         private DevExpress.XtraRichEdit.UI.DocumentViewsRibbonPageGroup documentViewsRibbonPageGroup1;
         private DevExpress.XtraRichEdit.UI.ShowRibbonPageGroup showRibbonPageGroup1;
         private DevExpress.XtraRichEdit.UI.ZoomRibbonPageGroup zoomRibbonPageGroup1;
-        private DevExpress.XtraRichEdit.UI.RichEditBarController richEditBarController1;
-        private DevExpress.XtraBars.Docking.DockManager dockManager1;
-        private DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit repositoryItemRibbonSearchEdit1;
-        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
-        private DevExpress.XtraBars.PopupMenu popupMenu1;
-        private DevExpress.XtraBars.BarCheckItem copyFormatItem;
-        private DevExpress.XtraLayout.LayoutControl layoutControl1;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraRichEdit.UI.RichEditBarController richEditBarController;
     }
 }

@@ -112,16 +112,25 @@ namespace TableEditor
             AdjustControlsState();
         }
 
-        private void SetHtmlContentToEditor(string html, bool applyTableStyle, bool autoFitTable)
+        /// <summary>
+        /// Формирование содержимого редактора на основе HTML
+        /// </summary>
+        /// <param name="htmlData"></param>
+        /// <param name="applyTableStyle"></param>
+        /// <param name="autoFitTable"></param>
+        private void SetHtmlContentToEditor(string htmlData, bool applyTableStyle, bool autoFitTable)
         {
             var richEditControl = rtfDocUserControl.RichEditControl;
+
+            // Получаем заголовок таблицы
+            var tableTitle = TransfromService.RichText.RichTextUtils.GetFirstTableTitle(htmlData);
 
             richEditControl.Document.BeginUpdate();
             richEditControl.Document.Delete(richEditControl.Document.Range);
 
             using (var server = new RichEditDocumentServer())
             {
-                server.HtmlText = html;
+                server.HtmlText = htmlData;
 
                 if (applyTableStyle)
                 {
@@ -130,7 +139,8 @@ namespace TableEditor
                     if (server.Document.Tables.Count > 0)
                     {
                         var tableStyle =
-                            server.Document.TableStyles.FirstOrDefault(style => style.Name.Equals(styleName, StringComparison.OrdinalIgnoreCase));
+                            server.Document.TableStyles.FirstOrDefault(style =>
+                                style.Name.Equals(styleName, StringComparison.OrdinalIgnoreCase));
 
                         if (tableStyle != null)
                         {
@@ -189,6 +199,9 @@ namespace TableEditor
                 }
             }
 
+            if (!string.IsNullOrEmpty(tableTitle))
+                rtfDocUserControl.SetTableTitle(tableTitle);
+
             richEditControl.Document.EndUpdate();
 
             //if (firstTable != null)
@@ -207,9 +220,10 @@ namespace TableEditor
             //    cell.BackgroundColor = Color.BlanchedAlmond;
             //}
 
-            var cellPar = rtfDocUserControl.RichEditControl.Document.BeginUpdateParagraphs(cell.Range);
+            // Заливка ячеек серым цветом
+            var cellParagraph = rtfDocUserControl.RichEditControl.Document.BeginUpdateParagraphs(cell.Range);
 
-            if (cellPar.BackColor.GetValueOrDefault().ToArgb().Equals(TransfromService.Utils.CommonTableHeaderColor.ArgbValue))
+            if (cellParagraph.BackColor.GetValueOrDefault().ToArgb().Equals(TransfromService.Utils.CommonTableHeaderColor.ArgbValue))
             {
                 //cell.HeightType = HeightType.Auto;
                 //cell.PreferredWidthType = WidthType.Auto;
@@ -218,7 +232,7 @@ namespace TableEditor
                 //cell.PreferredWidthType = WidthType.Fixed;
             }
 
-            rtfDocUserControl.RichEditControl.Document.EndUpdateParagraphs(cellPar);
+            rtfDocUserControl.RichEditControl.Document.EndUpdateParagraphs(cellParagraph);
         }
 
         //private void SetHtmlContentToEditor(string html)
@@ -391,7 +405,7 @@ namespace TableEditor
 
         private void TransformFromEditorToJson()
         {
-            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.All, null, rtfDocUserControl.RichEditControl.Options.Export.Html);
+            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.All, rtfDocUserControl.GetTableTitle(), rtfDocUserControl.RichEditControl.Options.Export.Html);
             var transformParams = transformParamsUserControl.GetParameters();
             transformParams.NeedDoubleTransformation = false;
 
@@ -450,7 +464,8 @@ namespace TableEditor
             {
                 Utils.ShowProgressForm();
                 InsertNewHtmlData(
-                    rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.All, null,
+                    rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.All,
+                        rtfDocUserControl.GetTableTitle(),
                         rtfDocUserControl.RichEditControl.Options.Export.Html), false);
             }
             catch (Exception exception)

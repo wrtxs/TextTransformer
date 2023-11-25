@@ -7,16 +7,16 @@ using TransfromService.RichText;
 
 namespace TableEditor.RichTextEdit.CustomCommands
 {
-    public class CustomCopySelectionCommand : CopySelectionCommand
+    internal class CustomCopySelectionCommand : CopySelectionCommand
     {
-        public CustomCopySelectionCommand(IRichEditControl control)
+        public CustomCopySelectionCommand(RichEditControlEx control)
             : base(control)
         {
         }
 
         protected override void ExecuteCore()
         {
-            var richEditControl = (RichEditControl)Control;
+            var richEditControl = (RichEditControlEx)Control;
             richEditControl.BeforeExport += OnBeforeExport;
             string htmlForClipboard;
 
@@ -24,7 +24,7 @@ namespace TableEditor.RichTextEdit.CustomCommands
 
             try
             {
-                var html = richEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.Selection, null, richEditControl.Options.Export.Html);
+                var html = richEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.Selection, richEditControl.GetTableTitle(), richEditControl.Options.Export.Html);
                 html = TransfromService.Utils.ProcessSpanTagStyleAttribute(html, true);
 
                 htmlForClipboard = CF_HtmlHelper.GetHtmlClipboardFormat(html);
