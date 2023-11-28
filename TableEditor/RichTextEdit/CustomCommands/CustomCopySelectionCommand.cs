@@ -1,8 +1,5 @@
 ﻿using DevExpress.Office.Utils;
-using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.Commands;
-using DevExpress.XtraRichEdit.Export;
-using DevExpress.XtraRichEdit.Export.Html;
 using TransfromService.RichText;
 
 namespace TableEditor.RichTextEdit.CustomCommands
@@ -17,47 +14,49 @@ namespace TableEditor.RichTextEdit.CustomCommands
         protected override void ExecuteCore()
         {
             var richEditControl = (RichEditControlEx)Control;
-            richEditControl.BeforeExport += OnBeforeExport;
+            //richEditControl.BeforeExport += OnBeforeExport;
             string htmlForClipboard;
 
             //SetExportOptions(richEditControl.Options.Export.Html);
 
+            var selRange = richEditControl.Document.GetSelectedRange();
+
             try
             {
-                var html = richEditControl.Document.GetHtmlContent(RichTextUtils.TextRange.Selection, richEditControl.GetTableTitle(), richEditControl.Options.Export.Html);
+                var html = richEditControl.Document.GetHtmlContent(selRange, richEditControl.GetTableTitle(), richEditControl.Options.Export.Html);
                 html = TransfromService.Utils.ProcessSpanTagStyleAttribute(html, true);
 
                 htmlForClipboard = CF_HtmlHelper.GetHtmlClipboardFormat(html);
             }
             finally
             {
-                richEditControl.BeforeExport -= OnBeforeExport;
+                //richEditControl.BeforeExport -= OnBeforeExport;
             }
 
             var data = new DataObject();
             data.SetData(OfficeDataFormats.Rtf,
-                richEditControl.Document.GetRtfText(richEditControl.Document.Selection));
+                richEditControl.Document.GetRtfText(selRange));
             data.SetData(OfficeDataFormats.UnicodeText,
-                richEditControl.Document.GetText(richEditControl.Document.Selection));
+                richEditControl.Document.GetText(selRange));
             data.SetData(OfficeDataFormats.Html, htmlForClipboard);
 
             Clipboard.Clear();
             Clipboard.SetDataObject(data, false);
         }
 
-        void OnBeforeExport(object sender, BeforeExportEventArgs e)
-        {
-            if (e.Options is HtmlDocumentExporterOptions exporterOptions)
-            {
-                //SetExportOptions(exporterOptions);
-            }
-        }
+        //void OnBeforeExport(object sender, BeforeExportEventArgs e)
+        //{
+        //    if (e.Options is HtmlDocumentExporterOptions exporterOptions)
+        //    {
+        //        //SetExportOptions(exporterOptions);
+        //    }
+        //}
 
-        private void SetExportOptions(HtmlDocumentExporterOptions exportHtml)
-        {
-            exportHtml.ExportRootTag = ExportRootTag.Html;
-            exportHtml.CssPropertiesExportType = CssPropertiesExportType.Inline;
-            exportHtml.EmbedImages = false;
-        }
+        //private void SetExportOptions(HtmlDocumentExporterOptions exportHtml)
+        //{
+        //    exportHtml.ExportRootTag = ExportRootTag.Html;
+        //    exportHtml.CssPropertiesExportType = CssPropertiesExportType.Inline;
+        //    exportHtml.EmbedImages = false;
+        //}
     }
 }

@@ -1,9 +1,7 @@
 ﻿using DevExpress.XtraRichEdit.Export.Html;
 using DevExpress.XtraRichEdit.Export;
-using DevExpress.XtraRichEdit;
-using HtmlAgilityPack;
-using static DevExpress.XtraPrinting.Native.ExportOptionsPropertiesNames;
-using System;
+using System.Linq;
+using DevExpress.XtraRichEdit.API.Native;
 
 namespace TransfromService.RichText
 {
@@ -26,20 +24,45 @@ namespace TransfromService.RichText
         //        richEditDocumentServer.Options.Export.Html);
         //}
 
-        public static string GetHtmlContent(this DevExpress.XtraRichEdit.API.Native.Document document,
-            TextRange textRange, string firstTableTitle, HtmlDocumentExporterOptions exportOptions)
+        public static string GetHtmlContent(this Document document,
+            TextRangeType textRangeType, string firstTableTitle, HtmlDocumentExporterOptions exportOptions)
         {
-            var htmlData = document.GetHtmlText(
-                textRange == TextRange.Selection ? document.Selection : document.Range,
-                //new LazyDataObject.HtmlClipboardUriProvider(),
-                new CustomUriProvider(),
-                exportOptions);
+            var range = textRangeType == TextRangeType.Selection ? GetSelectedRange(document) : document.Range;
 
-            // Записываем или удаляем имя таблицы
-            htmlData = SetFirstTableTitle(htmlData, firstTableTitle);
-
-            return htmlData;
+            return GetHtmlContent(document, range, firstTableTitle, exportOptions);
         }
+
+        public static string GetHtmlContent(this Document document,
+            DocumentRange range, string firstTableTitle, HtmlDocumentExporterOptions exportOptions)
+        {
+            if (range == null)
+                return null;
+
+            try
+            {
+                range.BeginUpdateDocument();
+                var htmlData = document.GetHtmlText(
+                    range,
+                    //new LazyDataObject.HtmlClipboardUriProvider(),
+                    new CustomUriProvider(),
+                    exportOptions);
+
+                // Записываем или удаляем имя таблицы
+                htmlData = SetFirstTableTitle(htmlData, firstTableTitle);
+
+                return htmlData;
+            }
+            finally
+            {
+                range.EndUpdateDocument(document);
+            }
+        }
+
+        public static DocumentRange GetSelectedRange(this Document document) =>
+            document.Selections.Count > 1
+                ? document.CreateRange(document.Selections[0].Start,
+                    document.Selections.Sum(selection => selection.Length))
+                : document.Selection;
 
         /// <summary>
         /// Записать заголовок для первой таблицы
@@ -96,7 +119,7 @@ namespace TransfromService.RichText
             exportHtml.EmbedImages = false;
         }
 
-        public enum TextRange
+        public enum TextRangeType
         {
             All,
             Selection

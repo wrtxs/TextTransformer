@@ -83,6 +83,7 @@ namespace TableEditor.RichTextEdit
             RedefineStandartCommands();
 
             ribbonControl.SelectedPage = homeRibbonPage1;
+
             ribbonControl.ForceInitialize();
         }
 

@@ -233,7 +233,7 @@ namespace TransfromService
                 server.Options.Export.Html.SetCommonExportOptions();
                 server.HtmlText = htmlData;
 
-                htmlData = server.Document.GetHtmlContent(RichTextUtils.TextRange.All, tableTitle,
+                htmlData = server.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, tableTitle,
                     server.Options.Export.Html);
             }
 
