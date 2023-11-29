@@ -284,7 +284,7 @@ namespace TableEditor
             tcgEditors.Location = new Point(0, 0);
             tcgEditors.Name = "tcgEditors";
             tcgEditors.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            tcgEditors.SelectedTabPage = lcgHtmlEditor;
+            tcgEditors.SelectedTabPage = lcgJsonEditor;
             tcgEditors.Size = new Size(481, 402);
             tcgEditors.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             tcgEditors.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lcgJsonEditor, lcgHtmlEditor });
@@ -335,7 +335,7 @@ namespace TableEditor
             tcgParameters.Location = new Point(0, 402);
             tcgParameters.Name = "tcgParameters";
             tcgParameters.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            tcgParameters.SelectedTabPage = lcgHtmlParameters;
+            tcgParameters.SelectedTabPage = lcgJsonParameters;
             tcgParameters.Size = new Size(1035, 137);
             tcgParameters.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             tcgParameters.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lcgJsonParameters, lcgHtmlParameters });

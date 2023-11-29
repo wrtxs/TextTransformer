@@ -109,7 +109,7 @@ namespace TransfromService.RichText
                     return table.GetAttributeValue("title", null);
             }
 
-            return htmlData;
+            return null;
         }
 
         public static void SetCommonExportOptions(this HtmlDocumentExporterOptions exportHtml)

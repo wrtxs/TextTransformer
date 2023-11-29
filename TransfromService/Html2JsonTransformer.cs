@@ -4,10 +4,12 @@ using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using DevExpress.XtraRichEdit;
+using DevExpress.XtraRichEdit.Import.Doc;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using TransfromService.JsonData;
 using TransfromService.RichText;
+using static DevExpress.XtraPrinting.Native.ExportOptionsPropertiesNames;
 
 namespace TransfromService
 {
@@ -25,42 +27,67 @@ namespace TransfromService
 
         public string Transform(string htmlText, Html2JsonTransformParameters transformParams)
         {
-            string result = null;
-
             if (string.IsNullOrEmpty(htmlText.Trim()))
-                return result;
+                return null;
 
             var doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
 
-            string mainTableTitle = null;
+            var docNode = doc.DocumentNode;
 
             _styleClassesRegistry =
-                new StyleClassesRegistry(doc.DocumentNode); // Создаем объект-обработчик стилей документа
+                new StyleClassesRegistry(docNode); // Создаем объект-обработчик стилей документа
 
             HtmlNode mainTable;
+            string mainTableTitle = null;
 
-            if (doc.DocumentNode.FirstChild.Name.Equals("tbody",
+            if (docNode.FirstChild.Name.Equals("tbody",
                     StringComparison.OrdinalIgnoreCase)) // Получаем тело таблицы, если первым не идет тег tbody
             {
-                mainTable = doc.DocumentNode.FirstChild;
+                mainTable = docNode.FirstChild;
             }
             else
             {
-                mainTable = doc.DocumentNode.SelectSingleNode("//table"); // Получаем первую таблицу
+                mainTable = docNode.SelectSingleNode("//table"); // Получаем первую таблицу
 
-                if (mainTable == null)
-                    return result;
-
-                mainTableTitle = mainTable.GetAttributeValue("title", null);
+                if (mainTable != null)
+                    mainTableTitle = mainTable.GetAttributeValue("title", null);
             }
 
+            JsonRootBase root;
+
+            if (mainTable != null)
+                root = CreateJsonTable(mainTable, mainTableTitle, transformParams);
+            else
+                root = CreateJsonText(docNode, transformParams);
+
+            if (root == null)
+                return null;
+
+            var result = JsonUtils.SerializeObject(root,
+                transformParams.NeedFormatResult ? Formatting.Indented : Formatting.None);
+
+            if (transformParams.NeedDoubleTransformation)
+            {
+                var doubleTransformParams = (Html2JsonTransformParameters)transformParams.Clone();
+                doubleTransformParams.NeedDoubleTransformation = false;
+
+                result = ExecuteDoubleTransformation(result, mainTableTitle, doubleTransformParams);
+            }
+
+            return result;
+        }
+
+        private JsonRootBase CreateJsonTable(HtmlNode mainTable, string mainTableTitle,
+            Html2JsonTransformParameters transformParams)
+        {
             var rows = mainTable.SelectNodes("//tr");
 
             if (rows == null)
-                return result;
+                return null;
 
-            var root = Root.GetRootInstance(mainTableTitle);
+            var root = TableJsonRoot.GetRootInstanceForTable(mainTableTitle);
+
             var y = 0;
             var colspanMap = new Dictionary<int, int>();
 
@@ -127,7 +154,7 @@ namespace TransfromService
                         Y = y,
                         W = colspan,
                         H = rowspan,
-                        IsHeader = isCellHeader ? true : (bool?)null,
+                        IsHeader = isCellHeader ? true : null,
                         Items = new List<Item>
                         {
                             new Item
@@ -157,27 +184,28 @@ namespace TransfromService
 
             PostProcessCells(root.Content.Table.Cells);
 
-            result = JsonConvert.SerializeObject(root,
-                transformParams.NeedFormatResult ? Formatting.Indented : Formatting.None);
+            return root;
+        }
 
-            if (transformParams.NeedDoubleTransformation)
-            {
-                var doubleTransformParams = (Html2JsonTransformParameters)transformParams.Clone();
-                doubleTransformParams.NeedDoubleTransformation = false;
+        private JsonRootBase CreateJsonText(HtmlNode doc, Html2JsonTransformParameters transformParams)
+        {
+            var root = TextJsonRoot.GetRootInstanceForText();
 
-                result = ExecuteDoubleTransformation(result, mainTableTitle, doubleTransformParams);
-            }
+            var bodyNode = doc.SelectSingleNode("//body");
 
-            return result;
+            var innerHtml = bodyNode != null ? bodyNode.InnerHtml : doc.InnerHtml;
+            root.Content.Value = Utils.ProcessSpanTagStyleAttribute(innerHtml, transformParams.ProcessTextColor);
+
+            return root;
         }
 
         #region Постобработка полученных ячеек - корректировка высоты ячеек для учета возможного бага в html разметке
 
-        /// <summary>
-        /// Постобработка полученных ячеек для устранения багов с высотой ячеек в html разметке от DevExpress
-        /// </summary>
-        /// <param name="cells"></param>
-        private void PostProcessCells(IReadOnlyList<Cell> cells)
+            /// <summary>
+            /// Постобработка полученных ячеек для устранения багов с высотой ячеек в html разметке от DevExpress
+            /// </summary>
+            /// <param name="cells"></param>
+            private void PostProcessCells(IReadOnlyList<Cell> cells)
         {
             foreach (var targetCell in cells.Where(c => c.H > 1)) // Получаем ячейки объединенные по высоте
             {
@@ -241,11 +269,11 @@ namespace TransfromService
             return new Html2JsonTransformer().Transform(htmlData, transformParams);
         }
 
-        private string GetCellValue(HtmlNode cell, bool isCellHeader, Html2JsonTransformParameters transformParameters)
+        private string GetCellValue(HtmlNode cell, bool isCellHeader, Html2JsonTransformParameters transformParams)
         {
             string cellValue;
 
-            switch (transformParameters.CellValueFormat)
+            switch (transformParams.CellValueFormat)
             {
                 case CellValueFormat.Html:
                     //var cleanCell = (HtmlNode)cell.Clone();
@@ -256,7 +284,7 @@ namespace TransfromService
                     cellValue = cell.InnerHtml; //.Trim();
 
                     // Убираем символы форматирования html (используется для трансформации html, содержащего внутри себя фрагмент отформатированного код)
-                    if (transformParameters.RemoveFormatting)
+                    if (transformParams.RemoveFormatting)
                         cellValue = Regex.Replace(cellValue, @"\r\n\t+", string.Empty);
                     
                     // Убираем символы неразрывных пробелов &nbsp; в начале и в конце html
@@ -271,17 +299,17 @@ namespace TransfromService
                     // Заменяем <code> на <span>
                     cellValue = ReplaceTagHavingAttributes(cellValue, "code", "span");
 
-                    // Заменяем <span style="color: rgb(0,51,102);"> на <font color="rgb(0,51,102)"> с нужным значением цвета (в основном для Confluence таблиц)
-                    cellValue = ProcessSpanTagStyleAttribute(cellValue, transformParameters.ProcessTextColor);
+                    // Для <span style="color: rgb(0,51,102);"> добавляем соответствующие теги (в частности, <font color="rgb(0,51,102)"> с нужным значением цвета, в основном для Confluence таблиц)
+                    cellValue =  Utils.ProcessSpanTagStyleAttribute(cellValue, transformParams.ProcessTextColor);
 
                     // Обрабатываем класс стилей для тега <span>, заменяем значения класса стиля на соответствующие теги (в основном для встренного редактора)
-                    cellValue = ProcessSpanTagClassAttribute(cellValue, transformParameters.ProcessTextColor);
+                    cellValue =  Utils.ProcessSpanTagClassAttribute(cellValue, transformParams.ProcessTextColor, _styleClassesRegistry);
 
                     // Обрабатываем класс стилей для тега <p class="cs2654AE3A">, заменяем значения класса стиля на соответствующие теги (в основном для встроенного редактора)
                     // cellValue = ProcessPTagClassStyle(cellValue);
 
                     // Удаляем при необходимости теги <font color=""></font>
-                    if (!transformParameters.ProcessTextColor)
+                    if (!transformParams.ProcessTextColor)
                         cellValue = RemoveFontColorTags(cellValue);
 
                     // Удаляем div теги с классом "expand-control"
@@ -309,7 +337,7 @@ namespace TransfromService
                     cellValue = RemovePTagsAtStartAndEnd(cellValue);
 
                     // Заменяем при необходимости Tab на неразрывные пробелы
-                    if (transformParameters.ReplaceTabsBySpaces)
+                    if (transformParams.ReplaceTabsBySpaces)
                         cellValue = cellValue.Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
 
                     // Убираем фразу Развернуть...
@@ -327,7 +355,7 @@ namespace TransfromService
                     if (isCellHeader)
                     {
                         // Удаляем жирный стиль для шрифта
-                        if (transformParameters.RemoveBoldStyleForHeaderCells)
+                        if (transformParams.RemoveBoldStyleForHeaderCells)
                             cellValue = RemoveBoldTags(cellValue);
 
                         // Записываем пробел в пустые ячейки, чтобы избежать надписи "Заголовок столбца"
@@ -408,19 +436,20 @@ namespace TransfromService
         /// Обработать класс стиля
         /// Функция  для тега <span class=""> - заменить значения класса стиля на соответствующие теги
         /// </summary>
-        /// <returns></returns>
-        private string ProcessSpanTagClassAttribute(string html, bool processTextColor)
-        {
-            return Utils.ProcessSpanTagClassAttribute(html, processTextColor, _styleClassesRegistry);
-            //var docNode = Utils.GetHtmlNodeFromText(html);
+        /// <returns>
+        /// </returns>
+        //private string ProcessSpanTagClassAttribute(string html, bool processTextColor)
+        //{
+        //    return Utils.ProcessSpanTagClassAttribute(html, processTextColor, _styleClassesRegistry);
+        //    //var docNode = Utils.GetHtmlNodeFromText(html);
 
-            //foreach (var spanTag in docNode.Descendants("span").ToList())
-            //{
-            //    ProcessSpanTagClassAttribute(spanTag, processTextColor);
-            //}
+        //    //foreach (var spanTag in docNode.Descendants("span").ToList())
+        //    //{
+        //    //    ProcessSpanTagClassAttribute(spanTag, processTextColor);
+        //    //}
 
-            //return docNode.OuterHtml;
-        }
+        //    //return docNode.OuterHtml;
+        //}
 
         //private void ProcessSpanTagClassAttribute(HtmlNode spanTag, bool processTextColor)
         //{
@@ -456,16 +485,16 @@ namespace TransfromService
         //}
 
         /// <summary>
-        /// Обработка тега <span style="...">, убираем атрибут style, заменяя его на:
+        /// Обработка тега <span style="...">, для значений style добавляем дополнительные теги:
         ///  - "color: rgb(0,128,0)" на <font color="rgb(0,128,0)"/>
         ///  - "font-weight: bolder" на <b/>
         /// </summary>
         /// <param name="html"></param>
         /// <param name="processTextColor"></param>
         /// <returns></returns>
-        private string ProcessSpanTagStyleAttribute(string html, bool processTextColor)
-        {
-            return Utils.ProcessSpanTagStyleAttribute(html, processTextColor);
+        //private string ProcessSpanTagStyleAttribute(string html, bool processTextColor)
+        //{
+            //return Utils.ProcessSpanTagStyleAttribute(html, processTextColor);
             //var docNode = Utils.GetHtmlNodeFromText(html);
 
             //foreach (var spanTag in docNode.Descendants("span").ToList())
@@ -474,7 +503,7 @@ namespace TransfromService
             //}
 
             //return docNode.OuterHtml;
-        }
+        //}
 
         //private void ProcessSpanTagStyleAttribute(HtmlNode spanTag, bool processTextColor)
         //{
