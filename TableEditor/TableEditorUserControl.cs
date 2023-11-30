@@ -123,7 +123,7 @@ namespace TableEditor
 
             // Получаем заголовок таблицы
             var tableTitle = RichTextUtils.GetFirstTableTitle(htmlData);
-            
+
             richEditControl.Document.BeginUpdate();
             richEditControl.Document.Delete(richEditControl.Document.Range);
 
@@ -156,7 +156,7 @@ namespace TableEditor
 
                 var insertedRange = richEditControl.Document.InsertDocumentContent(
                     richEditControl.Document.Range.Start, server.Document.Range);
-                
+
                 // Удаляем последнюю пустую строку, которая появляется в реадкторе после вставки контента 
                 richEditControl.Document.Delete(richEditControl.Document.CreateRange(insertedRange.End.ToInt() - 1, 1));
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using DevExpress.XtraRichEdit;
 using HtmlAgilityPack;
@@ -55,7 +56,7 @@ namespace TransfromService
                 return null;
 
             var result = JsonUtils.SerializeObject(root,
-                transformParams.NeedFormatResult ? Formatting.Indented : Formatting.None);
+                transformParams.NeedFormatJSONResult ? Formatting.Indented : Formatting.None);
 
             if (transformParams.NeedDoubleTransformation)
             {
@@ -228,42 +229,42 @@ namespace TransfromService
         /// <summary>
         /// Формат значений ячеек для выходного файла - html или text 
         /// </summary>
-        public ValueFormat TargetFormat { get; set; } = ValueFormat.Html;
+        public virtual ValueFormat TargetFormat { get; set; } = ValueFormat.Html;
 
         /// <summary>
         /// Признак необходимости форматирования выходного результата
         /// </summary>
-        public bool NeedFormatResult { get; set; } = false;
+        public virtual bool NeedFormatJSONResult { get; set; } = false;
 
         /// <summary>
         /// Признак необходимости учета цвета текста
         /// </summary>
-        public bool ProcessTextColor { get; set; } = true;
+        public virtual bool ProcessTextColor { get; set; } = true;
 
         /// <summary>
         /// Признак необходимости замены табов пробелами, 1 таб - 4 пробела (используется, если текст ячейки представляет собой предварительно отформатированный код, например xml)
         /// </summary>
-        public bool ReplaceTabsBySpaces { get; set; } = false;
+        public virtual bool ReplaceTabsBySpaces { get; set; } = false;
 
         /// <summary>
         /// Признак необходимости удаления форматирования у предварительно отформатированного кода перед его обработкой (удаление последовательности символов \r\n\t+)
         /// </summary>
-        public bool RemoveFormatting { get; set; } = true;
+        public virtual bool RemoveFormatting { get; set; } = true;
 
         /// <summary>
         /// Признак необходимости удаления жирного стиля для ячеек, являющимися заголовками
         /// </summary>
-        public bool RemoveBoldStyleForHeaderCells { get; set; } = true;
+        public virtual bool RemoveBoldStyleForHeaderCells { get; set; } = true;
 
         /// <summary>
         /// Признак необходимости двойного преобразования данных: из JSON в HTML и обратно (для корректной обработки тегов HTML, т.к. HTML редактора лучше воспринимается Сфера.Документы)
         /// </summary>
-        public bool NeedDoubleTransformation { get; set; } = true;
+        public virtual bool NeedDoubleTransformation { get; set; } = true;
 
         /// <summary>
         /// Признак перевода всех списков в плоские 
         /// </summary>
-        public bool MakeAllListsFlatten { get; set; } = true;
+        public virtual bool MakeAllListsFlatten { get; set; } = true;
 
         public object Clone()
         {
@@ -272,6 +273,7 @@ namespace TransfromService
 
         public enum ValueFormat
         {
+            [Description("HTML")]
             Html,
             Text
         }
