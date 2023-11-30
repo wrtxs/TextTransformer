@@ -24,7 +24,7 @@ namespace TableEditor.RichTextEdit.CustomCommands
             try
             {
                 var html = richEditControl.Document.GetHtmlContent(selRange, richEditControl.GetTableTitle(), richEditControl.Options.Export.Html);
-                html = TransfromService.Utils.ProcessSpanTagStyleAttribute(html, true); // Обрабатываем тег <span style="...">, добавляем отдельные теги, соответствующие значениям style
+                html = TransfromService.HtmlUtils.ProcessSpanTagStyleAttribute(html, true); // Обрабатываем тег <span style="...">, добавляем отдельные теги, соответствующие значениям style
 
                 htmlForClipboard = CF_HtmlHelper.GetHtmlClipboardFormat(html);
             }

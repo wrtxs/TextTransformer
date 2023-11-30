@@ -72,7 +72,7 @@ namespace TransfromService.RichText
         /// <returns></returns>
         public static string SetFirstTableTitle(string htmlData, string tableTitle)
         {
-            var docNode = Utils.GetHtmlNodeFromText(htmlData);
+            var docNode = HtmlUtils.GetHtmlNodeFromText(htmlData);
 
             if (docNode != null)
             {
@@ -99,7 +99,7 @@ namespace TransfromService.RichText
         /// <returns></returns>
         public static string GetFirstTableTitle(string htmlData)
         {
-            var docNode = Utils.GetHtmlNodeFromText(htmlData);
+            var docNode = HtmlUtils.GetHtmlNodeFromText(htmlData);
 
             if (docNode != null)
             {
@@ -117,6 +117,11 @@ namespace TransfromService.RichText
             exportHtml.ExportRootTag = ExportRootTag.Html;
             exportHtml.CssPropertiesExportType = CssPropertiesExportType.Inline;
             exportHtml.EmbedImages = false;
+
+            //exportHtml.TabMarker = "&nbsp;&nbsp;&nbsp;&nbsp;";
+            //exportHtml.HtmlNumberingListExportFormat = HtmlNumberingListExportFormat.HtmlFormat;
+            exportHtml.IgnoreHangingIndentOnNumberingList = false;
+            //exportHtml.ExportListItemStyle = true;
         }
 
         public enum TextRangeType

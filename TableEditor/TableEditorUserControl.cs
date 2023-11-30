@@ -10,7 +10,6 @@ using DevExpress.XtraLayout.HitInfo;
 using DevExpress.XtraLayout.Utils;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.API.Native;
-using System.Linq;
 using TransfromService;
 using TransfromService.RichText;
 
@@ -123,8 +122,8 @@ namespace TableEditor
             var richEditControl = rtfDocUserControl.RichEditControl;
 
             // Получаем заголовок таблицы
-            var tableTitle = TransfromService.RichText.RichTextUtils.GetFirstTableTitle(htmlData);
-
+            var tableTitle = RichTextUtils.GetFirstTableTitle(htmlData);
+            
             richEditControl.Document.BeginUpdate();
             richEditControl.Document.Delete(richEditControl.Document.Range);
 
@@ -155,8 +154,11 @@ namespace TableEditor
                     }
                 }
 
-                richEditControl.Document.InsertDocumentContent(
+                var insertedRange = richEditControl.Document.InsertDocumentContent(
                     richEditControl.Document.Range.Start, server.Document.Range);
+                
+                // Удаляем последнюю пустую строку, которая появляется в реадкторе после вставки контента 
+                richEditControl.Document.Delete(richEditControl.Document.CreateRange(insertedRange.End.ToInt() - 1, 1));
 
                 richEditControl.Document.Sections[0].Page.Landscape = true;
                 richEditControl.Document.CaretPosition =
@@ -223,12 +225,12 @@ namespace TableEditor
             // Заливка ячеек серым цветом
             var cellParagraph = rtfDocUserControl.RichEditControl.Document.BeginUpdateParagraphs(cell.Range);
 
-            if (cellParagraph.BackColor.GetValueOrDefault().ToArgb().Equals(TransfromService.Utils.CommonTableHeaderColor.ArgbValue))
+            if (cellParagraph.BackColor.GetValueOrDefault().ToArgb().Equals(TransfromService.HtmlUtils.CommonTableHeaderColor.ArgbValue))
             {
                 //cell.HeightType = HeightType.Auto;
                 //cell.PreferredWidthType = WidthType.Auto;
                 //cell.Height = 500;
-                cell.BackgroundColor = TransfromService.Utils.CommonTableHeaderColor.Value;
+                cell.BackgroundColor = TransfromService.HtmlUtils.CommonTableHeaderColor.Value;
                 //cell.PreferredWidthType = WidthType.Fixed;
             }
 

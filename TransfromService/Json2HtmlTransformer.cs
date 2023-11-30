@@ -57,7 +57,7 @@ namespace TransfromService
                 htmlBuilder.Append(GetHtmlDocBegin());
                 htmlBuilder.Append("<style type=\"text/css\">");
                 htmlBuilder.Append(
-                    $".{headerStyleClassName}{{background-color:{Utils.CommonTableHeaderColor.HexValue};}}");
+                    $".{headerStyleClassName}{{background-color:{HtmlUtils.CommonTableHeaderColor.HexValue};}}");
                 htmlBuilder.Append("</style>");
                 htmlBuilder.Append(GetHtmlBodyBegin());
                 htmlBuilder.Append("<table" + (string.IsNullOrEmpty(tableRoot.Title)

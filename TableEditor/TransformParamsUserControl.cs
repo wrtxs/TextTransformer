@@ -15,7 +15,7 @@ namespace TableEditor
 
         public Html2JsonTransformParameters GetParameters()
         {
-            CellValueFormat cellValueFormat;
+            Html2JsonTransformParameters.ValueFormat valueFormat;
             var processTextColor = ceProcessTextColor.CheckState == CheckState.Checked;
             var replaceTabsBySpaces = ceReplaceTabsBySpaces.CheckState == CheckState.Checked;
             var removeFormatting = ceRemoveFormatting.CheckState == CheckState.Checked;
@@ -23,19 +23,19 @@ namespace TableEditor
             switch (rgCellValueFormat.SelectedIndex)
             {
                 case 0:
-                    cellValueFormat = CellValueFormat.Html;
+                    valueFormat = Html2JsonTransformParameters.ValueFormat.Html;
                     break;
                 case 1:
-                    cellValueFormat = CellValueFormat.Text;
+                    valueFormat = Html2JsonTransformParameters.ValueFormat.Text;
                     break;
                 default:
-                    cellValueFormat = CellValueFormat.Html;
+                    valueFormat = Html2JsonTransformParameters.ValueFormat.Html;
                     break;
             }
 
             return new Html2JsonTransformParameters
             {
-                CellValueFormat = cellValueFormat,
+                TargetFormat = valueFormat,
                 ProcessTextColor = processTextColor,
                 ReplaceTabsBySpaces = replaceTabsBySpaces,
                 RemoveFormatting = removeFormatting
@@ -48,12 +48,12 @@ namespace TableEditor
             ceReplaceTabsBySpaces.Checked = parameters.ReplaceTabsBySpaces;
             ceRemoveFormatting.Checked = parameters.RemoveFormatting;
 
-            switch (parameters.CellValueFormat)
+            switch (parameters.TargetFormat)
             {
-                case CellValueFormat.Html:
+                case Html2JsonTransformParameters.ValueFormat.Html:
                     rgCellValueFormat.SelectedIndex = 0;
                     break;
-                case CellValueFormat.Text:
+                case Html2JsonTransformParameters.ValueFormat.Text:
                     rgCellValueFormat.SelectedIndex = 1;
                     break;
                 default:

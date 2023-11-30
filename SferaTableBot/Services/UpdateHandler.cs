@@ -41,7 +41,7 @@ public class UpdateHandler : IUpdateHandler
 
         _transformParameters = new Html2JsonTransformParameters
         {
-            CellValueFormat = CellValueFormat.Html,
+            TargetFormat = Html2JsonTransformParameters.ValueFormat.Html,
             NeedFormatResult = false,
 
             NeedDoubleTransformation = Convert.ToBoolean(configuration["TransformParameters:NeedDoubleTransformation"]),

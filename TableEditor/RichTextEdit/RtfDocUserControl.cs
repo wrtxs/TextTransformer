@@ -485,8 +485,9 @@ namespace TableEditor.RichTextEdit
 
         #endregion
 
-        public string GetTableTitle() => _barEditItemTableTitle.EditValue as string;
+        public string GetTableTitle() => (_barEditItemTableTitle.EditValue as string);
 
-        public void SetTableTitle(string tableTitle) => _barEditItemTableTitle.EditValue = tableTitle;
+        public void SetTableTitle(string tableTitle) =>
+            _barEditItemTableTitle.EditValue = tableTitle;
     }
 }
