@@ -42,7 +42,7 @@ public class UpdateHandler : IUpdateHandler
         _transformParameters = new Html2JsonTransformParameters
         {
             TargetFormat = Html2JsonTransformParameters.ValueFormat.Html,
-            NeedFormatJSONResult = false,
+            NeedFormatJsonResult = false,
 
             NeedDoubleTransformation = Convert.ToBoolean(configuration["TransformParameters:NeedDoubleTransformation"]),
             ProcessTextColor = Convert.ToBoolean(configuration["TransformParameters:ProcessTextColor"])

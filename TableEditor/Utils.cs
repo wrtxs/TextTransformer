@@ -1,17 +1,13 @@
 ﻿using System.IO;
 using ActiproSoftware.Text;
 using ActiproSoftware.UI.WinForms.Controls.SyntaxEditor;
-using DevExpress.Map.Kml.Model;
 using Microsoft.Win32;
 using DevExpress.XtraEditors;
-using DevExpress.XtraRichEdit;
-using DevExpress.XtraRichEdit.Export;
-using DevExpress.XtraRichEdit.Export.Html;
 using Newtonsoft.Json.Linq;
 using DevExpress.XtraSplashScreen;
-using TableEditor.RichTextEdit.CustomCommands;
 using TransfromService;
-using TableEditor.RichTextEdit;
+using TableEditor.TransformParameters;
+using Newtonsoft.Json;
 
 namespace TableEditor
 {
@@ -149,9 +145,136 @@ namespace TableEditor
             SplashScreenManager.CloseForm(false);
         }
 
-        public static string TransformHtml2Json(string htmlData, Html2JsonTransformParameters transformParams) =>
-            new Html2JsonTransformer().Transform(htmlData, transformParams);
+        public static string TransformHtml2Json(string htmlData, JsonTransformViewParameters transformParams)
+        {
+            var jsonData = new Html2JsonTransformer().Transform(htmlData, transformParams);
 
-        public static string TransformJson2Html(string jsonData) => new Json2HtmlTransformer().Transform(jsonData);
+            if (transformParams.CopyJsonToClipboardAfterTransformation)
+                CopyJsonToClipBoard(jsonData);
+
+            return jsonData;
+        }
+
+        public static string TransformJson2Html(string jsonData,
+            HtmlTransformViewParameters transformParams = null) =>
+            new Json2HtmlTransformer().Transform(jsonData, transformParams);
+
+        public static string TransformHtml2Html(string htmlData,
+            Html2HtmlTransformer.Html2HtmlTransformParameters transformParams) =>
+            new Html2HtmlTransformer().Transform(htmlData, transformParams);
+
+        public static HtmlTransformViewParameters ConvertToHtmlTransformParameters(this JsonTransformViewParameters transformParams) =>
+            new()
+            {
+                MakeAllListsHierarchical = transformParams.MakeAllListsHierarchical
+            };
+
+        public static Html2HtmlTransformer.Html2HtmlTransformParameters ConvertToHtml2HtmlTransformParameters(
+            this HtmlTransformViewParameters transformParams) =>
+            new()
+            {
+                MakeAllListsHierarchical = transformParams.MakeAllListsHierarchical
+            };
+
+        //public static void SaveParameters(Html2JsonTransformViewParameters parameters, string paramName)
+            //{
+            //    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            //    var paramsInJson = JsonConvert.SerializeObject(parameters);
+
+            //    if (config.AppSettings.Settings[paramName] == null)
+            //    {
+            //        config.AppSettings.Settings.Add(paramName, paramsInJson);
+            //    }
+            //    else
+            //    {
+            //        config.AppSettings.Settings[paramName].Value = paramsInJson;
+            //    }
+
+            //    config.Save(ConfigurationSaveMode.Modified);
+            //    ConfigurationManager.RefreshSection("appSettings");
+            //}
+
+            //public static Html2JsonTransformViewParameters LoadParameters(string paramName)
+            //{
+            //    try
+            //    {
+            //        var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            //        var jsonData = config.AppSettings.Settings[paramName]?.Value;
+
+            //        if (jsonData != null)
+            //            return JsonConvert.DeserializeObject<Html2JsonTransformViewParameters>(jsonData);
+
+            //        //return loadedParameters;
+            //    }
+            //    catch
+            //    {
+            //        // ignored
+            //    }
+
+            //    return new Html2JsonTransformViewParameters();
+            //}
+
+            public static void SaveParameters(object parameters, string paramName)
+        {
+            try
+            {
+                var jsonFilePath = GetJsonFilePath();
+
+                var existingSettings = LoadAllParameters(); // Загрузить все настройки
+                existingSettings[paramName] = JObject.FromObject(parameters);
+
+                // Сохраняем или обновляем настройки для заданной секции
+                var paramsInJson = JsonConvert.SerializeObject(existingSettings, Formatting.Indented);
+                File.WriteAllText(jsonFilePath, paramsInJson);
+            }
+            catch
+            {
+                // Обработка ошибок
+            }
+        }
+
+        public static T LoadParameters<T>(string paramName) where T : class, new()
+        {
+            var allParameters = LoadAllParameters();
+
+            return allParameters.TryGetValue(paramName, out var parameters)
+                ? parameters == null ? new T() : parameters.ToObject<T>()
+                : new T();
+        }
+
+        private static Dictionary<string, JObject> LoadAllParameters()
+        {
+            try
+            {
+                var jsonFilePath = GetJsonFilePath();
+
+                if (File.Exists(jsonFilePath))
+                {
+                    var jsonData = File.ReadAllText(jsonFilePath);
+                    return JsonConvert.DeserializeObject<Dictionary<string, JObject>>(jsonData) ??
+                           new Dictionary<string, JObject>();
+                }
+            }
+            catch
+            {
+                // Обработка ошибок
+            }
+
+            return new Dictionary<string, JObject>();
+        }
+
+        private static string GetJsonFilePath()
+        {
+            // Получаем путь к папке, содержащей исполняемый файл
+            var exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var exeDirectory = Path.GetDirectoryName(exePath);
+
+            // Создаем полный путь к JSON-файлу рядом с исполняемым файлом
+            const string jsonFileName = "TableEditor.settings.json"; // Название файла может быть любым
+            var jsonFilePath = Path.Combine(exeDirectory ?? string.Empty, jsonFileName);
+
+            return jsonFilePath;
+        }
     }
 }

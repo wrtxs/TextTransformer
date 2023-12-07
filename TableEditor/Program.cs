@@ -1,4 +1,5 @@
-﻿using ActiproSoftware.Products;
+﻿using System.Globalization;
+using ActiproSoftware.Products;
 
 namespace TableEditor
 {
@@ -10,14 +11,14 @@ namespace TableEditor
         [STAThread]
         static void Main()
         {
-            //// The following code must be executed before application startup.
-            //CultureInfo culture = CultureInfo.CreateSpecificCulture("ru-RU");
-            //Thread.CurrentThread.CurrentUICulture = culture;
-            //Thread.CurrentThread.CurrentCulture = culture;
+            // The following code must be executed before application startup.
+            var culture = CultureInfo.CreateSpecificCulture("ru-RU");
+            Thread.CurrentThread.CurrentUICulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
 
-            //// Sets the German culture as the default culture for all threads in the application. 
-            //CultureInfo.DefaultThreadCurrentCulture = culture;
-            //CultureInfo.DefaultThreadCurrentUICulture = culture;
+            // Sets the German culture as the default culture for all threads in the application. 
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

@@ -7,8 +7,10 @@ namespace TransfromService
 {
     public class Json2HtmlTransformer
     {
-        public string Transform(string jsonData)
+        public string Transform(string jsonData, Json2HtmlTransformParameters transformParams = null)
         {
+            transformParams ??= new Json2HtmlTransformParameters();
+
             var htmlResult = string.Empty;
 
             if (string.IsNullOrEmpty(jsonData))
@@ -24,6 +26,9 @@ namespace TransfromService
             {
                 htmlResult = CreateHtmlText(textRoot);
             }
+
+            if (transformParams.MakeAllListsHierarchical)
+                htmlResult = HtmlUtils.MakeAllListsHierarchical(htmlResult);
 
             return htmlResult;
         }
@@ -106,5 +111,23 @@ namespace TransfromService
         private string GetHtmlBodyBegin() => "<body>";
 
         private string GetHtmlDocEnd() => "</body>" + Environment.NewLine + "</html>";
+    }
+
+    public class Json2HtmlTransformParameters : ICloneable
+    {
+        ///// <summary>
+        ///// Производить трансформацию через JSON (JSON -> HTML, HTML -> JSON, JSON -> HTML )
+        ///// </summary>
+        //public bool TransformViaJson { get; set; } = true;
+
+        /// <summary>
+        /// Признак трансформации всех списков из плоского представления в древовидное
+        /// </summary>
+        public virtual bool MakeAllListsHierarchical { get; set; } = false;
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

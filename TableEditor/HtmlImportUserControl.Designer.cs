@@ -33,7 +33,7 @@ namespace TableEditor
         {
             layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             cmdJsonToHtml = new DevExpress.XtraEditors.SimpleButton();
-            transformParamsUserControl = new TransformParamsUserControl();
+            transformParamsUserControl = new TransformParametersUserControl();
             cmdHtmlToEditor = new DevExpress.XtraEditors.SimpleButton();
             cmdCopyJson2Buffer = new DevExpress.XtraEditors.SimpleButton();
             cmdFormatJson = new DevExpress.XtraEditors.SimpleButton();
@@ -502,7 +502,7 @@ namespace TableEditor
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
         private DevExpress.XtraEditors.SimpleButton cmdHtmlToEditor;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
-        private TransformParamsUserControl transformParamsUserControl;
+        private TransformParametersUserControl transformParamsUserControl;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem6;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem3;

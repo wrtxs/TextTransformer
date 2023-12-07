@@ -5,7 +5,7 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>1.0.21</Version>
+		<Version>1.0.25</Version>
 		<ApplicationIcon>Resources\app.ico</ApplicationIcon>
 		<AssemblyName>TableEditor.v$(Version)</AssemblyName>
 		<!--<AssemblyProduct>TableEditor.v$(Version)</AssemblyProduct>
@@ -14,6 +14,7 @@
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<SatelliteResourceLanguages>ru</SatelliteResourceLanguages>
 		<ResourceLanguages>ru</ResourceLanguages>
+		<!--<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract> -->
 	</PropertyGroup>
 
 	<ItemGroup>

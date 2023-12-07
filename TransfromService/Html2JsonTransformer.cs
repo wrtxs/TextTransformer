@@ -16,15 +16,12 @@ namespace TransfromService
 
         //private HtmlNode _htmlRoot;
 
-        public string Transform(string htmlText, Html2JsonTransformParameters transformParams)
+        public string Transform(string htmlData, Html2JsonTransformParameters transformParams)
         {
-            if (string.IsNullOrEmpty(htmlText.Trim()))
+            if (string.IsNullOrEmpty(htmlData.Trim()))
                 return null;
 
-            var doc = new HtmlDocument();
-            doc.LoadHtml(htmlText);
-
-            var docNode = doc.DocumentNode;
+            var docNode = HtmlUtils.GetHtmlNodeFromText(htmlData); 
 
             _styleClassesRegistry =
                 new StyleClassesRegistry(docNode); // Создаем объект-обработчик стилей документа
@@ -56,12 +53,14 @@ namespace TransfromService
                 return null;
 
             var result = JsonUtils.SerializeObject(root,
-                transformParams.NeedFormatJSONResult ? Formatting.Indented : Formatting.None);
+                transformParams.NeedFormatJsonResult ? Formatting.Indented : Formatting.None);
 
             if (transformParams.NeedDoubleTransformation)
             {
                 var doubleTransformParams = (Html2JsonTransformParameters)transformParams.Clone();
                 doubleTransformParams.NeedDoubleTransformation = false;
+                doubleTransformParams.MakeAllListsFlatten = false;
+                doubleTransformParams.MultiLevelNumerationForFlattenList = false;
 
                 result = ExecuteDoubleTransformation(result, mainTableTitle, doubleTransformParams);
             }
@@ -213,6 +212,7 @@ namespace TransfromService
             using (var server = new RichEditDocumentServer())
             {
                 server.Options.Export.Html.SetCommonExportOptions();
+                //server.HtmlText = null;
                 server.HtmlText = htmlData;
 
                 htmlData = server.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, tableTitle,
@@ -234,7 +234,7 @@ namespace TransfromService
         /// <summary>
         /// Признак необходимости форматирования выходного результата
         /// </summary>
-        public virtual bool NeedFormatJSONResult { get; set; } = false;
+        public virtual bool NeedFormatJsonResult { get; set; } = false;
 
         /// <summary>
         /// Признак необходимости учета цвета текста
@@ -266,6 +266,13 @@ namespace TransfromService
         /// </summary>
         public virtual bool MakeAllListsFlatten { get; set; } = true;
 
+        /// <summary>
+        /// Многоуровневая нумерация для плоского списка
+        /// </summary>
+        public virtual bool MultiLevelNumerationForFlattenList { get; set; } = false;
+
+        //public virtual bool CopyJsonToClipboardAfterTransformation { get; set; } = true;
+
         public object Clone()
         {
             return MemberwiseClone();
@@ -274,8 +281,9 @@ namespace TransfromService
         public enum ValueFormat
         {
             [Description("HTML")]
-            Html,
-            Text
+            Html = 0,
+            [Description("Plain Text")]
+            Text = 1
         }
     }
 }

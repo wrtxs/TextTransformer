@@ -10,13 +10,17 @@ using DevExpress.XtraLayout.HitInfo;
 using DevExpress.XtraLayout.Utils;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.API.Native;
+using TableEditor.TransformParameters;
 using TransfromService;
 using TransfromService.RichText;
 
 namespace TableEditor
 {
-    public partial class TableEditorUserControl : XtraUserControl
+    public partial class TableEditorUserControl : XtraUserControl, ISupportParameters
     {
+        private const string Html2JsonParamsSectionName = "Html2JsonTableEditorParameters";
+        private const string Json2HtmlParamsSectionName = "Json2HtmlTableEditorParameters";
+
         public TableEditorUserControl()
         {
             InitializeComponent();
@@ -73,16 +77,12 @@ namespace TableEditor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LayoutControlDragOver(object sender, System.Windows.Forms.DragEventArgs e)
+        private void LayoutControlDragOver(object sender, DragEventArgs e)
         {
-            var hitInfo =
-                this.layoutControl.CalcHitInfo(this.layoutControl.PointToClient(new Point(e.X, e.Y))) as
-                    TabbedGroupHitInfo;
-
-            if (hitInfo != null)
+            if (layoutControl.CalcHitInfo(this.layoutControl.PointToClient(new Point(e.X, e.Y))) is TabbedGroupHitInfo
+                hitInfo)
             {
-                var tcg = hitInfo.Item as TabbedControlGroup;
-                if (tcg.SelectedTabPageIndex != hitInfo.TabPageIndex)
+                if (hitInfo.Item is TabbedControlGroup tcg && tcg.SelectedTabPageIndex != hitInfo.TabPageIndex)
                     tcg.SelectedTabPageIndex = hitInfo.TabPageIndex;
             }
         }
@@ -213,7 +213,7 @@ namespace TableEditor
             //richEditControl.Refresh();
         }
 
-        private void CellProcessor(TableCell cell, int rowindex, int cellindex)
+        private void CellProcessor(TableCell cell, int rowIndex, int cellIndex)
         {
             //if (rowindex == 0)
             //{
@@ -346,7 +346,7 @@ namespace TableEditor
             try
             {
                 Utils.ShowProgressForm();
-                CreateTableOnEditorByJsonData();
+                CreateTableOnEditorByJsonData(txtJson.Text);
             }
             catch (Exception exception)
             {
@@ -358,31 +358,44 @@ namespace TableEditor
             }
         }
 
-        private void CreateTableOnEditorByJsonData()
+        private void CreateTableOnEditorByJsonData(string jsonData, JsonTransformViewParameters transformParams = null)
         {
-            var htmlData = Utils.TransformJson2Html(txtJson.Text);
+            if (transformParams == null)
+            {
+                transformParams =
+                    jsonTransformParamsUserControl.GetParameters<JsonTransformViewParameters>();
+            }
+
+            var htmlTransformParams = transformParams.ConvertToHtmlTransformParameters();
+
+            var htmlData = Utils.TransformJson2Html(jsonData, htmlTransformParams);
             SetHtmlContentToEditor(htmlData, true, false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="htmlData"></param>
-        /// <param name="viaJson">Признак необходимости выполнения преобразования через JSON: 1) HTML -> JSON, 2) JSON -> HTML</param>
-        private void CreateTableOnEditorByHtmlData(string htmlData, bool viaJson)
+        private void CreateTableOnEditorByHtmlData(string htmlData, HtmlTransformViewParameters transformParams = null)
         {
-            if (viaJson)
+            if (transformParams == null)
+                transformParams = htmlTransformParamsUserControl.GetParameters<HtmlTransformViewParameters>();
+
+            if (transformParams.TransformViaJson)
             {
-                var transformParams = new Html2JsonTransformParameters
+                var jsonTransformParams = new JsonTransformViewParameters
                 {
-                    NeedDoubleTransformation = false
+                    NeedDoubleTransformation = false,
+                    CopyJsonToClipboardAfterTransformation = false
                 };
 
                 // HTML -> JSON
-                var jsonData = Utils.TransformHtml2Json(htmlData, transformParams);
+                var jsonData = Utils.TransformHtml2Json(htmlData, jsonTransformParams);
 
                 // JSON -> HTML
-                htmlData = Utils.TransformJson2Html(jsonData);
+                htmlData = Utils.TransformJson2Html(jsonData, transformParams);
+            }
+            else
+            {
+                // HTML -> HTML
+                var html2HtmlTransformParams = transformParams.ConvertToHtml2HtmlTransformParameters();
+                htmlData = Utils.TransformHtml2Html(htmlData, html2HtmlTransformParams);
             }
 
             SetHtmlContentToEditor(htmlData, true, false);
@@ -407,38 +420,45 @@ namespace TableEditor
 
         private void TransformFromEditorToJson()
         {
-            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, rtfDocUserControl.GetTableTitle(), rtfDocUserControl.RichEditControl.Options.Export.Html);
-            var transformParams = transformParamsUserControl.GetParameters();
-            transformParams.NeedDoubleTransformation = false;
+            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All,
+                rtfDocUserControl.GetTableTitle(), rtfDocUserControl.RichEditControl.Options.Export.Html);
 
-            var jsonData = Utils.TransformHtml2Json(htmlData, transformParams);
+            if (jsonTransformParamsUserControl.GetParameters() is JsonTransformViewParameters transformParams)
+            {
+                transformParams.NeedDoubleTransformation = false;
 
-            InsertNewJsonData(jsonData, false);
+                var jsonData = Utils.TransformHtml2Json(htmlData, transformParams);
+
+                InsertNewJsonData(jsonData, false);
+            }
         }
 
-        public void InsertNewJsonData(string jsonData, bool updateTable)
+        public void InsertNewJsonData(string jsonData, bool updateTable,
+            JsonTransformViewParameters transformParams = null)
         {
             txtJson.Text = jsonData;
             txtJson.ActiveView.Selection.CaretPosition = new TextPosition(0, 0);
             //txtJson.Format();
 
             if (updateTable)
-                CreateTableOnEditorByJsonData();
+                CreateTableOnEditorByJsonData(jsonData, transformParams);
 
             tcgEditors.SelectedTabPage = lcgJsonEditor;
         }
 
-        public void InsertNewHtmlData(string htmlData, bool updateTable)
+        public void InsertNewHtmlData(string htmlData, bool updateTable,
+            HtmlTransformViewParameters transformParams = null)
         {
             txtHtml.Text = htmlData;
+            txtHtml.ActiveView.Selection.CaretPosition = new TextPosition(0, 0);
 
             if (updateTable)
-                CreateTableOnEditorByHtmlData(txtHtml.Text, ceTransformViaJson.Checked);
+                CreateTableOnEditorByHtmlData(htmlData, transformParams);
 
             tcgEditors.SelectedTabPage = lcgHtmlEditor;
         }
 
-        private void tcgEditors_SelectedPageChanged(object sender, DevExpress.XtraLayout.LayoutTabPageChangedEventArgs e)
+        private void tcgEditors_SelectedPageChanged(object sender, LayoutTabPageChangedEventArgs e)
         {
             AdjustParametersTab();
         }
@@ -448,7 +468,7 @@ namespace TableEditor
             try
             {
                 Utils.ShowProgressForm();
-                CreateTableOnEditorByHtmlData(txtHtml.Text, ceTransformViaJson.Checked);
+                CreateTableOnEditorByHtmlData(txtHtml.Text);
             }
             catch (Exception exception)
             {
@@ -478,6 +498,28 @@ namespace TableEditor
             {
                 Utils.CloseProgressForm();
             }
+        }
+
+        public void LoadParameters()
+        {
+            var html2JsonTransformParams =
+                Utils.LoadParameters<JsonTransformViewParameters>(Html2JsonParamsSectionName);
+            jsonTransformParamsUserControl.SetParameters(html2JsonTransformParams);
+
+            var json2HtmlTransformParams =
+                Utils.LoadParameters<HtmlTransformViewParameters>(Json2HtmlParamsSectionName);
+            htmlTransformParamsUserControl.SetParameters(json2HtmlTransformParams);
+        }
+
+        public void SaveParameters()
+        {
+            var html2JsonTransformParams =
+                jsonTransformParamsUserControl.GetParameters() as JsonTransformViewParameters;
+            Utils.SaveParameters(html2JsonTransformParams, Html2JsonParamsSectionName);
+
+            var json2HtmlTransformParams =
+                htmlTransformParamsUserControl.GetParameters() as HtmlTransformViewParameters;
+            Utils.SaveParameters(json2HtmlTransformParams, Json2HtmlParamsSectionName);
         }
     }
 }

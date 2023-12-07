@@ -1,6 +1,6 @@
 ﻿namespace TableEditor.TransformParameters
 {
-    partial class TransformParamsUserControl
+    partial class TransformParametersUserControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -42,16 +42,17 @@
             propertyGridControl.OptionsBehavior.PropertySort = DevExpress.XtraVerticalGrid.PropertySort.NoSort;
             propertyGridControl.OptionsBehavior.ResizeRowHeaders = false;
             propertyGridControl.OptionsView.AllowReadOnlyRowAppearance = DevExpress.Utils.DefaultBoolean.True;
-            propertyGridControl.OptionsView.ShowRootCategories = false;
+            propertyGridControl.RecordWidth = 50;
+            propertyGridControl.RowHeaderWidth = 150;
             propertyGridControl.Size = new Size(367, 214);
             propertyGridControl.TabIndex = 7;
             // 
-            // TransformParamsUserControl
+            // TransformParametersUserControl
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(propertyGridControl);
-            Name = "TransformParamsUserControl";
+            Name = "TransformParametersUserControl";
             Size = new Size(367, 214);
             ((System.ComponentModel.ISupportInitialize)propertyGridControl).EndInit();
             ResumeLayout(false);

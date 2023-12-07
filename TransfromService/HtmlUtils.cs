@@ -70,7 +70,7 @@ namespace TransfromService
 
                     // Переводим при необходимости все списки в плоские
                     if (transformParams.MakeAllListsFlatten)
-                        nodeValue = MakeAllListsFlatten(nodeValue);
+                        nodeValue = MakeAllListsFlatten(nodeValue, transformParams.MultiLevelNumerationForFlattenList);
                     
                     // Убираем символы неразрывных пробелов &nbsp; в начале и в конце html
                     nodeValue = RemoveLeadingAndTrailingTokens(nodeValue, "&nbsp;"); //.Trim();
@@ -109,6 +109,10 @@ namespace TransfromService
                     // Удаляем div теги с классом "container"
                     nodeValue = ProcessTagsWithClass(nodeValue, "div", "container",
                         TagProcessActionType.DeleteTagWithoutContent);
+
+                    // Удаляем span тег с классом "collapse-source expand-control"
+                    nodeValue = ProcessTagsWithClass(nodeValue, "span", "collapse-source expand-control",
+                        TagProcessActionType.DeleteTagWithContent);
 
                     // Удаляем ссылки Export to CSV
                     nodeValue = ProcessTagsWithClass(nodeValue, "a", "csvLink",
@@ -154,7 +158,7 @@ namespace TransfromService
                     if (!transformParams.RemoveFormatting && transformParams.ReplaceTabsBySpaces) 
                         nodeValue = RemoveFormatting(nodeValue);
                     
-                    nodeValue = RemoveExportToCsvPhrase(nodeValue);
+                    nodeValue = RemoveExcessPhrases(nodeValue);
                     
                     break;
                 }
@@ -163,77 +167,392 @@ namespace TransfromService
                 {
                     nodeValue = $"<p>{node.InnerText}</p>";
                     nodeValue = RemoveFormatting(nodeValue);
-                    nodeValue = RemoveExportToCsvPhrase(nodeValue);
+                    nodeValue = RemoveExcessPhrases(nodeValue);
 
                     break;
                 }
             }
 
-            nodeValue = nodeValue.Replace("Export to CSV", string.Empty); //.Trim();
+            //nodeValue = nodeValue.Replace("Export to CSV", string.Empty); //.Trim();
 
             return nodeValue;
         }
 
         /// <summary>
-        /// Перевод списков в плоские
+        /// Перевод всех списков узла в иерархические
         /// </summary>
-        /// <param name="htmlData"></param>
-        /// <returns></returns>
-        private static string MakeAllListsFlatten(string htmlData)
+        public static string MakeAllListsHierarchical(string htmlData)
         {
             var node = GetHtmlNodeFromText(htmlData);
 
             //var lists = node.SelectNodes("//ul[not(parent::*/ul)] | //ol[not(parent::*/ol)]");
 
-            foreach (var topLevelList in node.GetListDescendants())
+            foreach (var parentList in node.GetTopLevelLists())
             {
-                ToFlattenList(topLevelList);
+                var listWasChanged = MakeListHierarchical(parentList);
+
+                if (listWasChanged && !parentList.Name.Equals("ol", StringComparison.OrdinalIgnoreCase)) // Изменяем список на нумерованный
+                    parentList.Name = "ol";
             }
 
             return node.OuterHtml;
         }
 
         /// <summary>
-        /// Перевод одного списка в плоский
+        /// Перевод списка в иерархический
         /// </summary>
-        /// <param name="listNode"></param>
-        static void ToFlattenList(HtmlNode listNode)
+        static bool MakeListHierarchical(HtmlNode parentList)
         {
-            var items = listNode.Descendants("li").ToList();
+            var listWasChanged = false;
 
-            foreach (var item in items)
+            var listItems = parentList.Descendants("li").ToList();
+
+            var listItemsDict = new Dictionary<HtmlNode, ListItemNumberInfo>();
+
+            foreach (var listItem in listItems)
             {
-                var childLists = item.GetListDescendants();
+                var listItemInfo = GetListItemNumberInfo(listItem, listItemsDict);
 
-                foreach (var childList in childLists)
+                var parentListItemNumber = listItemInfo.ParentNumber;
+
+                while (!string.IsNullOrEmpty(parentListItemNumber))
                 {
-                    ToFlattenList(childList);
-                }
+                    // Ищем родительский элемент по номеру (части номера дочернего элемента)
+                    var parentListItem = listItems.FirstOrDefault(e =>
+                        GetListItemNumberInfo(e, listItemsDict).Number
+                            .Equals(parentListItemNumber,
+                                StringComparison.OrdinalIgnoreCase)); 
 
-                var parentList = item.GetListFirstAncestor();
-                var patentParentList = parentList?.GetListFirstAncestor();
+                    if (parentListItem != null)
+                    {
+                        // Ищем список внутри родительского элемента, создаем список при его отсутствии
+                        var nestedList = parentListItem.GetTopLevelLists().FirstOrDefault();
 
-                if (patentParentList != null)
-                {
-                    var clone = item.Clone();
-                    parentList.ParentNode.InsertBefore(clone, parentList);
+                        if (nestedList == null)
+                        {
+                            nestedList = parentList.OwnerDocument.CreateElement("ol");
+                            parentListItem.AppendChild(nestedList);
+                        }
 
-                    // Удаление оригинальный элемент из вложенного списка
-                    item.Remove();
+                        if (!nestedList.Name.Equals("ol",
+                                StringComparison.OrdinalIgnoreCase)) // Изменяем список на нумерованный
+                            parentList.Name = "ol";
+
+                        //nestedList.AppendChild(listItem);
+                        //listItem.Remove();
+                        
+                        // Убираем номер из названия
+                        listItem.InnerHtml = listItem.InnerHtml =
+                            listItem.InnerHtml.ReplaceFirstOccurrence(listItemInfo.FullNumber, string.Empty);
+
+                        listItemInfo.WasNumberRemovedFromName = true;
+
+                        // Переносим элемент списка во вложенный список
+                        nestedList.MoveChild(listItem);
+
+                        // Удаляем исходный элемент
+                        // listItem.ParentNode.RemoveChild(listItem);
+
+                        listWasChanged = true;
+
+                        break;
+                    }
+
+                    parentListItemNumber = GetParentNumberFromItemListNumber(parentListItemNumber);
                 }
             }
 
-            var listNodeParent = listNode.GetListFirstAncestor();
+            // Удаляем номер из наименований элементов списка
+            if (listWasChanged)
+            {
+                ////listItemsDict.Clear();
 
-            if (listNodeParent != null)
-                listNode.Remove();
+                //foreach (var checkedListItem in parentList.Descendants("li").ToList())
+                //{
+                //    var listItemInfo = GetListItemNumberInfo(checkedListItem, listItemsDict);
+
+                //    if (!string.IsNullOrEmpty(listItemInfo.FullNumber))
+                //        checkedListItem.InnerHtml = checkedListItem.InnerHtml.ReplaceFirstOccurrence(listItemInfo.FullNumber, string.Empty);
+                //}
+
+                //// Пересоздаем HtmlDocument с измененным HTML
+                //HtmlDocument updatedDoc = new HtmlDocument();
+                //updatedDoc.LoadHtml(parentList.OwnerDocument.DocumentNode.OuterHtml);
+
+                foreach (var listItem in listItems)
+                {
+                    var listItemInfo = GetListItemNumberInfo(listItem, listItemsDict);
+
+                    //var pli = parentList.Descendants("li").FirstOrDefault(node => node.InnerHtml.StartsWith(listItemInfo.FullNumber, StringComparison.OrdinalIgnoreCase));
+
+                    if (!listItemInfo.WasNumberRemovedFromName && !string.IsNullOrEmpty(listItemInfo.FullNumber))
+                    {
+                        //parentList.InnerHtml =
+                        //    parentList.InnerHtml.ReplaceFirstOccurrence(listItemInfo.FullNumber, string.Empty);
+
+                        listItem.InnerHtml =
+                            listItem.InnerHtml.ReplaceFirstOccurrence(listItemInfo.FullNumber, string.Empty);
+                    }
+                    //if (listItemInfo.ParentList != null)
+                    //    listItemInfo.ParentList.MoveChild(listItem);
+                }
+            }
+
+            return listWasChanged;
         }
 
-        private static HtmlNode GetListFirstAncestor(this HtmlNode node) =>
-            node.FindFirstAncestor(new[] { "ol", "ul" }, false);
+        /// <summary>
+        /// Получение номера родительского элемента списка, как составной части номера дочернего элемента списка
+        /// </summary>
+        /// <param name="listItemNumber"></param>
+        /// <returns></returns>
+        private static string GetParentNumberFromItemListNumber(string listItemNumber)
+        {
+            if (string.IsNullOrEmpty(listItemNumber))
+                return null;
 
-        private static List<HtmlNode> GetListDescendants(this HtmlNode node) => node.Descendants("ol").Concat(node.Descendants("ul")).ToList();
+            listItemNumber = listItemNumber.Trim();
 
+            // Откидываем последнюю часть номера
+            var lastDotIndex = listItemNumber.LastIndexOf('.');
+
+            return lastDotIndex < 0 ? null : listItemNumber[..lastDotIndex];
+        }
+
+        /// <summary>
+        /// Получение информации о номере элемента списка
+        /// </summary>
+        /// <param name="listItem"></param>
+        /// <param name="listItemsDict"></param>
+        /// <returns></returns>
+        private static ListItemNumberInfo GetListItemNumberInfo(HtmlNode listItem, IDictionary<HtmlNode, ListItemNumberInfo> listItemsDict)
+        {
+            if (!listItemsDict.TryGetValue(listItem, out var listItemInfo))
+            {
+                var listItemText = listItem.InnerText.TrimStart();
+                var match = Regex.Match(listItemText, @"^(\d+(\.\d+)*)\.(&nbsp;|\s)");
+
+                var fullNumber = match.Success ? match.Groups[0].Value : null;
+                var number = !string.IsNullOrEmpty(fullNumber) ? GetParentNumberFromItemListNumber(fullNumber) : null;
+                var parentNumber = !string.IsNullOrEmpty(number) ? GetParentNumberFromItemListNumber(number) : null;
+
+                listItemInfo = new ListItemNumberInfo
+                {
+                    ListItem = listItem,
+                    FullNumber = fullNumber,
+                    Number = number,
+                    ParentNumber = parentNumber
+                };
+
+                listItemsDict.Add(listItem, listItemInfo);
+            }
+
+            return listItemInfo;
+        }
+
+        /// <summary>
+        /// Информация о номере элемента списка
+        /// </summary>
+        private class ListItemNumberInfo
+        {
+            public HtmlNode ListItem { get; set; }
+            public string FullNumber { get; init; }
+            public string Number { get; init; }
+            public string ParentNumber { get; init; }
+            //public HtmlNode ParentList { get; set; }
+            public bool WasNumberRemovedFromName { get; set; }
+        }
+
+        /// <summary>
+        /// Перевод всех списков узла в плоские
+        /// </summary>
+        /// <param name="htmlData"></param>
+        /// <param name="multiLevelNumeration"></param>
+        /// <returns></returns>
+        private static string MakeAllListsFlatten(string htmlData, bool multiLevelNumeration)
+        {
+            var node = GetHtmlNodeFromText(htmlData);
+
+            //var lists = node.SelectNodes("//ul[not(parent::*/ul)] | //ol[not(parent::*/ol)]");
+
+            foreach (var parentList in node.GetTopLevelLists())
+            {
+                MakeListFlatten(parentList, multiLevelNumeration, string.Empty,
+                    GetListItemStartNumber(parentList), null);
+
+                if (multiLevelNumeration && !parentList.Name.Equals("ul")) // Изменяем список на ненумерованный
+                    parentList.Name = "ul";
+            }
+
+            return node.OuterHtml;
+        }
+
+        /// <summary>
+        /// Перевод списка в плоский
+        /// </summary>
+        static void MakeListFlatten(HtmlNode parentList, bool multiLevelNumeration, string parentNumberPath, int itemListStartNumber, IList<HtmlNode> innerListItems)
+        {
+            var itemNumber = itemListStartNumber;
+
+            var innerListItemsWasNull = (innerListItems == null);
+
+            // Проходим по всем элементам списка
+            foreach (var listItem in parentList.GetTopLevelItems().ToList())
+            {
+                if (innerListItems == null)
+                    innerListItems = new List<HtmlNode>();
+
+                // Присваиваем порядковый номер элементу списка
+                listItem.InnerHtml =
+                    (multiLevelNumeration ? GetListItemNumber(parentNumberPath, itemNumber) + ".&nbsp;" : string.Empty) +
+                    listItem.InnerHtml;
+
+                var insertPosition = !innerListItemsWasNull ? innerListItems.Count : 0; // Запоминаем позицию для вставки склонированного элемента в оригинальный список
+
+                // Проходим по всем вложенным спискам текущего элемента списка
+                foreach (var nestedList in listItem.GetTopLevelLists().ToList())
+                {
+                    var listItemStartNumber = GetListItemStartNumber(nestedList);
+
+                    MakeListFlatten(nestedList, multiLevelNumeration,
+                        GetListItemNumber(parentNumberPath, itemNumber), listItemStartNumber, innerListItems);
+
+                    //var clone = nestedList.Clone();
+                    //parentList.ParentNode.InsertBefore(clone, parentList);
+
+                    nestedList.Remove(); // Удаляем вложенный список после обработки
+                }
+
+                if (!innerListItemsWasNull)
+                {
+                    // Копируем и выносим элемент из вложенного списка перед вложенным списком, после чего удаляем элемент
+                    var cloneListItem = listItem.Clone();
+                    //parentList.ParentNode.InsertBefore(cloneListItem, parentList);
+                    innerListItems.Insert(insertPosition, cloneListItem);
+                    // Удаляем оригинальный элемент из вложенного списка
+                    listItem.Remove();
+                }
+                else
+                {
+                    innerListItems.Aggregate(listItem,
+                        (current, innerListItem) => parentList.InsertAfter(innerListItem, current));
+                }
+
+                itemNumber++;
+
+                if (innerListItemsWasNull)
+                    innerListItems = null;
+
+                //innerListItems = null;
+                //var parentParentList = parentList?.GetUpperList();
+
+                //if (parentParentList != null)
+                //{
+                //    // Копируем и выносим элемент из вложенного списка перед вложенным списком, после чего удаляем элемент
+                //    var cloneListItem = listItem.Clone();
+                //    //parentList.ParentNode.InsertBefore(cloneListItem, parentList);
+                //    innerListItems.Add(cloneListItem);
+
+                //    // Удаление оригинальный элемент из вложенного списка
+                //    listItem.Remove();
+                //}
+            }
+
+
+            //foreach (var listItem in listNode.Descendants("li").ToList())
+            //{
+            //    var childLists = listItem.GetParentLists();
+
+            //    foreach (var childList in childLists)
+            //    {
+            //        MakeListFlatten(childList, multiLevelNumeration, parentListNumber);
+            //    }
+
+            //    var parentList = listItem.GetListFirstAncestor();
+            //    var patentParentList = parentList?.GetListFirstAncestor();
+
+            //    if (patentParentList != null)
+            //    {
+            //        var clone = listItem.Clone();
+            //        parentList.ParentNode.InsertBefore(clone, parentList);
+
+            //        // Удаление оригинальный элемент из вложенного списка
+            //        listItem.Remove();
+            //    }
+            //}
+
+            //var listNodeParent = listNode.GetListFirstAncestor();
+
+            //if (listNodeParent != null)
+            //    listNode.Remove();
+        }
+
+        /// <summary>
+        /// Сформировать номер для элемента списка
+        /// </summary>
+        /// <param name="parentNumberPath"></param>
+        /// <param name="itemNumber"></param>
+        /// <returns></returns>
+        private static string GetListItemNumber(string parentNumberPath, int itemNumber) =>
+            (!string.IsNullOrEmpty(parentNumberPath) ? parentNumberPath + "." : string.Empty) +
+            $"{itemNumber}";
+
+        /// <summary>
+        /// Получить стартовый номер для элементов списка
+        /// </summary>
+        /// <param name="listNode"></param>
+        /// <returns></returns>
+        private static int GetListItemStartNumber(HtmlNode listNode)
+        {
+            return int.TryParse(listNode.GetAttributeValue("start", null) ?? "1", out var itemListStartNumbers)
+                ? itemListStartNumbers
+                : 1;
+        }
+
+        /// <summary>
+        /// Получить вышестоящий список для заданного узла (тега)
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private static HtmlNode GetUpperList(this HtmlNode node) =>
+            node.FindFirstAncestor(new[] { "ul", "ol" }, false);
+
+        /// <summary>
+        /// Получить перечень списков верхнего уровня для заданного узла (тега)
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private static IEnumerable<HtmlNode> GetTopLevelLists(this HtmlNode node)
+        {
+            var listTags = new[] { "ul", "ol" };
+
+            return node.Descendants()
+                .Where(n => listTags.Contains(n.Name, StringComparer.OrdinalIgnoreCase) &&
+                            !n.Ancestors().TakeWhile(curNode => curNode != node).Any(a => listTags.Contains(a.Name)));
+            //node.Descendants("ol").Concat(node.Descendants("ul")).ToList();
+        }
+
+        /// <summary>
+        /// Получить перечень элементов верхнего уровня для заданного списка
+        /// </summary>
+        /// <param name="listNode"></param>
+        /// <returns></returns>
+        private static IEnumerable<HtmlNode> GetTopLevelItems(this HtmlNode listNode)
+        {
+            return listNode.Descendants()
+                .Where(n => n.Name.Equals("li", StringComparison.OrdinalIgnoreCase) &&
+                            !n.Ancestors().TakeWhile(curNode => curNode != listNode).Any(a => a.Name.Equals("li")));
+            //node.Descendants("ol").Concat(node.Descendants("ul")).ToList();
+        }
+
+        /// <summary>
+        /// Получить для заданного узла самого первого предка из перечня заданных тегов, с учетом того,
+        /// что сам заданный узел может быть вернут в качестве результата, если его имя будет входить в перечень заданных тегов
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="tagNames"></param>
+        /// <param name="checkSelf"></param>
+        /// <returns></returns>
         private static HtmlNode FindFirstAncestor(this HtmlNode node, string[] tagNames, bool checkSelf)
         {
             if (node == null)
@@ -245,6 +564,12 @@ namespace TransfromService
             return _FindFirstAncestor(node.ParentNode, tagNames);
         }
 
+        /// <summary>
+        /// Получить для заданного узла самого первого предка из перечня заданных тегов
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="tagNames"></param>
+        /// <returns></returns>
         private static HtmlNode _FindFirstAncestor(HtmlNode node, string[] tagNames)
         {
             var currentNode = node;
@@ -332,7 +657,9 @@ namespace TransfromService
         /// <returns></returns>
         private static string RemoveFormatting(string htmlData) => Regex.Replace(htmlData, @"\r\n\t+", string.Empty);
 
-        private static string RemoveExportToCsvPhrase(string htmlData) => htmlData.Replace("Export to CSV", string.Empty); //.Trim();
+        private static string RemoveExcessPhrases(string htmlData) =>
+            htmlData.Replace("Export to CSV", string.Empty).Replace("Развернуть исходный код", string.Empty)
+                .Replace("Свернуть исходный код", string.Empty);
 
         /// <summary>
         /// Получить перечень наименований классов из атрибута class

@@ -1,21 +1,25 @@
 ﻿using System.Collections;
 using System.ComponentModel;
 using DevExpress.XtraEditors;
-using TransfromService;
 
 namespace TableEditor.TransformParameters
 {
-    public partial class TransformParamsUserControl : XtraUserControl
+    public partial class TransformParametersUserControl : XtraUserControl
     {
-        public TransformParamsUserControl()
+        public TransformParametersUserControl()
         {
             InitializeComponent();
-            SetParameters(new Html2JsonTransformParameters());
+            propertyGridControl.CustomPropertyDescriptors += PropertyGridControl_CustomPropertyDescriptors;
         }
 
-        public Html2JsonTransformParameters GetParameters()
+        public T GetParameters<T>() where T : class
         {
-            return propertyGridControl.SelectedObject as Html2JsonTransformViewParameters;
+            return GetParameters() as T;
+        }
+
+        public object GetParameters()
+        {
+            return propertyGridControl.SelectedObject;
 
             //Html2JsonTransformParameters.ValueFormat valueFormat;
             //var processTextColor = ceProcessTextColor.CheckState == CheckState.Checked;
@@ -44,7 +48,12 @@ namespace TableEditor.TransformParameters
             //};
         }
 
-        public void SetParameters(Html2JsonTransformParameters parameters)
+        //public void SetParameters(Html2JsonTransformParameters parameters)
+        //{
+        //    SetParameters(new Html2JsonTransformViewParameters(parameters));
+        //}
+
+        public void SetParameters(object parameters)
         {
             //ceProcessTextColor.Checked = parameters.ProcessTextColor;
             //ceReplaceTabsBySpaces.Checked = parameters.ReplaceTabsBySpaces;
@@ -62,10 +71,9 @@ namespace TableEditor.TransformParameters
             //        rgCellValueFormat.SelectedIndex = 0;
             //        break;
             //}
-            propertyGridControl.CustomPropertyDescriptors += PropertyGridControl_CustomPropertyDescriptors;
 
-            propertyGridControl.SelectedObject = new Html2JsonTransformViewParameters(parameters);
-            propertyGridControl.BestFit();
+            propertyGridControl.SelectedObject = parameters;
+            //propertyGridControl.BestFit();
         }
 
         private void PropertyGridControl_CustomPropertyDescriptors(object sender,
@@ -93,7 +101,8 @@ namespace TableEditor.TransformParameters
                 return 0;
             }
 
-            private static PropertyOrderAttribute GetPropertyOrderAttribute(MemberDescriptor property) => (PropertyOrderAttribute)property.Attributes[typeof(PropertyOrderAttribute)];
+            private static PropertyOrderAttribute GetPropertyOrderAttribute(MemberDescriptor property) =>
+                (PropertyOrderAttribute)property.Attributes[typeof(PropertyOrderAttribute)];
         }
     }
 }

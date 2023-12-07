@@ -27,5 +27,11 @@ namespace TransfromService
                 }
             }
         }
+
+        public static string ReplaceFirstOccurrence(this string original, string oldValue, string newValue)
+        {
+            var index = original.IndexOf(oldValue, StringComparison.Ordinal);
+            return index != -1 ? original[..index] + newValue + original[(index + oldValue.Length)..] : original;
+        }
     }
 }

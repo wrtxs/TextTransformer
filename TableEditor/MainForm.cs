@@ -11,13 +11,13 @@ namespace TableEditor
 
             InitializeComponent();
 
-            var appVersion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                .InformationalVersion;
+            var appVersion = Assembly.GetEntryAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion;
 
-            Text = $"Редактор таблиц v.{appVersion}";
+            Text = @$"Редактор таблиц v.{appVersion}";
 
-            _htmlImportUserControl.JsonToEditorEvent += HtmlImportUserControlJsonToEditorEvent;
-            _htmlImportUserControl.HtmlToEditorEvent += HtmlImportUserControlHtmlToEditorEvent;
+            htmlImportUserControl.JsonToEditorEvent += HtmlImportUserControlJsonToEditorEvent;
+            htmlImportUserControl.HtmlToEditorEvent += HtmlImportUserControlHtmlToEditorEvent;
 
             tabPaneMain.DragOver += TabPaneMain_DragOver;
 
@@ -28,6 +28,17 @@ namespace TableEditor
             //#endif
 
             tabPaneMain.SelectedPage = tnpEditTable;
+
+            tableEditorUserControl.LoadParameters();
+            htmlImportUserControl.LoadParameters();
+
+            FormClosed += OnFormClosed;
+        }
+
+        private void OnFormClosed(object sender, FormClosedEventArgs e)
+        {
+            tableEditorUserControl.SaveParameters();
+            htmlImportUserControl.SaveParameters();
         }
 
         /// <summary>
@@ -35,13 +46,8 @@ namespace TableEditor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TabPaneMain_DragOver(object sender, System.Windows.Forms.DragEventArgs e)
+        private void TabPaneMain_DragOver(object sender, DragEventArgs e)
         {
-            var tnp = tabPaneMain.CalcHitInfo(this.tabPaneMain.PointToClient(new System.Drawing.Point
-            {
-                X = e.X,
-                Y = e.Y
-            })) as TabNavigationPage;
             //if (hitInfo != null)
             //{
             //    TabbedControlGroup tcg = hitInfo.Item as TabbedControlGroup;
@@ -49,7 +55,11 @@ namespace TableEditor
             //        tcg.SelectedTabPageIndex = hitInfo.TabPageIndex;
             //}
 
-            if (tnp != null)
+            if (tabPaneMain.CalcHitInfo(tabPaneMain.PointToClient(new System.Drawing.Point
+                {
+                    X = e.X,
+                    Y = e.Y
+                })) is TabNavigationPage tnp)
             {
                 if (tabPaneMain.SelectedPage != tnp && tnp.Enabled)
                     tabPaneMain.SelectedPage = tnp;

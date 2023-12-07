@@ -32,7 +32,7 @@
             layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             tabPaneMain = new DevExpress.XtraBars.Navigation.TabPane();
             tnpImportFromHtml = new DevExpress.XtraBars.Navigation.TabNavigationPage();
-            _htmlImportUserControl = new HtmlImportUserControl();
+            htmlImportUserControl = new HtmlImportUserControl();
             tnpEditTable = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             tableEditorUserControl = new TableEditorUserControl();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -75,7 +75,7 @@
             // tnpImportFromHtml
             // 
             tnpImportFromHtml.Caption = "Импорт таблицы из HTML в JSON";
-            tnpImportFromHtml.Controls.Add(_htmlImportUserControl);
+            tnpImportFromHtml.Controls.Add(htmlImportUserControl);
             tnpImportFromHtml.ImageOptions.Image = (Image)resources.GetObject("tnpImportFromHtml.ImageOptions.Image");
             tnpImportFromHtml.ImageOptions.SvgImageSize = new Size(16, 16);
             tnpImportFromHtml.ItemShowMode = DevExpress.XtraBars.Navigation.ItemShowMode.ImageAndText;
@@ -85,11 +85,11 @@
             // 
             // _htmlImportUserControl
             // 
-            _htmlImportUserControl.Dock = DockStyle.Fill;
-            _htmlImportUserControl.Location = new Point(0, 0);
-            _htmlImportUserControl.Name = "_htmlImportUserControl";
-            _htmlImportUserControl.Size = new Size(1135, 531);
-            _htmlImportUserControl.TabIndex = 0;
+            htmlImportUserControl.Dock = DockStyle.Fill;
+            htmlImportUserControl.Location = new Point(0, 0);
+            htmlImportUserControl.Name = "htmlImportUserControl";
+            htmlImportUserControl.Size = new Size(1135, 531);
+            htmlImportUserControl.TabIndex = 0;
             // 
             // tnpEditTable
             // 
@@ -160,7 +160,7 @@
         private DevExpress.XtraBars.Navigation.TabNavigationPage tnpEditTable;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem;
-        private HtmlImportUserControl _htmlImportUserControl;
+        private HtmlImportUserControl htmlImportUserControl;
         private TableEditorUserControl tableEditorUserControl;
     }
 }
