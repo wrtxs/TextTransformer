@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using SferaTableBot.Services;
 using Telegram.Bot;
 using Telegram.Bot.Services;
 

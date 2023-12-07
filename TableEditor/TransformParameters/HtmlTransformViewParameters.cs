@@ -13,7 +13,7 @@ namespace TableEditor.TransformParameters
         public bool TransformViaJson { get; set; } = true;
         
         [Category("Преобразование в HTML")]
-        [DisplayName("Преобразовывать все списки в иерархические")]
+        [DisplayName("Преобразовывать списки в иерархические")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(1)]

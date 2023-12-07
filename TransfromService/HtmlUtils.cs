@@ -183,6 +183,7 @@ namespace TransfromService
         /// </summary>
         public static string MakeAllListsHierarchical(string htmlData)
         {
+            //htmlData = HtmlEntity.DeEntitize(htmlData);
             var node = GetHtmlNodeFromText(htmlData);
 
             //var lists = node.SelectNodes("//ul[not(parent::*/ul)] | //ol[not(parent::*/ol)]");
@@ -330,7 +331,9 @@ namespace TransfromService
             if (!listItemsDict.TryGetValue(listItem, out var listItemInfo))
             {
                 var listItemText = listItem.InnerText.TrimStart();
-                var match = Regex.Match(listItemText, @"^(\d+(\.\d+)*)\.(&nbsp;|\s)");
+                
+                // Выделяем номер по маске с начала строки: <число><точка><любая вариация пробельного символа или табуляции>
+                var match = Regex.Match(listItemText, @"(?i)^(\d+(\.\d+)*)\.(&nbsp;|&#xa0;|&#160;|\s|&Tab;|&#9;|&ensp;|&#8194;|&emsp;|&#8195;)");
 
                 var fullNumber = match.Success ? match.Groups[0].Value : null;
                 var number = !string.IsNullOrEmpty(fullNumber) ? GetParentNumberFromItemListNumber(fullNumber) : null;

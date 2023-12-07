@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
@@ -14,16 +15,18 @@ using Telegram.Bot.Types.ReplyMarkups;
 using TransfromService;
 using File = System.IO.File;
 
-namespace Telegram.Bot.Services;
+namespace SferaTableBot.Services;
 
 public class UpdateHandler : IUpdateHandler
 {
     private readonly ITelegramBotClient _botClient;
     private readonly ILogger<UpdateHandler> _logger;
 
-    private readonly static string _logBasePath;
-    private readonly static string _botResponsePhrase;
-    private readonly static Html2JsonTransformParameters _transformParameters;
+    private static readonly string? LogBasePath;
+    private static readonly string? BotCommonResponsePhrase;
+    private static readonly string? BotEditorInfoResponsePhrase;
+
+    private static readonly Html2JsonTransformParameters _transformParameters;
 
     static UpdateHandler()
     {
@@ -34,10 +37,13 @@ public class UpdateHandler : IUpdateHandler
         var configuration = configBuilder.Build();
 
         // Получаем путь к лог-файлу из конфигурации
-        _logBasePath = configuration["Logging:File:BasePath"];
+        LogBasePath = configuration["Logging:File:BasePath"];
 
         // Получаем стандартную фразу для ответа пользователю
-        _botResponsePhrase = configuration["BotConfiguration:BotResponsePhrase"];
+        BotCommonResponsePhrase = configuration["BotConfiguration:BotCommonResponsePhrase"];
+
+        // Получаем фразу с информацией по редактору для ответа на соответствующую команду
+        BotEditorInfoResponsePhrase = configuration["BotConfiguration:BotEditorInfoResponsePhrase"];
 
         _transformParameters = new Html2JsonTransformParameters
         {
@@ -230,14 +236,20 @@ public class UpdateHandler : IUpdateHandler
                 cancellationToken: cancellationToken);
         }
 
-        static async Task<Message> UsageEx(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+        static async Task<Message> UsageEx(ITelegramBotClient botClient, Message message,
+            CancellationToken cancellationToken)
         {
+            var command = message.Text?.Trim();
+            var responseText = command!.Equals("/editor", StringComparison.OrdinalIgnoreCase)
+                ? BotEditorInfoResponsePhrase
+                : BotCommonResponsePhrase;
+
             return await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
-                text: _botResponsePhrase,
+                text: responseText ?? string.Empty,
                 replyMarkup: new ReplyKeyboardRemove(),
                 cancellationToken: cancellationToken,
-                replyToMessageId:message.MessageId);
+                replyToMessageId: message.MessageId);
         }
 
         static async Task<Message> StartInlineQuery(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -360,7 +372,7 @@ public class UpdateHandler : IUpdateHandler
     {
         try
         {
-            var filePath = Path.Combine(_logBasePath, logFileType == LogFileType.Input ? "In" : "Out", fileName);
+            var filePath = Path.Combine(LogBasePath, logFileType == LogFileType.Input ? "In" : "Out", fileName);
 
             using var fs = new FileStream(filePath, FileMode.Create);
             ms.WriteTo(fs);

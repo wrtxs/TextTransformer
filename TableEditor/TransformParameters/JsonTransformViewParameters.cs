@@ -63,7 +63,7 @@ namespace TableEditor.TransformParameters
         }
 
         [Category("Преобразование в JSON")]
-        [DisplayName("Преобразовывать все списки в плоские")]
+        [DisplayName("Преобразовывать списки в плоские")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(5)]
@@ -121,7 +121,7 @@ namespace TableEditor.TransformParameters
         /// From JSON
         /// </summary>
         [Category("Преобразование из JSON")]
-        [DisplayName("Преобразовывать все списки в иерархические")]
+        [DisplayName("Преобразовывать списки в иерархические")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(9)]

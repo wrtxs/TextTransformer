@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using SferaTableBot.Services;
 using Telegram.Bot.Abstract;
 
 namespace Telegram.Bot.Services;
