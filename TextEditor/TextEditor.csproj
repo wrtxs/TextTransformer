@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Version>1.0.26</Version>
+		<ApplicationIcon>Resources\app.ico</ApplicationIcon>
+		<AssemblyName>TextEditor.v$(Version)</AssemblyName>
+		<!--<AssemblyProduct>TableEditor.v$(Version)</AssemblyProduct>
+		<AssemblyTitle>TableEditor.v$(Version)</AssemblyTitle>-->
+		<AppendTargetFrameworkToOutputFileName>false</AppendTargetFrameworkToOutputFileName>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<SatelliteResourceLanguages>ru</SatelliteResourceLanguages>
+		<ResourceLanguages>ru</ResourceLanguages>
+		<!--<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract> -->
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Include="Resources\app.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ActiproSoftware.Controls.WinForms.SyntaxEditor" Version="23.1.2" />
+		<PackageReference Include="ActiproSoftware.Controls.WinForms.SyntaxEditor.Addons.JavaScript" Version="23.1.2" />
+		<PackageReference Include="ActiproSoftware.Controls.WinForms.SyntaxEditor.Addons.XML" Version="23.1.2" />
+		<PackageReference Include="DevExpress.Win.Design" Version="23.1.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\TransfromService\TransfromService.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Properties\Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="ru\DevExpress.Data.v23.1.resources.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ru\DevExpress.Drawing.v23.1.resources.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ru\DevExpress.Office.v23.1.Core.resources.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ru\DevExpress.Printing.v23.1.Core.resources.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ru\DevExpress.RichEdit.v23.1.Core.resources.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ru\DevExpress.Utils.v23.1.resources.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ru\DevExpress.XtraBars.v23.1.resources.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ru\DevExpress.XtraEditors.v23.1.resources.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ru\DevExpress.XtraLayout.v23.1.resources.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ru\DevExpress.XtraRichEdit.v23.1.resources.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>
