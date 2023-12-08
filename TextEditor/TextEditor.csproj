@@ -8,8 +8,8 @@
 		<Version>1.0.26</Version>
 		<ApplicationIcon>Resources\app.ico</ApplicationIcon>
 		<AssemblyName>TextEditor.v$(Version)</AssemblyName>
-		<!--<AssemblyProduct>TableEditor.v$(Version)</AssemblyProduct>
-		<AssemblyTitle>TableEditor.v$(Version)</AssemblyTitle>-->
+		<!--<AssemblyProduct>TextEditor.v$(Version)</AssemblyProduct>
+		<AssemblyTitle>TextEditor.v$(Version)</AssemblyTitle>-->
 		<AppendTargetFrameworkToOutputFileName>false</AppendTargetFrameworkToOutputFileName>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<SatelliteResourceLanguages>ru</SatelliteResourceLanguages>

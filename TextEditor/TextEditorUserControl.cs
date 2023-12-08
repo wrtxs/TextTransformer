@@ -17,8 +17,8 @@ namespace TextEditor
 {
     public partial class TextEditorUserControl : XtraUserControl, ISupportParameters
     {
-        private const string Html2JsonParamsSectionName = "Html2JsonTableEditorParameters";
-        private const string Json2HtmlParamsSectionName = "Json2HtmlTableEditorParameters";
+        private const string Html2JsonParamsSectionName = "Html2JsonTextEditorParameters";
+        private const string Json2HtmlParamsSectionName = "Json2HtmlTextEditorParameters";
 
         public TextEditorUserControl()
         {

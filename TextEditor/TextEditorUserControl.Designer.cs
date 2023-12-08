@@ -603,7 +603,7 @@ namespace TextEditor
             layoutControlItem13.TextSize = new Size(0, 0);
             layoutControlItem13.TextVisible = false;
             // 
-            // TableEditorUserControl
+            // TextEditorUserControl
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;

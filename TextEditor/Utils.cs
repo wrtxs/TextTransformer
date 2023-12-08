@@ -163,7 +163,8 @@ namespace TextEditor
             Html2HtmlTransformer.Html2HtmlTransformParameters transformParams) =>
             new Html2HtmlTransformer().Transform(htmlData, transformParams);
 
-        public static HtmlTransformViewParameters ConvertToHtmlTransformParameters(this JsonTransformViewParameters transformParams) =>
+        public static HtmlTransformViewParameters ConvertToHtmlTransformParameters(
+            this JsonTransformViewParameters transformParams) =>
             new()
             {
                 MakeAllListsHierarchical = transformParams.MakeAllListsHierarchical
@@ -177,45 +178,45 @@ namespace TextEditor
             };
 
         //public static void SaveParameters(Html2JsonTransformViewParameters parameters, string paramName)
-            //{
-            //    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        //{
+        //    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            //    var paramsInJson = JsonConvert.SerializeObject(parameters);
+        //    var paramsInJson = JsonConvert.SerializeObject(parameters);
 
-            //    if (config.AppSettings.Settings[paramName] == null)
-            //    {
-            //        config.AppSettings.Settings.Add(paramName, paramsInJson);
-            //    }
-            //    else
-            //    {
-            //        config.AppSettings.Settings[paramName].Value = paramsInJson;
-            //    }
+        //    if (config.AppSettings.Settings[paramName] == null)
+        //    {
+        //        config.AppSettings.Settings.Add(paramName, paramsInJson);
+        //    }
+        //    else
+        //    {
+        //        config.AppSettings.Settings[paramName].Value = paramsInJson;
+        //    }
 
-            //    config.Save(ConfigurationSaveMode.Modified);
-            //    ConfigurationManager.RefreshSection("appSettings");
-            //}
+        //    config.Save(ConfigurationSaveMode.Modified);
+        //    ConfigurationManager.RefreshSection("appSettings");
+        //}
 
-            //public static Html2JsonTransformViewParameters LoadParameters(string paramName)
-            //{
-            //    try
-            //    {
-            //        var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            //        var jsonData = config.AppSettings.Settings[paramName]?.Value;
+        //public static Html2JsonTransformViewParameters LoadParameters(string paramName)
+        //{
+        //    try
+        //    {
+        //        var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        //        var jsonData = config.AppSettings.Settings[paramName]?.Value;
 
-            //        if (jsonData != null)
-            //            return JsonConvert.DeserializeObject<Html2JsonTransformViewParameters>(jsonData);
+        //        if (jsonData != null)
+        //            return JsonConvert.DeserializeObject<Html2JsonTransformViewParameters>(jsonData);
 
-            //        //return loadedParameters;
-            //    }
-            //    catch
-            //    {
-            //        // ignored
-            //    }
+        //        //return loadedParameters;
+        //    }
+        //    catch
+        //    {
+        //        // ignored
+        //    }
 
-            //    return new Html2JsonTransformViewParameters();
-            //}
+        //    return new Html2JsonTransformViewParameters();
+        //}
 
-            public static void SaveParameters(object parameters, string paramName)
+        public static void SaveParameters(object parameters, string paramName)
         {
             try
             {
@@ -271,7 +272,7 @@ namespace TextEditor
             var exeDirectory = Path.GetDirectoryName(exePath);
 
             // Создаем полный путь к JSON-файлу рядом с исполняемым файлом
-            const string jsonFileName = "TableEditor.settings.json"; // Название файла может быть любым
+            const string jsonFileName = "TextEditor.settings.json"; // Название файла может быть любым
             var jsonFilePath = Path.Combine(exeDirectory ?? string.Empty, jsonFileName);
 
             return jsonFilePath;
