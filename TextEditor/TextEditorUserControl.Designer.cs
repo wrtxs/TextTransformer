@@ -329,7 +329,7 @@ namespace TextEditor
             tcgParameters.Location = new Point(0, 412);
             tcgParameters.Name = "tcgParameters";
             tcgParameters.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            tcgParameters.SelectedTabPage = lcgHtmlParameters;
+            tcgParameters.SelectedTabPage = lcgJsonParameters;
             tcgParameters.Size = new Size(1035, 127);
             tcgParameters.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             tcgParameters.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lcgJsonParameters, lcgHtmlParameters });

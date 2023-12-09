@@ -16,10 +16,16 @@ namespace TextEditor
         public HtmlImportUserControl()
         {
             InitializeComponent();
-            txtHtml.Document.Language = new XmlSyntaxLanguage();
-            txtHtml.Document.Language.RegisterIndentProvider(new XmlIndentProvider());
+
+            // Задаем пробелы вместо таба
+            txtJson.Document.TabSize = 4;
+            txtJson.Document.AutoConvertTabsToSpaces = true;
+            
             txtJson.Document.Language = new JsonSyntaxLanguage();
             txtJson.Document.Language.RegisterIndentProvider(new JsonIndentProvider());
+
+            txtHtml.Document.Language = new XmlSyntaxLanguage();
+            txtHtml.Document.Language.RegisterIndentProvider(new XmlIndentProvider());
 
             txtJson.DocumentTextChanged += CodeDocumentTextChanged;
             txtHtml.DocumentTextChanged += CodeDocumentTextChanged;
@@ -39,8 +45,7 @@ namespace TextEditor
         {
             AdjustControlsState();
         }
-
-        // TODO пересмотреть
+        
         private void CmdHtml2JsonClick(object sender, EventArgs e)
         {
             try
@@ -68,7 +73,6 @@ namespace TextEditor
             //txtJson.Format();
         }
 
-        /// TODO пересмотреть
         private void cmdJsonToHtml_Click(object sender, EventArgs e)
         {
             try

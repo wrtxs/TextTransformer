@@ -24,11 +24,16 @@ namespace TextEditor
         {
             InitializeComponent();
             //rtfDocUserControl.InsertEmptyTable();
-            txtHtml.Document.Language.RegisterIndentProvider(new XmlIndentProvider());
-            txtHtml.Document.Language = new XmlSyntaxLanguage();
+
+            // Задаем пробелы вместо таба
+            txtJson.Document.TabSize = 4;
+            txtJson.Document.AutoConvertTabsToSpaces = true;
 
             txtJson.Document.Language.RegisterIndentProvider(new JsonIndentProvider());
             txtJson.Document.Language = new JsonSyntaxLanguage();
+
+            txtHtml.Document.Language.RegisterIndentProvider(new XmlIndentProvider());
+            txtHtml.Document.Language = new XmlSyntaxLanguage();
 
             // Настройка возможности перетаскивания файла в текстовые редакторы
             Utils.SetDragAndDropEventsHandlers(txtJson);

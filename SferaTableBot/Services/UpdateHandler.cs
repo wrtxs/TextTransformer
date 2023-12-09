@@ -240,16 +240,21 @@ public class UpdateHandler : IUpdateHandler
             CancellationToken cancellationToken)
         {
             var command = message.Text?.Trim();
-            var responseText = command!.Equals("/editor", StringComparison.OrdinalIgnoreCase)
+
+            var responseText = !string.IsNullOrEmpty(command) &&
+                               command.Equals("/editor", StringComparison.OrdinalIgnoreCase)
                 ? BotEditorInfoResponsePhrase
                 : BotCommonResponsePhrase;
 
+            //var responseText = command!.Equals("/editor", StringComparison.OrdinalIgnoreCase)
+            //    ? BotEditorInfoResponsePhrase
+            //    : BotCommonResponsePhrase;
             return await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
                 text: responseText ?? string.Empty,
                 replyMarkup: new ReplyKeyboardRemove(),
                 cancellationToken: cancellationToken,
-                replyToMessageId: message.MessageId);
+                replyToMessageId: (message.Type == MessageType.Text) ? message.MessageId : null);
         }
 
         static async Task<Message> StartInlineQuery(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
