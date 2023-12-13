@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using DevExpress.Utils.Text;
 using TransfromService.JsonData;
 
 namespace TransfromService
@@ -213,9 +214,19 @@ namespace TransfromService
             var listItems = parentList.Descendants("li").ToList();
             var listItemsDict = new Dictionary<HtmlNode, ListItemInfo>();
 
-            foreach (var listItem in listItems)
+            for (var i = 0; i < listItems.Count; i++)
             {
+                var listItem = listItems[i];
+                
                 var listItemInfo = GetListItemNumberInfo(listItem, listItemsDict);
+
+                if (i == 0) // Устанавливаем значение атрибута start для списка
+                {
+                    var listStartNum = listItemInfo.GetIntNumber();
+
+                    if (listStartNum != null)
+                        parentList.SetAttributeValue("start", listStartNum.Value.ToString());
+                }
 
                 var parentListItemNumber = listItemInfo.ParentNumber;
 
@@ -328,12 +339,32 @@ namespace TransfromService
             var isTopLevelList = (innerListItemsInfo == null);
 
             // Словарь с информацией об элементах списка: key -> информация об элементе списка самого верхнего уровня, value -> список с информацией об элементах дочерних списков, по отношению к элементу списка самого верхнего уровня
-            var listItemsInfoDict = isTopLevelList ? new Dictionary<ListItemInfo, IList<ListItemInfo>>() : null;
+            var listItemInfos = isTopLevelList ? new List<ListItemInfo>() : null;
 
+            var listItems = parentList.GetTopLevelItems().ToList(); // Получаем элементы списка: li, ol, ul
+            
             // Проходим по всем элементам списка
-            foreach (var listItem in parentList.GetTopLevelItems().ToList())
+            foreach (var listItem in listItems) 
             {
                 innerListItemsInfo ??= new List<ListItemInfo>();
+
+                // Запоминаем позицию для вставки склонированного элемента в оригинальный список
+                var listItemPosition = isTopLevelList ? 0 : innerListItemsInfo.Count;
+                List<HtmlNode> itemLists;
+                var listItemIsList = listItem.IsList(); // Признак того, что элемент списка является списком (ol или ul)
+
+                if (listItemIsList) // Элемент списка - является списком (ol или ul)
+                {
+                    itemLists = new List<HtmlNode>() { listItem };
+
+                    if (itemNumber > 0 &&
+                        listItems.Any(node => node.Name.Equals("li", StringComparison.OrdinalIgnoreCase)))
+                        itemNumber--;
+                }
+                else // Элемент списка - li
+                {
+                    itemLists = listItem.GetTopLevelLists().ToList();
+                }
 
                 // Опредляем порядковый номер элемента списка
                 var listItemInfo = new ListItemInfo
@@ -342,11 +373,8 @@ namespace TransfromService
                     Number = multiLevelNumeration ? GetListItemNumber(parentNumberPath, itemNumber) : string.Empty
                 };
 
-                // Запоминаем позицию для вставки склонированного элемента в оригинальный список
-                var listItemPosition = isTopLevelList ? 0 : innerListItemsInfo.Count;
-
                 // Проходим по всем вложенным спискам текущего элемента списка
-                foreach (var nestedList in listItem.GetTopLevelLists().ToList())
+                foreach (var nestedList in itemLists)
                 {
                     var listItemStartNumber = nestedList.GetListItemStartNumber();
 
@@ -371,9 +399,12 @@ namespace TransfromService
                 else // Элемент верхнеуровневого списка
                 {
                     if (innerListItemsInfo.Count > 0)
+                    {
                         listWasChanged = true;
+                        listItemInfo.ChildItemInfos.AddRange(innerListItemsInfo);
+                    }
 
-                    listItemsInfoDict.Add(listItemInfo, innerListItemsInfo);
+                    listItemInfos.Add(listItemInfo);
                 }
 
                 itemNumber++;
@@ -384,27 +415,63 @@ namespace TransfromService
 
             if (isTopLevelList && listWasChanged)
             {
-                foreach (var listItemInfoData in listItemsInfoDict)
+                for (var i = 0; i < listItemInfos.Count; i++)
                 {
-                    var parentListItemInfo = listItemInfoData.Key;
+                    var listItemInfo = listItemInfos[i];
+                    var parentListItemInfo = listItemInfo;
+                    var listItemIsList = listItemInfo.ListItem.IsList();
 
                     if (multiLevelNumeration)
-                        parentListItemInfo.ListItem.SetNumberToListItem(listItemInfoData.Key.Number);
+                        parentListItemInfo.ListItem.SetNumberToListItem(listItemInfo.Number);
 
-                    var insertAfterNode = parentListItemInfo.ListItem;
+                    var insertAfterNode = GetFirstInsertAfterItemList(listItemInfos, i);
 
-                    foreach (var childListItemInfo in listItemInfoData.Value)
+                    foreach (var childListItemInfo in listItemInfo.ChildItemInfos)
                     {
+                        if (childListItemInfo.ListItem.IsList())
+                        {
+                            childListItemInfo.ListItem.Remove();
+                            continue;
+                        }
+
                         if (multiLevelNumeration)
                             childListItemInfo.ListItem.SetNumberToListItem(childListItemInfo.Number);
 
-                        insertAfterNode = parentList.InsertAfter(childListItemInfo.ListItem, insertAfterNode);
+                        insertAfterNode = insertAfterNode != null
+                            ? parentList.InsertAfter(childListItemInfo.ListItem, insertAfterNode)
+                            : parentList.AppendChild(childListItemInfo.ListItem);
                     }
+
+                    if (listItemIsList)
+                        parentListItemInfo.ListItem.Remove();
                 }
             }
 
             return listWasChanged;
         }
+
+        /// <summary>
+        /// Поиск первого элемента списка (не являющегося списком), после которого будут вставлены дочерние элементы
+        /// </summary>
+        /// <param name="listItems"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private static HtmlNode GetFirstInsertAfterItemList(IList<ListItemInfo> listItems, int index)
+        {
+            if (!listItems[index].ListItem.IsList())
+                return listItems[index].ListItem;
+
+            for (var i = index - 1; i >= 0; i--)
+            {
+                if (!listItems[i].ListItem.IsList())
+                    return listItems[i].ListItem;
+            }
+
+            return null;
+        }
+
+        private static bool IsList(this HtmlNode node) =>
+            new[] { "ul", "ol" }.Contains(node.Name, StringComparer.OrdinalIgnoreCase);
 
         private static void SetNumberToListItem(this HtmlNode listItem, string number)
         {
@@ -474,10 +541,18 @@ namespace TransfromService
             public string FullNumber { get; init; }
             public string Number { get; init; }
 
+
+            public int? GetIntNumber()
+            {
+                return !string.IsNullOrEmpty(Number) && int.TryParse(Number, out var intVal) ? intVal : null;
+            }
+
             public string ParentNumber { get; init; }
 
             //public HtmlNode ParentList { get; set; }
             public bool WasNumberRemovedFromName { get; set; }
+
+            public List<ListItemInfo> ChildItemInfos { get; } = new List<ListItemInfo>();
         }
 
         /// <summary>
@@ -526,15 +601,22 @@ namespace TransfromService
         }
 
         /// <summary>
-        /// Получить перечень элементов верхнего уровня для заданного списка
+        /// Получить перечень элементов верхнего уровня для заданного списка.
+        /// Элементом может быть как непосредственно элемент списка, так и списки лежащие внутри списка,
+        /// но не внутри другого элемента или списка
         /// </summary>
         /// <param name="listNode"></param>
         /// <returns></returns>
         private static IEnumerable<HtmlNode> GetTopLevelItems(this HtmlNode listNode)
         {
+            var parentTagsForInnerListItems = new[] { "li", "ol", "ul" };
+            var childTagsForInnerListItems = new[] { "li", "ol", "ul" };
+
             return listNode.Descendants()
-                .Where(n => n.Name.Equals("li", StringComparison.OrdinalIgnoreCase) &&
-                            !n.Ancestors().TakeWhile(curNode => curNode != listNode).Any(a => a.Name.Equals("li")));
+                .Where(n => childTagsForInnerListItems.Contains(n.Name, StringComparer.OrdinalIgnoreCase) &&
+                            !n.Ancestors().TakeWhile(curNode => curNode != listNode).Any(a =>
+                                parentTagsForInnerListItems.Contains(a.Name, StringComparer.OrdinalIgnoreCase)));
+            //a.Name.Equals("li", StringComparison.CurrentCultureIgnoreCase) || ));
             //node.Descendants("ol").Concat(node.Descendants("ul")).ToList();
         }
 
