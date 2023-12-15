@@ -8,7 +8,7 @@ namespace TextEditor.RichTextEdit.CustomCommands
         private const string StartFragmentTag = "<!--StartFragment-->";
         private const string EndFragmentTag = "<!--EndFragment-->";
 
-        private const string BodyTag = "<body>\r\n";
+        private const string BodyTag = "<body>";
         private const string BodyTagClose = "</body>";
         private const string EmptyDescription = "Version:0.9\r\nStartHTML:{0:D10}\r\nEndHTML:{1:D10}\r\nStartFragment:{2:D10}\r\nEndFragment:{3:D10}\r\n";
 

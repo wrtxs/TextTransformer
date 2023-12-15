@@ -13,35 +13,64 @@ namespace TextEditor.RichTextEdit.CustomCommands
 
         protected override void ExecuteCore()
         {
-            var richEditControl = (RichEditControlEx)Control;
+            if (Control is not RichEditControlEx richEditControl)
+                return;
+
             //richEditControl.BeforeExport += OnBeforeExport;
-            string htmlForClipboard;
 
             //SetExportOptions(richEditControl.Options.Export.Html);
 
-            var selRange = richEditControl.Document.GetSelectedRange();
+            var doc = richEditControl.Document;
+            var selRange = doc.GetSelectedRange();
+            var clipboardFormat = richEditControl.GetClipboardFormat();
 
             try
             {
-                var html = richEditControl.Document.GetHtmlContent(selRange, richEditControl.GetTableTitle(), richEditControl.Options.Export.Html);
-                html = TransfromService.HtmlUtils.ProcessSpanTagStyleAttribute(html, true); // Обрабатываем тег <span style="...">, добавляем отдельные теги, соответствующие значениям style
+                var htmlData = doc.GetHtmlContent(selRange, true, richEditControl.GetTableTitle(),
+                    richEditControl.Options.Export.Html);
 
-                htmlForClipboard = CF_HtmlHelper.GetHtmlClipboardFormat(html);
+                switch (clipboardFormat)
+                {
+                    case ClipboardFormat.All:
+                    {
+                        // Обрабатываем тег <span style="...">, добавляем отдельные теги, соответствующие значениям style
+                        //htmlData = TransfromService.HtmlUtils.ProcessSpanTagStyleAttribute(htmlData, true);
+                        htmlData = TransfromService.HtmlUtils.GetHtmlCleanValue(htmlData, null);
+                        var htmlForClipboard = CF_HtmlHelper.GetHtmlClipboardFormat(htmlData);
+
+                        var dataObject = new DataObject();
+                        dataObject.SetData(OfficeDataFormats.Rtf,
+                            doc.GetRtfText(selRange));
+                        dataObject.SetData(OfficeDataFormats.UnicodeText,
+                            doc.GetText(selRange));
+                        dataObject.SetData(OfficeDataFormats.Html, htmlForClipboard);
+
+                        //Clipboard.Clear();
+                        Clipboard.SetDataObject(dataObject, true);
+                        break;
+                    }
+                    case ClipboardFormat.Html:
+                    {
+                        // Очищаем HTML для последующей корректной обработки
+                        htmlData = TransfromService.HtmlUtils.GetHtmlCleanValue(htmlData, null);
+                        var htmlForClipboard = CF_HtmlHelper.GetHtmlClipboardFormat(htmlData);
+
+                        var dataObject = new DataObject();
+                        dataObject.SetData(OfficeDataFormats.Html, htmlForClipboard);
+                        Clipboard.SetDataObject(dataObject, true);
+
+                        break;
+                    }
+                }
             }
-            finally
+            catch
             {
-                //richEditControl.BeforeExport -= OnBeforeExport;
+                // ignored
             }
-
-            var data = new DataObject();
-            data.SetData(OfficeDataFormats.Rtf,
-                richEditControl.Document.GetRtfText(selRange));
-            data.SetData(OfficeDataFormats.UnicodeText,
-                richEditControl.Document.GetText(selRange));
-            data.SetData(OfficeDataFormats.Html, htmlForClipboard);
-
-            Clipboard.Clear();
-            Clipboard.SetDataObject(data, false);
+            //finally
+            //{
+            //    //richEditControl.BeforeExport -= OnBeforeExport;
+            //}
         }
 
         //void OnBeforeExport(object sender, BeforeExportEventArgs e)

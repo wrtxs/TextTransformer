@@ -25,15 +25,15 @@ namespace TransfromService.RichText
         //}
 
         public static string GetHtmlContent(this Document document,
-            TextRangeType textRangeType, string firstTableTitle, HtmlDocumentExporterOptions exportOptions)
+            TextRangeType textRangeType, bool writeFirstTableTitle, string firstTableTitle,  HtmlDocumentExporterOptions exportOptions)
         {
             var range = textRangeType == TextRangeType.Selection ? GetSelectedRange(document) : document.Range;
 
-            return GetHtmlContent(document, range, firstTableTitle, exportOptions);
+            return GetHtmlContent(document, range, writeFirstTableTitle, firstTableTitle,  exportOptions);
         }
 
         public static string GetHtmlContent(this Document document,
-            DocumentRange range, string firstTableTitle, HtmlDocumentExporterOptions exportOptions)
+            DocumentRange range, bool writeFirstTableTitle, string firstTableTitle,  HtmlDocumentExporterOptions exportOptions)
         {
             if (range == null)
                 return null;
@@ -48,7 +48,8 @@ namespace TransfromService.RichText
                     exportOptions);
 
                 // Записываем или удаляем имя таблицы
-                htmlData = SetFirstTableTitle(htmlData, firstTableTitle);
+                if (writeFirstTableTitle) 
+                    htmlData = SetFirstTableTitle(htmlData, firstTableTitle);
 
                 return htmlData;
             }

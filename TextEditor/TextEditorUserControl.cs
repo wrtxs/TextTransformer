@@ -424,7 +424,7 @@ namespace TextEditor
 
         private void TransformFromEditorToJson()
         {
-            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All,
+            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, true,
                 rtfDocUserControl.GetTableTitle(), rtfDocUserControl.RichEditControl.Options.Export.Html);
 
             if (jsonTransformParamsUserControl.GetParameters() is JsonTransformViewParameters transformParams)
@@ -490,9 +490,9 @@ namespace TextEditor
             {
                 Utils.ShowProgressForm();
                 InsertNewHtmlData(
-                    rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All,
-                        rtfDocUserControl.GetTableTitle(),
-                        rtfDocUserControl.RichEditControl.Options.Export.Html), false);
+                    rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, true,
+                        rtfDocUserControl.GetTableTitle(), rtfDocUserControl.RichEditControl.Options.Export.Html),
+                    false);
             }
             catch (Exception exception)
             {

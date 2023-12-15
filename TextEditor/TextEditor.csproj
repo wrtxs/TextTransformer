@@ -5,7 +5,7 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>1.0.26</Version>
+		<Version>1.0.27</Version>
 		<ApplicationIcon>Resources\app.ico</ApplicationIcon>
 		<AssemblyName>TextEditor.v$(Version)</AssemblyName>
 		<!--<AssemblyProduct>TextEditor.v$(Version)</AssemblyProduct>

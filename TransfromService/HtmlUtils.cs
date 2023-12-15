@@ -46,6 +46,14 @@ namespace TransfromService
             //TableHeaderBackgroundColorArgbValue = TableHeaderBackgroundColor.ToArgb();
         }
 
+        public static string GetHtmlCleanValue(string htmlData, Html2JsonTransformParameters transformParams)
+        {
+            transformParams ??= new Html2JsonTransformParameters();
+            var node = GetHtmlNodeFromText(htmlData);
+
+            return GetNodeCleanValue(node, false, transformParams, null);
+        }
+
         public static string GetNodeCleanValue(HtmlNode node, bool isCellHeader,
             Html2JsonTransformParameters transformParams, StyleClassesRegistry styleClassesRegistry)
         {
@@ -774,6 +782,9 @@ namespace TransfromService
         private static void ProcessSpanTagClassAttribute(HtmlNode spanTag, bool processTextColor,
             StyleClassesRegistry styleClassesRegistry)
         {
+            if (styleClassesRegistry == null)
+                return;
+
             foreach (var className in GetClassAttributeValues(spanTag))
             {
                 if (styleClassesRegistry.Items.TryGetValue(className, out var styleClass))

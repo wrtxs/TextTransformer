@@ -11,21 +11,20 @@ namespace TextEditor.RichTextEdit
 {
     internal class RichEditControlEx : RichEditControl
     {
-        private ITableTitleService _tableTitleService;
+        private IRichEditControlAdditionalService _richEditControlAdditionalService;
 
-        public RichEditControlEx(ITableTitleService tableTitleService)
+        public RichEditControlEx(IRichEditControlAdditionalService richEditControlAdditionalService)
         {
-           Initialize(tableTitleService);
+           Initialize(richEditControlAdditionalService);
         }
         public RichEditControlEx()
         {
         }
 
-        public void Initialize(ITableTitleService tableTitleService)
+        public void Initialize(IRichEditControlAdditionalService richEditControlAdditionalService)
         {
-            _tableTitleService = tableTitleService;
+            _richEditControlAdditionalService = richEditControlAdditionalService;
         }
-
 
         protected override InnerRichEditControl CreateInnerControl()
         {
@@ -73,9 +72,8 @@ namespace TextEditor.RichTextEdit
                     : base.Calculate(hitTestResult, physicalPoint);
         }
 
-        public string GetTableTitle()
-        {
-            return _tableTitleService.GetTableTitle();
-        }
+        public string GetTableTitle() => _richEditControlAdditionalService.GetTableTitle();
+
+        public ClipboardFormat GetClipboardFormat() => _richEditControlAdditionalService.GetClipboardFormat();
     }
 }

@@ -83,6 +83,56 @@ namespace TextEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap copyToClipboardInHtmlFormat {
+            get {
+                object obj = ResourceManager.GetObject("copyToClipboardInHtmlFormat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] en_US_aff {
+            get {
+                object obj = ResourceManager.GetObject("en_US_aff", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] en_US_dic {
+            get {
+                object obj = ResourceManager.GetObject("en_US_dic", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ru_RU_aff {
+            get {
+                object obj = ResourceManager.GetObject("ru_RU_aff", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ru_RU_dic {
+            get {
+                object obj = ResourceManager.GetObject("ru_RU_dic", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap tablelayout_32x32 {
             get {
                 object obj = ResourceManager.GetObject("tablelayout_32x32", resourceCulture);

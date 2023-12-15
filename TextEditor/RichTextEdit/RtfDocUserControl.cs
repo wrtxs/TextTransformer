@@ -4,6 +4,10 @@ using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.API.Layout;
 using DevExpress.XtraRichEdit.API.Native;
 using DevExpress.XtraRichEdit.Services;
+using DevExpress.XtraSpellChecker;
+using DevExpress.XtraSpellChecker.Native;
+using System.IO;
+using DevExpress.XtraRichEdit.Export;
 using TextEditor.RichTextEdit.CustomCommands;
 using TransfromService.RichText;
 using Table = DevExpress.XtraRichEdit.API.Native.Table;
@@ -11,7 +15,7 @@ using TableLayoutType = DevExpress.XtraRichEdit.API.Native.TableLayoutType;
 
 namespace TextEditor.RichTextEdit
 {
-    public partial class RtfDocUserControl : XtraUserControl, ITableTitleService
+    public partial class RtfDocUserControl : XtraUserControl, IRichEditControlAdditionalService
     {
         private DevExpress.XtraBars.BarCheckItem _copyFormatItem;
         private DevExpress.XtraBars.PopupMenu _popupMenu;
@@ -85,6 +89,34 @@ namespace TextEditor.RichTextEdit
             ribbonControl.SelectedPage = homeRibbonPage1;
 
             ribbonControl.ForceInitialize();
+
+            LoadDictionaries();
+        }
+
+        private void LoadDictionaries()
+        {
+            spellChecker.Dictionaries.Clear();
+
+            var ruAffStream = new MemoryStream(Properties.Resources.ru_RU_aff);
+            var ruDicStream = new MemoryStream(Properties.Resources.ru_RU_dic);
+
+            var enAffStream = new MemoryStream(Properties.Resources.en_US_aff);
+            var enDicStream = new MemoryStream(Properties.Resources.en_US_dic);
+
+
+            var ruDict = new HunspellDictionary();
+            ruDict.LoadFromStream(ruDicStream, ruAffStream);
+
+            var enDict = new HunspellDictionary();
+            enDict.LoadFromStream(enDicStream, enAffStream);
+
+            //dictionary.Encoding = 
+
+            spellChecker.Dictionaries.Add(ruDict);
+            spellChecker.Dictionaries.Add(enDict);
+
+            SpellCheckTextControllersManager.Default.RegisterClass(typeof(RichEditControlEx),
+                typeof(DevExpress.XtraRichEdit.SpellChecker.RichEditSpellCheckController));
         }
 
         private void AdjsutCommandsBar()
@@ -155,6 +187,7 @@ namespace TextEditor.RichTextEdit
         //}
 
         private Document GetDocument() => richEditControl.Document;
+        public HtmlDocumentExporterOptions GetHtmlExporterOptions() => richEditControl.Options.Export.Html;
 
         private Table GetFirstTable() => GetDocument().Tables.First;
 
@@ -486,6 +519,12 @@ namespace TextEditor.RichTextEdit
         #endregion
 
         public string GetTableTitle() => (_barEditItemTableTitle.EditValue as string);
+
+        public ClipboardFormat GetClipboardFormat()
+        {
+            return ClipboardFormat.All;
+            // return copyToClipboardInHtmlFormatItem.Down ? ClipboardFormat.Html : ClipboardFormat.All;
+        }
 
         public void SetTableTitle(string tableTitle) =>
             _barEditItemTableTitle.EditValue = tableTitle;

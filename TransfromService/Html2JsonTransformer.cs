@@ -215,7 +215,7 @@ namespace TransfromService
                 //server.HtmlText = null;
                 server.HtmlText = htmlData;
 
-                htmlData = server.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, tableTitle,
+                htmlData = server.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, true, tableTitle,
                     server.Options.Export.Html);
             }
 
