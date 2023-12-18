@@ -523,7 +523,7 @@ namespace TextEditor.RichTextEdit
         public ClipboardFormat GetClipboardFormat()
         {
             return ClipboardFormat.All;
-            // return copyToClipboardInHtmlFormatItem.Down ? ClipboardFormat.Html : ClipboardFormat.All;
+            //return copyToClipboardInHtmlFormatItem.Down ? ClipboardFormat.Html : ClipboardFormat.All;
         }
 
         public void SetTableTitle(string tableTitle) =>

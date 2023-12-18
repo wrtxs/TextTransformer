@@ -29,25 +29,24 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup1 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
-            DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
-            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
-            DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
-            DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
-            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
-            DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
-            DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
-            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
-            DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
-            DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
-            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
-            DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
-            DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
-            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem5 = new DevExpress.Utils.ToolTipTitleItem();
-            DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
-            DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup2 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RtfDocUserControl));
-            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation1 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+            DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup3 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
+            DevExpress.Utils.SuperToolTip superToolTip6 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem6 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem6 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip7 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem7 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem7 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip8 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem8 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem8 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip9 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem9 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem9 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip10 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem10 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem10 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup4 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
+            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation2 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
             layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             richEditControl = new RichEditControlEx();
             ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
@@ -457,7 +456,7 @@
             ribbonControl.ExpandCollapseItem.Id = 0;
             ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl.ExpandCollapseItem, undoItem1, redoItem1, fileNewItem1, fileOpenItem1, fileSaveItem1, fileSaveAsItem1, quickPrintItem1, printItem1, printPreviewItem1, encryptDocumentItem1, showDocumentPropertiesFormItem1, pasteItem1, cutItem1, copyItem1, pasteSpecialItem1, barButtonGroup1, changeFontNameItem1, changeFontSizeItem1, fontSizeIncreaseItem1, fontSizeDecreaseItem1, barButtonGroup2, toggleFontBoldItem1, toggleFontItalicItem1, toggleFontUnderlineItem1, toggleFontDoubleUnderlineItem1, toggleFontStrikeoutItem1, toggleFontDoubleStrikeoutItem1, toggleFontSuperscriptItem1, toggleFontSubscriptItem1, barButtonGroup3, changeFontColorItem1, changeFontHighlightColorItem1, changeTextCaseItem1, makeTextUpperCaseItem1, makeTextLowerCaseItem1, capitalizeEachWordCaseItem1, toggleTextCaseItem1, clearFormattingItem1, barButtonGroup4, toggleBulletedListItem1, toggleNumberingListItem1, toggleMultiLevelListItem1, barButtonGroup5, decreaseIndentItem1, increaseIndentItem1, rtlToggleBulletedListItem1, rtlToggleNumberingListItem1, rtlToggleMultiLevelListItem1, rtlDecreaseIndentItem1, rtlIncreaseIndentItem1, toggleParagraphLeftToRightItem1, toggleParagraphRightToLeftItem1, barButtonGroup6, toggleParagraphAlignmentLeftItem1, toggleParagraphAlignmentCenterItem1, toggleParagraphAlignmentRightItem1, toggleParagraphAlignmentJustifyItem1, toggleParagraphAlignmentArabicJustifyGroupItem1, toggleParagraphAlignmentArabicJustifyItem1, toggleParagraphAlignmentJustifyLowItem1, toggleParagraphAlignmentJustifyMediumItem1, toggleParagraphAlignmentJustifyHighItem1, toggleParagraphAlignmentDistributeItem1, toggleParagraphAlignmentThaiDistributeItem1, toggleShowWhitespaceItem1, barButtonGroup7, changeParagraphLineSpacingItem1, setSingleParagraphSpacingItem1, setSesquialteralParagraphSpacingItem1, setDoubleParagraphSpacingItem1, showLineSpacingFormItem1, addSpacingBeforeParagraphItem1, removeSpacingBeforeParagraphItem1, addSpacingAfterParagraphItem1, removeSpacingAfterParagraphItem1, changeParagraphBackColorItem1, galleryChangeStyleItem1, findItem1, replaceItem1, insertPageBreakItem21, insertTableItem1, insertFloatingPictureItem1, insertBookmarkItem1, insertHyperlinkItem1, editPageHeaderItem1, editPageFooterItem1, insertPageNumberItem1, insertPageCountItem1, insertTextBoxItem1, insertObjectItem1, insertSymbolItem1, changeSectionPageMarginsItem1, setNormalSectionPageMarginsItem1, setNarrowSectionPageMarginsItem1, setModerateSectionPageMarginsItem1, setWideSectionPageMarginsItem1, showPageMarginsSetupFormItem1, changeSectionPageOrientationItem1, setPortraitPageOrientationItem1, setLandscapePageOrientationItem1, changeSectionPaperKindItem1, changeSectionColumnsItem1, setSectionOneColumnItem1, setSectionTwoColumnsItem1, setSectionThreeColumnsItem1, showColumnsSetupFormItem1, insertBreakItem1, insertPageBreakItem1, insertColumnBreakItem1, insertSectionBreakNextPageItem1, insertSectionBreakContinuousItem1, insertSectionBreakEvenPageItem1, insertSectionBreakOddPageItem1, changeSectionLineNumberingItem1, setSectionLineNumberingNoneItem1, setSectionLineNumberingContinuousItem1, setSectionLineNumberingRestartNewPageItem1, setSectionLineNumberingRestartNewSectionItem1, toggleParagraphSuppressLineNumbersItem1, showLineNumberingFormItem1, changeHyphenationOptionsItem1, setHyphenateDocumentNoneItem1, setHyphenateDocumentAutomaticItem1, showHyphenationOptionsFormItem1, changePageColorItem1, watermarkItem1, deleteWatermarkItem1, insertTableOfContentsItem1, updateTableOfContentsItem1, addParagraphsToTableOfContentItem1, setParagraphHeadingLevelItem1, setParagraphHeadingLevelItem2, setParagraphHeadingLevelItem3, setParagraphHeadingLevelItem4, setParagraphHeadingLevelItem5, setParagraphHeadingLevelItem6, setParagraphHeadingLevelItem7, setParagraphHeadingLevelItem8, setParagraphHeadingLevelItem9, setParagraphHeadingLevelItem10, insertCaptionPlaceholderItem1, insertFiguresCaptionItems1, insertTablesCaptionItems1, insertEquationsCaptionItems1, insertTableOfFiguresPlaceholderItem1, insertTableOfFiguresItems1, insertTableOfTablesItems1, insertTableOfEquationsItems1, updateTableOfFiguresItem1, insertFootnoteItem1, insertEndnoteItem1, navigationNotesItem1, showNotesItem1, insertMergeFieldItem1, showAllFieldCodesItem1, showAllFieldResultsItem1, toggleViewMergedDataItem1, checkSpellingItem1, changeLanguageItem1, protectDocumentItem1, changeRangeEditingPermissionsItem1, unprotectDocumentItem1, newCommentItem1, deleteCommentsItem1, deleteOneCommentItem1, deleteAllCommentsShownItem1, deleteAllCommentsItem1, previousCommentItem1, nextCommentItem1, toggleTrackChangesBarItem1, changeDisplayForReviewModeItem1, showMarkupSubItem1, reviewingPaneItem1, acceptAndMoveToNextSubItem1, rejectAndMoveToNextSubItem1, previousChangeItem1, nextChangeItem1, switchToSimpleViewItem1, switchToDraftViewItem1, switchToPrintLayoutViewItem1, toggleShowHorizontalRulerItem1, toggleShowVerticalRulerItem1, zoomOutItem1, zoomInItem1, goToPageHeaderItem1, goToPageFooterItem1, goToNextHeaderFooterItem1, goToPreviousHeaderFooterItem1, toggleLinkToPreviousItem1, toggleDifferentFirstPageItem1, toggleDifferentOddAndEvenPagesItem1, closePageHeaderFooterItem1, toggleFirstRowItem1, toggleLastRowItem1, toggleBandedRowsItem1, toggleFirstColumnItem1, toggleLastColumnItem1, toggleBandedColumnsItem1, galleryChangeTableStyleItem1, changeTableBorderLineStyleItem1, changeTableBorderLineWeightItem1, changeTableBorderColorItem1, changeTableBordersItem1, toggleTableCellsBottomBorderItem1, toggleTableCellsTopBorderItem1, toggleTableCellsLeftBorderItem1, toggleTableCellsRightBorderItem1, resetTableCellsAllBordersItem1, toggleTableCellsAllBordersItem1, toggleTableCellsOutsideBorderItem1, toggleTableCellsInsideBorderItem1, toggleTableCellsInsideHorizontalBorderItem1, toggleTableCellsInsideVerticalBorderItem1, toggleShowTableGridLinesItem1, changeTableCellsShadingItem1, selectTableElementsItem1, selectTableCellItem1, selectTableColumnItem1, selectTableRowItem1, selectTableItem1, showTablePropertiesFormItem1, deleteTableElementsItem1, showDeleteTableCellsFormItem1, deleteTableColumnsItem1, deleteTableRowsItem1, deleteTableItem1, insertTableRowAboveItem1, insertTableRowBelowItem1, insertTableColumnToLeftItem1, insertTableColumnToRightItem1, mergeTableCellsItem1, showSplitTableCellsForm1, splitTableItem1, toggleTableAutoFitItem1, toggleTableAutoFitContentsItem1, toggleTableAutoFitWindowItem1, toggleTableFixedColumnWidthItem1, toggleTableCellsTopLeftAlignmentItem1, toggleTableCellsMiddleLeftAlignmentItem1, toggleTableCellsBottomLeftAlignmentItem1, toggleTableCellsTopCenterAlignmentItem1, toggleTableCellsMiddleCenterAlignmentItem1, toggleTableCellsBottomCenterAlignmentItem1, toggleTableCellsTopRightAlignmentItem1, toggleTableCellsMiddleRightAlignmentItem1, toggleTableCellsBottomRightAlignmentItem1, toggleTableCellsBottomLeftRotate90AlignmentItem1, toggleTableCellsBottomCenterRotate90AlignmentItem1, toggleTableCellsBottomRightRotate90AlignmentItem1, toggleTableCellsMiddleLeftRotate90AlignmentItem1, toggleTableCellsMiddleCenterRotate90AlignmentItem1, toggleTableCellsMiddleRightRotate90AlignmentItem1, toggleTableCellsTopLeftRotate90AlignmentItem1, toggleTableCellsTopCenterRotate90AlignmentItem1, toggleTableCellsTopRightRotate90AlignmentItem1, toggleTableCellsTopRightRotate270AlignmentItem1, toggleTableCellsTopCenterRotate270AlignmentItem1, toggleTableCellsTopLeftRotate270AlignmentItem1, toggleTableCellsMiddleRightRotate270AlignmentItem1, toggleTableCellsMiddleCenterRotate270AlignmentItem1, toggleTableCellsMiddleLeftRotate270AlignmentItem1, toggleTableCellsBottomRightRotate270AlignmentItem1, toggleTableCellsBottomCenterRotate270AlignmentItem1, toggleTableCellsBottomLeftRotate270AlignmentItem1, changeTableCellsHorizontalTextDirectionItem1, changeTableCellsVerticalTextDirectionItem1, changeTableCellsRotateAll90TextDirectionItem1, changeTableCellsRotateAll270TextDirectionItem1, changeTableCellsRotateAsian270TextDirectionItem1, showTableOptionsFormItem1, changeFloatingObjectFillColorItem1, changeFloatingObjectOutlineColorItem1, changeFloatingObjectOutlineWeightItem1, changeFloatingObjectTextWrapTypeItem1, setFloatingObjectInlineTextWrapTypeItem1, setFloatingObjectSquareTextWrapTypeItem1, setFloatingObjectTightTextWrapTypeItem1, setFloatingObjectThroughTextWrapTypeItem1, setFloatingObjectTopAndBottomTextWrapTypeItem1, setFloatingObjectBehindTextWrapTypeItem1, setFloatingObjectInFrontOfTextWrapTypeItem1, changeFloatingObjectAlignmentItem1, setFloatingObjectTopLeftAlignmentItem1, setFloatingObjectTopCenterAlignmentItem1, setFloatingObjectTopRightAlignmentItem1, setFloatingObjectMiddleLeftAlignmentItem1, setFloatingObjectMiddleCenterAlignmentItem1, setFloatingObjectMiddleRightAlignmentItem1, setFloatingObjectBottomLeftAlignmentItem1, setFloatingObjectBottomCenterAlignmentItem1, setFloatingObjectBottomRightAlignmentItem1, floatingObjectBringForwardSubItem1, floatingObjectBringForwardItem1, floatingObjectBringToFrontItem1, floatingObjectBringInFrontOfTextItem1, floatingObjectSendBackwardSubItem1, floatingObjectSendBackwardItem1, floatingObjectSendToBackItem1, floatingObjectSendBehindTextItem1 });
             ribbonControl.Location = new Point(0, 0);
-            ribbonControl.MaxItemId = 301;
+            ribbonControl.MaxItemId = 302;
             ribbonControl.Name = "ribbonControl";
             ribbonControl.PageCategories.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageCategory[] { headerFooterToolsRibbonPageCategory1, tableToolsRibbonPageCategory1, floatingPictureToolsRibbonPageCategory1 });
             ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { fileRibbonPage1, homeRibbonPage1, insertRibbonPage1, pageLayoutRibbonPage1, referencesRibbonPage1, mailingsRibbonPage1, reviewRibbonPage1, viewRibbonPage1 });
@@ -911,7 +910,7 @@
             // 
             // 
             galleryChangeStyleItem1.Gallery.ColumnCount = 10;
-            galleryChangeStyleItem1.Gallery.Groups.AddRange(new DevExpress.XtraBars.Ribbon.GalleryItemGroup[] { galleryItemGroup1 });
+            galleryChangeStyleItem1.Gallery.Groups.AddRange(new DevExpress.XtraBars.Ribbon.GalleryItemGroup[] { galleryItemGroup3 });
             galleryChangeStyleItem1.Gallery.ImageSize = new Size(65, 46);
             galleryChangeStyleItem1.Id = 77;
             galleryChangeStyleItem1.Name = "galleryChangeStyleItem1";
@@ -1307,11 +1306,11 @@
             // 
             // navigationNotesItem1
             // 
-            toolTipTitleItem1.Text = "Next Footnote";
-            toolTipItem1.Text = "Jump to next footnote";
-            superToolTip1.Items.Add(toolTipTitleItem1);
-            superToolTip1.Items.Add(toolTipItem1);
-            navigationNotesItem1.DropDownSuperTip = superToolTip1;
+            toolTipTitleItem6.Text = "Next Footnote";
+            toolTipItem6.Text = "Jump to next footnote";
+            superToolTip6.Items.Add(toolTipTitleItem6);
+            superToolTip6.Items.Add(toolTipItem6);
+            navigationNotesItem1.DropDownSuperTip = superToolTip6;
             navigationNotesItem1.Id = 152;
             navigationNotesItem1.Name = "navigationNotesItem1";
             // 
@@ -1403,11 +1402,11 @@
             // 
             // toggleTrackChangesBarItem1
             // 
-            toolTipTitleItem2.Text = "Track Changes";
-            toolTipItem2.Text = "Keep track of changes made to this document.";
-            superToolTip2.Items.Add(toolTipTitleItem2);
-            superToolTip2.Items.Add(toolTipItem2);
-            toggleTrackChangesBarItem1.DropDownSuperTip = superToolTip2;
+            toolTipTitleItem7.Text = "Track Changes";
+            toolTipItem7.Text = "Keep track of changes made to this document.";
+            superToolTip7.Items.Add(toolTipTitleItem7);
+            superToolTip7.Items.Add(toolTipItem7);
+            toggleTrackChangesBarItem1.DropDownSuperTip = superToolTip7;
             toggleTrackChangesBarItem1.Id = 170;
             toggleTrackChangesBarItem1.Name = "toggleTrackChangesBarItem1";
             // 
@@ -1427,11 +1426,11 @@
             // showMarkupSubItem1
             // 
             showMarkupSubItem1.ActAsDropDown = true;
-            toolTipTitleItem3.Text = "Show Markup";
-            toolTipItem3.Text = "Choose what types of markup to show in your document.";
-            superToolTip3.Items.Add(toolTipTitleItem3);
-            superToolTip3.Items.Add(toolTipItem3);
-            showMarkupSubItem1.DropDownSuperTip = superToolTip3;
+            toolTipTitleItem8.Text = "Show Markup";
+            toolTipItem8.Text = "Choose what types of markup to show in your document.";
+            superToolTip8.Items.Add(toolTipTitleItem8);
+            superToolTip8.Items.Add(toolTipItem8);
+            showMarkupSubItem1.DropDownSuperTip = superToolTip8;
             showMarkupSubItem1.Id = 172;
             showMarkupSubItem1.Name = "showMarkupSubItem1";
             showMarkupSubItem1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
@@ -1443,21 +1442,21 @@
             // 
             // acceptAndMoveToNextSubItem1
             // 
-            toolTipTitleItem4.Text = "Accept";
-            toolTipItem4.Text = "Click for additional options, such as accepting all the changes at once.";
-            superToolTip4.Items.Add(toolTipTitleItem4);
-            superToolTip4.Items.Add(toolTipItem4);
-            acceptAndMoveToNextSubItem1.DropDownSuperTip = superToolTip4;
+            toolTipTitleItem9.Text = "Accept";
+            toolTipItem9.Text = "Click for additional options, such as accepting all the changes at once.";
+            superToolTip9.Items.Add(toolTipTitleItem9);
+            superToolTip9.Items.Add(toolTipItem9);
+            acceptAndMoveToNextSubItem1.DropDownSuperTip = superToolTip9;
             acceptAndMoveToNextSubItem1.Id = 174;
             acceptAndMoveToNextSubItem1.Name = "acceptAndMoveToNextSubItem1";
             // 
             // rejectAndMoveToNextSubItem1
             // 
-            toolTipTitleItem5.Text = "Reject";
-            toolTipItem5.Text = "Click for additional options, such as rejecting all the changes at once.";
-            superToolTip5.Items.Add(toolTipTitleItem5);
-            superToolTip5.Items.Add(toolTipItem5);
-            rejectAndMoveToNextSubItem1.DropDownSuperTip = superToolTip5;
+            toolTipTitleItem10.Text = "Reject";
+            toolTipItem10.Text = "Click for additional options, such as rejecting all the changes at once.";
+            superToolTip10.Items.Add(toolTipTitleItem10);
+            superToolTip10.Items.Add(toolTipItem10);
+            rejectAndMoveToNextSubItem1.DropDownSuperTip = superToolTip10;
             rejectAndMoveToNextSubItem1.Id = 175;
             rejectAndMoveToNextSubItem1.Name = "rejectAndMoveToNextSubItem1";
             // 
@@ -1590,7 +1589,7 @@
             // 
             // 
             galleryChangeTableStyleItem1.Gallery.ColumnCount = 3;
-            galleryChangeTableStyleItem1.Gallery.Groups.AddRange(new DevExpress.XtraBars.Ribbon.GalleryItemGroup[] { galleryItemGroup2 });
+            galleryChangeTableStyleItem1.Gallery.Groups.AddRange(new DevExpress.XtraBars.Ribbon.GalleryItemGroup[] { galleryItemGroup4 });
             galleryChangeTableStyleItem1.Gallery.ImageSize = new Size(65, 46);
             galleryChangeTableStyleItem1.Id = 199;
             galleryChangeTableStyleItem1.ModifyItemLink = null;
@@ -2346,12 +2345,12 @@
             // 
             homeRibbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { clipboardRibbonPageGroup1, fontRibbonPageGroup1, paragraphRibbonPageGroup1, stylesRibbonPageGroup1, editingRibbonPageGroup1 });
             homeRibbonPage1.Name = "homeRibbonPage1";
-            reduceOperation1.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.UntilAvailable;
-            reduceOperation1.GroupName = null;
-            reduceOperation1.ItemLinkIndex = 0;
-            reduceOperation1.ItemLinksCount = 0;
-            reduceOperation1.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-            homeRibbonPage1.ReduceOperations.Add(reduceOperation1);
+            reduceOperation2.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.UntilAvailable;
+            reduceOperation2.GroupName = null;
+            reduceOperation2.ItemLinkIndex = 0;
+            reduceOperation2.ItemLinksCount = 0;
+            reduceOperation2.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+            homeRibbonPage1.ReduceOperations.Add(reduceOperation2);
             // 
             // clipboardRibbonPageGroup1
             // 

@@ -117,29 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="copyToClipboardInHtmlFormatItem.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAOySURBVFhH7VddSJNRGD5z86YLIyxSwp9KZmI/JP5EZVpBlBcVRJTOi6y7QSSrSLQwU9QxYbuI
-        bEHaoIyiiCALTLJi1sTa1iyTzIRG0Wybf1vqvnOi857OlpuL2mdd9PPAw/ftfO95n+d737NzNhQJYmNj
-        UVZW1vzs7GwDpZvzAozFxcXxqN8EiUSCMjIyoqmgWafTYZfLxQj3MJaZmRktk8l4tAgcWhOLmnYuCqJ6
-        awLauGopksvlKC0tDVGhXUqlEgMIIYwAGINn6enpLHbdihRUvSVhRr7K/AVcLQwgwH44lYQyJycniHq9
-        PiDuJ4yFxtlVchyaq7U4iauFgd+At68BTyckCxX8EWGOt08jTM/z5xmgiRggmRhSsBx+I6INzBb/Dfwd
-        Bo6VlUVEisD8/y34Z1vgoWzDPq/W299YNW6t0drLlt/97QbowegUBKwadHljmrvfo2O3epHycjsqPd+C
-        amuOoxPKIhQ1Zy5XDMFsW1BeUWFsunIjvvRmnzRV06VIrjfdphxKVpt87Mo+P1YknuqQxuQWwg8Mrswx
-        mwr4fD6j4VbHnBW17XIqZN7b0ku2NdnIDkMPWazu+lzQ/PUexuE5pXz+nspgE2INCILgtLvG4/PPWeQp
-        mi7HJcsH0v7KRTactRKXZwqDAcfYJF57xkw6B4cJPIc4MDF3UwlXpxDbAq1Op9pnMEnhzVpocp+Acb7e
-        Sh6+GYYczABc7/Q5MVQFfkFBHMQnVT+QcnnRFfC0mZ7FLKnrVEB5aW5Chcjuiy/gWZABABgw0ipAHG+H
-        gsuLMzAxMdHWaBxENFErCEVKmMflxbVA09CgLdLfBwMO2mcWm0fL3//Ry94eCEL+++63oxgWIwDi6TfE
-        weXFVWB4ZKSqpMWCktVdPtp7NrZS94QMe6fCGqD7A4bFCYB4mMflRa8B3dHW11CBIX8Fcs9ayIAzfAWe
-        2kfx9gvTKkDncXlxBrAw1aZ/aAMDt/19jYQwj8vPNPCT9PSYm2NS1I+KC/m34HrPENl39SXzBwQhuAKg
-        //f63SwO4pPqTcVcXrQBPPq0SrVfa5DRt2H7wKcpgeScNhPru7EgAw8G3HjTOSvduDAJ7AO1nd/+y/kN
-        RMwjy1zG8s3xKXVGthNC8ms2B9uKPZM+ZsBNF2UeXXywQ8Jz/044r+AgV6eA/21wXIrl6gMnYS0EzoL1
-        jRZSdLmXnQU7Dc/J1vO2oLNg4X4dQrJorv4rIIlCsLcn0u2VCnznNDQpaNml7M2ZOEJfAGhyk3Tg7asE
-        AAAAAElFTkSuQmCC
-</value>
-  </data>
+  <metadata name="spellChecker.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>181, 17</value>
+  </metadata>
   <metadata name="spellChecker.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>181, 17</value>
   </metadata>

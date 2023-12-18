@@ -83,9 +83,9 @@ namespace TextEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap copyToClipboardInHtmlFormat {
+        internal static System.Drawing.Bitmap copyToClipboardPreparedHtml {
             get {
-                object obj = ResourceManager.GetObject("copyToClipboardInHtmlFormat", resourceCulture);
+                object obj = ResourceManager.GetObject("copyToClipboardPreparedHtml", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,5 +1,6 @@
 ﻿using DevExpress.Office.Utils;
 using DevExpress.XtraRichEdit.Commands;
+using TransfromService;
 using TransfromService.RichText;
 
 namespace TextEditor.RichTextEdit.CustomCommands
@@ -29,13 +30,19 @@ namespace TextEditor.RichTextEdit.CustomCommands
                 var htmlData = doc.GetHtmlContent(selRange, true, richEditControl.GetTableTitle(),
                     richEditControl.Options.Export.Html);
 
+                var transformParams = new Html2JsonTransformParameters
+                {
+                    MakeAllListsFlatten = false,
+                    NeedDoubleTransformation = false
+                };
+
                 switch (clipboardFormat)
                 {
                     case ClipboardFormat.All:
                     {
                         // Обрабатываем тег <span style="...">, добавляем отдельные теги, соответствующие значениям style
                         //htmlData = TransfromService.HtmlUtils.ProcessSpanTagStyleAttribute(htmlData, true);
-                        htmlData = TransfromService.HtmlUtils.GetHtmlCleanValue(htmlData, null);
+                        htmlData = HtmlUtils.GetHtmlCleanValue(htmlData, transformParams);
                         var htmlForClipboard = CF_HtmlHelper.GetHtmlClipboardFormat(htmlData);
 
                         var dataObject = new DataObject();
@@ -52,7 +59,7 @@ namespace TextEditor.RichTextEdit.CustomCommands
                     case ClipboardFormat.Html:
                     {
                         // Очищаем HTML для последующей корректной обработки
-                        htmlData = TransfromService.HtmlUtils.GetHtmlCleanValue(htmlData, null);
+                        htmlData = TransfromService.HtmlUtils.GetHtmlCleanValue(htmlData, transformParams);
                         var htmlForClipboard = CF_HtmlHelper.GetHtmlClipboardFormat(htmlData);
 
                         var dataObject = new DataObject();
