@@ -24,12 +24,14 @@ namespace TransfromService
 
         public static CellBackgroundColor CommonTableHeaderColor { get; }
 
+        private static readonly string[] RemainTagsOnEmptyHtmlContent = new[] { "<img", "<ol", "<ul", "<li" };
+
         public static IReadOnlyList<CellBackgroundColor> TableHeaderColors { get; }
 
         static HtmlUtils()
         {
             CommonTableHeaderColor = new CellBackgroundColor(216, 216, 216);
-
+            
             TableHeaderColors = new List<CellBackgroundColor>
             {
                 CommonTableHeaderColor,
@@ -1094,8 +1096,11 @@ namespace TransfromService
         /// <returns></returns>
         private static string RemoveEmptyValueTags(string cellValue)
         {
-            if (cellValue.Contains("<img", StringComparison.OrdinalIgnoreCase)) // Оставляем изображения как есть
+            if (RemainTagsOnEmptyHtmlContent.Any(s => cellValue.Contains(s, StringComparison.OrdinalIgnoreCase))) // Значение содержит тег, который нельзя удалять
                 return cellValue;
+
+            //if (cellValue.Contains("<img", StringComparison.OrdinalIgnoreCase)) 
+            //    return cellValue;
 
             var cellNodeInnerText = HtmlUtils.GetHtmlNodeFromText(cellValue).InnerText.Trim();
             cellValue = cellValue.Trim();
