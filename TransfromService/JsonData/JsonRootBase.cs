@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -14,6 +15,8 @@ namespace TransfromService.JsonData
 
     internal abstract class TypedJsonRootBase<T> : JsonRootBase where T : RootContentBase
     {
+        [JsonProperty("id")] public int Id { get; } = new Random().Next(10000000, 100000000);
+        
         [JsonProperty("content")] public T Content { get; set; }
     }
 

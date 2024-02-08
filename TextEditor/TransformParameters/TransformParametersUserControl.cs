@@ -17,6 +17,11 @@ namespace TextEditor.TransformParameters
             return GetParameters() as T;
         }
 
+        public T GetCloneParameters<T>() where T : class, ICloneable
+        {
+            return (GetParameters() as T)?.Clone() as T;
+        }
+
         public object GetParameters()
         {
             return propertyGridControl.SelectedObject;

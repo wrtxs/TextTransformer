@@ -119,7 +119,7 @@ namespace TransfromService
                     //string cellValue = GetCellValue(cell, cellValueFormat); // Формируем значение ячейки
                     var isCellHeader =
                         HtmlUtils.IsCellHeader(cell,
-                            _styleClassesRegistry); // Определяем является ли ячейка заголовком таблицы
+                            _styleClassesRegistry, transformParams); // Определяем является ли ячейка заголовком таблицы
                     var cellValue =
                         HtmlUtils.GetNodeCleanValue(cell, isCellHeader, transformParams,
                             _styleClassesRegistry); // Формируем значение ячейки
@@ -255,6 +255,11 @@ namespace TransfromService
         /// Признак необходимости удаления жирного стиля для ячеек, являющимися заголовками
         /// </summary>
         public virtual bool RemoveBoldStyleForHeaderCells { get; set; } = true;
+
+        /// <summary>
+        /// Признак необходимости обработки серого цвета для заливки ячеек (для установки признака заголовка)
+        /// </summary>
+        public virtual bool ProcessGreyBackgroundColorForCells { get; set; } = true;
 
         /// <summary>
         /// Признак необходимости двойного преобразования данных: из JSON в HTML и обратно (для корректной обработки тегов HTML, т.к. HTML редактора лучше воспринимается Сфера.Документы)

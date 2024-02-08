@@ -63,10 +63,21 @@ namespace TextEditor.TransformParameters
         }
 
         [Category("Преобразование в JSON")]
-        [DisplayName("Преобразовывать списки в плоские")]
+        [DisplayName("Обрабатывать заливку серым цветом ячеек таблиц")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(5)]
+        public override bool ProcessGreyBackgroundColorForCells
+        {
+            get => base.ProcessGreyBackgroundColorForCells;
+            set => base.ProcessGreyBackgroundColorForCells = value;
+        }
+
+        [Category("Преобразование в JSON")]
+        [DisplayName("Преобразовывать списки в плоские")]
+        [DefaultValue(true)]
+        [TypeConverter(typeof(YesNoTypeConverter))]
+        [PropertyOrder(6)]
         public override bool MakeAllListsFlatten
         {
             get => base.MakeAllListsFlatten;
@@ -77,7 +88,7 @@ namespace TextEditor.TransformParameters
         [DisplayName("Многоуровневая нумерация для плоского списка")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoTypeConverter))]
-        [PropertyOrder(6)]
+        [PropertyOrder(7)]
         public override bool MultiLevelNumerationForFlattenList
         {
             get => base.MultiLevelNumerationForFlattenList;
@@ -91,14 +102,14 @@ namespace TextEditor.TransformParameters
         [DisplayName("Копировать JSON в буфер обмена после преобразования")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
-        [PropertyOrder(7)]
+        [PropertyOrder(8)]
         public bool CopyJsonToClipboardAfterTransformation { get; set; } = true;
 
         [Category("Преобразование в JSON")]
         [DisplayName("Форматировать результирующий JSON")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoTypeConverter))]
-        [PropertyOrder(8)]
+        [PropertyOrder(9)]
         public override bool NeedFormatJsonResult
         {
             get => base.NeedFormatJsonResult;
@@ -106,7 +117,7 @@ namespace TextEditor.TransformParameters
         }
 
         [Category("Преобразование в JSON")]
-        [DisplayName("Двойная трансформация при преобразовании данных")]
+        [DisplayName("Двойная трансформация при преобразовании данных (HTML -> JSON, JSON -> HTML, HTML -> JSON)")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [Browsable(false)]

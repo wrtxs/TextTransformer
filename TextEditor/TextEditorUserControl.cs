@@ -10,6 +10,9 @@ using DevExpress.XtraLayout.HitInfo;
 using DevExpress.XtraLayout.Utils;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.API.Native;
+using System.IO.Compression;
+using System.IO;
+using System.Text;
 using TextEditor.TransformParameters;
 using TransfromService.RichText;
 
@@ -383,11 +386,16 @@ namespace TextEditor
 
             if (transformParams.TransformViaJson)
             {
-                var jsonTransformParams = new JsonTransformViewParameters
-                {
-                    NeedDoubleTransformation = false,
-                    CopyJsonToClipboardAfterTransformation = false
-                };
+                var jsonTransformParams =
+                    jsonTransformParamsUserControl.GetCloneParameters<JsonTransformViewParameters>();
+                jsonTransformParams.NeedDoubleTransformation = false;
+                jsonTransformParams.CopyJsonToClipboardAfterTransformation = false;
+
+                //var jsonTransformParams = new JsonTransformViewParameters
+                //{
+                //    NeedDoubleTransformation = false,
+                //    CopyJsonToClipboardAfterTransformation = false
+                //};
 
                 // HTML -> JSON
                 var jsonData = Utils.TransformHtml2Json(htmlData, jsonTransformParams);

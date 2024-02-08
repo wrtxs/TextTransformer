@@ -9,7 +9,6 @@ namespace TransfromService
             if (string.IsNullOrEmpty(htmlData.Trim()))
                 return null;
 
-
             var result = htmlData;
 
             if (transformParams.MakeAllListsHierarchical)

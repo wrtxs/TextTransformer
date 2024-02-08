@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
-using DevExpress.Utils.Text;
 using TransfromService.JsonData;
 
 namespace TransfromService
@@ -31,15 +30,20 @@ namespace TransfromService
         static HtmlUtils()
         {
             CommonTableHeaderColor = new CellBackgroundColor(216, 216, 216);
-            
+
             TableHeaderColors = new List<CellBackgroundColor>
             {
                 CommonTableHeaderColor,
-                new(244, 245, 247), // Цвет ячейки-заголовка Confluence 
+                // Цвет ячейки-заголовка Confluence 
+                new(244, 245, 247),
+                // Стандартная палитра Редактора
                 new(242, 242, 242),
                 new(191, 191, 191),
                 new(165, 165, 165),
-                new(127, 127, 127)
+                new(127, 127, 127),
+                // Стандартная палитра Сфера.Знания
+                new(228, 231, 236),
+                new(213, 216, 223)
             };
 
 
@@ -1375,69 +1379,79 @@ namespace TransfromService
 
         //    //return node;
         //}
-        public static bool IsCellHeader(HtmlNode cell, StyleClassesRegistry styleClassesRegistry)
+        public static bool IsCellHeader(HtmlNode cell, StyleClassesRegistry styleClassesRegistry,
+            Html2JsonTransformParameters transformParams)
         {
             if (cell.Name.Equals("th", StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
 
-            // Берем наименования классов у ячейки
-            var classAttributeValue = cell.GetAttributeValue("class", null);
-            if (!string.IsNullOrEmpty(classAttributeValue))
+            // Обрабатываем заливку ячейки серым цветом
+            if (transformParams.ProcessGreyBackgroundColorForCells)
             {
-                if (classAttributeValue.Split(' ').Any(className =>
-                        HasBackgroundColorInStyleClass(className, styleClassesRegistry) ||
-                        className.Equals("highlight-grey", StringComparison.OrdinalIgnoreCase)))
+                // Получаем наименования классов у ячейки и проверяем на выполнение одного из следующих условий:
+                // 1) Классы содержат названия "highlight-grey" и "confluenceTd"
+                // 2) Класс содержит параметр background-color, значение которого попадает в диапазон серого цвета
+                var classAttributeValue = cell.GetAttributeValue("class", null);
+
+                if (!string.IsNullOrEmpty(classAttributeValue))
                 {
-                    return true;
-                }
-            }
+                    var classNames = classAttributeValue.Split(' ');
 
-            // Проверяем на наличие атрибута data-highlight-colour="grey"
-            //var dhcAttributeValue = cell.GetAttributeValue("data-highlight-colour", null);
-
-            //if (!string.IsNullOrEmpty(dhcAttributeValue) &&
-            //    dhcAttributeValue.Equals("grey", StringComparison.OrdinalIgnoreCase))
-            //    return true;
-
-            // Проверяем стили ячейки
-            var styleAttribute = cell.Attributes["style"];
-            if (styleAttribute != null)
-            {
-                var styleValue = styleAttribute.Value.ToLower();
-                // Разбиваем стиль на пары свойств и значений
-                var stylePairs = styleValue.Split(';');
-
-                foreach (var stylePair in stylePairs)
-                {
-                    // Разбиваем пару на свойство и значение
-                    var keyValue = stylePair.Split(':');
-                    if (keyValue.Length == 2)
+                    if ((classNames.Contains("highlight-grey", StringComparer.OrdinalIgnoreCase) &&
+                         classNames.Contains("confluenceTd", StringComparer.OrdinalIgnoreCase)) ||
+                        classNames.Any(className => HasBackgroundColorInStyleClass(className, styleClassesRegistry)))
                     {
-                        var propertyName = keyValue[0].Trim().ToLower();
-                        var propertyValue = keyValue[1].Trim().ToLower();
-                        // Проверяем свойство background-color и его значение
-                        if (propertyName.Equals("background-color", StringComparison.OrdinalIgnoreCase) &&
-                            IsColorRefersToHeaderColors(
-                                propertyValue)) // propertyValue.Equals(Utils.TableHeaderBackgroundColorHexValue, StringComparison.OrdinalIgnoreCase))
+                        return true;
+                    }
+                }
+
+                // Проверяем на наличие атрибута data-highlight-colour="grey"
+                //var dhcAttributeValue = cell.GetAttributeValue("data-highlight-colour", null);
+
+                //if (!string.IsNullOrEmpty(dhcAttributeValue) &&
+                //    dhcAttributeValue.Equals("grey", StringComparison.OrdinalIgnoreCase))
+                //    return true;
+
+                // Проверяем атрибут style ячейки на наличие параметра background-color, значение которого попадает в диапазон серого цвета
+                var styleAttribute = cell.Attributes["style"];
+                if (styleAttribute != null)
+                {
+                    var styleValue = styleAttribute.Value.ToLower();
+                    // Разбиваем стиль на пары свойств и значений
+                    var stylePairs = styleValue.Split(';');
+
+                    foreach (var stylePair in stylePairs)
+                    {
+                        // Разбиваем пару на свойство и значение
+                        var keyValue = stylePair.Split(':');
+                        if (keyValue.Length == 2)
                         {
-                            return true;
+                            var propertyName = keyValue[0].Trim().ToLower();
+                            var propertyValue = keyValue[1].Trim().ToLower();
+                            // Проверяем свойство background-color и его значение
+                            if (propertyName.Equals("background-color", StringComparison.OrdinalIgnoreCase) &&
+                                IsColorRefersToHeaderColors(
+                                    propertyValue)) // propertyValue.Equals(Utils.TableHeaderBackgroundColorHexValue, StringComparison.OrdinalIgnoreCase))
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
-            }
 
+                // Проверяем наличие атриубта bgcolor, значение которого попадает в диапазон серого цвета
+                var bgColorAttribute = cell.Attributes["bgcolor"];
 
-            var bgcolorAttribute = cell.Attributes["bgcolor"];
-
-            if (bgcolorAttribute != null)
-            {
-                var bgСolorValue = bgcolorAttribute.Value.Trim();
-                if (IsColorRefersToHeaderColors(
-                        bgСolorValue)) //bgcolorValue.Equals(Utils.TableHeaderBackgroundColorHexValue, StringComparison.OrdinalIgnoreCase))
+                if (bgColorAttribute != null)
                 {
-                    return true;
+                    var bgСolorValue = bgColorAttribute.Value.Trim();
+                    if (IsColorRefersToHeaderColors(
+                            bgСolorValue)) //bgcolorValue.Equals(Utils.TableHeaderBackgroundColorHexValue, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -1447,12 +1461,40 @@ namespace TransfromService
         /// <summary>
         /// Признак того, что цвет относится к цветам заголовка
         /// </summary>
-        /// <param name="colorHexValue"></param>
+        /// <param name="strColorValue">
+        /// Может принимать либо hex значение (например, "#e4e7ec"), либо RGB (например, "rgb(213, 216, 223)")
+        /// </param>
         /// <returns></returns>
-        public static bool IsColorRefersToHeaderColors(string colorHexValue)
+        public static bool IsColorRefersToHeaderColors(string strColorValue)
         {
-            return HtmlUtils.TableHeaderColors.Any(color =>
-                color.HexValue.Equals(colorHexValue, StringComparison.OrdinalIgnoreCase));
+            if (strColorValue.StartsWith("#"))
+            {
+                return HtmlUtils.TableHeaderColors.Any(color =>
+                    color.HexValue.Equals(strColorValue, StringComparison.OrdinalIgnoreCase));
+            }
+            else if (strColorValue.StartsWith("rgb(", StringComparison.OrdinalIgnoreCase))
+            {
+                var searchColor = GetColorFromString(strColorValue);
+
+                return HtmlUtils.TableHeaderColors.Any(color =>
+                    color.Value.Equals(searchColor));
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="strColorValue">
+        /// Строка вида "rgb(R, G, B)"
+        /// </param>
+        /// <returns></returns>
+        private static Color GetColorFromString(string strColorValue)
+        {
+            var rgbValues = strColorValue.ToLower().Replace("rgb(", string.Empty).Replace(")", String.Empty).Split(',');
+
+            return Color.FromArgb(int.Parse(rgbValues[0].Trim()), int.Parse(rgbValues[1].Trim()),
+                int.Parse(rgbValues[2].Trim()));
         }
 
         public static bool HasBackgroundColorInStyleClass(string className, StyleClassesRegistry styleClassesRegistry)
