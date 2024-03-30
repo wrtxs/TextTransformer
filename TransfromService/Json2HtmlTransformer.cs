@@ -55,6 +55,9 @@ namespace TransfromService
                 var numRows = cells.Max(c => c.Y) + 1;
                 var numCols = cells.Max(c => c.X) + 1;
 
+                var minRowIndex = cells.Min(c => c.Y);
+                var minColIndex = cells.Min(c => c.X);
+
                 var headerStyleClassName = "cs162A16FE1";
 
                 var htmlBuilder = new StringBuilder();
@@ -69,11 +72,11 @@ namespace TransfromService
                     ? ">"
                     : $" title='{tableRoot.Title}'>"));
 
-                for (var row = 0; row < numRows; row++)
+                for (var row = minRowIndex; row < numRows; row++)
                 {
                     htmlBuilder.Append("<tr>");
 
-                    for (var col = 0; col < numCols; col++)
+                    for (var col = minColIndex; col < numCols; col++)
                     {
                         var cell = cells.FirstOrDefault(c => c.X == col && c.Y == row);
                         if (cell != null)

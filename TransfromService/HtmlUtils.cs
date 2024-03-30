@@ -102,7 +102,7 @@ namespace TransfromService
                     // Для <span style="color: rgb(0,51,102);"> добавляем соответствующие теги (в частности, <font color="rgb(0,51,102)"> с нужным значением цвета, в основном для Confluence таблиц)
                     nodeValue = ProcessSpanTagStyleAttribute(nodeValue, transformParams.ProcessTextColor);
 
-                    // Обрабатываем класс стилей для тега <span>, заменяем значения класса стиля на соответствующие теги (в основном для встренного редактора)
+                    // Обрабатываем класс стилей для тега <span>, заменяем значения класса стиля на соответствующие теги (в основном для встроенного редактора)
                     nodeValue = ProcessSpanTagClassAttribute(nodeValue, transformParams.ProcessTextColor,
                         styleClassesRegistry);
 
@@ -112,6 +112,10 @@ namespace TransfromService
                     // Удаляем при необходимости теги <font color=""></font>
                     if (!transformParams.ProcessTextColor)
                         nodeValue = RemoveFontColorTags(nodeValue);
+
+                    // Устанавливаем цвет для текста ссылки в режиме редактирования фрагмента в Сфера.Документы
+                    if (transformParams.ProcessTextColor)
+                        nodeValue = SetFontColorToLinksTags(nodeValue);
 
                     // Удаляем div теги с классом "expand-control"
                     nodeValue = ProcessTagsWithClass(nodeValue, "div", "expand-control",
@@ -960,6 +964,33 @@ namespace TransfromService
         }
 
         /// <summary>
+        /// Устанавливаем цвет для ссылок (цвет, который будет отображаться для ссылок в режиме редактирования фрагмента Сфера.Документы)
+        /// Проблема установки цвета связана с тем, что html редактор DevExpress помещает ссылку внутрь тега font для текста, в резуьтате чего ссылка
+        /// в режиме реадактирования фрагмента отображается черным цветом 
+        /// </summary>
+        /// <param name="html"></param>
+        /// <returns></returns>
+        private static string SetFontColorToLinksTags(string html)
+        {
+            var docNode = HtmlUtils.GetHtmlNodeFromText(html);
+
+            var processNodes = docNode.SelectNodes("//a");
+
+            if (processNodes != null)
+            {
+                foreach (var node in processNodes)
+                {
+                    var fontTag = docNode.OwnerDocument.CreateElement("font");
+                    fontTag.SetAttributeValue("color", "#694fff");
+                    fontTag.InnerHtml = node.InnerHtml;
+                    node.InnerHtml = fontTag.OuterHtml;
+                }
+            }
+
+            return docNode.OuterHtml;
+        }
+
+        /// <summary>
         /// Найти заданные теги с заданным стилем и произвести над ними заданное действие
         /// </summary>
         /// <param name="html"></param>
@@ -998,8 +1029,8 @@ namespace TransfromService
 
         private enum TagProcessActionType
         {
-            DeleteTagWithContent,
-            DeleteTagWithoutContent
+            DeleteTagWithContent, // Удалить тег и все его содержимое
+            DeleteTagWithoutContent // Удалить только тег, оставив его содержимое
         }
 
         private static string ReplaceTagsInsideTableCellWithCodeClass(string html, string sourceTag, string targetTag)
