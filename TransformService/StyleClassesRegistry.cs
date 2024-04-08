@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace TransfromService
+namespace TransformService
 {
     public class StyleClassesRegistry
     {

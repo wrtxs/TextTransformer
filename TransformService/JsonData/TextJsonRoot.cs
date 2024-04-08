@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TransfromService.JsonData
+namespace TransformService.JsonData
 {
     internal class TextJsonRoot : TypedJsonRootBase<TextRootContent>
     {

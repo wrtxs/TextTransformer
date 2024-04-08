@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 
-namespace TransfromService.JsonData
+namespace TransformService.JsonData
 {
     internal abstract class JsonRootBase
     {

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using TransfromService;
+using TransformService;
 
 namespace TextEditor.TransformParameters
 {
@@ -63,10 +63,22 @@ namespace TextEditor.TransformParameters
         }
 
         [Category("Преобразование в JSON")]
-        [DisplayName("Обрабатывать заливку серым цветом ячеек таблиц")]
+        [DisplayName("Обрабатывать автонумерацию строк таблиц")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(5)]
+        public override bool ProcessAutoNumberedRows
+        {
+            get => base.ProcessAutoNumberedRows;
+            set => base.ProcessAutoNumberedRows = value;
+        }
+
+
+        [Category("Преобразование в JSON")]
+        [DisplayName("Обрабатывать заливку серым цветом ячеек таблиц")]
+        [DefaultValue(true)]
+        [TypeConverter(typeof(YesNoTypeConverter))]
+        [PropertyOrder(6)]
         public override bool ProcessGreyBackgroundColorForCells
         {
             get => base.ProcessGreyBackgroundColorForCells;
@@ -77,7 +89,7 @@ namespace TextEditor.TransformParameters
         [DisplayName("Преобразовывать списки в плоские")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
-        [PropertyOrder(6)]
+        [PropertyOrder(7)]
         public override bool MakeAllListsFlatten
         {
             get => base.MakeAllListsFlatten;
@@ -88,7 +100,7 @@ namespace TextEditor.TransformParameters
         [DisplayName("Многоуровневая нумерация для плоского списка")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoTypeConverter))]
-        [PropertyOrder(7)]
+        [PropertyOrder(8)]
         public override bool MultiLevelNumerationForFlattenList
         {
             get => base.MultiLevelNumerationForFlattenList;
@@ -102,14 +114,14 @@ namespace TextEditor.TransformParameters
         [DisplayName("Копировать JSON в буфер обмена после преобразования")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
-        [PropertyOrder(8)]
+        [PropertyOrder(9)]
         public bool CopyJsonToClipboardAfterTransformation { get; set; } = true;
 
         [Category("Преобразование в JSON")]
         [DisplayName("Форматировать результирующий JSON")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoTypeConverter))]
-        [PropertyOrder(9)]
+        [PropertyOrder(0)]
         public override bool NeedFormatJsonResult
         {
             get => base.NeedFormatJsonResult;
@@ -135,7 +147,7 @@ namespace TextEditor.TransformParameters
         [DisplayName("Преобразовывать списки в иерархические")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoTypeConverter))]
-        [PropertyOrder(9)]
+        [PropertyOrder(10)]
         public bool MakeAllListsHierarchical { get; set; }
 
         public JsonTransformViewParameters()

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
-using TransfromService.JsonData;
+using TransformService.JsonData;
 
-namespace TransfromService
+namespace TransformService
 {
     public class Json2HtmlTransformer
     {
@@ -55,6 +56,9 @@ namespace TransfromService
                 var numRows = cells.Max(c => c.Y) + 1;
                 var numCols = cells.Max(c => c.X) + 1;
 
+                var minRowIndex = cells.Min(c => c.Y);
+                var minColIndex = cells.Min(c => c.X);
+
                 var headerStyleClassName = "cs162A16FE1";
 
                 var htmlBuilder = new StringBuilder();
@@ -69,21 +73,39 @@ namespace TransfromService
                     ? ">"
                     : $" title='{tableRoot.Title}'>"));
 
-                for (var row = 0; row < numRows; row++)
+                for (var row = minRowIndex; row < numRows; row++)
                 {
                     htmlBuilder.Append("<tr>");
 
-                    for (var col = 0; col < numCols; col++)
+                    for (var col = minColIndex; col < numCols; col++)
                     {
                         var cell = cells.FirstOrDefault(c => c.X == col && c.Y == row);
                         if (cell != null)
                         {
+                            // Обработка заголовка
                             var cellTag = cell.IsHeader == true ? "th" : "td";
-                            var styleClass = cell.IsHeader == true
+                            var styleClass = (cell.IsHeader == true || (cell.IsAutoNumbered == true))
                                 ? $" class=\"{headerStyleClassName}\""
                                 : string.Empty;
 
-                            var cellValue = cell.Items.FirstOrDefault()?.Content?.Value ?? string.Empty;
+                            string cellValue = null;
+                            var contentValue = cell.Items.FirstOrDefault()?.Content?.Value ?? string.Empty;
+
+                            // Обработка автонумерации
+                            if (cell.IsAutoNumbered == true)
+                            {
+                                var autoNumberStr = contentValue
+                                    .Replace("<p>", string.Empty, StringComparison.InvariantCultureIgnoreCase)
+                                    .Replace("</p>", string.Empty, StringComparison.InvariantCultureIgnoreCase).Trim();
+
+                                if (int.TryParse(autoNumberStr, out var autoNumber))
+                                {
+                                    cellValue = $"<ol start=\"{autoNumber}\"><li><span>&nbsp;</span></li></ol>";
+                                }
+                            }
+
+                            if (string.IsNullOrEmpty(cellValue)) 
+                                cellValue = contentValue;
 
                             var colSpan = cell.W > 1 ? $" colspan=\"{cell.W}\"" : string.Empty;
                             var rowSpan = cell.H > 1 ? $" rowspan=\"{cell.H}\"" : string.Empty;

@@ -10,7 +10,7 @@ using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InlineQueryResults;
-using TransfromService;
+using TransformService;
 using File = System.IO.File;
 
 namespace SferaTableBot.Services;

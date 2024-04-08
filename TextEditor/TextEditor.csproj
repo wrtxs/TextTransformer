@@ -29,7 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\TransfromService\TransfromService.csproj" />
+		<ProjectReference Include="..\TransformService\TransformService.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

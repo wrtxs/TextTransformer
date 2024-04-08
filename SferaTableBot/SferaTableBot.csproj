@@ -39,7 +39,7 @@
     <PackageReference Include="Telegram.Bot" Version="19.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TransfromService\TransfromService.csproj" />
+    <ProjectReference Include="..\TransformService\TransformService.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Data.v23.1">

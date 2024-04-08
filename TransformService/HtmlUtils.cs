@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
-using TransfromService.JsonData;
+using TransformService.JsonData;
 
-namespace TransfromService
+namespace TransformService
 {
     public static class HtmlUtils
     {
@@ -102,7 +102,7 @@ namespace TransfromService
                     // Для <span style="color: rgb(0,51,102);"> добавляем соответствующие теги (в частности, <font color="rgb(0,51,102)"> с нужным значением цвета, в основном для Confluence таблиц)
                     nodeValue = ProcessSpanTagStyleAttribute(nodeValue, transformParams.ProcessTextColor);
 
-                    // Обрабатываем класс стилей для тега <span>, заменяем значения класса стиля на соответствующие теги (в основном для встренного редактора)
+                    // Обрабатываем класс стилей для тега <span>, заменяем значения класса стиля на соответствующие теги (в основном для встроенного редактора)
                     nodeValue = ProcessSpanTagClassAttribute(nodeValue, transformParams.ProcessTextColor,
                         styleClassesRegistry);
 
@@ -112,6 +112,10 @@ namespace TransfromService
                     // Удаляем при необходимости теги <font color=""></font>
                     if (!transformParams.ProcessTextColor)
                         nodeValue = RemoveFontColorTags(nodeValue);
+
+                    // Устанавливаем цвет для текста ссылки в режиме редактирования фрагмента в Сфера.Документы
+                    if (transformParams.ProcessTextColor)
+                        nodeValue = SetFontColorToLinksTags(nodeValue);
 
                     // Удаляем div теги с классом "expand-control"
                     nodeValue = ProcessTagsWithClass(nodeValue, "div", "expand-control",
@@ -960,6 +964,33 @@ namespace TransfromService
         }
 
         /// <summary>
+        /// Устанавливаем цвет для ссылок (цвет, который будет отображаться для ссылок в режиме редактирования фрагмента Сфера.Документы)
+        /// Проблема установки цвета связана с тем, что html редактор DevExpress помещает ссылку внутрь тега font для текста, в резуьтате чего ссылка
+        /// в режиме реадактирования фрагмента отображается черным цветом 
+        /// </summary>
+        /// <param name="html"></param>
+        /// <returns></returns>
+        private static string SetFontColorToLinksTags(string html)
+        {
+            var docNode = HtmlUtils.GetHtmlNodeFromText(html);
+
+            var processNodes = docNode.SelectNodes("//a");
+
+            if (processNodes != null)
+            {
+                foreach (var node in processNodes)
+                {
+                    var fontTag = docNode.OwnerDocument.CreateElement("font");
+                    fontTag.SetAttributeValue("color", "#694fff");
+                    fontTag.InnerHtml = node.InnerHtml;
+                    node.InnerHtml = fontTag.OuterHtml;
+                }
+            }
+
+            return docNode.OuterHtml;
+        }
+
+        /// <summary>
         /// Найти заданные теги с заданным стилем и произвести над ними заданное действие
         /// </summary>
         /// <param name="html"></param>
@@ -998,8 +1029,8 @@ namespace TransfromService
 
         private enum TagProcessActionType
         {
-            DeleteTagWithContent,
-            DeleteTagWithoutContent
+            DeleteTagWithContent, // Удалить тег и все его содержимое
+            DeleteTagWithoutContent // Удалить только тег, оставив его содержимое
         }
 
         private static string ReplaceTagsInsideTableCellWithCodeClass(string html, string sourceTag, string targetTag)
@@ -1456,6 +1487,52 @@ namespace TransfromService
             }
 
             return false;
+        }
+
+
+        /// <summary>
+        /// Признак того, что ячейка относится к автонумерованной строке
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
+        public static (bool, int) IsAutoNumberedRow(HtmlNode cell)
+        {
+            var notAutoNumberRowResult = (false, 0);
+
+            // Проверяем, содержится ли в ячейке таблицы только один список <ol> с заданной структурой
+            var childNodes = cell.ChildNodes.Where(node => node.NodeType != HtmlNodeType.Text).ToList();
+
+            if (childNodes.Count != 1 || childNodes[0].Name != "ol")
+                return notAutoNumberRowResult;
+
+            var olNode = childNodes[0];
+
+            // Проверяем, что внутри <ol> содержится только один тег <li>
+            var liNodes = olNode.SelectNodes(".//li");
+            if (liNodes is not { Count: 1 })
+                return notAutoNumberRowResult;
+
+            // Проверяем, что внутри <li> содержится только ноль или один тег <span>
+            var spanNodes = liNodes[0].SelectNodes(".//span");
+            if (spanNodes is { Count: > 1 })
+                return notAutoNumberRowResult;
+
+            // Проверяем содержимое <li>, либо <span>
+            var liContent = liNodes[0].InnerText.Trim();
+            if (!string.IsNullOrWhiteSpace(liContent) && liContent != "&nbsp;" && liContent != "&nbsp; ")
+                return notAutoNumberRowResult;
+
+            // Получаем значение номера строки
+            var startAttribute = olNode.GetAttributeValue("start", null);
+            var valueAttribute = liNodes[0].GetAttributeValue("value", null);
+
+            if (!int.TryParse(startAttribute, out var autoNumber))
+            {
+                if (!int.TryParse(valueAttribute, out autoNumber))
+                    autoNumber = 1;
+            }
+
+            return (true, autoNumber);
         }
 
         /// <summary>

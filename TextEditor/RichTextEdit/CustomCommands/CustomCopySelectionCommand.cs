@@ -1,7 +1,7 @@
 ﻿using DevExpress.Office.Utils;
 using DevExpress.XtraRichEdit.Commands;
-using TransfromService;
-using TransfromService.RichText;
+using TransformService;
+using TransformService.RichText;
 
 namespace TextEditor.RichTextEdit.CustomCommands
 {
@@ -59,7 +59,7 @@ namespace TextEditor.RichTextEdit.CustomCommands
                     case ClipboardFormat.Html:
                     {
                         // Очищаем HTML для последующей корректной обработки
-                        htmlData = TransfromService.HtmlUtils.GetHtmlCleanValue(htmlData, transformParams);
+                        htmlData = TransformService.HtmlUtils.GetHtmlCleanValue(htmlData, transformParams);
                         var htmlForClipboard = CF_HtmlHelper.GetHtmlClipboardFormat(htmlData);
 
                         var dataObject = new DataObject();

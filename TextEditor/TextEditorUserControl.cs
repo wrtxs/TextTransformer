@@ -14,7 +14,7 @@ using System.IO.Compression;
 using System.IO;
 using System.Text;
 using TextEditor.TransformParameters;
-using TransfromService.RichText;
+using TransformService.RichText;
 
 namespace TextEditor
 {
@@ -232,12 +232,12 @@ namespace TextEditor
             // Заливка ячеек серым цветом
             var cellParagraph = rtfDocUserControl.RichEditControl.Document.BeginUpdateParagraphs(cell.Range);
 
-            if (cellParagraph.BackColor.GetValueOrDefault().ToArgb().Equals(TransfromService.HtmlUtils.CommonTableHeaderColor.ArgbValue))
+            if (cellParagraph.BackColor.GetValueOrDefault().ToArgb().Equals(TransformService.HtmlUtils.CommonTableHeaderColor.ArgbValue))
             {
                 //cell.HeightType = HeightType.Auto;
                 //cell.PreferredWidthType = WidthType.Auto;
                 //cell.Height = 500;
-                cell.BackgroundColor = TransfromService.HtmlUtils.CommonTableHeaderColor.Value;
+                cell.BackgroundColor = TransformService.HtmlUtils.CommonTableHeaderColor.Value;
                 //cell.PreferredWidthType = WidthType.Fixed;
             }
 

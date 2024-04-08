@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TransfromService.JsonData
+namespace TransformService.JsonData
 {
     internal class TableJsonRoot : TypedJsonRootBase<TableRootContent>
     {
@@ -47,7 +47,10 @@ namespace TransfromService.JsonData
         [JsonProperty("w")] public int W { get; set; }
 
         [JsonProperty("h")] public int H { get; set; }
-
+        
+        [JsonProperty("isAutoNumbered", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? IsAutoNumbered { get; set; }
+        
         [JsonProperty("isHeader", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsHeader { get; set; }
 

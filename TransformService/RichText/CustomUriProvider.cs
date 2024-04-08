@@ -2,7 +2,7 @@
 using DevExpress.Office.Services.Implementation;
 using DevExpress.Office.Utils;
 
-namespace TransfromService.RichText
+namespace TransformService.RichText
 {
     internal class CustomUriProvider : IUriProvider
     {
