@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
-using TransfromService.JsonData;
+using TransformService.JsonData;
 
-namespace TransfromService
+namespace TransformService
 {
     public static class HtmlUtils
     {
@@ -1487,6 +1487,52 @@ namespace TransfromService
             }
 
             return false;
+        }
+
+
+        /// <summary>
+        /// Признак того, что ячейка относится к автонумерованной строке
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
+        public static (bool, int) IsAutoNumberedRow(HtmlNode cell)
+        {
+            var notAutoNumberRowResult = (false, 0);
+
+            // Проверяем, содержится ли в ячейке таблицы только один список <ol> с заданной структурой
+            var childNodes = cell.ChildNodes.Where(node => node.NodeType != HtmlNodeType.Text).ToList();
+
+            if (childNodes.Count != 1 || childNodes[0].Name != "ol")
+                return notAutoNumberRowResult;
+
+            var olNode = childNodes[0];
+
+            // Проверяем, что внутри <ol> содержится только один тег <li>
+            var liNodes = olNode.SelectNodes(".//li");
+            if (liNodes is not { Count: 1 })
+                return notAutoNumberRowResult;
+
+            // Проверяем, что внутри <li> содержится только ноль или один тег <span>
+            var spanNodes = liNodes[0].SelectNodes(".//span");
+            if (spanNodes is { Count: > 1 })
+                return notAutoNumberRowResult;
+
+            // Проверяем содержимое <li>, либо <span>
+            var liContent = liNodes[0].InnerText.Trim();
+            if (!string.IsNullOrWhiteSpace(liContent) && liContent != "&nbsp;" && liContent != "&nbsp; ")
+                return notAutoNumberRowResult;
+
+            // Получаем значение номера строки
+            var startAttribute = olNode.GetAttributeValue("start", null);
+            var valueAttribute = liNodes[0].GetAttributeValue("value", null);
+
+            if (!int.TryParse(startAttribute, out var autoNumber))
+            {
+                if (!int.TryParse(valueAttribute, out autoNumber))
+                    autoNumber = 1;
+            }
+
+            return (true, autoNumber);
         }
 
         /// <summary>

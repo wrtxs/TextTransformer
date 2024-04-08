@@ -3,7 +3,7 @@ using DevExpress.XtraRichEdit.Export;
 using System.Linq;
 using DevExpress.XtraRichEdit.API.Native;
 
-namespace TransfromService.RichText
+namespace TransformService.RichText
 {
     public static class RichTextUtils
     {

@@ -5,10 +5,10 @@ using System.Linq;
 using DevExpress.XtraRichEdit;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
-using TransfromService.JsonData;
-using TransfromService.RichText;
+using TransformService.JsonData;
+using TransformService.RichText;
 
-namespace TransfromService
+namespace TransformService
 {
     public class Html2JsonTransformer
     {
@@ -120,23 +120,40 @@ namespace TransfromService
                     var isCellHeader =
                         HtmlUtils.IsCellHeader(cell,
                             _styleClassesRegistry, transformParams); // Определяем является ли ячейка заголовком таблицы
-                    var cellValue =
-                        HtmlUtils.GetNodeCleanValue(cell, isCellHeader, transformParams,
-                            _styleClassesRegistry); // Формируем значение ячейки
+                    string cellValue = null;
+                    
+                    // Обработка автонумерации строк
+                    var isAutoNumberedRow = false;
+                    var autoNumber = 1;
 
-                    var colspan = 1;
-                    var rowspan = 1;
+                    if (transformParams.ProcessAutoNumberedRows)
+                    {
+                        var result = HtmlUtils.IsAutoNumberedRow(cell);
+
+                        isAutoNumberedRow = result.Item1;
+                        autoNumber = result.Item2;
+                    }
+
+                    if (isAutoNumberedRow)
+                        cellValue = $"<p>{autoNumber.ToString()}</p>";
+
+                    // Формирование значения ячейки
+                    if (string.IsNullOrEmpty(cellValue))
+                        cellValue = HtmlUtils.GetNodeCleanValue(cell, isCellHeader, transformParams, _styleClassesRegistry);
+
+                    var colSpan = 1;
+                    var rowSpan = 1;
 
                     var colspanAttribute = cell.Attributes["colspan"];
                     if (colspanAttribute != null && int.TryParse(colspanAttribute.Value, out var colspanValue))
                     {
-                        colspan = colspanValue;
+                        colSpan = colspanValue;
                     }
 
-                    var rowspanAttribute = cell.Attributes["rowspan"];
-                    if (rowspanAttribute != null && int.TryParse(rowspanAttribute.Value, out var rowspanValue))
+                    var rowSpanAttribute = cell.Attributes["rowspan"];
+                    if (rowSpanAttribute != null && int.TryParse(rowSpanAttribute.Value, out var rowSpanValue))
                     {
-                        rowspan = rowspanValue;
+                        rowSpan = rowSpanValue;
                     }
 
                     // Вычисляем значение x с учетом объединенных ячеек
@@ -146,12 +163,13 @@ namespace TransfromService
                     {
                         X = x, // Используем текущее значение x
                         Y = y,
-                        W = colspan,
-                        H = rowspan,
+                        W = colSpan,
+                        H = rowSpan,
+                        IsAutoNumbered = isAutoNumberedRow ? true : null,
                         IsHeader = isCellHeader ? true : null,
                         Items = new List<Item>
                         {
-                            new Item
+                            new()
                             {
                                 Uuid = Guid.NewGuid().ToString(),
                                 Type = "TEXT",
@@ -164,13 +182,13 @@ namespace TransfromService
                     };
 
                     // Обновляем карту объединенных ячеек для текущей строки
-                    for (var i = x; i < x + colspan; i++)
+                    for (var i = x; i < x + colSpan; i++)
                     {
-                        colspanMap[i] = y + rowspan;
+                        colspanMap[i] = y + rowSpan;
                     }
 
                     root.Content.Table.Cells.Add(cellData);
-                    x += colspan;
+                    x += colSpan;
                 }
 
                 y++;
@@ -255,6 +273,11 @@ namespace TransfromService
         /// Признак необходимости удаления жирного стиля для ячеек, являющимися заголовками
         /// </summary>
         public virtual bool RemoveBoldStyleForHeaderCells { get; set; } = true;
+
+        /// <summary>
+        /// Признак необходимости обработки автонумерации строк таблицы
+        /// </summary>
+        public virtual bool ProcessAutoNumberedRows { get; set; } = true;
 
         /// <summary>
         /// Признак необходимости обработки серого цвета для заливки ячеек (для установки признака заголовка)

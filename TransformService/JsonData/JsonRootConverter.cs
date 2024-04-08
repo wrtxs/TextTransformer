@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace TransfromService.JsonData
+namespace TransformService.JsonData
 {
     internal class JsonRootConverter : JsonConverter<JsonRootBase>
     {

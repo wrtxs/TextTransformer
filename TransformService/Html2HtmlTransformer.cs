@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TransfromService
+namespace TransformService
 {
     public class Html2HtmlTransformer
     {

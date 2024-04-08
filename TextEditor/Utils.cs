@@ -5,7 +5,7 @@ using Microsoft.Win32;
 using DevExpress.XtraEditors;
 using Newtonsoft.Json.Linq;
 using DevExpress.XtraSplashScreen;
-using TransfromService;
+using TransformService;
 using Newtonsoft.Json;
 using TextEditor.TransformParameters;
 

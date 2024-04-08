@@ -9,7 +9,7 @@ using DevExpress.XtraSpellChecker.Native;
 using System.IO;
 using DevExpress.XtraRichEdit.Export;
 using TextEditor.RichTextEdit.CustomCommands;
-using TransfromService.RichText;
+using TransformService.RichText;
 using Table = DevExpress.XtraRichEdit.API.Native.Table;
 using TableLayoutType = DevExpress.XtraRichEdit.API.Native.TableLayoutType;
 
