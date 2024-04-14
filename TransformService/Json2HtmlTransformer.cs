@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using TransformService.JsonData;
@@ -59,19 +58,39 @@ namespace TransformService
                 var minRowIndex = cells.Min(c => c.Y);
                 var minColIndex = cells.Min(c => c.X);
 
-                var headerStyleClassName = "cs162A16FE1";
 
                 var htmlBuilder = new StringBuilder();
-                
+
+                // Формирование стилей
+                /*
+                var headerStyleClassName = "cs162A16FE1";
                 htmlBuilder.Append(GetHtmlDocBegin());
                 htmlBuilder.Append("<style type=\"text/css\">");
                 htmlBuilder.Append(
                     $".{headerStyleClassName}{{background-color:{HtmlUtils.CommonTableHeaderColor.HexValue};}}");
                 htmlBuilder.Append("</style>");
+                */
+
                 htmlBuilder.Append(GetHtmlBodyBegin());
-                htmlBuilder.Append("<table" + (string.IsNullOrEmpty(tableRoot.Title)
-                    ? ">"
-                    : $" title='{tableRoot.Title}'>"));
+                
+                // Формируем метаданные таблицы
+                var tableMetadataAttrValue = string.Empty;
+                var tableMetadata = new TableMetadata.TableMetadata(tableRoot.Title, tableRoot.Table.Widths);
+
+                // Добавляем заголовок (наименование) таблицы
+                if (!string.IsNullOrEmpty(tableMetadata.Title))
+                    tableMetadataAttrValue = AddPrefixWhitespace(tableMetadataAttrValue) + $"{TableMetadata.TableMetadata.TitleAttributeName}=\"{tableMetadata.Title}\"";
+
+                // Добавляем ширины столбцов таблицы
+                if (tableRoot.Table.Widths != null && tableRoot.Table.Widths.Count != 0)
+                    tableMetadataAttrValue = AddPrefixWhitespace(tableMetadataAttrValue) +
+                                    $"{TableMetadata.TableMetadata.ColWidthsAttributeName}=\"{tableMetadata.GetColumnWidthsString()}\"";
+
+                htmlBuilder.Append($"<table{AddPrefixWhitespace(tableMetadataAttrValue) + tableMetadataAttrValue}>");
+
+                //htmlBuilder.Append("<table" + (string.IsNullOrEmpty(tableRoot.Title)
+                //    ? ">"
+                //    : $" title='{tableRoot.Title}'>"));
 
                 for (var row = minRowIndex; row < numRows; row++)
                 {
@@ -85,7 +104,8 @@ namespace TransformService
                             // Обработка заголовка
                             var cellTag = cell.IsHeader == true ? "th" : "td";
                             var styleClass = (cell.IsHeader == true || (cell.IsAutoNumbered == true))
-                                ? $" class=\"{headerStyleClassName}\""
+                                ? $" style=\"background-color:{HtmlUtils.CommonTableHeaderColor.HexValue};\""
+                                // $" class=\"{headerStyleClassName}\""
                                 : string.Empty;
 
                             string cellValue = null;
@@ -104,7 +124,7 @@ namespace TransformService
                                 }
                             }
 
-                            if (string.IsNullOrEmpty(cellValue)) 
+                            if (string.IsNullOrEmpty(cellValue))
                                 cellValue = contentValue;
 
                             var colSpan = cell.W > 1 ? $" colspan=\"{cell.W}\"" : string.Empty;
@@ -117,7 +137,7 @@ namespace TransformService
 
                     htmlBuilder.Append("</tr>");
                 }
-                
+
                 htmlBuilder.Append("</table>");
                 htmlBuilder.Append(GetHtmlDocEnd());
                 result = htmlBuilder.ToString();
@@ -125,6 +145,8 @@ namespace TransformService
 
             return result;
         }
+
+        private string AddPrefixWhitespace(string str) => string.IsNullOrEmpty(str) ? str : " " + str;
 
         private string GetHtmlDocBegin() =>
             "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" +

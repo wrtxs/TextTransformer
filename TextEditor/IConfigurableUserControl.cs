@@ -1,6 +1,6 @@
 ﻿namespace TextEditor
 {
-    internal interface ISupportParameters
+    public interface IConfigurableUserControl
     {
         public void LoadParameters();
         public void SaveParameters();

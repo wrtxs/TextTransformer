@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net6.0-windows</TargetFramework>
@@ -78,6 +77,10 @@
 		<None Update="ru\DevExpress.XtraRichEdit.v23.1.resources.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Editors\WorkbookEdit\" />
 	</ItemGroup>
 
 </Project>

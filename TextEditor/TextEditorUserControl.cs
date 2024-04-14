@@ -10,15 +10,13 @@ using DevExpress.XtraLayout.HitInfo;
 using DevExpress.XtraLayout.Utils;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.API.Native;
-using System.IO.Compression;
-using System.IO;
-using System.Text;
 using TextEditor.TransformParameters;
 using TransformService.RichText;
+using TransformService.TableMetadata;
 
 namespace TextEditor
 {
-    public partial class TextEditorUserControl : XtraUserControl, ISupportParameters
+    public partial class TextEditorUserControl : XtraUserControl, IConfigurableUserControl
     {
         private const string Html2JsonParamsSectionName = "Html2JsonTextEditorParameters";
         private const string Json2HtmlParamsSectionName = "Json2HtmlTextEditorParameters";
@@ -111,6 +109,7 @@ namespace TextEditor
 
         private Color GetBackColor() => EditorsSkins.GetSkin(layoutControl.LookAndFeel.ActiveLookAndFeel)
             .TranslateColor(SystemColors.Control);
+
         #endregion
 
         private void RichEdit_ContentChanged(object sender, EventArgs e)
@@ -129,7 +128,7 @@ namespace TextEditor
             var richEditControl = rtfDocUserControl.RichEditControl;
 
             // Получаем заголовок таблицы
-            var tableTitle = RichTextUtils.GetFirstTableTitle(htmlData);
+            var tableMetadata = TableMetadataUtils.GetFirstTableMetadata(htmlData);
 
             richEditControl.Document.BeginUpdate();
             richEditControl.Document.Delete(richEditControl.Document.Range);
@@ -177,7 +176,20 @@ namespace TextEditor
 
                 if (firstTable != null)
                 {
-                    firstTable.ForEachCell(CellProcessor);
+                    firstTable.PreferredWidthType = WidthType.Auto;
+                    firstTable.ForEachCell(
+                        CellProcessor); // Устанавливаем серую заливку для соответствующих ячеек таблицы
+
+                    // Устанавливаем ширину столбцов
+                    //for (var i = 0; i < firstTable.FirstRow.Cells.Count && i < tableMetadata.ColumnWidths.Count(); i++)
+                    //{
+                    //    foreach (var row in firstTable.Rows)
+                    //    {
+                    //        row.Cells[i].PreferredWidth = tableMetadata.ColumnWidths.ElementAt(i);
+                    //        row.Cells[i].PreferredWidthType = WidthType.Fixed;
+                    //    }
+                    //}
+
                     //firstTable.TableLayout = TableLayoutType.Fixed;
 
                     //var lt = richEditControl.DocumentLayout.GetElement<LayoutTable>(table.Range.Start);
@@ -208,8 +220,15 @@ namespace TextEditor
                 }
             }
 
-            if (!string.IsNullOrEmpty(tableTitle))
-                rtfDocUserControl.SetTableTitle(tableTitle);
+            // Записываем метаданные таблицы
+            var curTableMetadata = rtfDocUserControl.GetTableMetadata();
+
+            if (string.IsNullOrEmpty(tableMetadata.Title))
+                tableMetadata.Title =
+                    curTableMetadata
+                        .Title; // Сохраняем прежнее наименование таблицы при отсутствии наименования в новой таблице
+
+            rtfDocUserControl.SetTableMetadata(tableMetadata);
 
             richEditControl.Document.EndUpdate();
 
@@ -232,7 +251,8 @@ namespace TextEditor
             // Заливка ячеек серым цветом
             var cellParagraph = rtfDocUserControl.RichEditControl.Document.BeginUpdateParagraphs(cell.Range);
 
-            if (cellParagraph.BackColor.GetValueOrDefault().ToArgb().Equals(TransformService.HtmlUtils.CommonTableHeaderColor.ArgbValue))
+            if (cellParagraph.BackColor.GetValueOrDefault().ToArgb()
+                .Equals(TransformService.HtmlUtils.CommonTableHeaderColor.ArgbValue))
             {
                 //cell.HeightType = HeightType.Auto;
                 //cell.PreferredWidthType = WidthType.Auto;
@@ -432,8 +452,8 @@ namespace TextEditor
 
         private void TransformFromEditorToJson()
         {
-            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, true,
-                rtfDocUserControl.GetTableTitle(), rtfDocUserControl.RichEditControl.Options.Export.Html);
+            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All,
+                rtfDocUserControl.GetTableMetadata(), rtfDocUserControl.RichEditControl.Options.Export.Html);
 
             if (jsonTransformParamsUserControl.GetParameters() is JsonTransformViewParameters transformParams)
             {
@@ -448,7 +468,8 @@ namespace TextEditor
         public void InsertNewJsonData(string jsonData, bool updateTable,
             JsonTransformViewParameters transformParams = null)
         {
-            txtJson.Text = jsonData;
+            txtJson.Document.SetText(TextChangeTypes.ReplaceAll, jsonData); // Text = jsonData;
+
             txtJson.ActiveView.Selection.CaretPosition = new TextPosition(0, 0);
             //txtJson.Format();
 
@@ -461,7 +482,7 @@ namespace TextEditor
         public void InsertNewHtmlData(string htmlData, bool updateTable,
             HtmlTransformViewParameters transformParams = null)
         {
-            txtHtml.Text = htmlData;
+            txtHtml.Document.SetText(TextChangeTypes.ReplaceAll, htmlData); // Text = htmlData;
             txtHtml.ActiveView.Selection.CaretPosition = new TextPosition(0, 0);
 
             if (updateTable)
@@ -498,8 +519,8 @@ namespace TextEditor
             {
                 Utils.ShowProgressForm();
                 InsertNewHtmlData(
-                    rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, true,
-                        rtfDocUserControl.GetTableTitle(), rtfDocUserControl.RichEditControl.Options.Export.Html),
+                    rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All,
+                        rtfDocUserControl.GetTableMetadata(), rtfDocUserControl.RichEditControl.Options.Export.Html),
                     false);
             }
             catch (Exception exception)
@@ -511,6 +532,8 @@ namespace TextEditor
                 Utils.CloseProgressForm();
             }
         }
+
+        #region IConfigurableUserControl
 
         public void LoadParameters()
         {
@@ -533,5 +556,7 @@ namespace TextEditor
                 htmlTransformParamsUserControl.GetParameters() as HtmlTransformViewParameters;
             Utils.SaveParameters(json2HtmlTransformParams, Json2HtmlParamsSectionName);
         }
+
+        #endregion
     }
 }

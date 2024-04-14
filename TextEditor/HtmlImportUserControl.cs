@@ -6,7 +6,7 @@ using TextEditor.TransformParameters;
 
 namespace TextEditor
 {
-    public partial class HtmlImportUserControl : XtraUserControl, ISupportParameters
+    public partial class HtmlImportUserControl : XtraUserControl, IConfigurableUserControl
     {
         public event EventHandler<JsonExportEventArgs> JsonToEditorEvent;
         public event EventHandler<HtmlExportEventArgs> HtmlToEditorEvent;
@@ -20,7 +20,7 @@ namespace TextEditor
             // Задаем пробелы вместо таба
             txtJson.Document.TabSize = 4;
             txtJson.Document.AutoConvertTabsToSpaces = true;
-            
+
             txtJson.Document.Language = new JsonSyntaxLanguage();
             txtJson.Document.Language.RegisterIndentProvider(new JsonIndentProvider());
 
@@ -41,11 +41,12 @@ namespace TextEditor
         //    e.Effect = DragDropEffects.Copy;
         //}
 
-        private void CodeDocumentTextChanged(object sender, ActiproSoftware.UI.WinForms.Controls.SyntaxEditor.EditorSnapshotChangedEventArgs e)
+        private void CodeDocumentTextChanged(object sender,
+            ActiproSoftware.UI.WinForms.Controls.SyntaxEditor.EditorSnapshotChangedEventArgs e)
         {
             AdjustControlsState();
         }
-        
+
         private void CmdHtml2JsonClick(object sender, EventArgs e)
         {
             try
@@ -68,7 +69,9 @@ namespace TextEditor
             var transformParams = transformParamsUserControl.GetParameters<JsonTransformViewParameters>();
             //transformParams.NeedDoubleTransformation = true;
 
-            txtJson.Text = Utils.TransformHtml2Json(txtHtml.Text, transformParams);
+            //txtJson.Text = Utils.TransformHtml2Json(txtHtml.Text, transformParams);
+            txtJson.Document.SetText(TextChangeTypes.ReplaceAll,
+                Utils.TransformHtml2Json(txtHtml.Text, transformParams));
 
             //txtJson.Format();
         }
@@ -95,7 +98,10 @@ namespace TextEditor
             var jsonTransformParams = transformParamsUserControl.GetParameters<JsonTransformViewParameters>();
             var htmlTransformParams = jsonTransformParams.ConvertToHtmlTransformParameters();
 
-            txtHtml.Text = Utils.TransformJson2Html(txtJson.Text, htmlTransformParams);
+            txtHtml.Document.SetText(TextChangeTypes.ReplaceAll,
+                Utils.TransformJson2Html(txtJson.Text, htmlTransformParams));
+
+            //txtHtml.Text = Utils.TransformJson2Html(txtJson.Text, htmlTransformParams);
         }
 
         private void CmdCopyJson2BufferClick(object sender, EventArgs e)
@@ -209,6 +215,8 @@ namespace TextEditor
                 cmdJsonToEditor.Enabled = txtJson.Document.CurrentSnapshot.HasContent;
         }
 
+        #region IConfigurableUserControl
+
         public void LoadParameters()
         {
             var parameters = Utils.LoadParameters<JsonTransformViewParameters>(ParamsSectionName);
@@ -220,5 +228,7 @@ namespace TextEditor
             var parameters = transformParamsUserControl.GetParameters();
             Utils.SaveParameters(parameters, ParamsSectionName);
         }
+
+        #endregion
     }
 }

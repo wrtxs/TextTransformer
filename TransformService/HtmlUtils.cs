@@ -1489,7 +1489,6 @@ namespace TransformService
             return false;
         }
 
-
         /// <summary>
         /// Признак того, что ячейка относится к автонумерованной строке
         /// </summary>

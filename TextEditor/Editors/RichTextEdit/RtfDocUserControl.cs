@@ -1,28 +1,29 @@
-﻿using DevExpress.XtraBars.Ribbon;
+﻿using System.IO;
+using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.API.Layout;
 using DevExpress.XtraRichEdit.API.Native;
+using DevExpress.XtraRichEdit.Export;
 using DevExpress.XtraRichEdit.Services;
 using DevExpress.XtraSpellChecker;
 using DevExpress.XtraSpellChecker.Native;
-using System.IO;
-using DevExpress.XtraRichEdit.Export;
-using TextEditor.RichTextEdit.CustomCommands;
+using TextEditor.Editors.RichTextEdit.CustomCommands;
 using TransformService.RichText;
-using Table = DevExpress.XtraRichEdit.API.Native.Table;
-using TableLayoutType = DevExpress.XtraRichEdit.API.Native.TableLayoutType;
+using TransformService.TableMetadata;
+//using Table = DevExpress.XtraRichEdit.API.Native.Table;
+//using TableLayoutType = DevExpress.XtraRichEdit.API.Native.TableLayoutType;
 
-namespace TextEditor.RichTextEdit
+namespace TextEditor.Editors.RichTextEdit
 {
-    public partial class RtfDocUserControl : XtraUserControl, IRichEditControlAdditionalService
+    public partial class RtfDocUserControl : XtraUserControl, IEditorService, IClipboardService
     {
         private DevExpress.XtraBars.BarCheckItem _copyFormatItem;
         private DevExpress.XtraBars.PopupMenu _popupMenu;
 
-        bool _isZoomChanging;
-        int _pageCount = 1;
-        int _currentPage = 1;
+        private bool _isZoomChanging;
+        private int _pageCount = 1;
+        private int _currentPage = 1;
 
         public RtfDocUserControl()
         {
@@ -159,8 +160,9 @@ namespace TextEditor.RichTextEdit
 
         private void RedefineStandartCommands()
         {
-            var commandFactory = new CustomRichEditCommandFactoryService(richEditControl,
+            var commandFactory = new CustomRichEditCommandFactoryService(richEditControl, this, this,
                 richEditControl.GetService<IRichEditCommandFactoryService>());
+
             richEditControl.RemoveService(typeof(IRichEditCommandFactoryService));
             richEditControl.AddService(typeof(IRichEditCommandFactoryService), commandFactory);
         }
@@ -256,7 +258,11 @@ namespace TextEditor.RichTextEdit
         #region Status bar
 
         private RibbonStatusBar _ribbonStatusBar;
+
+        // ToDo вынести в отдельный контрол
         private DevExpress.XtraBars.BarEditItem _barEditItemTableTitle;
+        private TableMetadata _tableMetada = new TableMetadata();
+
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit _txtTableTitle;
         private DevExpress.XtraBars.BarStaticItem _pagesBarItem;
         private DevExpress.XtraBars.BarEditItem _zoomBarEditItem;
@@ -518,7 +524,27 @@ namespace TextEditor.RichTextEdit
 
         #endregion
 
-        public string GetTableTitle() => (_barEditItemTableTitle.EditValue as string);
+        #region IEditorService
+
+        public TableMetadata GetTableMetadata()
+        {
+            var title = _barEditItemTableTitle.EditValue as string;
+
+            var tableMetadata = _tableMetada.Clone();
+            tableMetadata.Title = title;
+
+            return tableMetadata;
+        }
+
+        public void SetTableMetadata(TableMetadata tableMetadata)
+        {
+            _tableMetada = tableMetadata != null ? tableMetadata.Clone() : new TableMetadata();
+            _barEditItemTableTitle.EditValue = tableMetadata?.Title;
+        }
+
+        #endregion
+
+        #region IClipboardService
 
         public ClipboardFormat GetClipboardFormat()
         {
@@ -526,7 +552,6 @@ namespace TextEditor.RichTextEdit
             //return copyToClipboardInHtmlFormatItem.Down ? ClipboardFormat.Html : ClipboardFormat.All;
         }
 
-        public void SetTableTitle(string tableTitle) =>
-            _barEditItemTableTitle.EditValue = tableTitle;
+        #endregion
     }
 }

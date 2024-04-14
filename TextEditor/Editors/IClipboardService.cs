@@ -1,9 +1,7 @@
-﻿namespace TextEditor.RichTextEdit
+﻿namespace TextEditor.Editors
 {
-    internal interface IRichEditControlAdditionalService
+    interface IClipboardService
     {
-        public string GetTableTitle();
-
         public ClipboardFormat GetClipboardFormat();
     }
 

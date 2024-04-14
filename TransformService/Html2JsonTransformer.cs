@@ -7,6 +7,7 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using TransformService.JsonData;
 using TransformService.RichText;
+using TransformService.TableMetadata;
 
 namespace TransformService
 {
@@ -27,7 +28,7 @@ namespace TransformService
                 new StyleClassesRegistry(docNode); // Создаем объект-обработчик стилей документа
 
             HtmlNode mainTable;
-            string mainTableTitle = null;
+            var tableMetadata = new TableMetadata.TableMetadata();
 
             if (docNode.FirstChild.Name.Equals("tbody",
                     StringComparison.OrdinalIgnoreCase)) // Получаем тело таблицы, если первым не идет тег tbody
@@ -39,15 +40,14 @@ namespace TransformService
                 mainTable = docNode.SelectSingleNode("//table"); // Получаем первую таблицу
 
                 if (mainTable != null)
-                    mainTableTitle = mainTable.GetAttributeValue("title", null)?.Replace("&nbsp;", " ").Replace("&quot;", "\"");
+                {
+                    tableMetadata = TableMetadataUtils.GetTableMetadata(mainTable);
+                    //mainTableTitle = mainTable.GetAttributeValue("title", null)?.Replace("&nbsp;", " ")
+                    //    .Replace("&quot;", "\"");
+                }
             }
 
-            JsonRootBase root;
-
-            if (mainTable != null)
-                root = CreateJsonTable(mainTable, mainTableTitle, transformParams);
-            else
-                root = CreateJsonText(docNode, transformParams);
+            var root = mainTable != null ? CreateJsonTable(mainTable, tableMetadata, transformParams) : CreateJsonText(docNode, transformParams);
 
             if (root == null)
                 return null;
@@ -62,13 +62,13 @@ namespace TransformService
                 doubleTransformParams.MakeAllListsFlatten = false;
                 doubleTransformParams.MultiLevelNumerationForFlattenList = false;
 
-                result = ExecuteDoubleTransformation(result, mainTableTitle, doubleTransformParams);
+                result = ExecuteDoubleTransformation(result, tableMetadata, doubleTransformParams);
             }
 
             return result;
         }
 
-        private JsonRootBase CreateJsonTable(HtmlNode mainTable, string mainTableTitle,
+        private JsonRootBase CreateJsonTable(HtmlNode mainTable, TableMetadata.TableMetadata tableMetadata,
             Html2JsonTransformParameters transformParams)
         {
             var rows = mainTable.SelectNodes("//tr");
@@ -76,7 +76,7 @@ namespace TransformService
             if (rows == null)
                 return null;
 
-            var root = TableJsonRoot.GetRootInstanceForTable(mainTableTitle);
+            var root = TableJsonRoot.GetRootInstanceForTable(tableMetadata);
 
             var y = 0;
             var colspanMap = new Dictionary<int, int>();
@@ -117,29 +117,32 @@ namespace TransformService
                         continue;
 
                     //string cellValue = GetCellValue(cell, cellValueFormat); // Формируем значение ячейки
-                    var isCellHeader =
+                    var isHeaderCell =
                         HtmlUtils.IsCellHeader(cell,
                             _styleClassesRegistry, transformParams); // Определяем является ли ячейка заголовком таблицы
                     string cellValue = null;
                     
                     // Обработка автонумерации строк
-                    var isAutoNumberedRow = false;
+                    var isAutoNumberedCell = false;
                     var autoNumber = 1;
 
                     if (transformParams.ProcessAutoNumberedRows)
                     {
                         var result = HtmlUtils.IsAutoNumberedRow(cell);
 
-                        isAutoNumberedRow = result.Item1;
+                        isAutoNumberedCell = result.Item1;
                         autoNumber = result.Item2;
                     }
 
-                    if (isAutoNumberedRow)
+                    if (isAutoNumberedCell)
+                    {
                         cellValue = $"<p>{autoNumber.ToString()}</p>";
+                        isHeaderCell = false;
+                    }
 
                     // Формирование значения ячейки
                     if (string.IsNullOrEmpty(cellValue))
-                        cellValue = HtmlUtils.GetNodeCleanValue(cell, isCellHeader, transformParams, _styleClassesRegistry);
+                        cellValue = HtmlUtils.GetNodeCleanValue(cell, isHeaderCell, transformParams, _styleClassesRegistry);
 
                     var colSpan = 1;
                     var rowSpan = 1;
@@ -165,8 +168,8 @@ namespace TransformService
                         Y = y,
                         W = colSpan,
                         H = rowSpan,
-                        IsAutoNumbered = isAutoNumberedRow ? true : null,
-                        IsHeader = isCellHeader ? true : null,
+                        IsAutoNumbered = isAutoNumberedCell ? true : null,
+                        IsHeader = isHeaderCell ? true : null,
                         Items = new List<Item>
                         {
                             new()
@@ -218,10 +221,10 @@ namespace TransformService
         /// Выполнение двойной трансформации 1) JSON -> HTML, 2) HTML -> JSON
         /// </summary>
         /// <param name="jsonData"></param>
-        /// <param name="tableTitle"></param>
+        /// <param name="tableMetadata"></param>
         /// <param name="transformParams"></param>
         /// <returns></returns>
-        private string ExecuteDoubleTransformation(string jsonData, string tableTitle,
+        private string ExecuteDoubleTransformation(string jsonData, TableMetadata.TableMetadata tableMetadata,
             Html2JsonTransformParameters transformParams)
         {
             // Первая трансформация JSON -> HTML
@@ -233,7 +236,7 @@ namespace TransformService
                 //server.HtmlText = null;
                 server.HtmlText = htmlData;
 
-                htmlData = server.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, true, tableTitle,
+                htmlData = server.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, tableMetadata,
                     server.Options.Export.Html);
             }
 
