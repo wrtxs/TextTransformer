@@ -14,7 +14,7 @@ namespace TransformService.JsonData
             //    case TableJsonRoot tableRoot:
             //        serializer.Serialize(writer, tableRoot);
             //        break;
-            //    case TextJsonRoot textRo9ot:
+            //    case TextJsonRoot textRoot:
             //        serializer.Serialize(writer, textRoot);
             //        break;
             //    default:

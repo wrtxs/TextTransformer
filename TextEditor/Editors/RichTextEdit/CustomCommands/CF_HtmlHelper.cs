@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace TextEditor.RichTextEdit.CustomCommands
+namespace TextEditor.Editors.RichTextEdit.CustomCommands
 {
     internal class CF_HtmlHelper
     {

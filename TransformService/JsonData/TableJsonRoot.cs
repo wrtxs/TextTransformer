@@ -11,15 +11,16 @@ namespace TransformService.JsonData
     {
         public override ContentType Type => ContentType.Table;
 
-        public static TableJsonRoot GetRootInstanceForTable(string tableTitle) =>
+        public static TableJsonRoot GetRootInstanceForTable(TableMetadata.TableMetadata tableMetadata) =>
             new()
             {
                 Content = new TableRootContent
                 {
-                    Title = tableTitle,
+                    Title = tableMetadata.Title,
                     Table = new Table
                     {
-                        Cells = new List<Cell>()
+                        Widths = new List<int>(tableMetadata.ColumnWidths)
+                        //Cells = new List<Cell>()
                     }
                 }
             };
@@ -35,7 +36,8 @@ namespace TransformService.JsonData
 
     internal class Table
     {
-        [JsonProperty("cells")] public List<Cell> Cells { get; set; }
+        [JsonProperty("widths")] public List<int> Widths { get; init; } = new();
+        [JsonProperty("cells")] public List<Cell> Cells { get; } = new();
     }
 
     internal class Cell
@@ -48,7 +50,7 @@ namespace TransformService.JsonData
 
         [JsonProperty("h")] public int H { get; set; }
         
-        [JsonProperty("isAutoNumbered", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("isAutonumbered", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsAutoNumbered { get; set; }
         
         [JsonProperty("isHeader", NullValueHandling = NullValueHandling.Ignore)]

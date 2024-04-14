@@ -1,34 +1,43 @@
 ﻿using DevExpress.Office.Utils;
+using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.Commands;
 using TransformService;
 using TransformService.RichText;
 
-namespace TextEditor.RichTextEdit.CustomCommands
+namespace TextEditor.Editors.RichTextEdit.CustomCommands
 {
     internal class CustomCopySelectionCommand : CopySelectionCommand
     {
-        public CustomCopySelectionCommand(RichEditControlEx control)
+        private readonly RichEditControl _richEditControl;
+        private readonly IClipboardService _clipboardService;
+        private readonly ITableMetadataManager _tableMetadataManager;
+
+        public CustomCopySelectionCommand(RichEditControl control, IClipboardService clipboardService,
+            ITableMetadataManager tableMetadataManager)
             : base(control)
         {
+            _richEditControl = control;
+            _clipboardService = clipboardService;
+            _tableMetadataManager = tableMetadataManager;
         }
 
         protected override void ExecuteCore()
         {
-            if (Control is not RichEditControlEx richEditControl)
-                return;
+            //if (Control is not RichEditControlEx richEditControl)
+            //    return;
 
             //richEditControl.BeforeExport += OnBeforeExport;
 
             //SetExportOptions(richEditControl.Options.Export.Html);
 
-            var doc = richEditControl.Document;
+            var doc = Control.Document;
             var selRange = doc.GetSelectedRange();
-            var clipboardFormat = richEditControl.GetClipboardFormat();
+            var clipboardFormat = _clipboardService.GetClipboardFormat();
 
             try
             {
-                var htmlData = doc.GetHtmlContent(selRange, true, richEditControl.GetTableTitle(),
-                    richEditControl.Options.Export.Html);
+                var htmlData = doc.GetHtmlContent(selRange, _tableMetadataManager.GetTableMetadata(),
+                    _richEditControl.Options.Export.Html);
 
                 var transformParams = new Html2JsonTransformParameters
                 {
@@ -56,10 +65,10 @@ namespace TextEditor.RichTextEdit.CustomCommands
                         Clipboard.SetDataObject(dataObject, true);
                         break;
                     }
-                    case ClipboardFormat.Html:
+                    case ClipboardFormat.Html: default:
                     {
                         // Очищаем HTML для последующей корректной обработки
-                        htmlData = TransformService.HtmlUtils.GetHtmlCleanValue(htmlData, transformParams);
+                        htmlData = HtmlUtils.GetHtmlCleanValue(htmlData, transformParams);
                         var htmlForClipboard = CF_HtmlHelper.GetHtmlClipboardFormat(htmlData);
 
                         var dataObject = new DataObject();

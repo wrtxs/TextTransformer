@@ -1,4 +1,4 @@
-﻿namespace TextEditor.RichTextEdit
+﻿namespace TextEditor.Editors.RichTextEdit
 {
     partial class RtfDocUserControl
     {

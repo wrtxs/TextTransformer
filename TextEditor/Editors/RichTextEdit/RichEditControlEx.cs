@@ -7,23 +7,24 @@ using DevExpress.XtraRichEdit.Internal;
 using DevExpress.XtraRichEdit.Layout;
 using DevExpress.XtraRichEdit.Mouse;
 
-namespace TextEditor.RichTextEdit
+namespace TextEditor.Editors.RichTextEdit
 {
     internal class RichEditControlEx : RichEditControl
     {
-        private IRichEditControlAdditionalService _richEditControlAdditionalService;
+        private IClipboardService _clipboardService;
 
-        public RichEditControlEx(IRichEditControlAdditionalService richEditControlAdditionalService)
+        public RichEditControlEx(IClipboardService clipboardService)
         {
-           Initialize(richEditControlAdditionalService);
+            Initialize(clipboardService);
         }
+
         public RichEditControlEx()
         {
         }
 
-        public void Initialize(IRichEditControlAdditionalService richEditControlAdditionalService)
+        public void Initialize(IClipboardService clipboardService)
         {
-            _richEditControlAdditionalService = richEditControlAdditionalService;
+            _clipboardService = clipboardService;
         }
 
         protected override InnerRichEditControl CreateInnerControl()
@@ -61,7 +62,6 @@ namespace TextEditor.RichTextEdit
             {
             }
 
-
             public override IPortableCursor Calculate(RichEditHitTestResultCore hitTestResult, Point physicalPoint) =>
                 //=>
                 //((ExRichEditControl)View.Control).FormatCalculatorEnabled
@@ -72,8 +72,19 @@ namespace TextEditor.RichTextEdit
                     : base.Calculate(hitTestResult, physicalPoint);
         }
 
-        public string GetTableTitle() => _richEditControlAdditionalService.GetTableTitle();
+        //public ClipboardFormat GetClipboardFormat()
+        //{
+        //    return ClipboardFormat.All;
+        //    //return copyToClipboardInHtmlFormatItem.Down ? ClipboardFormat.Html : ClipboardFormat.All;
+        //}
 
-        public ClipboardFormat GetClipboardFormat() => _richEditControlAdditionalService.GetClipboardFormat();
+        //public TableMetadata GetTableMetadata() => _editorService.GetTableMetadata();
+        //#region IEditorService
+        //public ClipboardFormat GetClipboardFormat()
+        //{
+        //    return ClipboardFormat.All;
+        //    //return copyToClipboardInHtmlFormatItem.Down ? ClipboardFormat.Html : ClipboardFormat.All;
+        //}
+        //#endregion
     }
 }

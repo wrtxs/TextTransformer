@@ -11,8 +11,9 @@ namespace TextEditor
 
             InitializeComponent();
 
-            var appVersion = Assembly.GetEntryAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                ?.InformationalVersion;
+            var appVersion = GetAssemblyVersion();
+
+            //var appVersion = Assembly.GetEntryAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
 
             Text += @$" v.{appVersion}";
 
@@ -33,6 +34,23 @@ namespace TextEditor
             htmlImportUserControl.LoadParameters();
 
             FormClosed += OnFormClosed;
+        }
+
+        private string GetAssemblyVersion()
+        {
+            var version = "1.0";
+            var versionAttribute = Assembly.GetEntryAssembly()!.GetCustomAttribute<AssemblyFileVersionAttribute>();
+
+            if (versionAttribute != null && !string.IsNullOrEmpty(versionAttribute.Version))
+            {
+                version = versionAttribute.Version;
+
+                var lastIndex = version.LastIndexOf(".0", StringComparison.Ordinal);
+                if (lastIndex != -1)
+                    version = version.Substring(0, lastIndex);
+            }
+
+            return version;
         }
 
         private void OnFormClosed(object sender, FormClosedEventArgs e)
