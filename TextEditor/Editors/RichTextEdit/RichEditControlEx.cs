@@ -11,20 +11,8 @@ namespace TextEditor.Editors.RichTextEdit
 {
     internal class RichEditControlEx : RichEditControl
     {
-        private IClipboardService _clipboardService;
-
-        public RichEditControlEx(IClipboardService clipboardService)
-        {
-            Initialize(clipboardService);
-        }
-
         public RichEditControlEx()
         {
-        }
-
-        public void Initialize(IClipboardService clipboardService)
-        {
-            _clipboardService = clipboardService;
         }
 
         protected override InnerRichEditControl CreateInnerControl()

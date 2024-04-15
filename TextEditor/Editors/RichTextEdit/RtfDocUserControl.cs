@@ -46,7 +46,7 @@ namespace TextEditor.Editors.RichTextEdit
             // Устанавливаем обработчик ошибок
             new RichEditControlExceptionHandler(richEditControl).Install();
 
-            richEditControl.Initialize(this);
+            //richEditControl.Initialize(this);
 
             richEditControl.Text = string.Empty;
 
