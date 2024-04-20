@@ -74,7 +74,7 @@
             // 
             // tnpImportFromHtml
             // 
-            tnpImportFromHtml.Caption = "Импорт из HTML в JSON";
+            tnpImportFromHtml.Caption = "Преобразование без представления";
             tnpImportFromHtml.Controls.Add(htmlImportUserControl);
             tnpImportFromHtml.ImageOptions.Image = (Image)resources.GetObject("tnpImportFromHtml.ImageOptions.Image");
             tnpImportFromHtml.ImageOptions.SvgImageSize = new Size(16, 16);
@@ -93,7 +93,7 @@
             // 
             // tnpEditor
             // 
-            tnpEditor.Caption = "Визуальный редактор";
+            tnpEditor.Caption = "Преобразование через представление";
             tnpEditor.Controls.Add(textEditorUserControl);
             tnpEditor.ImageOptions.Image = (Image)resources.GetObject("tnpEditor.ImageOptions.Image");
             tnpEditor.ImageOptions.SvgImageSize = new Size(16, 16);

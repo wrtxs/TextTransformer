@@ -1652,8 +1652,13 @@ namespace TransformService
         //    }
         //}
 
-
-        // Метод для определения значения x с учетом объединенных ячеек
+        /// <summary>
+        /// Определение значения x с учетом объединенных ячеек
+        /// </summary>
+        /// <param name="currentY"></param>
+        /// <param name="currentX"></param>
+        /// <param name="colspanMap"></param>
+        /// <returns></returns>
         public static int GetXWithColspan(int currentY, int currentX, IReadOnlyDictionary<int, int> colspanMap)
         {
             var x = currentX;
