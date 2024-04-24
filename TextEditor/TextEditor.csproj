@@ -79,8 +79,4 @@
 		</None>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Editors\WorkbookEdit\" />
-	</ItemGroup>
-
 </Project>

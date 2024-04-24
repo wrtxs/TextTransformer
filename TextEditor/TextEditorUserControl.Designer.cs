@@ -278,7 +278,7 @@ namespace TextEditor
             tcgEditors.Location = new Point(0, 0);
             tcgEditors.Name = "tcgEditors";
             tcgEditors.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            tcgEditors.SelectedTabPage = lcgHtmlEditor;
+            tcgEditors.SelectedTabPage = lcgJsonEditor;
             tcgEditors.Size = new Size(481, 412);
             tcgEditors.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             tcgEditors.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lcgJsonEditor, lcgHtmlEditor });

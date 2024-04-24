@@ -6,7 +6,7 @@ using TextEditor.TransformParameters;
 
 namespace TextEditor
 {
-    public partial class HtmlImportUserControl : XtraUserControl, IConfigurableUserControl
+    public partial class HtmlImportUserControl : XtraUserControl, IConfigurable
     {
         public event EventHandler<JsonExportEventArgs> JsonToEditorEvent;
         public event EventHandler<HtmlExportEventArgs> HtmlToEditorEvent;
@@ -95,11 +95,11 @@ namespace TextEditor
 
         private void TransformJsonToHtml()
         {
-            var jsonTransformParams = transformParamsUserControl.GetParameters<JsonTransformViewParameters>();
-            var htmlTransformParams = jsonTransformParams.ConvertToHtmlTransformParameters();
+            var jsonTransformViewParameters = transformParamsUserControl.GetParameters<JsonTransformViewParameters>();
+            //var htmlTransformParams = jsonTransformViewParameters.GetJson2HtmlTransformParameters();// ConvertToHtmlTransformParameters();
 
             txtHtml.Document.SetText(TextChangeTypes.ReplaceAll,
-                Utils.TransformJson2Html(txtJson.Text, htmlTransformParams));
+                Utils.TransformJson2Html(txtJson.Text, jsonTransformViewParameters?.GetJson2HtmlTransformParameters()));
 
             //txtHtml.Text = Utils.TransformJson2Html(txtJson.Text, htmlTransformParams);
         }
@@ -215,12 +215,12 @@ namespace TextEditor
                 cmdJsonToEditor.Enabled = txtJson.Document.CurrentSnapshot.HasContent;
         }
 
-        #region IConfigurableUserControl
+        #region IConfigurable
 
         public void LoadParameters()
         {
-            var parameters = Utils.LoadParameters<JsonTransformViewParameters>(ParamsSectionName);
-            transformParamsUserControl.SetParameters(parameters);
+            var jsonTransformViewParameters = Utils.LoadParameters<JsonTransformViewParameters>(ParamsSectionName);
+            transformParamsUserControl.SetParameters(jsonTransformViewParameters);
         }
 
         public void SaveParameters()

@@ -3,167 +3,194 @@ using TransformService;
 
 namespace TextEditor.TransformParameters
 {
-    public class JsonTransformViewParameters : Html2JsonTransformParameters
+    public class JsonTransformViewParameters : ICloneable // : Html2JsonTransformParameters
     {
+        private const string ToEditorCategoryName = "Преобразование JSON -> Редактор";
+        private const string FromEditorCategoryName = "Преобразование JSON <- Редактор";
+
+        private readonly Json2HtmlTransformParameters _json2HtmlParameters;
+        private readonly Html2JsonTransformParameters _html2JsonParameters;
+
+        /// <summary>
+        /// From JSON
+        /// </summary>
+        [Category(ToEditorCategoryName)]
+        [DisplayName("Преобразовывать списки в иерархические")]
+        [DefaultValue(false)]
+        [TypeConverter(typeof(YesNoTypeConverter))]
+        [PropertyOrder(0)]
+        public bool MakeAllListsHierarchical
+        {
+            get => _json2HtmlParameters.MakeAllListsHierarchical;
+            set => _json2HtmlParameters.MakeAllListsHierarchical = value;
+        }
+
         /// <summary>
         /// To JSON
         /// </summary>
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Выходной формат текста")]
-        [DefaultValue(ValueFormat.Html)]
+        [DefaultValue(Html2JsonTransformParameters.ValueFormat.Html)]
         [PropertyOrder(0)]
-        public override ValueFormat TargetFormat
+        public Html2JsonTransformParameters.ValueFormat TargetFormat
         {
-            get => base.TargetFormat;
-            set => base.TargetFormat = value;
+            get => _html2JsonParameters.TargetFormat;
+            set => _html2JsonParameters.TargetFormat = value;
         }
 
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Обрабатывать цвет текста")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(1)]
-        public override bool ProcessTextColor
+        public bool ProcessTextColor
         {
-            get => base.ProcessTextColor;
-            set => base.ProcessTextColor = value;
+            get => _html2JsonParameters.ProcessTextColor;
+            set => _html2JsonParameters.ProcessTextColor = value;
         }
 
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Заменять табы пробелами")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(2)]
-        public override bool ReplaceTabsBySpaces
+        public bool ReplaceTabsBySpaces
         {
-            get => base.ReplaceTabsBySpaces;
-            set => base.ReplaceTabsBySpaces = value;
+            get => _html2JsonParameters.ReplaceTabsBySpaces;
+            set => _html2JsonParameters.ReplaceTabsBySpaces = value;
         }
 
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Убирать форматирование из HTML")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(3)]
-        public override bool RemoveFormatting
+        public bool RemoveFormatting
         {
-            get => base.RemoveFormatting;
-            set => base.RemoveFormatting = value;
+            get => _html2JsonParameters.RemoveFormatting;
+            set => _html2JsonParameters.RemoveFormatting = value;
         }
 
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Убирать Bold стиль для заголовков таблиц")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(4)]
-        public override bool RemoveBoldStyleForHeaderCells
+        public bool RemoveBoldStyleForHeaderCells
         {
-            get => base.RemoveBoldStyleForHeaderCells;
-            set => base.RemoveBoldStyleForHeaderCells = value;
+            get => _html2JsonParameters.RemoveBoldStyleForHeaderCells;
+            set => _html2JsonParameters.RemoveBoldStyleForHeaderCells = value;
         }
 
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Обрабатывать автонумерацию строк таблиц")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(5)]
-        public override bool ProcessAutoNumberedRows
+        public bool ProcessAutoNumberedRows
         {
-            get => base.ProcessAutoNumberedRows;
-            set => base.ProcessAutoNumberedRows = value;
+            get => _html2JsonParameters.ProcessAutoNumberedRows;
+            set => _html2JsonParameters.ProcessAutoNumberedRows = value;
         }
 
 
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Обрабатывать заливку серым цветом ячеек таблиц")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(6)]
-        public override bool ProcessGreyBackgroundColorForCells
+        public bool ProcessGreyBackgroundColorForCells
         {
-            get => base.ProcessGreyBackgroundColorForCells;
-            set => base.ProcessGreyBackgroundColorForCells = value;
+            get => _html2JsonParameters.ProcessGreyBackgroundColorForCells;
+            set => _html2JsonParameters.ProcessGreyBackgroundColorForCells = value;
         }
 
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Преобразовывать списки в плоские")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(7)]
-        public override bool MakeAllListsFlatten
+        public bool MakeAllListsFlatten
         {
-            get => base.MakeAllListsFlatten;
-            set => base.MakeAllListsFlatten = value;
+            get => _html2JsonParameters.MakeAllListsFlatten;
+            set => _html2JsonParameters.MakeAllListsFlatten = value;
         }
 
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Многоуровневая нумерация для плоского списка")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(8)]
-        public override bool MultiLevelNumerationForFlattenList
+        public bool MultiLevelNumerationForFlattenList
         {
-            get => base.MultiLevelNumerationForFlattenList;
-            set => base.MultiLevelNumerationForFlattenList = value;
+            get => _html2JsonParameters.MultiLevelNumerationForFlattenList;
+            set => _html2JsonParameters.MultiLevelNumerationForFlattenList = value;
         }
 
         /// <summary>
         /// Признак необходимости копирования результрующего JSON в буфер обмена после трансформации 
         /// </summary>
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Копировать JSON в буфер обмена после преобразования")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(9)]
         public bool CopyJsonToClipboardAfterTransformation { get; set; } = true;
 
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Форматировать результирующий JSON")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [PropertyOrder(0)]
-        public override bool NeedFormatJsonResult
+        public bool NeedFormatJsonResult
         {
-            get => base.NeedFormatJsonResult;
-            set => base.NeedFormatJsonResult = value;
+            get => _html2JsonParameters.NeedFormatJsonResult;
+            set => _html2JsonParameters.NeedFormatJsonResult = value;
         }
 
-        [Category("Преобразование в JSON")]
+        [Category(FromEditorCategoryName)]
         [DisplayName("Двойная трансформация при преобразовании данных (HTML -> JSON, JSON -> HTML, HTML -> JSON)")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoTypeConverter))]
         [Browsable(false)]
         [PropertyOrder(25)]
-        public override bool NeedDoubleTransformation
+        public bool NeedDoubleTransformation
         {
-            get => base.NeedDoubleTransformation;
-            set => base.NeedDoubleTransformation = value;
+            get => _html2JsonParameters.NeedDoubleTransformation;
+            set => _html2JsonParameters.NeedDoubleTransformation = value;
         }
 
-        /// <summary>
-        /// From JSON
-        /// </summary>
-        [Category("Преобразование из JSON")]
-        [DisplayName("Преобразовывать списки в иерархические")]
-        [DefaultValue(false)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
-        [PropertyOrder(10)]
-        public bool MakeAllListsHierarchical { get; set; }
-
-        public JsonTransformViewParameters()
+        public JsonTransformViewParameters() : this(new Json2HtmlTransformParameters(),
+            new Html2JsonTransformParameters())
         {
         }
 
-        public JsonTransformViewParameters(Html2JsonTransformParameters source)
+        public JsonTransformViewParameters(Json2HtmlTransformParameters json2HtmlParameters,
+            Html2JsonTransformParameters html2JsonParameters)
         {
-            CommonUtils.CopyValues(source, this);
+            _json2HtmlParameters = json2HtmlParameters;
+            _html2JsonParameters = html2JsonParameters;
         }
 
-        public void SetValues(Html2JsonTransformParameters source)
+        public Json2HtmlTransformParameters GetJson2HtmlTransformParameters() => _json2HtmlParameters;
+        public Html2JsonTransformParameters GetHtml2JsonTransformParameters() => _html2JsonParameters;
+
+        //public JsonTransformViewParameters(Html2JsonTransformParameters source)
+        //{
+        //    CommonUtils.CopyValues(source, this);
+        //}
+
+        //public void SetValues(Html2JsonTransformParameters source)
+        //{
+        //    CommonUtils.CopyValues(source, this);
+        //}
+        public object Clone()
         {
-            CommonUtils.CopyValues(source, this);
+            return new JsonTransformViewParameters(_json2HtmlParameters.Clone() as Json2HtmlTransformParameters,
+                _html2JsonParameters.Clone() as Html2JsonTransformParameters);
         }
     }
+
     internal class PropertyOrderAttribute : Attribute
     {
         public int Value { get; set; }

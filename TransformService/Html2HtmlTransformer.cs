@@ -16,18 +16,17 @@ namespace TransformService
 
             return result;
         }
+    }
+    public class Html2HtmlTransformParameters : ICloneable
+    {
+        /// <summary>
+        /// Признак трансформации всех списков из плоского представления в древовидное
+        /// </summary>
+        public virtual bool MakeAllListsHierarchical { get; set; } = false;
 
-        public class Html2HtmlTransformParameters : ICloneable
+        public object Clone()
         {
-            /// <summary>
-            /// Признак трансформации всех списков из плоского представления в древовидное
-            /// </summary>
-            public virtual bool MakeAllListsHierarchical { get; set; } = false;
-
-            public object Clone()
-            {
-                return MemberwiseClone();
-            }
+            return MemberwiseClone();
         }
     }
 }

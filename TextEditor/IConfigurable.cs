@@ -1,6 +1,6 @@
 ﻿namespace TextEditor
 {
-    public interface IConfigurableUserControl
+    public interface IConfigurable
     {
         public void LoadParameters();
         public void SaveParameters();

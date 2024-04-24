@@ -30,8 +30,8 @@ namespace TextEditor
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new MainForm());
-            //Application.Run(new Form1());
+            var mainForm = new MainForm();
+            Application.Run(mainForm);
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

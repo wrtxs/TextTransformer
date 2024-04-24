@@ -1,40 +1,104 @@
 ﻿using System.Reflection;
+using DevExpress.Utils;
 using DevExpress.XtraBars.Navigation;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraTab;
 
 namespace TextEditor
 {
     public sealed partial class MainForm : DevExpress.XtraEditors.XtraForm
     {
+        private const string MainParametersSectionName = "MainParameters";
+
+        private HtmlImportUserControl _htmlImportUserControl;
+
+        public class MainParameters
+        {
+            public bool ShowHtmlImportTab { get; set; } = false;
+        }
+
+        private MainParameters _mainParameters;
+
         public MainForm()
         {
             Utils.ShowProgressForm(false, false, null, "Идет загрузка...");
 
+            //this.DoubleBuffered = true;
+            //SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            //UpdateStyles();
+
+            LoadParameters();
             InitializeComponent();
 
-            var appVersion = GetAssemblyVersion();
+            Text += @$" v.{GetAssemblyVersion()}"; // Устанавливаем заголовок приложения
 
-            //var appVersion = Assembly.GetEntryAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+            ProcessHtmlImportTabVisibility();
+            ProcessTabPaneMainVisibility();
 
-            Text += @$" v.{appVersion}";
+            ((IConfigurable)textEditorUserControl)?.LoadParameters();
+            ((IConfigurable)_htmlImportUserControl)?.LoadParameters();
 
-            htmlImportUserControl.JsonToEditorEvent += HtmlImportUserControlJsonToEditorEvent;
-            htmlImportUserControl.HtmlToEditorEvent += HtmlImportUserControlHtmlToEditorEvent;
+            FormClosed += OnFormClosed;
+        }
 
-            tabPaneMain.DragOver += TabPaneMain_DragOver;
+        private void ProcessHtmlImportTabVisibility()
+        {
+            if (_mainParameters.ShowHtmlImportTab) // Необходимо отобразить вкладку импорта
+            {
+                _htmlImportUserControl = new HtmlImportUserControl();
 
+                tnpImportFromHtml.Controls.Add(_htmlImportUserControl);
+
+                _htmlImportUserControl.Dock = DockStyle.Fill;
+                _htmlImportUserControl.Location = new Point(0, 0);
+                _htmlImportUserControl.Name = "htmlImportUserControl";
+                _htmlImportUserControl.Size = new Size(1135, 531);
+                _htmlImportUserControl.TabIndex = 0;
+
+                _htmlImportUserControl.JsonToEditorEvent += HtmlImportUserControlJsonToEditorEvent;
+                _htmlImportUserControl.HtmlToEditorEvent += HtmlImportUserControlHtmlToEditorEvent;
+            }
+            else // Вкладка импорта не отображается (удаляется)
+            {
+                tabPaneMain.TabPages.Remove(tnpImportFromHtml);
+            }
+        }
+
+        private void ProcessTabPaneMainVisibility()
+        {
             //#if DEBUG
             //            tnpImportFromHtml.Enabled = true;
             //#else
             //            tnpImportFromHtml.Enabled = false;
             //#endif
+            if (tabPaneMain.TabPages.Count == 0)
+                return;
 
-            tabPaneMain.SelectedPage = tnpEditor;
+            if (tabPaneMain.TabPages.Count == 1)
+            {
+                var tabNavigationPage = tabPaneMain.TabPages[0];
+                tabPaneMain.ShowTabHeader = DefaultBoolean.False;
+                tabPaneMain.BorderStyle = BorderStyles.NoBorder;
+                tabPaneMain.BorderStylePage = BorderStyles.NoBorder;
+                tabPaneMain.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat;
+                tabPaneMain.LookAndFeel.UseDefaultLookAndFeel = false;
 
-            textEditorUserControl.LoadParameters();
-            htmlImportUserControl.LoadParameters();
-
-            FormClosed += OnFormClosed;
+                //var control = tabNavigationPage.Controls[0];
+                //control.Dock = DockStyle.Fill;
+                //Controls.Remove(tabPaneMain);
+                //Controls.Add(control);
+                //tabPaneMain.Hide();
+            }
+            else if (tabPaneMain.TabPages.Count > 1)
+            {
+                tabPaneMain.DragOver += TabPaneMain_DragOver;
+                tabPaneMain.TabPages[0].Select();
+            }
         }
+
+        public void LoadParameters() => _mainParameters = Utils.LoadParameters<MainParameters>(MainParametersSectionName);
+
+        public void SaveParameters() => Utils.SaveParameters(_mainParameters, MainParametersSectionName);
 
         private string GetAssemblyVersion()
         {
@@ -55,8 +119,9 @@ namespace TextEditor
 
         private void OnFormClosed(object sender, FormClosedEventArgs e)
         {
-            textEditorUserControl.SaveParameters();
-            htmlImportUserControl.SaveParameters();
+            SaveParameters();
+            ((IConfigurable)textEditorUserControl).SaveParameters();
+            ((IConfigurable)_htmlImportUserControl)?.SaveParameters();
         }
 
         /// <summary>
@@ -72,29 +137,42 @@ namespace TextEditor
             //    if (tcg.SelectedTabPageIndex != hitInfo.TabPageIndex)
             //        tcg.SelectedTabPageIndex = hitInfo.TabPageIndex;
             //}
-
-            if (tabPaneMain.CalcHitInfo(tabPaneMain.PointToClient(new System.Drawing.Point
+            var s = tabPaneMain.CalcHitInfo(tabPaneMain.PointToClient(new Point
             {
                 X = e.X,
                 Y = e.Y
-            })) is TabNavigationPage tnp)
+            }));
+
+            var tnp = s.Page;
+
+            if (tnp != null)
             {
-                if (tabPaneMain.SelectedPage != tnp && tnp.Enabled)
-                    tabPaneMain.SelectedPage = tnp;
+                if (tabPaneMain.SelectedTabPage != tnp && tnp.Enabled)
+                    tabPaneMain.SelectedTabPage = tnp;
             }
+
+            //if (tabPaneMain.CalcHitInfo(tabPaneMain.PointToClient(new System.Drawing.Point
+            //    {
+            //        X = e.X,
+            //        Y = e.Y
+            //    })) is TabNavigationPage tnp)
+            //{
+            //    if (tabPaneMain.SelectedPage != tnp && tnp.Enabled)
+            //        tabPaneMain.SelectedPage = tnp;
+            //}
         }
 
         private void HtmlImportUserControlJsonToEditorEvent(object sender,
             HtmlImportUserControl.JsonExportEventArgs e)
         {
             textEditorUserControl.InsertNewJsonData(e.JsonData, true);
-            tabPaneMain.SelectedPage = tnpEditor;
+            tabPaneMain.SelectedTabPage = tnpEditor;
         }
 
         private void HtmlImportUserControlHtmlToEditorEvent(object sender, HtmlImportUserControl.HtmlExportEventArgs e)
         {
             textEditorUserControl.InsertNewHtmlData(e.HtmlData, true);
-            tabPaneMain.SelectedPage = tnpEditor;
+            tabPaneMain.SelectedTabPage = tnpEditor;
         }
 
         private void MainForm_Load(object sender, EventArgs e)

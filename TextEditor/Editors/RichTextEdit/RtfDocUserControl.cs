@@ -92,6 +92,8 @@ namespace TextEditor.Editors.RichTextEdit
             ribbonControl.ForceInitialize();
 
             LoadDictionaries();
+
+            ribbonControl.ForceInitialize();
         }
 
         private void LoadDictionaries()
@@ -103,7 +105,6 @@ namespace TextEditor.Editors.RichTextEdit
 
             var enAffStream = new MemoryStream(Properties.Resources.en_US_aff);
             var enDicStream = new MemoryStream(Properties.Resources.en_US_dic);
-
 
             var ruDict = new HunspellDictionary();
             ruDict.LoadFromStream(ruDicStream, ruAffStream);

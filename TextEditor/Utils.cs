@@ -85,7 +85,7 @@ namespace TextEditor
             }
             catch (Exception e)
             {
-                Utils.ProcessException(e);
+                ProcessException(e);
             }
         }
 
@@ -112,8 +112,8 @@ namespace TextEditor
         {
             try
             {
-                Utils.ShowProgressForm();
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                ShowProgressForm();
+                if (e.Data != null && e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
                     var files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
@@ -123,11 +123,11 @@ namespace TextEditor
             }
             catch (Exception exception)
             {
-                Utils.ProcessException(exception);
+                ProcessException(exception);
             }
             finally
             {
-                Utils.CloseProgressForm();
+                CloseProgressForm();
             }
         }
 
@@ -145,37 +145,48 @@ namespace TextEditor
             SplashScreenManager.CloseForm(false);
         }
 
-        public static string TransformHtml2Json(string htmlData, JsonTransformViewParameters transformParams)
+        public static string TransformHtml2Json(string htmlData, JsonTransformViewParameters transformViewParams)
         {
-            var jsonData = new Html2JsonTransformer().Transform(htmlData, transformParams);
+            var html2JsonTransformParameters = transformViewParams.GetHtml2JsonTransformParameters();
+            var jsonData = new Html2JsonTransformer().Transform(htmlData, html2JsonTransformParameters);
 
-            if (transformParams.CopyJsonToClipboardAfterTransformation)
+            if (transformViewParams.CopyJsonToClipboardAfterTransformation)
                 CopyJsonToClipBoard(jsonData);
 
             return jsonData;
         }
 
-        public static string TransformJson2Html(string jsonData,
-            HtmlTransformViewParameters transformParams = null) =>
+        public static string TransformJson2Html(string jsonData, Json2HtmlTransformParameters transformParams = null) =>
             new Json2HtmlTransformer().Transform(jsonData, transformParams);
 
-        public static string TransformHtml2Html(string htmlData,
-            Html2HtmlTransformer.Html2HtmlTransformParameters transformParams) =>
+        //public static string TransformJson2Html(string jsonData,
+        //    JsonTransformViewParameters transformViewParams = null) =>
+        //    new Json2HtmlTransformer().Transform(jsonData, transformViewParams?.GetJson2HtmlTransformParameters());
+
+        public static string TransformHtml2Html(string htmlData, Html2HtmlTransformParameters transformParams) =>
             new Html2HtmlTransformer().Transform(htmlData, transformParams);
 
-        public static HtmlTransformViewParameters ConvertToHtmlTransformParameters(
-            this JsonTransformViewParameters transformParams) =>
-            new()
-            {
-                MakeAllListsHierarchical = transformParams.MakeAllListsHierarchical
-            };
+        //public static HtmlTransformViewParameters ConvertToHtmlTransformParameters(
+        //    this JsonTransformViewParameters transformParams) =>
+        //    new()
+        //    {
+        //        MakeAllListsHierarchical = transformParams.MakeAllListsHierarchical
+        //    };
 
-        public static Html2HtmlTransformer.Html2HtmlTransformParameters ConvertToHtml2HtmlTransformParameters(
+        public static Html2HtmlTransformParameters ConvertToHtml2HtmlTransformParameters(
             this HtmlTransformViewParameters transformParams) =>
             new()
             {
                 MakeAllListsHierarchical = transformParams.MakeAllListsHierarchical
             };
+
+        public static Json2HtmlTransformParameters ConvertToJson2HtmlTransformParameters(
+            this HtmlTransformViewParameters transformParams) =>
+            new()
+            {
+                MakeAllListsHierarchical = transformParams.MakeAllListsHierarchical
+            };
+
 
         //public static void SaveParameters(Html2JsonTransformViewParameters parameters, string paramName)
         //{

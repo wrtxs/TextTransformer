@@ -17,9 +17,9 @@ namespace TextEditor.TransformParameters
             return GetParameters() as T;
         }
 
-        public T GetCloneParameters<T>() where T : class, ICloneable
+        public T GetClonedParameters<T>() where T : class, ICloneable
         {
-            return (GetParameters() as T)?.Clone() as T;
+            return GetParameters<T>()?.Clone() as T;
         }
 
         public object GetParameters()
