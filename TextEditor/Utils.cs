@@ -145,6 +145,8 @@ namespace TextEditor
             SplashScreenManager.CloseForm(false);
         }
 
+        public static string GetNormalizedString(string path) => path.ToLower().Replace(" ", "%20");
+
         public static string TransformHtml2Json(string htmlData, JsonTransformViewParameters transformViewParams)
         {
             var html2JsonTransformParameters = transformViewParams.GetHtml2JsonTransformParameters();

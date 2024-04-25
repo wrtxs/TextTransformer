@@ -62,6 +62,9 @@
 		<None Update="ru\DevExpress.RichEdit.v23.1.Core.resources.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="ru\DevExpress.Spreadsheet.v23.1.Core.resources.dll">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="ru\DevExpress.Utils.v23.1.resources.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
@@ -72,9 +75,6 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="ru\DevExpress.XtraLayout.v23.1.resources.dll">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="ru\DevExpress.XtraRichEdit.v23.1.resources.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

@@ -5,11 +5,15 @@ using ActiproSoftware.UI.WinForms.Controls.SyntaxEditor;
 using DevExpress.Skins;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.HitInfo;
 using DevExpress.XtraLayout.Utils;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.API.Native;
+using DevExpress.XtraTab;
+using DevExpress.XtraTab.ViewInfo;
+using TextEditor.Editors.WorkbookEditor;
 using TextEditor.TransformParameters;
 using TransformService.RichText;
 using TransformService.TableMetadata;
@@ -20,6 +24,8 @@ namespace TextEditor
     {
         private const string Html2JsonParamsSectionName = "Html2JsonTextEditorParameters";
         private const string Json2HtmlParamsSectionName = "Json2HtmlTextEditorParameters";
+
+        private WorkbookEditorUserControl _workbookEditor;
 
         public TextEditorUserControl()
         {
@@ -566,5 +572,54 @@ namespace TextEditor
         }
 
         #endregion
+
+        public void SetWorkbookEditorTabVisibility(bool visible)
+        {
+            if (visible) // Необходимо отобразить вкладку редактора ячеек
+            {
+                _workbookEditor = new WorkbookEditorUserControl();
+
+                tabPageWorkbook.Controls.Add(_workbookEditor);
+                _workbookEditor.Dock = DockStyle.Fill;
+            }
+            else // Вкладка редактора ячеек не отображается
+            {
+                tabControlMain.TabPages.Remove(tabPageWorkbook);
+            }
+
+            if (tabControlMain.TabPages.Count == 0)
+                return;
+
+            if (tabControlMain.TabPages.Count == 1)
+            {
+                tabControlMain.ShowTabHeader = DefaultBoolean.False;
+                //tabControlMain.BorderStyle = BorderStyles.NoBorder;
+                //tabControlMain.BorderStylePage = BorderStyles.NoBorder;
+                //tabControlMain.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat;
+                //tabControlMain.LookAndFeel.UseDefaultLookAndFeel = false;
+            }
+            else if (tabControlMain.TabPages.Count > 1)
+            {
+                tabControlMain.AllowDrop = true;
+                tabControlMain.DragOver += TabControlMainDragOver;
+                tabControlMain.TabPages[0].Select();
+            }
+        }
+
+        private void TabControlMainDragOver(object sender, DragEventArgs e)
+        {
+            var tabControl = (XtraTabControl)sender;
+
+            var pt = tabControl.PointToClient(new Point(e.X, e.Y));
+            var info = tabControl.CalcHitInfo(pt);
+
+            if (info.HitTest == XtraTabHitTest.PageHeader) // Проверяем, что мы находимся над заголовком вкладки
+            {
+                var tabPage = info.Page;
+
+                if (tabPage != null && tabControl.SelectedTabPage != tabPage && tabPage.Enabled)
+                    tabControl.SelectedTabPage = tabPage;
+            }
+        }
     }
 }

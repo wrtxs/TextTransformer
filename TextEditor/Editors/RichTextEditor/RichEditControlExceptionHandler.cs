@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using DevExpress.XtraRichEdit;
 
-namespace TextEditor.Editors.RichTextEdit
+namespace TextEditor.Editors.RichTextEditor
 {
     internal class RichEditControlExceptionHandler
     {

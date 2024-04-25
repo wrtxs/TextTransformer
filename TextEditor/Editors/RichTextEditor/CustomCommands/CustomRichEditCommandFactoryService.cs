@@ -2,7 +2,7 @@
 using DevExpress.XtraRichEdit.Commands;
 using DevExpress.XtraRichEdit.Services;
 
-namespace TextEditor.Editors.RichTextEdit.CustomCommands
+namespace TextEditor.Editors.RichTextEditor.CustomCommands
 {
     internal class CustomRichEditCommandFactoryService : IRichEditCommandFactoryService
     {
