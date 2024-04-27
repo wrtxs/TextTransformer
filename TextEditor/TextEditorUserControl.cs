@@ -5,7 +5,6 @@ using ActiproSoftware.UI.WinForms.Controls.SyntaxEditor;
 using DevExpress.Skins;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.HitInfo;
 using DevExpress.XtraLayout.Utils;
@@ -30,6 +29,11 @@ namespace TextEditor
         public TextEditorUserControl()
         {
             InitializeComponent();
+
+            // Задаем параметры для вкладок JSON и HTML редакторов
+            tabControlData.AllowDrop = true;
+            tabControlData.DragOver += TabControlDragOver;
+            tabControlData.SelectedTabPage = tabPageJsonData;
             //rtfDocUserControl.InsertEmptyTable();
 
             // Задаем пробелы вместо таба
@@ -60,9 +64,7 @@ namespace TextEditor
             rtfDocUserControl.RichEditControl.ContentChanged += RichEdit_ContentChanged;
 
             // Убираем ненужные рамки у контролов
-            tcgParameters.CustomDraw += TabbedControlGroupOnCustomDraw;
-
-            tcgEditors.SelectedTabPage = lcgJsonEditor;
+            tabControlParameters.CustomDraw += TabbedControlGroupOnCustomDraw;
 
             AdjustControlsState();
             AdjustParametersTab();
@@ -301,21 +303,21 @@ namespace TextEditor
 
         private void AdjustParametersTab()
         {
-            tcgParameters.ShowTabHeader = DefaultBoolean.False;
+            tabControlParameters.ShowTabHeader = DefaultBoolean.False;
 
-            if (tcgEditors.SelectedTabPage == lcgJsonEditor)
+            if (tabControlData.SelectedTabPage == tabPageJsonData)
             {
-                lcgHtmlParameters.Visibility = LayoutVisibility.Never;
-                lcgJsonParameters.Visibility = LayoutVisibility.OnlyInRuntime;
+                tabPageHtmlParameters.Visibility = LayoutVisibility.Never;
+                tabPageJsonParameters.Visibility = LayoutVisibility.OnlyInRuntime;
 
-                tcgParameters.SelectedTabPage = lcgJsonParameters;
+                tabControlParameters.SelectedTabPage = tabPageJsonParameters;
             }
-            else if (tcgEditors.SelectedTabPage == lcgHtmlEditor)
+            else if (tabControlData.SelectedTabPage == tabPageHtmlData)
             {
-                lcgJsonParameters.Visibility = LayoutVisibility.Never;
-                lcgHtmlParameters.Visibility = LayoutVisibility.OnlyInRuntime;
+                tabPageJsonParameters.Visibility = LayoutVisibility.Never;
+                tabPageHtmlParameters.Visibility = LayoutVisibility.OnlyInRuntime;
 
-                tcgParameters.SelectedTabPage = lcgHtmlParameters;
+                tabControlParameters.SelectedTabPage = tabPageHtmlParameters;
             }
         }
 
@@ -490,7 +492,7 @@ namespace TextEditor
             if (updateTable)
                 CreateEditorContentByJsonData(jsonData, transformParams);
 
-            tcgEditors.SelectedTabPage = lcgJsonEditor;
+            tabControlData.SelectedTabPage = tabPageJsonData;
         }
 
         public void InsertNewHtmlData(string htmlData, bool createEditorContent,
@@ -502,13 +504,13 @@ namespace TextEditor
             if (createEditorContent)
                 CreateEditorContentByHtmlData(htmlData, transformParams);
 
-            tcgEditors.SelectedTabPage = lcgHtmlEditor;
+            tabControlData.SelectedTabPage = tabPageHtmlData;
         }
 
-        private void tcgEditors_SelectedPageChanged(object sender, LayoutTabPageChangedEventArgs e)
-        {
-            AdjustParametersTab();
-        }
+        //private void tcgEditors_SelectedPageChanged(object sender, LayoutTabPageChangedEventArgs e)
+        //{
+        //    AdjustParametersTab();
+        //}
 
         private void cmdHtml2Editor_Click(object sender, EventArgs e)
         {
@@ -584,29 +586,29 @@ namespace TextEditor
             }
             else // Вкладка редактора ячеек не отображается
             {
-                tabControlMain.TabPages.Remove(tabPageWorkbook);
+                tabControlEditors.TabPages.Remove(tabPageWorkbook);
             }
 
-            if (tabControlMain.TabPages.Count == 0)
+            if (tabControlEditors.TabPages.Count == 0)
                 return;
 
-            if (tabControlMain.TabPages.Count == 1)
+            if (tabControlEditors.TabPages.Count == 1)
             {
-                tabControlMain.ShowTabHeader = DefaultBoolean.False;
-                //tabControlMain.BorderStyle = BorderStyles.NoBorder;
-                //tabControlMain.BorderStylePage = BorderStyles.NoBorder;
-                //tabControlMain.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat;
-                //tabControlMain.LookAndFeel.UseDefaultLookAndFeel = false;
+                tabControlEditors.ShowTabHeader = DefaultBoolean.False;
+                //tabControlEditors.BorderStyle = BorderStyles.NoBorder;
+                //tabControlEditors.BorderStylePage = BorderStyles.NoBorder;
+                //tabControlEditors.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat;
+                //tabControlEditors.LookAndFeel.UseDefaultLookAndFeel = false;
             }
-            else if (tabControlMain.TabPages.Count > 1)
+            else if (tabControlEditors.TabPages.Count > 1)
             {
-                tabControlMain.AllowDrop = true;
-                tabControlMain.DragOver += TabControlMainDragOver;
-                tabControlMain.TabPages[0].Select();
+                tabControlEditors.AllowDrop = true;
+                tabControlEditors.DragOver += TabControlDragOver;
+                tabControlEditors.TabPages[0].Select();
             }
         }
 
-        private void TabControlMainDragOver(object sender, DragEventArgs e)
+        private void TabControlDragOver(object sender, DragEventArgs e)
         {
             var tabControl = (XtraTabControl)sender;
 
@@ -620,6 +622,11 @@ namespace TextEditor
                 if (tabPage != null && tabControl.SelectedTabPage != tabPage && tabPage.Enabled)
                     tabControl.SelectedTabPage = tabPage;
             }
+        }
+
+        private void tabControlData_SelectedPageChanged(object sender, TabPageChangedEventArgs e)
+        {
+            AdjustParametersTab();
         }
     }
 }

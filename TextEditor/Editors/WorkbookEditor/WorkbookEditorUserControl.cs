@@ -6,10 +6,12 @@ using TransformService.TableMetadata;
 
 namespace TextEditor.Editors.WorkbookEditor
 {
-    public sealed partial class WorkbookEditorUserControl : XtraUserControl, IEditorService, IClipboardService
+    public sealed partial class WorkbookEditorUserControl : XtraUserControl, IEditorService//, IClipboardService
     {
         private RichTextEditForm _richTextEditForm;    // Форма редактирования форматированного текста
         private SpreadsheetMenuItem _setRichTextItem;  // Команда контестного меню для вызова редактора форматированного текста
+
+        private TableMetadata _tableMetadata = new TableMetadata();
 
         public WorkbookEditorUserControl()
         {
@@ -22,20 +24,30 @@ namespace TextEditor.Editors.WorkbookEditor
             //ribbonControl.ForceInitialize();
         }
 
+        #region IEditorService
+
         public TableMetadata GetTableMetadata()
         {
-            throw new NotImplementedException();
+            var title = barEditItemTableTitle.EditValue as string;
+
+            var tableMetadata = _tableMetadata.Clone();
+            tableMetadata.Title = title;
+
+            return tableMetadata;
         }
 
         public void SetTableMetadata(TableMetadata tableMetadata)
         {
-            throw new NotImplementedException();
+            _tableMetadata = tableMetadata != null ? tableMetadata.Clone() : new TableMetadata();
+            barEditItemTableTitle.EditValue = tableMetadata?.Title;
         }
 
-        public ClipboardFormat GetClipboardFormat()
-        {
-            throw new NotImplementedException();
-        }
+        //public ClipboardFormat GetClipboardFormat()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        #endregion
 
         private void spreadsheetControl_CellBeginEdit(object sender,
             DevExpress.XtraSpreadsheet.SpreadsheetCellCancelEventArgs e)

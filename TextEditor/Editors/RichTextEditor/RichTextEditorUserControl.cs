@@ -263,7 +263,7 @@ namespace TextEditor.Editors.RichTextEditor
 
         // ToDo вынести в отдельный контрол
         //private DevExpress.XtraBars.BarEditItem _barEditItemTableTitle;
-        private TableMetadata _tableMetada = new TableMetadata();
+        private TableMetadata _tableMetadata = new TableMetadata();
 
         //private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit _txtTableTitle;
         private DevExpress.XtraBars.BarStaticItem _pagesBarItem;
@@ -527,7 +527,7 @@ namespace TextEditor.Editors.RichTextEditor
         {
             var title = barEditItemTableTitle.EditValue as string;
 
-            var tableMetadata = _tableMetada.Clone();
+            var tableMetadata = _tableMetadata.Clone();
             tableMetadata.Title = title;
 
             return tableMetadata;
@@ -535,7 +535,7 @@ namespace TextEditor.Editors.RichTextEditor
 
         public void SetTableMetadata(TableMetadata tableMetadata)
         {
-            _tableMetada = tableMetadata != null ? tableMetadata.Clone() : new TableMetadata();
+            _tableMetadata = tableMetadata != null ? tableMetadata.Clone() : new TableMetadata();
             barEditItemTableTitle.EditValue = tableMetadata?.Title;
         }
 
