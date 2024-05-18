@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            DevExpress.XtraSpellChecker.OptionsSpelling optionsSpelling1 = new DevExpress.XtraSpellChecker.OptionsSpelling();
             DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup1 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
             DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
             DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
@@ -48,7 +49,6 @@
             DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup2 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
             DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation1 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
             ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            barAndDockingController = new DevExpress.XtraBars.BarAndDockingController(components);
             undoItem1 = new DevExpress.XtraRichEdit.UI.UndoItem();
             redoItem1 = new DevExpress.XtraRichEdit.UI.RedoItem();
             fileNewItem1 = new DevExpress.XtraRichEdit.UI.FileNewItem();
@@ -417,7 +417,6 @@
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             richEditBarController = new DevExpress.XtraRichEdit.UI.RichEditBarController(components);
             ((System.ComponentModel.ISupportInitialize)ribbonControl).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)barAndDockingController).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemFontEditRichEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRichEditFontSizeEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)displayForReviewModeComboBox1).BeginInit();
@@ -430,7 +429,6 @@
             // 
             // ribbonControl
             // 
-            ribbonControl.Controller = barAndDockingController;
             ribbonControl.ExpandCollapseItem.Id = 0;
             ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl.ExpandCollapseItem, undoItem1, redoItem1, fileNewItem1, fileOpenItem1, fileSaveItem1, fileSaveAsItem1, quickPrintItem1, printItem1, printPreviewItem1, encryptDocumentItem1, showDocumentPropertiesFormItem1, pasteItem1, cutItem1, copyItem1, pasteSpecialItem1, barButtonGroup1, changeFontNameItem1, changeFontSizeItem1, fontSizeIncreaseItem1, fontSizeDecreaseItem1, barButtonGroup2, toggleFontBoldItem1, toggleFontItalicItem1, toggleFontUnderlineItem1, toggleFontDoubleUnderlineItem1, toggleFontStrikeoutItem1, toggleFontDoubleStrikeoutItem1, toggleFontSuperscriptItem1, toggleFontSubscriptItem1, barButtonGroup3, changeFontColorItem1, changeFontHighlightColorItem1, changeTextCaseItem1, makeTextUpperCaseItem1, makeTextLowerCaseItem1, capitalizeEachWordCaseItem1, toggleTextCaseItem1, clearFormattingItem1, barButtonGroup4, toggleBulletedListItem1, toggleNumberingListItem1, toggleMultiLevelListItem1, barButtonGroup5, decreaseIndentItem1, increaseIndentItem1, rtlToggleBulletedListItem1, rtlToggleNumberingListItem1, rtlToggleMultiLevelListItem1, rtlDecreaseIndentItem1, rtlIncreaseIndentItem1, toggleParagraphLeftToRightItem1, toggleParagraphRightToLeftItem1, barButtonGroup6, toggleParagraphAlignmentLeftItem1, toggleParagraphAlignmentCenterItem1, toggleParagraphAlignmentRightItem1, toggleParagraphAlignmentJustifyItem1, toggleParagraphAlignmentArabicJustifyGroupItem1, toggleParagraphAlignmentArabicJustifyItem1, toggleParagraphAlignmentJustifyLowItem1, toggleParagraphAlignmentJustifyMediumItem1, toggleParagraphAlignmentJustifyHighItem1, toggleParagraphAlignmentDistributeItem1, toggleParagraphAlignmentThaiDistributeItem1, toggleShowWhitespaceItem1, barButtonGroup7, changeParagraphLineSpacingItem1, setSingleParagraphSpacingItem1, setSesquialteralParagraphSpacingItem1, setDoubleParagraphSpacingItem1, showLineSpacingFormItem1, addSpacingBeforeParagraphItem1, removeSpacingBeforeParagraphItem1, addSpacingAfterParagraphItem1, removeSpacingAfterParagraphItem1, changeParagraphBackColorItem1, galleryChangeStyleItem1, findItem1, replaceItem1, insertPageBreakItem21, insertTableItem1, insertFloatingPictureItem1, insertBookmarkItem1, insertHyperlinkItem1, editPageHeaderItem1, editPageFooterItem1, insertPageNumberItem1, insertPageCountItem1, insertTextBoxItem1, insertObjectItem1, insertSymbolItem1, changeSectionPageMarginsItem1, setNormalSectionPageMarginsItem1, setNarrowSectionPageMarginsItem1, setModerateSectionPageMarginsItem1, setWideSectionPageMarginsItem1, showPageMarginsSetupFormItem1, changeSectionPageOrientationItem1, setPortraitPageOrientationItem1, setLandscapePageOrientationItem1, changeSectionPaperKindItem1, changeSectionColumnsItem1, setSectionOneColumnItem1, setSectionTwoColumnsItem1, setSectionThreeColumnsItem1, showColumnsSetupFormItem1, insertBreakItem1, insertPageBreakItem1, insertColumnBreakItem1, insertSectionBreakNextPageItem1, insertSectionBreakContinuousItem1, insertSectionBreakEvenPageItem1, insertSectionBreakOddPageItem1, changeSectionLineNumberingItem1, setSectionLineNumberingNoneItem1, setSectionLineNumberingContinuousItem1, setSectionLineNumberingRestartNewPageItem1, setSectionLineNumberingRestartNewSectionItem1, toggleParagraphSuppressLineNumbersItem1, showLineNumberingFormItem1, changeHyphenationOptionsItem1, setHyphenateDocumentNoneItem1, setHyphenateDocumentAutomaticItem1, showHyphenationOptionsFormItem1, changePageColorItem1, watermarkItem1, deleteWatermarkItem1, insertTableOfContentsItem1, updateTableOfContentsItem1, addParagraphsToTableOfContentItem1, setParagraphHeadingLevelItem1, setParagraphHeadingLevelItem2, setParagraphHeadingLevelItem3, setParagraphHeadingLevelItem4, setParagraphHeadingLevelItem5, setParagraphHeadingLevelItem6, setParagraphHeadingLevelItem7, setParagraphHeadingLevelItem8, setParagraphHeadingLevelItem9, setParagraphHeadingLevelItem10, insertCaptionPlaceholderItem1, insertFiguresCaptionItems1, insertTablesCaptionItems1, insertEquationsCaptionItems1, insertTableOfFiguresPlaceholderItem1, insertTableOfFiguresItems1, insertTableOfTablesItems1, insertTableOfEquationsItems1, updateTableOfFiguresItem1, insertFootnoteItem1, insertEndnoteItem1, navigationNotesItem1, showNotesItem1, insertMergeFieldItem1, showAllFieldCodesItem1, showAllFieldResultsItem1, toggleViewMergedDataItem1, checkSpellingItem1, changeLanguageItem1, protectDocumentItem1, changeRangeEditingPermissionsItem1, unprotectDocumentItem1, newCommentItem1, deleteCommentsItem1, deleteOneCommentItem1, deleteAllCommentsShownItem1, deleteAllCommentsItem1, previousCommentItem1, nextCommentItem1, toggleTrackChangesBarItem1, changeDisplayForReviewModeItem1, showMarkupSubItem1, reviewingPaneItem1, acceptAndMoveToNextSubItem1, rejectAndMoveToNextSubItem1, previousChangeItem1, nextChangeItem1, switchToSimpleViewItem1, switchToDraftViewItem1, switchToPrintLayoutViewItem1, toggleShowHorizontalRulerItem1, toggleShowVerticalRulerItem1, zoomOutItem1, zoomInItem1, goToPageHeaderItem1, goToPageFooterItem1, goToNextHeaderFooterItem1, goToPreviousHeaderFooterItem1, toggleLinkToPreviousItem1, toggleDifferentFirstPageItem1, toggleDifferentOddAndEvenPagesItem1, closePageHeaderFooterItem1, toggleFirstRowItem1, toggleLastRowItem1, toggleBandedRowsItem1, toggleFirstColumnItem1, toggleLastColumnItem1, toggleBandedColumnsItem1, galleryChangeTableStyleItem1, changeTableBorderLineStyleItem1, changeTableBorderLineWeightItem1, changeTableBorderColorItem1, changeTableBordersItem1, toggleTableCellsBottomBorderItem1, toggleTableCellsTopBorderItem1, toggleTableCellsLeftBorderItem1, toggleTableCellsRightBorderItem1, resetTableCellsAllBordersItem1, toggleTableCellsAllBordersItem1, toggleTableCellsOutsideBorderItem1, toggleTableCellsInsideBorderItem1, toggleTableCellsInsideHorizontalBorderItem1, toggleTableCellsInsideVerticalBorderItem1, toggleShowTableGridLinesItem1, changeTableCellsShadingItem1, selectTableElementsItem1, selectTableCellItem1, selectTableColumnItem1, selectTableRowItem1, selectTableItem1, showTablePropertiesFormItem1, deleteTableElementsItem1, showDeleteTableCellsFormItem1, deleteTableColumnsItem1, deleteTableRowsItem1, deleteTableItem1, insertTableRowAboveItem1, insertTableRowBelowItem1, insertTableColumnToLeftItem1, insertTableColumnToRightItem1, mergeTableCellsItem1, showSplitTableCellsForm1, splitTableItem1, toggleTableAutoFitItem1, toggleTableAutoFitContentsItem1, toggleTableAutoFitWindowItem1, toggleTableFixedColumnWidthItem1, toggleTableCellsTopLeftAlignmentItem1, toggleTableCellsMiddleLeftAlignmentItem1, toggleTableCellsBottomLeftAlignmentItem1, toggleTableCellsTopCenterAlignmentItem1, toggleTableCellsMiddleCenterAlignmentItem1, toggleTableCellsBottomCenterAlignmentItem1, toggleTableCellsTopRightAlignmentItem1, toggleTableCellsMiddleRightAlignmentItem1, toggleTableCellsBottomRightAlignmentItem1, toggleTableCellsBottomLeftRotate90AlignmentItem1, toggleTableCellsBottomCenterRotate90AlignmentItem1, toggleTableCellsBottomRightRotate90AlignmentItem1, toggleTableCellsMiddleLeftRotate90AlignmentItem1, toggleTableCellsMiddleCenterRotate90AlignmentItem1, toggleTableCellsMiddleRightRotate90AlignmentItem1, toggleTableCellsTopLeftRotate90AlignmentItem1, toggleTableCellsTopCenterRotate90AlignmentItem1, toggleTableCellsTopRightRotate90AlignmentItem1, toggleTableCellsTopRightRotate270AlignmentItem1, toggleTableCellsTopCenterRotate270AlignmentItem1, toggleTableCellsTopLeftRotate270AlignmentItem1, toggleTableCellsMiddleRightRotate270AlignmentItem1, toggleTableCellsMiddleCenterRotate270AlignmentItem1, toggleTableCellsMiddleLeftRotate270AlignmentItem1, toggleTableCellsBottomRightRotate270AlignmentItem1, toggleTableCellsBottomCenterRotate270AlignmentItem1, toggleTableCellsBottomLeftRotate270AlignmentItem1, changeTableCellsHorizontalTextDirectionItem1, changeTableCellsVerticalTextDirectionItem1, changeTableCellsRotateAll90TextDirectionItem1, changeTableCellsRotateAll270TextDirectionItem1, changeTableCellsRotateAsian270TextDirectionItem1, showTableOptionsFormItem1, changeFloatingObjectFillColorItem1, changeFloatingObjectOutlineColorItem1, changeFloatingObjectOutlineWeightItem1, changeFloatingObjectTextWrapTypeItem1, setFloatingObjectInlineTextWrapTypeItem1, setFloatingObjectSquareTextWrapTypeItem1, setFloatingObjectTightTextWrapTypeItem1, setFloatingObjectThroughTextWrapTypeItem1, setFloatingObjectTopAndBottomTextWrapTypeItem1, setFloatingObjectBehindTextWrapTypeItem1, setFloatingObjectInFrontOfTextWrapTypeItem1, changeFloatingObjectAlignmentItem1, setFloatingObjectTopLeftAlignmentItem1, setFloatingObjectTopCenterAlignmentItem1, setFloatingObjectTopRightAlignmentItem1, setFloatingObjectMiddleLeftAlignmentItem1, setFloatingObjectMiddleCenterAlignmentItem1, setFloatingObjectMiddleRightAlignmentItem1, setFloatingObjectBottomLeftAlignmentItem1, setFloatingObjectBottomCenterAlignmentItem1, setFloatingObjectBottomRightAlignmentItem1, floatingObjectBringForwardSubItem1, floatingObjectBringForwardItem1, floatingObjectBringToFrontItem1, floatingObjectBringInFrontOfTextItem1, floatingObjectSendBackwardSubItem1, floatingObjectSendBackwardItem1, floatingObjectSendToBackItem1, floatingObjectSendBehindTextItem1, barEditItemTableTitle });
             ribbonControl.Location = new Point(0, 0);
@@ -441,15 +439,9 @@
             ribbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemFontEditRichEdit1, repositoryItemRichEditFontSizeEdit1, displayForReviewModeComboBox1, repositoryItemBorderLineStyle1, repositoryItemBorderLineWeight1, repositoryItemFloatingObjectOutlineWeight1, txtTableTitle });
             ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
             ribbonControl.ShowToolbarCustomizeItem = false;
-            ribbonControl.Size = new Size(1044, 139);
+            ribbonControl.Size = new Size(1044, 150);
             ribbonControl.StatusBar = ribbonStatusBar;
             ribbonControl.Toolbar.ShowCustomizeItem = false;
-            // 
-            // barAndDockingController
-            // 
-            barAndDockingController.LookAndFeel.SkinName = "Office 2016 Colorful";
-            barAndDockingController.LookAndFeel.UseDefaultLookAndFeel = false;
-            barAndDockingController.PropertiesBar.AllowLinkLighting = false;
             // 
             // undoItem1
             // 
@@ -565,12 +557,13 @@
             // 
             richEditControl.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
             richEditControl.Dock = DockStyle.Fill;
-            richEditControl.Location = new Point(0, 139);
+            richEditControl.Location = new Point(0, 150);
             richEditControl.MenuManager = ribbonControl;
             richEditControl.Name = "richEditControl";
             richEditControl.Options.DocumentSaveOptions.CurrentFormat = DevExpress.XtraRichEdit.DocumentFormat.PlainText;
-            richEditControl.Size = new Size(1044, 338);
+            richEditControl.Size = new Size(1044, 326);
             richEditControl.SpellChecker = spellChecker;
+            spellChecker.SetSpellCheckerOptions(richEditControl, optionsSpelling1);
             richEditControl.TabIndex = 8;
             // 
             // spellChecker
@@ -2617,11 +2610,11 @@
             // ribbonStatusBar
             // 
             ribbonStatusBar.ItemLinks.Add(barEditItemTableTitle, true);
-            ribbonStatusBar.Location = new Point(0, 477);
+            ribbonStatusBar.Location = new Point(0, 476);
             ribbonStatusBar.MinimumSize = new Size(0, 26);
             ribbonStatusBar.Name = "ribbonStatusBar";
             ribbonStatusBar.Ribbon = ribbonControl;
-            ribbonStatusBar.Size = new Size(1044, 26);
+            ribbonStatusBar.Size = new Size(1044, 27);
             // 
             // richEditBarController
             // 
@@ -2929,7 +2922,6 @@
             Name = "RichTextEditorUserControl";
             Size = new Size(1044, 503);
             ((System.ComponentModel.ISupportInitialize)ribbonControl).EndInit();
-            ((System.ComponentModel.ISupportInitialize)barAndDockingController).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemFontEditRichEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRichEditFontSizeEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)displayForReviewModeComboBox1).EndInit();
@@ -3307,7 +3299,6 @@
         private DevExpress.XtraRichEdit.UI.ZoomRibbonPageGroup zoomRibbonPageGroup1;
         private DevExpress.XtraRichEdit.UI.RichEditBarController richEditBarController;
         private DevExpress.XtraSpellChecker.SpellChecker spellChecker;
-        private DevExpress.XtraBars.BarAndDockingController barAndDockingController;
         private RichEditControlEx richEditControl;
         private DevExpress.XtraBars.BarEditItem barEditItemTableTitle;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit txtTableTitle;

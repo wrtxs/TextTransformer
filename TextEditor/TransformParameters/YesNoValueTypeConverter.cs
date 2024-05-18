@@ -2,7 +2,7 @@
 
 namespace TextEditor.TransformParameters
 {
-    public class YesNoTypeConverter : BooleanConverter
+    public class YesNoValueTypeConverter : BooleanConverter
     {
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture,
             object value, Type destinationType)

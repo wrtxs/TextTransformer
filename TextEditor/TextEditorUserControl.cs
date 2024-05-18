@@ -2,27 +2,26 @@
 using ActiproSoftware.Text.Languages.JavaScript.Implementation;
 using ActiproSoftware.Text.Languages.Xml.Implementation;
 using ActiproSoftware.UI.WinForms.Controls.SyntaxEditor;
+using DevExpress.CodeParser;
 using DevExpress.Skins;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.HitInfo;
 using DevExpress.XtraLayout.Utils;
-using DevExpress.XtraRichEdit;
-using DevExpress.XtraRichEdit.API.Native;
 using DevExpress.XtraTab;
 using DevExpress.XtraTab.ViewInfo;
+using TextEditor.Editors;
+using TextEditor.Editors.RichTextEditor;
 using TextEditor.Editors.WorkbookEditor;
 using TextEditor.TransformParameters;
-using TransformService.RichText;
-using TransformService.TableMetadata;
 
 namespace TextEditor
 {
     public partial class TextEditorUserControl : XtraUserControl, IConfigurable
     {
-        private const string Html2JsonParamsSectionName = "Html2JsonTextEditorParameters";
-        private const string Json2HtmlParamsSectionName = "Json2HtmlTextEditorParameters";
+        private const string JsonTransformParamsSectionName = "JsonTransformParameters";
+        private const string HtmlTransformParamsSectionName = "HtmlTransformParameters";
 
         private WorkbookEditorUserControl _workbookEditor;
 
@@ -34,7 +33,6 @@ namespace TextEditor
             tabControlData.AllowDrop = true;
             tabControlData.DragOver += TabControlDragOver;
             tabControlData.SelectedTabPage = tabPageJsonData;
-            //rtfDocUserControl.InsertEmptyTable();
 
             // Задаем пробелы вместо таба
             txtJson.Document.TabSize = 4;
@@ -61,16 +59,20 @@ namespace TextEditor
             txtHtml.DocumentTextChanged += CodeChanged;
             txtJson.DocumentTextChanged += CodeChanged;
 
-            rtfDocUserControl.RichEditControl.ContentChanged += RichEdit_ContentChanged;
+            RegisterContentChangedEventHandler(richTextEditorUserControl);
 
-            // Убираем ненужные рамки у контролов
+            // Убираем лишние рамки у контролов
             tabControlParameters.CustomDraw += TabbedControlGroupOnCustomDraw;
 
             AdjustControlsState();
             AdjustParametersTab();
-
-            //rtfDocUserControl.RichEdit.
         }
+
+        private void RegisterContentChangedEventHandler(IEditorService editorService) =>
+            editorService.ContentChanged += Editor_ContentChanged;
+
+        private void UnRegisterContentChangedEventHandler(IEditorService editorService) =>
+            editorService.ContentChanged -= Editor_ContentChanged;
 
         private void TxtJson_PasteDragDrop(object sender, PasteDragDropEventArgs e)
         {
@@ -80,10 +82,12 @@ namespace TextEditor
                 e.Text += Environment.NewLine;
         }
 
-        private void CodeChanged(object sender, EditorSnapshotChangedEventArgs e)
-        {
-            AdjustControlsState();
-        }
+        /// <summary>
+        /// Обработка события изменения содержимого редактора кода (JSON, HTML)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CodeChanged(object sender, EditorSnapshotChangedEventArgs e) => AdjustControlsState();
 
         /// <summary>
         /// Обработка перетаскивания файла для смены вкладок
@@ -120,20 +124,15 @@ namespace TextEditor
 
         #endregion
 
-        private void RichEdit_ContentChanged(object sender, EventArgs e)
+        private void Editor_ContentChanged(object sender, EventArgs e)
         {
             AdjustControlsState();
         }
 
-        /// <summary>
-        /// Формирование содержимого редактора на основе HTML
-        /// </summary>
-        /// <param name="htmlData"></param>
-        /// <param name="applyTableStyle"></param>
-        /// <param name="autoFitTable"></param>
+        /*
         private void SetHtmlContentToEditor(string htmlData, bool applyTableStyle, bool autoFitTable)
         {
-            var richEditControl = rtfDocUserControl.RichEditControl;
+            var richEditControl = richTextEditorUserControl.RichEditControl;
 
             // Получаем заголовок таблицы
             var tableMetadata = TableMetadataUtils.GetFirstTableMetadata(htmlData);
@@ -171,7 +170,7 @@ namespace TextEditor
                 var insertedRange = richEditControl.Document.InsertDocumentContent(
                     richEditControl.Document.Range.Start, server.Document.Range);
 
-                // Удаляем последнюю пустую строку, которая появляется в редакторе после вставки контента 
+                // Удаляем последнюю пустую строку, которая появляется в редакторе после вставки контента
                 richEditControl.Document.Delete(richEditControl.Document.CreateRange(insertedRange.End.ToInt() - 1, 1));
 
                 richEditControl.Document.Sections[0].Page.Landscape = true;
@@ -180,7 +179,7 @@ namespace TextEditor
 
                 //richEditControl.ActiveViewType = RichEditViewType.Simple;
 
-                var firstTable = rtfDocUserControl.RichEditControl.Document.Tables.First;
+                var firstTable = richTextEditorUserControl.RichEditControl.Document.Tables.First;
 
                 if (firstTable != null)
                 {
@@ -220,23 +219,23 @@ namespace TextEditor
                     //}
                 }
 
-                //rtfDocUserControl.AutoFitTable();
+                //richTextEditorUserControl.AutoFitTable();
 
                 if (autoFitTable)
                 {
-                    rtfDocUserControl.AutoFitTable();
+                    richTextEditorUserControl.AutoFitTable();
                 }
             }
 
             // Записываем метаданные таблицы
-            var curTableMetadata = rtfDocUserControl.GetTableMetadata();
+            var curTableMetadata = richTextEditorUserControl.GetTableMetadata();
 
             if (string.IsNullOrEmpty(tableMetadata.Title))
                 tableMetadata.Title =
                     curTableMetadata
                         .Title; // Сохраняем прежнее наименование таблицы при отсутствии наименования в новой таблице
 
-            rtfDocUserControl.SetTableMetadata(tableMetadata);
+            richTextEditorUserControl.SetTableMetadata(tableMetadata);
 
             richEditControl.Document.EndUpdate();
 
@@ -246,49 +245,78 @@ namespace TextEditor
             //richEditControl.Update();
             //richEditControl.Refresh();
         }
+        */
 
-        private void CellProcessor(TableCell cell, int rowIndex, int cellIndex)
+        /// <summary>
+        /// Формирование содержимого редактора на основе HTML
+        /// </summary>
+        private void SetHtmlContentToEditor(string htmlData, object parameters)
         {
-            //if (rowindex == 0)
-            //{
-            //    cell.HeightType = HeightType.Exact;
-            //    cell.Height = 500;
-            //    cell.BackgroundColor = Color.BlanchedAlmond;
-            //}
+            var editorService = GetActiveEditorService();
+            IEditorParameters editorParameters = null;
 
-            // Заливка ячеек серым цветом
-            var cellParagraph = rtfDocUserControl.RichEditControl.Document.BeginUpdateParagraphs(cell.Range);
-
-            if (cellParagraph.BackColor.GetValueOrDefault().ToArgb()
-                .Equals(TransformService.HtmlUtils.CommonTableHeaderColor.ArgbValue))
+            switch (editorService)
             {
-                //cell.HeightType = HeightType.Auto;
-                //cell.PreferredWidthType = WidthType.Auto;
-                //cell.Height = 500;
-                cell.BackgroundColor = TransformService.HtmlUtils.CommonTableHeaderColor.Value;
-                //cell.PreferredWidthType = WidthType.Fixed;
+                case null:
+                    return;
+                case RichTextEditorUserControl:
+                    editorParameters = GetRichTextEditorParameters();
+                    break;
+                case WorkbookEditorUserControl:
+                    editorParameters = GetWorkbookEditorParameters(parameters);
+                    break;
             }
 
-            rtfDocUserControl.RichEditControl.Document.EndUpdateParagraphs(cellParagraph);
+            editorService.SetHtmlContent(htmlData, editorParameters);
         }
+
+        private IEditorService GetActiveEditorService() =>
+            tabControlEditors.SelectedTabPage == tabPageRichTextEditor
+                ? richTextEditorUserControl
+                : _workbookEditor;
+
+        //private void CellProcessor(TableCell cell, int rowIndex, int cellIndex)
+        //{
+        //    //if (rowindex == 0)
+        //    //{
+        //    //    cell.HeightType = HeightType.Exact;
+        //    //    cell.Height = 500;
+        //    //    cell.BackgroundColor = Color.BlanchedAlmond;
+        //    //}
+
+        //    // Заливка ячеек серым цветом
+        //    var cellParagraph = richTextEditorUserControl.RichEditControl.Document.BeginUpdateParagraphs(cell.Range);
+
+        //    if (cellParagraph.BackColor.GetValueOrDefault().ToArgb()
+        //        .Equals(TransformService.HtmlUtils.CommonTableHeaderColor.ArgbValue))
+        //    {
+        //        //cell.HeightType = HeightType.Auto;
+        //        //cell.PreferredWidthType = WidthType.Auto;
+        //        //cell.Height = 500;
+        //        cell.BackgroundColor = TransformService.HtmlUtils.CommonTableHeaderColor.Value;
+        //        //cell.PreferredWidthType = WidthType.Fixed;
+        //    }
+
+        //    richTextEditorUserControl.RichEditControl.Document.EndUpdateParagraphs(cellParagraph);
+        //}
 
         //private void SetHtmlContentToEditor(string html)
         //{
         //    //string text = "<b>SOME SAMPLE TEXT</b>";
         //    //AddHeaderToDocument(server.Document, text);
         //    //AddFooterToDocument(server.Document, text);
-        //    rtfDocUserControl.RichEdit.Document.BeginUpdate();
-        //    rtfDocUserControl.RichEdit.Document.Delete(rtfDocUserControl.RichEdit.Document.Range);
+        //    richTextEditorUserControl.RichEdit.Document.BeginUpdate();
+        //    richTextEditorUserControl.RichEdit.Document.Delete(richTextEditorUserControl.RichEdit.Document.Range);
 
         //    using (RichEditDocumentServer server = new RichEditDocumentServer())
         //    {
         //        server.HtmlText = html;
 
-        //        rtfDocUserControl.RichEdit.Document.InsertDocumentContent(
-        //            rtfDocUserControl.RichEdit.Document.Range.Start, server.Document.Range);
+        //        richTextEditorUserControl.RichEdit.Document.InsertDocumentContent(
+        //            richTextEditorUserControl.RichEdit.Document.Range.Start, server.Document.Range);
         //    }
 
-        //    rtfDocUserControl.RichEdit.Document.EndUpdate();
+        //    richTextEditorUserControl.RichEdit.Document.EndUpdate();
         //}
 
         private void AdjustControlsState()
@@ -298,7 +326,7 @@ namespace TextEditor
             cmdCopyJson.Enabled = cmdJson2Editor.Enabled =
                 cmdFormatJson.Enabled = txtJson.Document.CurrentSnapshot.HasContent;
 
-            cmdEditor2Html.Enabled = cmdEditor2Json.Enabled = !rtfDocUserControl.RichEditControl.Document.IsEmpty;
+            cmdEditor2Html.Enabled = cmdEditor2Json.Enabled = GetActiveEditorService()?.HasContent() ?? false;
         }
 
         private void AdjustParametersTab()
@@ -396,14 +424,14 @@ namespace TextEditor
         private void CreateEditorContentByJsonData(string jsonData,
             JsonTransformViewParameters jsonTransformViewParams = null)
         {
-            if (jsonTransformViewParams == null)
-                jsonTransformViewParams = jsonTransformParamsUserControl.GetParameters<JsonTransformViewParameters>();
+            jsonTransformViewParams ??= jsonTransformParamsUserControl.GetParameters<JsonTransformViewParameters>();
 
             //var htmlTransformParams = jsonTransformViewParams.ConvertToHtmlTransformParameters();
 
             var htmlData =
-                Utils.TransformJson2Html(jsonData, jsonTransformViewParams?.GetJson2HtmlTransformParameters());
-            SetHtmlContentToEditor(htmlData, true, false);
+                Utils.TransformJson2Html(jsonData, jsonTransformViewParams.GetJson2HtmlTransformParameters());
+
+            SetHtmlContentToEditor(htmlData, jsonTransformViewParams);
         }
 
         private void CreateEditorContentByHtmlData(string htmlData,
@@ -444,8 +472,15 @@ namespace TextEditor
                 htmlData = Utils.TransformHtml2Html(htmlData, html2HtmlTransformParams);
             }
 
-            SetHtmlContentToEditor(htmlData, true, false);
+            SetHtmlContentToEditor(htmlData, htmlTransformViewParams);
         }
+
+        private WorkbookEditorParameters GetWorkbookEditorParameters(object parameters) =>
+            parameters is ISupportWorkbookEditorParameters workbookEditorParameters
+                ? workbookEditorParameters.GetWorkbookEditorParameters()
+                : null;
+
+        private RichTextEditorParameters GetRichTextEditorParameters() => new(true, false);
 
         private void CmdEditor2JsonClick(object sender, EventArgs e)
         {
@@ -466,8 +501,17 @@ namespace TextEditor
 
         private void TransformFromEditorToJson()
         {
-            var htmlData = rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All,
-                rtfDocUserControl.GetTableMetadata(), rtfDocUserControl.RichEditControl.Options.Export.Html);
+            var editorService = GetActiveEditorService();
+
+            var htmlData = editorService?.GetHtmlContent();
+
+            if (htmlData == null)
+                return;
+
+            //var htmlData = richTextEditorUserControl.RichEditControl.Document.GetHtmlContent(
+            //    RichTextUtils.TextRangeType.All,
+            //    richTextEditorUserControl.GetTableMetadata(),
+            //    richTextEditorUserControl.RichEditControl.Options.Export.Html);
 
             var jsonTransformViewParams =
                 jsonTransformParamsUserControl.GetClonedParameters<JsonTransformViewParameters>();
@@ -534,10 +578,22 @@ namespace TextEditor
             try
             {
                 Utils.ShowProgressForm();
-                InsertNewHtmlData(
-                    rtfDocUserControl.RichEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All,
-                        rtfDocUserControl.GetTableMetadata(), rtfDocUserControl.RichEditControl.Options.Export.Html),
-                    false);
+
+                var editorService = GetActiveEditorService();
+
+                if (editorService == null)
+                    return;
+
+                var htmlData = editorService.GetHtmlContent();
+                InsertNewHtmlData(htmlData, false);
+
+                //InsertNewHtmlData(
+                //    richTextEditorUserControl.RichEditControl.Document.GetHtmlContent(
+                //        RichTextUtils.TextRangeType.All,
+                //        richTextEditorUserControl.GetTableMetadata(),
+                //        richTextEditorUserControl.RichEditControl.Options.Export.Html),
+                //    false);
+
             }
             catch (Exception exception)
             {
@@ -551,42 +607,55 @@ namespace TextEditor
 
         #region IConfigurable
 
-        public void LoadParameters()
+        public void LoadParameters(bool isWorkbookEditorEnable)
         {
-            var html2JsonTransformViewParams =
-                Utils.LoadParameters<JsonTransformViewParameters>(Html2JsonParamsSectionName);
-            jsonTransformParamsUserControl.SetParameters(html2JsonTransformViewParams);
+            var jsonTransformViewParams =
+                Utils.LoadParameters<JsonTransformViewParameters>(JsonTransformParamsSectionName);
+            SetWorkbookEditorParametersVisibility(jsonTransformViewParams, isWorkbookEditorEnable);
+            jsonTransformParamsUserControl.SetParameters(jsonTransformViewParams);
 
-            var json2HtmlTransformViewParams =
-                Utils.LoadParameters<HtmlTransformViewParameters>(Json2HtmlParamsSectionName);
-            htmlTransformParamsUserControl.SetParameters(json2HtmlTransformViewParams);
+            var htmlTransformViewParams =
+                Utils.LoadParameters<HtmlTransformViewParameters>(HtmlTransformParamsSectionName);
+            SetWorkbookEditorParametersVisibility(htmlTransformViewParams, isWorkbookEditorEnable);
+            htmlTransformParamsUserControl.SetParameters(htmlTransformViewParams);
+        }
+
+        private void SetWorkbookEditorParametersVisibility(object parameters, bool isWorkbookEditorEnable)
+        {
+            if (parameters is ISupportWorkbookEditorParameters workbookEditorParameters)
+                workbookEditorParameters.SetWorkbookEditorParametersVisibility(isWorkbookEditorEnable);
         }
 
         public void SaveParameters()
         {
             var html2JsonTransformViewParams =
                 jsonTransformParamsUserControl.GetParameters() as JsonTransformViewParameters;
-            Utils.SaveParameters(html2JsonTransformViewParams, Html2JsonParamsSectionName);
+            Utils.SaveParameters(html2JsonTransformViewParams, JsonTransformParamsSectionName);
 
             var json2HtmlTransformParams =
                 htmlTransformParamsUserControl.GetParameters() as HtmlTransformViewParameters;
-            Utils.SaveParameters(json2HtmlTransformParams, Json2HtmlParamsSectionName);
+            Utils.SaveParameters(json2HtmlTransformParams, HtmlTransformParamsSectionName);
         }
 
         #endregion
 
-        public void SetWorkbookEditorTabVisibility(bool visible)
+        public void SetWorkbookEditorVisibility(bool visible)
         {
             if (visible) // Необходимо отобразить вкладку редактора ячеек
             {
                 _workbookEditor = new WorkbookEditorUserControl();
 
-                tabPageWorkbook.Controls.Add(_workbookEditor);
+                tabPageWorkbookEditor.Controls.Add(_workbookEditor);
                 _workbookEditor.Dock = DockStyle.Fill;
+
+                RegisterContentChangedEventHandler(_workbookEditor);
             }
             else // Вкладка редактора ячеек не отображается
             {
-                tabControlEditors.TabPages.Remove(tabPageWorkbook);
+                tabControlEditors.TabPages.Remove(tabPageWorkbookEditor);
+
+                if (_workbookEditor != null)
+                    UnRegisterContentChangedEventHandler(_workbookEditor);
             }
 
             if (tabControlEditors.TabPages.Count == 0)
@@ -604,6 +673,7 @@ namespace TextEditor
             {
                 tabControlEditors.AllowDrop = true;
                 tabControlEditors.DragOver += TabControlDragOver;
+                tabControlEditors.SelectedPageChanged += (_, _) => AdjustControlsState();
                 tabControlEditors.TabPages[0].Select();
             }
         }

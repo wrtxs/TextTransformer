@@ -13,4 +13,9 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.54" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>..\..\..\..\Downloads\Aspose.Cells_24.4\net4.0\Aspose.Cells.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

@@ -1,15 +1,20 @@
 ﻿using System.ComponentModel;
+using TextEditor.Editors.WorkbookEditor;
 using TransformService;
 
 namespace TextEditor.TransformParameters
 {
-    public class JsonTransformViewParameters : ICloneable // : Html2JsonTransformParameters
+    public class
+        JsonTransformViewParameters : ISupportWorkbookEditorParameters, ICloneable,
+        ICustomTypeDescriptor // : Html2JsonTransformParameters
     {
-        private const string ToEditorCategoryName = "Преобразование JSON -> Редактор";
-        private const string FromEditorCategoryName = "Преобразование JSON <- Редактор";
+        protected const string ToEditorCategoryName = "Преобразование JSON -> Редактор";
+        protected const string FromEditorCategoryName = "Преобразование JSON <- Редактор";
 
         private readonly Json2HtmlTransformParameters _json2HtmlParameters;
         private readonly Html2JsonTransformParameters _html2JsonParameters;
+
+        private bool _isWorkbookEditorVisible;
 
         /// <summary>
         /// From JSON
@@ -17,13 +22,20 @@ namespace TextEditor.TransformParameters
         [Category(ToEditorCategoryName)]
         [DisplayName("Преобразовывать списки в иерархические")]
         [DefaultValue(false)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(0)]
         public bool MakeAllListsHierarchical
         {
             get => _json2HtmlParameters.MakeAllListsHierarchical;
             set => _json2HtmlParameters.MakeAllListsHierarchical = value;
         }
+
+        [Category(ToEditorCategoryName)]
+        [DisplayName("Параметры редактора ячеек")]
+        [ReadOnly(true)]
+        [PropertyOrder(1)]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        public WorkbookEditorParameters WorkbookEditorParameters { get; set; }
 
         /// <summary>
         /// To JSON
@@ -41,7 +53,7 @@ namespace TextEditor.TransformParameters
         [Category(FromEditorCategoryName)]
         [DisplayName("Обрабатывать цвет текста")]
         [DefaultValue(true)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(1)]
         public bool ProcessTextColor
         {
@@ -52,7 +64,7 @@ namespace TextEditor.TransformParameters
         [Category(FromEditorCategoryName)]
         [DisplayName("Заменять табы пробелами")]
         [DefaultValue(false)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(2)]
         public bool ReplaceTabsBySpaces
         {
@@ -63,7 +75,7 @@ namespace TextEditor.TransformParameters
         [Category(FromEditorCategoryName)]
         [DisplayName("Убирать форматирование из HTML")]
         [DefaultValue(true)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(3)]
         public bool RemoveFormatting
         {
@@ -74,7 +86,7 @@ namespace TextEditor.TransformParameters
         [Category(FromEditorCategoryName)]
         [DisplayName("Убирать Bold стиль для заголовков таблиц")]
         [DefaultValue(true)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(4)]
         public bool RemoveBoldStyleForHeaderCells
         {
@@ -85,7 +97,7 @@ namespace TextEditor.TransformParameters
         [Category(FromEditorCategoryName)]
         [DisplayName("Обрабатывать автонумерацию строк таблиц")]
         [DefaultValue(true)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(5)]
         public bool ProcessAutoNumberedRows
         {
@@ -97,7 +109,7 @@ namespace TextEditor.TransformParameters
         [Category(FromEditorCategoryName)]
         [DisplayName("Обрабатывать заливку серым цветом ячеек таблиц")]
         [DefaultValue(true)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(6)]
         public bool ProcessGreyBackgroundColorForCells
         {
@@ -108,7 +120,7 @@ namespace TextEditor.TransformParameters
         [Category(FromEditorCategoryName)]
         [DisplayName("Преобразовывать списки в плоские")]
         [DefaultValue(true)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(7)]
         public bool MakeAllListsFlatten
         {
@@ -119,7 +131,7 @@ namespace TextEditor.TransformParameters
         [Category(FromEditorCategoryName)]
         [DisplayName("Многоуровневая нумерация для плоского списка")]
         [DefaultValue(false)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(8)]
         public bool MultiLevelNumerationForFlattenList
         {
@@ -133,14 +145,14 @@ namespace TextEditor.TransformParameters
         [Category(FromEditorCategoryName)]
         [DisplayName("Копировать JSON в буфер обмена после преобразования")]
         [DefaultValue(true)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(9)]
         public bool CopyJsonToClipboardAfterTransformation { get; set; } = true;
 
         [Category(FromEditorCategoryName)]
         [DisplayName("Форматировать результирующий JSON")]
         [DefaultValue(false)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(0)]
         public bool NeedFormatJsonResult
         {
@@ -151,7 +163,7 @@ namespace TextEditor.TransformParameters
         [Category(FromEditorCategoryName)]
         [DisplayName("Двойная трансформация при преобразовании данных (HTML -> JSON, JSON -> HTML, HTML -> JSON)")]
         [DefaultValue(true)]
-        [TypeConverter(typeof(YesNoTypeConverter))]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
         [Browsable(false)]
         [PropertyOrder(25)]
         public bool NeedDoubleTransformation
@@ -159,6 +171,8 @@ namespace TextEditor.TransformParameters
             get => _html2JsonParameters.NeedDoubleTransformation;
             set => _html2JsonParameters.NeedDoubleTransformation = value;
         }
+
+        #region Constructors
 
         public JsonTransformViewParameters() : this(new Json2HtmlTransformParameters(),
             new Html2JsonTransformParameters())
@@ -170,7 +184,10 @@ namespace TextEditor.TransformParameters
         {
             _json2HtmlParameters = json2HtmlParameters;
             _html2JsonParameters = html2JsonParameters;
+            WorkbookEditorParameters = new WorkbookEditorParameters();
         }
+
+        #endregion
 
         public Json2HtmlTransformParameters GetJson2HtmlTransformParameters() => _json2HtmlParameters;
         public Html2JsonTransformParameters GetHtml2JsonTransformParameters() => _html2JsonParameters;
@@ -184,16 +201,59 @@ namespace TextEditor.TransformParameters
         //{
         //    CommonUtils.CopyValues(source, this);
         //}
-        public object Clone()
-        {
-            return new JsonTransformViewParameters(_json2HtmlParameters.Clone() as Json2HtmlTransformParameters,
-                _html2JsonParameters.Clone() as Html2JsonTransformParameters);
-        }
-    }
 
-    internal class PropertyOrderAttribute : Attribute
-    {
-        public int Value { get; set; }
-        public PropertyOrderAttribute(int value) => Value = value;
+        #region ICloneable
+
+        public object Clone() =>
+            new JsonTransformViewParameters(_json2HtmlParameters.Clone() as Json2HtmlTransformParameters,
+                _html2JsonParameters.Clone() as Html2JsonTransformParameters)
+            {
+                WorkbookEditorParameters = WorkbookEditorParameters.Clone() as WorkbookEditorParameters
+            };
+
+        #endregion
+
+        #region ISupportWorkbookEditorParameters
+
+        public void SetWorkbookEditorParametersVisibility(bool value) => _isWorkbookEditorVisible = value;
+        public WorkbookEditorParameters GetWorkbookEditorParameters() => WorkbookEditorParameters;
+
+        #endregion
+
+        #region ICustomTypeDescriptor
+
+        // Реализация ICustomTypeDescriptor
+        public AttributeCollection GetAttributes() => TypeDescriptor.GetAttributes(this, true);
+        public string GetClassName() => TypeDescriptor.GetClassName(this, true);
+        public string GetComponentName() => TypeDescriptor.GetComponentName(this, true);
+        public TypeConverter GetConverter() => TypeDescriptor.GetConverter(this, true);
+        public EventDescriptor GetDefaultEvent() => TypeDescriptor.GetDefaultEvent(this, true);
+        public PropertyDescriptor GetDefaultProperty() => TypeDescriptor.GetDefaultProperty(this, true);
+        public object GetEditor(Type editorBaseType) => TypeDescriptor.GetEditor(this, editorBaseType, true);
+
+        public EventDescriptorCollection GetEvents(Attribute[] attributes) =>
+            TypeDescriptor.GetEvents(this, attributes, true);
+
+        public EventDescriptorCollection GetEvents() => TypeDescriptor.GetEvents(this, true);
+        public virtual PropertyDescriptorCollection GetProperties(Attribute[] attributes) => GetProperties();
+
+        public virtual PropertyDescriptorCollection GetProperties()
+        {
+            var props = TypeDescriptor.GetProperties(this, true)
+                .Cast<PropertyDescriptor>()
+                .Select(p =>
+                    p.Name == "WorkbookEditorParameters"
+                        ? TypeDescriptor.CreateProperty(
+                            typeof(JsonTransformViewParameters), p,
+                            new BrowsableAttribute(_isWorkbookEditorVisible))
+                        : p
+                );
+
+            return new PropertyDescriptorCollection(props.ToArray());
+        }
+
+        public object GetPropertyOwner(PropertyDescriptor pd) => this;
+
+        #endregion
     }
 }

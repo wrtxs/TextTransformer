@@ -12,8 +12,15 @@ namespace TextEditor
 
         public class MainParameters
         {
-            public bool ShowHtmlImportTab { get; set; } = false;
-            public bool ShowWorkbookEditorTab { get; set; } = true;
+            /// <summary>
+            /// Признак доступности утилиты трансформации из HTML в JSON и обратно
+            /// </summary>
+            public bool EnableHtmlImportUtils { get; set; } = false;
+
+            /// <summary>
+            /// Признак доступносии табличного редактора
+            /// </summary>
+            public bool EnableWorkbookEditor { get; set; } = true; 
         }
 
         private MainParameters _mainParameters;
@@ -31,19 +38,19 @@ namespace TextEditor
 
             Text += @$" v.{GetAssemblyVersion()}"; // Устанавливаем заголовок приложения
 
-            textEditorUserControl.SetWorkbookEditorTabVisibility(_mainParameters.ShowWorkbookEditorTab);
+            textEditorUserControl.SetWorkbookEditorVisibility(_mainParameters.EnableWorkbookEditor);
             ProcessHtmlImportTabVisibility();
             //ProcessTabPaneMainVisibility();
 
-            ((IConfigurable)textEditorUserControl)?.LoadParameters();
-            ((IConfigurable)_htmlImportUserControl)?.LoadParameters();
+            ((IConfigurable)textEditorUserControl)?.LoadParameters(_mainParameters.EnableWorkbookEditor);
+            ((IConfigurable)_htmlImportUserControl)?.LoadParameters(_mainParameters.EnableWorkbookEditor);
 
             FormClosed += OnFormClosed;
         }
 
         private void ProcessHtmlImportTabVisibility()
         {
-            if (_mainParameters.ShowHtmlImportTab) // Необходимо отобразить вкладку импорта
+            if (_mainParameters.EnableHtmlImportUtils) // Необходимо отобразить вкладку импорта
             {
                 _htmlImportUserControl = new HtmlImportUserControl();
                 tabPageImportFromHtml.Controls.Add(_htmlImportUserControl);

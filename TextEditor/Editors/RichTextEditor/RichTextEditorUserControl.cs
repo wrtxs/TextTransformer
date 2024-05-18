@@ -4,7 +4,6 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraRichEdit.API.Layout;
 using DevExpress.XtraRichEdit.API.Native;
-using DevExpress.XtraRichEdit.Export;
 using DevExpress.XtraRichEdit.Services;
 using DevExpress.XtraSpellChecker;
 using DevExpress.XtraSpellChecker.Native;
@@ -16,7 +15,8 @@ using TransformService.TableMetadata;
 
 namespace TextEditor.Editors.RichTextEditor
 {
-    public sealed partial class RichTextEditorUserControl : XtraUserControl, IEditorService, IClipboardService
+    public sealed partial class RichTextEditorUserControl : XtraUserControl, IEditorService, ITableMetadataManager,
+        IClipboardService
     {
         private DevExpress.XtraBars.BarCheckItem _copyFormatItem;
         private DevExpress.XtraBars.PopupMenu _popupMenu;
@@ -82,20 +82,24 @@ namespace TextEditor.Editors.RichTextEditor
             richEditControl.Options.Export.Html.SetCommonExportOptions();
 
             // Добавляем дополнительные команды ("Формат по образцу") и переопределяем панель команд
-            AdjsutCommandsBar();
+            AdjustCommandsBar();
 
             // Создаем строку состояния
             AdjustStatusBar();
 
             // Переопределяем стандартные команды (копирование в буфер обмена)
-            RedefineStandartCommands();
+            RedefineStandardCommands();
 
             ribbonControl.SelectedPage = homeRibbonPage1;
 
             LoadDictionaries();
 
             ribbonControl.ForceInitialize();
+
+            richEditControl.ContentChanged += RichEditControl_ContentChanged;
         }
+
+        private void RichEditControl_ContentChanged(object sender, EventArgs e) => ContentChanged?.Invoke(sender, e);
 
         private void LoadDictionaries()
         {
@@ -122,7 +126,7 @@ namespace TextEditor.Editors.RichTextEditor
                 typeof(DevExpress.XtraRichEdit.SpellChecker.RichEditSpellCheckController));
         }
 
-        private void AdjsutCommandsBar()
+        private void AdjustCommandsBar()
         {
             clipboardRibbonPageGroup1.Text = @"Буфер обмена";
 
@@ -160,7 +164,7 @@ namespace TextEditor.Editors.RichTextEditor
             richEditControl.Options.DocumentCapabilities.Undo = DocumentCapability.Enabled;
         }
 
-        private void RedefineStandartCommands()
+        private void RedefineStandardCommands()
         {
             var commandFactory = new CustomRichEditCommandFactoryService(richEditControl, this, this,
                 richEditControl.GetService<IRichEditCommandFactoryService>());
@@ -191,7 +195,7 @@ namespace TextEditor.Editors.RichTextEditor
         //}
 
         private Document GetDocument() => richEditControl.Document;
-        public HtmlDocumentExporterOptions GetHtmlExporterOptions() => richEditControl.Options.Export.Html;
+        //public HtmlDocumentExporterOptions GetHtmlExporterOptions() => richEditControl.Options.Export.Html;
 
         private Table GetFirstTable() => GetDocument().Tables.First;
 
@@ -226,14 +230,14 @@ namespace TextEditor.Editors.RichTextEditor
             table.EndUpdate();
         }
 
-        public void SetSimpleViewType()
-        {
-            richEditControl.ActiveViewType = RichEditViewType.Simple;
-        }
+        //public void SetSimpleViewType()
+        //{
+        //    richEditControl.ActiveViewType = RichEditViewType.Simple;
+        //}
 
-        public RichEditControl RichEditControl => richEditControl;
+        //public RichEditControl RichEditControl => richEditControl;
 
-        int PageCount
+        private int PageCount
         {
             get => _pageCount;
             set
@@ -245,9 +249,9 @@ namespace TextEditor.Editors.RichTextEditor
             }
         }
 
-        int CurrentPage
+        private int CurrentPage
         {
-            get { return _currentPage; }
+            get => _currentPage;
             set
             {
                 if (_currentPage == value)
@@ -261,9 +265,7 @@ namespace TextEditor.Editors.RichTextEditor
 
         //private RibbonStatusBar _ribbonStatusBar;
 
-        // ToDo вынести в отдельный контрол
         //private DevExpress.XtraBars.BarEditItem _barEditItemTableTitle;
-        private TableMetadata _tableMetadata = new TableMetadata();
 
         //private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit _txtTableTitle;
         private DevExpress.XtraBars.BarStaticItem _pagesBarItem;
@@ -304,7 +306,6 @@ namespace TextEditor.Editors.RichTextEditor
             //_barEditItemTableTitle.Caption = @"Заголовок таблицы";
             //_barEditItemTableTitle.Edit = _txtTableTitle;
             //_barEditItemTableTitle.EditWidth = 360;
-            //_barEditItemTableTitle.Id = 304;
             //_barEditItemTableTitle.Name = "barEditItemTableTitle";
             //_ribbonStatusBar.ItemLinks.Add(_barEditItemTableTitle, true);
 
@@ -369,20 +370,20 @@ namespace TextEditor.Editors.RichTextEditor
 
         #endregion
 
-        void RichTextUserControl_Load(object sender, EventArgs e)
+        private void RichTextUserControl_Load(object sender, EventArgs e)
         {
-            RichEditControl.DocumentLayout.DocumentFormatted += DocumentLayout_DocumentFormatted;
+            richEditControl.DocumentLayout.DocumentFormatted += DocumentLayout_DocumentFormatted;
             OnPagesInfoChanged();
             //RichEdit.HyphenationDictionaries.Add(new OpenOfficeHyphenationDictionary(DemoUtils.GetRelativePath("hyph_en_US.dic"), new System.Globalization.CultureInfo("en-US")));
             //LoadDocument("FirstLook.docx");
         }
 
-        void DocumentLayout_DocumentFormatted(object sender, EventArgs e)
+        private void DocumentLayout_DocumentFormatted(object sender, EventArgs e)
         {
-            BeginInvoke(() => { PageCount = RichEditControl.DocumentLayout.GetPageCount(); });
+            BeginInvoke(() => { PageCount = richEditControl.DocumentLayout.GetPageCount(); });
         }
 
-        void zoomBarEditItem_EditValueChanged(object sender, EventArgs e)
+        private void zoomBarEditItem_EditValueChanged(object sender, EventArgs e)
         {
             if (this._isZoomChanging)
                 return;
@@ -390,7 +391,7 @@ namespace TextEditor.Editors.RichTextEditor
             this._isZoomChanging = true;
             try
             {
-                RichEditControl.ActiveView.ZoomFactor = value / 100f;
+                richEditControl.ActiveView.ZoomFactor = value / 100f;
                 _zoomBarEditItem.Caption = $@"{value}%";
             }
             finally
@@ -399,11 +400,11 @@ namespace TextEditor.Editors.RichTextEditor
             }
         }
 
-        void richEditControl_ZoomChanged(object sender, EventArgs e)
+        private void richEditControl_ZoomChanged(object sender, EventArgs e)
         {
             if (this._isZoomChanging)
                 return;
-            int value = (int)Math.Round(RichEditControl.ActiveView.ZoomFactor * 100);
+            int value = (int)Math.Round(richEditControl.ActiveView.ZoomFactor * 100);
             this._isZoomChanging = true;
             try
             {
@@ -416,45 +417,44 @@ namespace TextEditor.Editors.RichTextEditor
             }
         }
 
-        void OnPagesInfoChanged()
+        private void OnPagesInfoChanged()
         {
             _pagesBarItem.Caption = $@"Страница {CurrentPage} из {PageCount}";
         }
 
-        void richEditControl_VisiblePagesChanged(object sender, EventArgs e)
+        private void richEditControl_VisiblePagesChanged(object sender, EventArgs e)
         {
-            CurrentPage = RichEditControl.ActiveView.GetVisiblePageLayoutInfos()[0].PageIndex + 1;
+            CurrentPage = richEditControl.ActiveView.GetVisiblePageLayoutInfos()[0].PageIndex + 1;
         }
 
-        void richEditControl_SelectionChanged(object sender, EventArgs e)
+        private void richEditControl_SelectionChanged(object sender, EventArgs e)
         {
-            RangedLayoutElement element =
-                RichEditControl.DocumentLayout.GetElement<RangedLayoutElement>(RichEditControl.Document.CaretPosition);
+            var element =
+                richEditControl.DocumentLayout.GetElement<RangedLayoutElement>(richEditControl.Document.CaretPosition);
             if (element != null)
-                CurrentPage = RichEditControl.DocumentLayout.GetPageIndex(element) + 1;
+                CurrentPage = richEditControl.DocumentLayout.GetPageIndex(element) + 1;
         }
 
-        void richEditControl_InvalidFormatException(object sender, RichEditInvalidFormatExceptionEventArgs e)
+        private void richEditControl_InvalidFormatException(object sender, RichEditInvalidFormatExceptionEventArgs e)
         {
-            XtraMessageBox.Show(string.Format(
-                    "Невозможно открыть файл '{0}' поскольку файл имеет недоступимый формат или расширение.\n" +
-                    "Удостоверьтесь, что файл не поврежден и расширение файла соответсвует его формату.",
-                    RichEditControl.Options.DocumentSaveOptions.CurrentFileName),
+            XtraMessageBox.Show(
+                $"Невозможно открыть файл '{richEditControl.Options.DocumentSaveOptions.CurrentFileName}' поскольку файл имеет недоступимый формат или расширение.\n" +
+                "Удостоверьтесь, что файл не поврежден и расширение файла соответсвует его формату.",
                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        void richEditControl_DocumentClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void richEditControl_DocumentClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (RichEditControl.Modified)
+            if (richEditControl.Modified)
             {
-                var currentFileName = RichEditControl.Options.DocumentSaveOptions.CurrentFileName;
+                var currentFileName = richEditControl.Options.DocumentSaveOptions.CurrentFileName;
                 var message = !string.IsNullOrEmpty(currentFileName)
-                    ? string.Format("Вы хотите сохранить изменения, сделанные для '{0}'?", currentFileName)
+                    ? $"Вы хотите сохранить изменения, сделанные для '{currentFileName}'?"
                     : "Вы хотите сохранить изменения?";
-                DialogResult result = XtraMessageBox.Show(message, "Сохранение", MessageBoxButtons.YesNoCancel,
+                var result = XtraMessageBox.Show(message, "Сохранение", MessageBoxButtons.YesNoCancel,
                     MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
-                    e.Cancel = !RichEditControl.SaveDocument();
+                    e.Cancel = !richEditControl.SaveDocument();
                 else
                     e.Cancel = result == DialogResult.Cancel;
             }
@@ -522,6 +522,157 @@ namespace TextEditor.Editors.RichTextEditor
         #endregion
 
         #region IEditorService
+
+        /// <summary>
+        /// Формирование содержимого редактора на основе HTML
+        /// </summary>
+        /// <param name="htmlData"></param>
+        /// <param name="parameters"></param>
+        public void SetHtmlContent(string htmlData, IEditorParameters parameters)
+        {
+            //var richEditControl = richTextEditorUserControl.RichEditControl;
+            var richTextEditorParameters = parameters as RichTextEditorParameters ?? new RichTextEditorParameters();
+
+            richEditControl.Document.BeginUpdate();
+            richEditControl.Document.Delete(richEditControl.Document.Range);
+
+            using (var server = new RichEditDocumentServer())
+            {
+                server.HtmlText = htmlData;
+
+                if (richTextEditorParameters.ApplyTableStyle)
+                {
+                    const string styleName = "Table Simple 1";
+
+                    if (server.Document.Tables.Count > 0)
+                    {
+                        var tableStyle =
+                            server.Document.TableStyles.FirstOrDefault(style =>
+                                style.Name.Equals(styleName, StringComparison.OrdinalIgnoreCase));
+
+                        if (tableStyle != null)
+                        {
+                            foreach (var documentTable in server.Document.Tables)
+                            {
+                                documentTable.Style = tableStyle;
+                            }
+                        }
+
+                        //if (server.Document.TableStyles.Any(style => style.Name.Equals(styleName)))
+                        //    server.Document.Tables.First.Style = server.Document.TableStyles[styleName];
+                    }
+                }
+
+                var insertedRange = richEditControl.Document.InsertDocumentContent(
+                    richEditControl.Document.Range.Start, server.Document.Range);
+
+                // Удаляем последнюю пустую строку, которая появляется в редакторе после вставки контента
+                richEditControl.Document.Delete(richEditControl.Document.CreateRange(insertedRange.End.ToInt() - 1, 1));
+
+                richEditControl.Document.Sections[0].Page.Landscape = true;
+                richEditControl.Document.CaretPosition =
+                    richEditControl.Document.Range.Start;
+
+                //richEditControl.ActiveViewType = RichEditViewType.Simple;
+
+                var firstTable = richEditControl.Document.Tables.First;
+
+                if (firstTable != null)
+                {
+                    firstTable.PreferredWidthType = WidthType.Auto;
+                    firstTable.ForEachCell(
+                        CellProcessor); // Устанавливаем серую заливку для соответствующих ячеек таблицы
+
+                    // Устанавливаем ширину столбцов
+                    //for (var i = 0; i < firstTable.FirstRow.Cells.Count && i < tableMetadata.ColumnWidths.Count(); i++)
+                    //{
+                    //    foreach (var row in firstTable.Rows)
+                    //    {
+                    //        row.Cells[i].PreferredWidth = tableMetadata.ColumnWidths.ElementAt(i);
+                    //        row.Cells[i].PreferredWidthType = WidthType.Fixed;
+                    //    }
+                    //}
+
+                    //firstTable.TableLayout = TableLayoutType.Fixed;
+
+                    //var lt = richEditControl.DocumentLayout.GetElement<LayoutTable>(table.Range.Start);
+
+                    //table.PreferredWidth = Units.TwipsToCentimetersF(lt.Bounds.Width);
+
+                    //for (var rowIndex = 0; rowIndex < table.Rows.Count; rowIndex++)
+                    //{
+                    //    for (var cellIndex = 0; cellIndex < table.Rows[rowIndex].Cells.Count; cellIndex++)
+                    //    {
+                    //        var cell = table[rowIndex, cellIndex];
+                    //        cell.PreferredWidthType = WidthType.Auto;
+                    //    }
+                    //}
+
+                    //if (firstTable.Rows.Count > 0 && firstTable.Rows[0].Cells.Count > 0)
+                    //{
+                    //    firstTable.Rows[0].Cells[0].PreferredWidth += DevExpress.Office.Utils.Units.DocumentsToMillimetersF(1);
+
+                    //}
+                }
+
+                //richTextEditorUserControl.AutoFitTable();
+
+                if (richTextEditorParameters.AutoFitTable)
+                {
+                    AutoFitTable();
+                }
+            }
+
+            richEditControl.Document.EndUpdate();
+
+            // Записываем метаданные таблицы
+            EditorUtils.SetTableMetadata(this, htmlData, true);
+
+            //if (firstTable != null)
+            //    firstTable.PreferredWidthType = WidthType.Fixed;
+
+            //richEditControl.Update();
+            //richEditControl.Refresh();
+        }
+
+        private void CellProcessor(TableCell cell, int rowIndex, int cellIndex)
+        {
+            //if (rowindex == 0)
+            //{
+            //    cell.HeightType = HeightType.Exact;
+            //    cell.Height = 500;
+            //    cell.BackgroundColor = Color.BlanchedAlmond;
+            //}
+
+            // Заливка ячеек серым цветом
+            var cellParagraph = richEditControl.Document.BeginUpdateParagraphs(cell.Range);
+
+            if (cellParagraph.BackColor.GetValueOrDefault().ToArgb()
+                .Equals(TransformService.HtmlUtils.CommonTableHeaderColor.ArgbValue))
+            {
+                //cell.HeightType = HeightType.Auto;
+                //cell.PreferredWidthType = WidthType.Auto;
+                //cell.Height = 500;
+                cell.BackgroundColor = TransformService.HtmlUtils.CommonTableHeaderColor.Value;
+                //cell.PreferredWidthType = WidthType.Fixed;
+            }
+
+            richEditControl.Document.EndUpdateParagraphs(cellParagraph);
+        }
+
+        public string GetHtmlContent() =>
+            richEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, GetTableMetadata(),
+                richEditControl.Options.Export.Html);
+
+        public bool HasContent() => !richEditControl.Document.IsEmpty;
+
+        public event EventHandler ContentChanged;
+
+        #endregion
+
+        #region ITableMetadataManager
+
+        private TableMetadata _tableMetadata = new();
 
         public TableMetadata GetTableMetadata()
         {

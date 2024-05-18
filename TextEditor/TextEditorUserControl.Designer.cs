@@ -40,9 +40,9 @@ namespace TextEditor
             tabPageHtmlData = new DevExpress.XtraTab.XtraTabPage();
             txtHtml = new ActiproSoftware.UI.WinForms.Controls.SyntaxEditor.SyntaxEditor();
             tabControlEditors = new DevExpress.XtraTab.XtraTabControl();
-            tabPageText = new DevExpress.XtraTab.XtraTabPage();
-            rtfDocUserControl = new RichTextEditorUserControl();
-            tabPageWorkbook = new DevExpress.XtraTab.XtraTabPage();
+            tabPageRichTextEditor = new DevExpress.XtraTab.XtraTabPage();
+            richTextEditorUserControl = new RichTextEditorUserControl();
+            tabPageWorkbookEditor = new DevExpress.XtraTab.XtraTabPage();
             htmlTransformParamsUserControl = new TransformParametersUserControl();
             jsonTransformParamsUserControl = new TransformParametersUserControl();
             cmdFormatHtml = new DevExpress.XtraEditors.SimpleButton();
@@ -55,17 +55,6 @@ namespace TextEditor
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             tabControlParameters = new DevExpress.XtraLayout.TabbedControlGroup();
-            tabPageJsonParameters = new DevExpress.XtraLayout.LayoutControlGroup();
-            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
-            emptySpaceItem10 = new DevExpress.XtraLayout.EmptySpaceItem();
-            emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
-            simpleSeparator1 = new DevExpress.XtraLayout.SimpleSeparator();
-            emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
-            emptySpaceItem8 = new DevExpress.XtraLayout.EmptySpaceItem();
             tabPageHtmlParameters = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -77,6 +66,17 @@ namespace TextEditor
             emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
             layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
+            tabPageJsonParameters = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+            emptySpaceItem10 = new DevExpress.XtraLayout.EmptySpaceItem();
+            emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
+            simpleSeparator1 = new DevExpress.XtraLayout.SimpleSeparator();
+            emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
+            emptySpaceItem8 = new DevExpress.XtraLayout.EmptySpaceItem();
             layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)layoutControl).BeginInit();
@@ -87,21 +87,10 @@ namespace TextEditor
             tabPageHtmlData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tabControlEditors).BeginInit();
             tabControlEditors.SuspendLayout();
-            tabPageText.SuspendLayout();
+            tabPageRichTextEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tabControlParameters).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)tabPageJsonParameters).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem8).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem10).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)simpleSeparator1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tabPageHtmlParameters).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem7).BeginInit();
@@ -113,6 +102,17 @@ namespace TextEditor
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem12).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tabPageJsonParameters).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem10).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)simpleSeparator1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem10).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem13).BeginInit();
             SuspendLayout();
@@ -146,7 +146,7 @@ namespace TextEditor
             tabControlData.Location = new Point(2, 2);
             tabControlData.Name = "tabControlData";
             tabControlData.SelectedTabPage = tabPageJsonData;
-            tabControlData.Size = new Size(423, 422);
+            tabControlData.Size = new Size(450, 426);
             tabControlData.TabIndex = 0;
             tabControlData.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageJsonData, tabPageHtmlData });
             tabControlData.SelectedPageChanged += tabControlData_SelectedPageChanged;
@@ -155,7 +155,7 @@ namespace TextEditor
             // 
             tabPageJsonData.Controls.Add(txtJson);
             tabPageJsonData.Name = "tabPageJsonData";
-            tabPageJsonData.Size = new Size(421, 397);
+            tabPageJsonData.Size = new Size(448, 401);
             tabPageJsonData.Text = "JSON данные";
             // 
             // txtJson
@@ -169,14 +169,14 @@ namespace TextEditor
             txtJson.Location = new Point(0, 0);
             txtJson.Name = "txtJson";
             txtJson.Padding = new Padding(0);
-            txtJson.Size = new Size(421, 397);
+            txtJson.Size = new Size(448, 401);
             txtJson.TabIndex = 0;
             // 
             // tabPageHtmlData
             // 
             tabPageHtmlData.Controls.Add(txtHtml);
             tabPageHtmlData.Name = "tabPageHtmlData";
-            tabPageHtmlData.Size = new Size(509, 397);
+            tabPageHtmlData.Size = new Size(478, 401);
             tabPageHtmlData.Text = "HTML данные";
             // 
             // txtHtml
@@ -189,59 +189,59 @@ namespace TextEditor
             txtHtml.IsLineNumberMarginVisible = true;
             txtHtml.Location = new Point(0, 0);
             txtHtml.Name = "txtHtml";
-            txtHtml.Size = new Size(509, 397);
+            txtHtml.Size = new Size(478, 401);
             txtHtml.TabIndex = 1;
             // 
             // tabControlEditors
             // 
             tabControlEditors.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            tabControlEditors.Location = new Point(439, 2);
+            tabControlEditors.Location = new Point(466, 2);
             tabControlEditors.Name = "tabControlEditors";
-            tabControlEditors.SelectedTabPage = tabPageText;
-            tabControlEditors.Size = new Size(594, 422);
+            tabControlEditors.SelectedTabPage = tabPageRichTextEditor;
+            tabControlEditors.Size = new Size(567, 426);
             tabControlEditors.TabIndex = 2;
-            tabControlEditors.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageText, tabPageWorkbook });
+            tabControlEditors.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { tabPageRichTextEditor, tabPageWorkbookEditor });
             // 
-            // tabPageText
+            // tabPageRichTextEditor
             // 
-            tabPageText.Controls.Add(rtfDocUserControl);
-            tabPageText.ImageOptions.Image = (Image)resources.GetObject("tabPageText.ImageOptions.Image");
-            tabPageText.Name = "tabPageText";
-            tabPageText.Size = new Size(592, 394);
-            tabPageText.Text = "Текст";
+            tabPageRichTextEditor.Controls.Add(richTextEditorUserControl);
+            tabPageRichTextEditor.ImageOptions.Image = (Image)resources.GetObject("tabPageRichTextEditor.ImageOptions.Image");
+            tabPageRichTextEditor.Name = "tabPageRichTextEditor";
+            tabPageRichTextEditor.Size = new Size(565, 398);
+            tabPageRichTextEditor.Text = "Текст";
             // 
-            // rtfDocUserControl
+            // richTextEditorUserControl
             // 
-            rtfDocUserControl.Dock = DockStyle.Fill;
-            rtfDocUserControl.Location = new Point(0, 0);
-            rtfDocUserControl.Name = "rtfDocUserControl";
-            rtfDocUserControl.Size = new Size(592, 394);
-            rtfDocUserControl.TabIndex = 17;
+            richTextEditorUserControl.Dock = DockStyle.Fill;
+            richTextEditorUserControl.Location = new Point(0, 0);
+            richTextEditorUserControl.Name = "richTextEditorUserControl";
+            richTextEditorUserControl.Size = new Size(565, 398);
+            richTextEditorUserControl.TabIndex = 17;
             // 
-            // tabPageWorkbook
+            // tabPageWorkbookEditor
             // 
-            tabPageWorkbook.ImageOptions.Image = (Image)resources.GetObject("tabPageWorkbook.ImageOptions.Image");
-            tabPageWorkbook.Name = "tabPageWorkbook";
-            tabPageWorkbook.Size = new Size(504, 394);
-            tabPageWorkbook.Text = "Ячейки";
+            tabPageWorkbookEditor.ImageOptions.Image = (Image)resources.GetObject("tabPageWorkbookEditor.ImageOptions.Image");
+            tabPageWorkbookEditor.Name = "tabPageWorkbookEditor";
+            tabPageWorkbookEditor.Size = new Size(535, 398);
+            tabPageWorkbookEditor.Text = "Ячейки";
             // 
             // htmlTransformParamsUserControl
             // 
-            htmlTransformParamsUserControl.Location = new Point(3, 452);
+            htmlTransformParamsUserControl.Location = new Point(3, 456);
             htmlTransformParamsUserControl.Name = "htmlTransformParamsUserControl";
             htmlTransformParamsUserControl.Size = new Size(362, 78);
             htmlTransformParamsUserControl.TabIndex = 4;
             // 
             // jsonTransformParamsUserControl
             // 
-            jsonTransformParamsUserControl.Location = new Point(3, 452);
+            jsonTransformParamsUserControl.Location = new Point(3, 456);
             jsonTransformParamsUserControl.Name = "jsonTransformParamsUserControl";
             jsonTransformParamsUserControl.Size = new Size(362, 78);
             jsonTransformParamsUserControl.TabIndex = 1;
             // 
             // cmdFormatHtml
             // 
-            cmdFormatHtml.Location = new Point(390, 493);
+            cmdFormatHtml.Location = new Point(390, 497);
             cmdFormatHtml.Name = "cmdFormatHtml";
             cmdFormatHtml.Size = new Size(136, 37);
             cmdFormatHtml.StyleController = layoutControl;
@@ -251,7 +251,7 @@ namespace TextEditor
             // 
             // cmdEditor2Html
             // 
-            cmdEditor2Html.Location = new Point(530, 452);
+            cmdEditor2Html.Location = new Point(530, 456);
             cmdEditor2Html.Name = "cmdEditor2Html";
             cmdEditor2Html.Size = new Size(136, 37);
             cmdEditor2Html.StyleController = layoutControl;
@@ -261,7 +261,7 @@ namespace TextEditor
             // 
             // cmdHtml2Editor
             // 
-            cmdHtml2Editor.Location = new Point(390, 452);
+            cmdHtml2Editor.Location = new Point(390, 456);
             cmdHtml2Editor.Name = "cmdHtml2Editor";
             cmdHtml2Editor.Size = new Size(136, 37);
             cmdHtml2Editor.StyleController = layoutControl;
@@ -271,7 +271,7 @@ namespace TextEditor
             // 
             // cmdJson2Editor
             // 
-            cmdJson2Editor.Location = new Point(390, 452);
+            cmdJson2Editor.Location = new Point(390, 456);
             cmdJson2Editor.Name = "cmdJson2Editor";
             cmdJson2Editor.Size = new Size(136, 37);
             cmdJson2Editor.StyleController = layoutControl;
@@ -281,7 +281,7 @@ namespace TextEditor
             // 
             // cmdEditor2Json
             // 
-            cmdEditor2Json.Location = new Point(530, 452);
+            cmdEditor2Json.Location = new Point(530, 456);
             cmdEditor2Json.Name = "cmdEditor2Json";
             cmdEditor2Json.Size = new Size(136, 37);
             cmdEditor2Json.StyleController = layoutControl;
@@ -291,7 +291,7 @@ namespace TextEditor
             // 
             // cmdFormatJson
             // 
-            cmdFormatJson.Location = new Point(390, 493);
+            cmdFormatJson.Location = new Point(390, 497);
             cmdFormatJson.Name = "cmdFormatJson";
             cmdFormatJson.Size = new Size(136, 37);
             cmdFormatJson.StyleController = layoutControl;
@@ -301,7 +301,7 @@ namespace TextEditor
             // 
             // cmdCopyJson
             // 
-            cmdCopyJson.Location = new Point(530, 493);
+            cmdCopyJson.Location = new Point(530, 497);
             cmdCopyJson.Name = "cmdCopyJson";
             cmdCopyJson.Size = new Size(136, 37);
             cmdCopyJson.StyleController = layoutControl;
@@ -323,19 +323,139 @@ namespace TextEditor
             // 
             splitterItem1.AllowHotTrack = true;
             splitterItem1.IsCollapsible = DevExpress.Utils.DefaultBoolean.True;
-            splitterItem1.Location = new Point(427, 0);
+            splitterItem1.Location = new Point(454, 0);
             splitterItem1.Name = "splitterItem1";
-            splitterItem1.Size = new Size(10, 426);
+            splitterItem1.Size = new Size(10, 430);
             // 
             // tabControlParameters
             // 
-            tabControlParameters.Location = new Point(0, 426);
+            tabControlParameters.Location = new Point(0, 430);
             tabControlParameters.Name = "tabControlParameters";
             tabControlParameters.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            tabControlParameters.SelectedTabPage = tabPageJsonParameters;
-            tabControlParameters.Size = new Size(1035, 113);
+            tabControlParameters.SelectedTabPage = tabPageHtmlParameters;
+            tabControlParameters.Size = new Size(1035, 109);
             tabControlParameters.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             tabControlParameters.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { tabPageJsonParameters, tabPageHtmlParameters });
+            // 
+            // tabPageHtmlParameters
+            // 
+            tabPageHtmlParameters.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1, layoutControlItem7, emptySpaceItem1, layoutControlItem11, emptySpaceItem9, simpleSeparator2, emptySpaceItem14, emptySpaceItem7, layoutControlItem12, emptySpaceItem4 });
+            tabPageHtmlParameters.Location = new Point(0, 0);
+            tabPageHtmlParameters.Name = "tabPageHtmlParameters";
+            tabPageHtmlParameters.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            tabPageHtmlParameters.Size = new Size(1033, 84);
+            tabPageHtmlParameters.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            tabPageHtmlParameters.Text = "Параметры HTML";
+            // 
+            // layoutControlItem1
+            // 
+            layoutControlItem1.Control = cmdHtml2Editor;
+            layoutControlItem1.Location = new Point(387, 0);
+            layoutControlItem1.MaxSize = new Size(140, 41);
+            layoutControlItem1.MinSize = new Size(140, 41);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Size = new Size(140, 41);
+            layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem1.TextSize = new Size(0, 0);
+            layoutControlItem1.TextVisible = false;
+            // 
+            // layoutControlItem7
+            // 
+            layoutControlItem7.Control = cmdEditor2Html;
+            layoutControlItem7.Location = new Point(527, 0);
+            layoutControlItem7.MaxSize = new Size(140, 41);
+            layoutControlItem7.MinSize = new Size(140, 41);
+            layoutControlItem7.Name = "layoutControlItem7";
+            layoutControlItem7.Size = new Size(140, 41);
+            layoutControlItem7.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem7.TextSize = new Size(0, 0);
+            layoutControlItem7.TextVisible = false;
+            // 
+            // emptySpaceItem1
+            // 
+            emptySpaceItem1.AllowHotTrack = false;
+            emptySpaceItem1.Location = new Point(527, 41);
+            emptySpaceItem1.MaxSize = new Size(0, 41);
+            emptySpaceItem1.MinSize = new Size(10, 41);
+            emptySpaceItem1.Name = "emptySpaceItem1";
+            emptySpaceItem1.Size = new Size(140, 41);
+            emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            emptySpaceItem1.TextSize = new Size(0, 0);
+            // 
+            // layoutControlItem11
+            // 
+            layoutControlItem11.Control = cmdFormatHtml;
+            layoutControlItem11.Location = new Point(387, 41);
+            layoutControlItem11.MaxSize = new Size(140, 41);
+            layoutControlItem11.MinSize = new Size(140, 41);
+            layoutControlItem11.Name = "layoutControlItem11";
+            layoutControlItem11.Size = new Size(140, 41);
+            layoutControlItem11.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem11.TextSize = new Size(0, 0);
+            layoutControlItem11.TextVisible = false;
+            // 
+            // emptySpaceItem9
+            // 
+            emptySpaceItem9.AllowHotTrack = false;
+            emptySpaceItem9.Location = new Point(377, 0);
+            emptySpaceItem9.MaxSize = new Size(10, 82);
+            emptySpaceItem9.MinSize = new Size(10, 82);
+            emptySpaceItem9.Name = "emptySpaceItem9";
+            emptySpaceItem9.Size = new Size(10, 82);
+            emptySpaceItem9.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            emptySpaceItem9.TextSize = new Size(0, 0);
+            // 
+            // simpleSeparator2
+            // 
+            simpleSeparator2.AllowHotTrack = false;
+            simpleSeparator2.Location = new Point(376, 0);
+            simpleSeparator2.Name = "simpleSeparator2";
+            simpleSeparator2.Size = new Size(1, 82);
+            // 
+            // emptySpaceItem14
+            // 
+            emptySpaceItem14.AllowHotTrack = false;
+            emptySpaceItem14.Location = new Point(366, 0);
+            emptySpaceItem14.MaxSize = new Size(10, 82);
+            emptySpaceItem14.MinSize = new Size(10, 82);
+            emptySpaceItem14.Name = "emptySpaceItem14";
+            emptySpaceItem14.Size = new Size(10, 82);
+            emptySpaceItem14.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            emptySpaceItem14.TextSize = new Size(0, 0);
+            // 
+            // emptySpaceItem7
+            // 
+            emptySpaceItem7.AllowHotTrack = false;
+            emptySpaceItem7.Location = new Point(667, 0);
+            emptySpaceItem7.MaxSize = new Size(0, 82);
+            emptySpaceItem7.MinSize = new Size(104, 82);
+            emptySpaceItem7.Name = "emptySpaceItem7";
+            emptySpaceItem7.Size = new Size(366, 82);
+            emptySpaceItem7.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            emptySpaceItem7.TextSize = new Size(0, 0);
+            // 
+            // layoutControlItem12
+            // 
+            layoutControlItem12.Control = htmlTransformParamsUserControl;
+            layoutControlItem12.Location = new Point(0, 0);
+            layoutControlItem12.MaxSize = new Size(366, 82);
+            layoutControlItem12.MinSize = new Size(366, 82);
+            layoutControlItem12.Name = "layoutControlItem12";
+            layoutControlItem12.Size = new Size(366, 82);
+            layoutControlItem12.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem12.TextSize = new Size(0, 0);
+            layoutControlItem12.TextVisible = false;
+            // 
+            // emptySpaceItem4
+            // 
+            emptySpaceItem4.AllowHotTrack = false;
+            emptySpaceItem4.Location = new Point(0, 82);
+            emptySpaceItem4.MaxSize = new Size(0, 2);
+            emptySpaceItem4.MinSize = new Size(10, 2);
+            emptySpaceItem4.Name = "emptySpaceItem4";
+            emptySpaceItem4.Size = new Size(1033, 2);
+            emptySpaceItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            emptySpaceItem4.TextSize = new Size(0, 0);
             // 
             // tabPageJsonParameters
             // 
@@ -344,7 +464,7 @@ namespace TextEditor
             tabPageJsonParameters.Location = new Point(0, 0);
             tabPageJsonParameters.Name = "tabPageJsonParameters";
             tabPageJsonParameters.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            tabPageJsonParameters.Size = new Size(1033, 88);
+            tabPageJsonParameters.Size = new Size(1033, 84);
             tabPageJsonParameters.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             tabPageJsonParameters.Text = "Параметры JSON";
             // 
@@ -400,8 +520,8 @@ namespace TextEditor
             // 
             layoutControlItem8.Control = jsonTransformParamsUserControl;
             layoutControlItem8.Location = new Point(0, 0);
-            layoutControlItem8.MaxSize = new Size(366, 0);
-            layoutControlItem8.MinSize = new Size(366, 5);
+            layoutControlItem8.MaxSize = new Size(366, 82);
+            layoutControlItem8.MinSize = new Size(366, 82);
             layoutControlItem8.Name = "layoutControlItem8";
             layoutControlItem8.Size = new Size(366, 82);
             layoutControlItem8.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
@@ -412,8 +532,8 @@ namespace TextEditor
             // 
             emptySpaceItem10.AllowHotTrack = false;
             emptySpaceItem10.Location = new Point(366, 0);
-            emptySpaceItem10.MaxSize = new Size(10, 0);
-            emptySpaceItem10.MinSize = new Size(10, 10);
+            emptySpaceItem10.MaxSize = new Size(10, 82);
+            emptySpaceItem10.MinSize = new Size(10, 82);
             emptySpaceItem10.Name = "emptySpaceItem10";
             emptySpaceItem10.Size = new Size(10, 82);
             emptySpaceItem10.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
@@ -423,8 +543,8 @@ namespace TextEditor
             // 
             emptySpaceItem3.AllowHotTrack = false;
             emptySpaceItem3.Location = new Point(377, 0);
-            emptySpaceItem3.MaxSize = new Size(10, 0);
-            emptySpaceItem3.MinSize = new Size(10, 10);
+            emptySpaceItem3.MaxSize = new Size(10, 82);
+            emptySpaceItem3.MinSize = new Size(10, 82);
             emptySpaceItem3.Name = "emptySpaceItem3";
             emptySpaceItem3.Size = new Size(10, 82);
             emptySpaceItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
@@ -441,11 +561,11 @@ namespace TextEditor
             // 
             emptySpaceItem2.AllowHotTrack = false;
             emptySpaceItem2.Location = new Point(0, 82);
-            emptySpaceItem2.MaxSize = new Size(0, 6);
-            emptySpaceItem2.MinSize = new Size(10, 6);
+            emptySpaceItem2.MaxSize = new Size(0, 2);
+            emptySpaceItem2.MinSize = new Size(10, 2);
             emptySpaceItem2.Name = "emptySpaceItem2";
             emptySpaceItem2.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            emptySpaceItem2.Size = new Size(1033, 6);
+            emptySpaceItem2.Size = new Size(1033, 2);
             emptySpaceItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             emptySpaceItem2.TextSize = new Size(0, 0);
             // 
@@ -453,135 +573,20 @@ namespace TextEditor
             // 
             emptySpaceItem8.AllowHotTrack = false;
             emptySpaceItem8.Location = new Point(667, 0);
-            emptySpaceItem8.MinSize = new Size(100, 20);
+            emptySpaceItem8.MaxSize = new Size(0, 82);
+            emptySpaceItem8.MinSize = new Size(100, 82);
             emptySpaceItem8.Name = "emptySpaceItem8";
             emptySpaceItem8.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             emptySpaceItem8.Size = new Size(366, 82);
             emptySpaceItem8.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             emptySpaceItem8.TextSize = new Size(0, 0);
             // 
-            // tabPageHtmlParameters
-            // 
-            tabPageHtmlParameters.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1, layoutControlItem7, emptySpaceItem1, layoutControlItem11, emptySpaceItem9, simpleSeparator2, emptySpaceItem14, emptySpaceItem7, layoutControlItem12, emptySpaceItem4 });
-            tabPageHtmlParameters.Location = new Point(0, 0);
-            tabPageHtmlParameters.Name = "tabPageHtmlParameters";
-            tabPageHtmlParameters.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            tabPageHtmlParameters.Size = new Size(1033, 88);
-            tabPageHtmlParameters.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            tabPageHtmlParameters.Text = "Параметры HTML";
-            // 
-            // layoutControlItem1
-            // 
-            layoutControlItem1.Control = cmdHtml2Editor;
-            layoutControlItem1.Location = new Point(387, 0);
-            layoutControlItem1.MaxSize = new Size(140, 41);
-            layoutControlItem1.MinSize = new Size(140, 41);
-            layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(140, 41);
-            layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem1.TextSize = new Size(0, 0);
-            layoutControlItem1.TextVisible = false;
-            // 
-            // layoutControlItem7
-            // 
-            layoutControlItem7.Control = cmdEditor2Html;
-            layoutControlItem7.Location = new Point(527, 0);
-            layoutControlItem7.MaxSize = new Size(140, 41);
-            layoutControlItem7.MinSize = new Size(140, 41);
-            layoutControlItem7.Name = "layoutControlItem7";
-            layoutControlItem7.Size = new Size(140, 41);
-            layoutControlItem7.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem7.TextSize = new Size(0, 0);
-            layoutControlItem7.TextVisible = false;
-            // 
-            // emptySpaceItem1
-            // 
-            emptySpaceItem1.AllowHotTrack = false;
-            emptySpaceItem1.Location = new Point(527, 41);
-            emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new Size(140, 41);
-            emptySpaceItem1.TextSize = new Size(0, 0);
-            // 
-            // layoutControlItem11
-            // 
-            layoutControlItem11.Control = cmdFormatHtml;
-            layoutControlItem11.Location = new Point(387, 41);
-            layoutControlItem11.MaxSize = new Size(140, 41);
-            layoutControlItem11.MinSize = new Size(140, 41);
-            layoutControlItem11.Name = "layoutControlItem11";
-            layoutControlItem11.Size = new Size(140, 41);
-            layoutControlItem11.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem11.TextSize = new Size(0, 0);
-            layoutControlItem11.TextVisible = false;
-            // 
-            // emptySpaceItem9
-            // 
-            emptySpaceItem9.AllowHotTrack = false;
-            emptySpaceItem9.Location = new Point(377, 0);
-            emptySpaceItem9.MaxSize = new Size(10, 0);
-            emptySpaceItem9.MinSize = new Size(10, 10);
-            emptySpaceItem9.Name = "emptySpaceItem9";
-            emptySpaceItem9.Size = new Size(10, 82);
-            emptySpaceItem9.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            emptySpaceItem9.TextSize = new Size(0, 0);
-            // 
-            // simpleSeparator2
-            // 
-            simpleSeparator2.AllowHotTrack = false;
-            simpleSeparator2.Location = new Point(376, 0);
-            simpleSeparator2.Name = "simpleSeparator2";
-            simpleSeparator2.Size = new Size(1, 82);
-            // 
-            // emptySpaceItem14
-            // 
-            emptySpaceItem14.AllowHotTrack = false;
-            emptySpaceItem14.Location = new Point(366, 0);
-            emptySpaceItem14.MaxSize = new Size(10, 0);
-            emptySpaceItem14.MinSize = new Size(10, 10);
-            emptySpaceItem14.Name = "emptySpaceItem14";
-            emptySpaceItem14.Size = new Size(10, 82);
-            emptySpaceItem14.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            emptySpaceItem14.TextSize = new Size(0, 0);
-            // 
-            // emptySpaceItem7
-            // 
-            emptySpaceItem7.AllowHotTrack = false;
-            emptySpaceItem7.Location = new Point(667, 0);
-            emptySpaceItem7.MinSize = new Size(104, 24);
-            emptySpaceItem7.Name = "emptySpaceItem7";
-            emptySpaceItem7.Size = new Size(366, 82);
-            emptySpaceItem7.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            emptySpaceItem7.TextSize = new Size(0, 0);
-            // 
-            // layoutControlItem12
-            // 
-            layoutControlItem12.Control = htmlTransformParamsUserControl;
-            layoutControlItem12.Location = new Point(0, 0);
-            layoutControlItem12.MaxSize = new Size(366, 0);
-            layoutControlItem12.MinSize = new Size(366, 5);
-            layoutControlItem12.Name = "layoutControlItem12";
-            layoutControlItem12.Size = new Size(366, 82);
-            layoutControlItem12.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem12.TextSize = new Size(0, 0);
-            layoutControlItem12.TextVisible = false;
-            // 
-            // emptySpaceItem4
-            // 
-            emptySpaceItem4.AllowHotTrack = false;
-            emptySpaceItem4.Location = new Point(0, 82);
-            emptySpaceItem4.MaxSize = new Size(0, 6);
-            emptySpaceItem4.MinSize = new Size(10, 6);
-            emptySpaceItem4.Name = "emptySpaceItem4";
-            emptySpaceItem4.Size = new Size(1033, 6);
-            emptySpaceItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            emptySpaceItem4.TextSize = new Size(0, 0);
-            // 
             // layoutControlItem10
             // 
             layoutControlItem10.Control = tabControlEditors;
-            layoutControlItem10.Location = new Point(437, 0);
+            layoutControlItem10.Location = new Point(464, 0);
             layoutControlItem10.Name = "layoutControlItem10";
-            layoutControlItem10.Size = new Size(598, 426);
+            layoutControlItem10.Size = new Size(571, 430);
             layoutControlItem10.TextSize = new Size(0, 0);
             layoutControlItem10.TextVisible = false;
             // 
@@ -590,7 +595,7 @@ namespace TextEditor
             layoutControlItem13.Control = tabControlData;
             layoutControlItem13.Location = new Point(0, 0);
             layoutControlItem13.Name = "layoutControlItem13";
-            layoutControlItem13.Size = new Size(427, 426);
+            layoutControlItem13.Size = new Size(454, 430);
             layoutControlItem13.TextSize = new Size(0, 0);
             layoutControlItem13.TextVisible = false;
             // 
@@ -609,21 +614,10 @@ namespace TextEditor
             tabPageHtmlData.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)tabControlEditors).EndInit();
             tabControlEditors.ResumeLayout(false);
-            tabPageText.ResumeLayout(false);
+            tabPageRichTextEditor.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)tabControlParameters).EndInit();
-            ((System.ComponentModel.ISupportInitialize)tabPageJsonParameters).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem8).EndInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem10).EndInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)simpleSeparator1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem8).EndInit();
             ((System.ComponentModel.ISupportInitialize)tabPageHtmlParameters).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem7).EndInit();
@@ -635,6 +629,17 @@ namespace TextEditor
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem7).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem12).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tabPageJsonParameters).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem10).EndInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)simpleSeparator1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem8).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem10).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem13).EndInit();
             ResumeLayout(false);
@@ -674,7 +679,7 @@ namespace TextEditor
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
         private DevExpress.XtraLayout.SimpleSeparator simpleSeparator2;
 
-        private RichTextEditorUserControl rtfDocUserControl;
+        private RichTextEditorUserControl richTextEditorUserControl;
         private TransformParametersUserControl jsonTransformParamsUserControl;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem10;
@@ -682,8 +687,8 @@ namespace TextEditor
         private TransformParametersUserControl htmlTransformParamsUserControl;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;
         private DevExpress.XtraTab.XtraTabControl tabControlEditors;
-        private DevExpress.XtraTab.XtraTabPage tabPageText;
-        private DevExpress.XtraTab.XtraTabPage tabPageWorkbook;
+        private DevExpress.XtraTab.XtraTabPage tabPageRichTextEditor;
+        private DevExpress.XtraTab.XtraTabPage tabPageWorkbookEditor;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
         //private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
         //private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
