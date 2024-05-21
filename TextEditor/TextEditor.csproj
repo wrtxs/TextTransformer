@@ -83,6 +83,12 @@
 		<None Update="ru\DevExpress.XtraLayout.v23.1.resources.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="ru\DevExpress.XtraRichEdit.v23.1.resources.dll">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ru\DevExpress.XtraSpreadsheet.v23.1.resources.dll">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>
