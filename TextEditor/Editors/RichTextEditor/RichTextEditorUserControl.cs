@@ -584,11 +584,11 @@ namespace TextEditor.Editors.RichTextEditor
                         CellProcessor); // Устанавливаем серую заливку для соответствующих ячеек таблицы
 
                     // Устанавливаем ширину столбцов
-                    //for (var i = 0; i < firstTable.FirstRow.Cells.Count && i < tableMetadata.ColumnWidths.Count(); i++)
+                    //for (var i = 0; i < firstTable.FirstRow.Cells.Count && i < tableMetadata.OriginalColumnWidths.Count(); i++)
                     //{
                     //    foreach (var row in firstTable.Rows)
                     //    {
-                    //        row.Cells[i].PreferredWidth = tableMetadata.ColumnWidths.ElementAt(i);
+                    //        row.Cells[i].PreferredWidth = tableMetadata.OriginalColumnWidths.ElementAt(i);
                     //        row.Cells[i].PreferredWidthType = WidthType.Fixed;
                     //    }
                     //}
@@ -660,8 +660,8 @@ namespace TextEditor.Editors.RichTextEditor
             richEditControl.Document.EndUpdateParagraphs(cellParagraph);
         }
 
-        public string GetHtmlContent() =>
-            richEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, GetTableMetadata(),
+        public string GetHtmlContent(bool needActualColumnWidths = false) =>
+            richEditControl.Document.GetHtmlContent(RichTextUtils.TextRangeType.All, GetTableMetadata(needActualColumnWidths),
                 richEditControl.Options.Export.Html);
 
         public bool HasContent() => !richEditControl.Document.IsEmpty;
@@ -674,14 +674,57 @@ namespace TextEditor.Editors.RichTextEditor
 
         private TableMetadata _tableMetadata = new();
 
-        public TableMetadata GetTableMetadata()
+        public TableMetadata GetTableMetadata(bool needActualColumnWidths = false) =>
+            new(barEditItemTableTitle.EditValue as string, _tableMetadata.OriginalColumnWidths,
+                needActualColumnWidths ? GetActualColumnWidths() : null);
+
+        private IEnumerable<int> GetActualColumnWidths()
         {
-            var title = barEditItemTableTitle.EditValue as string;
+            var firstTable = richEditControl.Document.Tables.First;
+            var dictColumnWidths = new SortedDictionary<int, int>();
 
-            var tableMetadata = _tableMetadata.Clone();
-            tableMetadata.Title = title;
+            firstTable?.ForEachCell((cell, _, colIndex) =>
+                {
+                    var cellLayout = richEditControl.DocumentLayout.GetElement<LayoutTableCell>(cell.Range.Start);
+                    if (cellLayout != null)
+                    {
+                        var cellWidth = cellLayout.Bounds.Width;
 
-            return tableMetadata;
+                        if (dictColumnWidths.TryGetValue(colIndex, out var dictWidth))
+                        {
+                            if (cellWidth < dictWidth)
+                                dictColumnWidths[colIndex] = cellWidth;
+                        }
+                        else dictColumnWidths[colIndex] = cellWidth;
+                    }
+                }
+            );
+
+            //if (firstTable != null)
+            //{
+            //    foreach (var row in firstTable.Rows)
+            //    {
+            //        for (var colIndex = 0; colIndex < row.Cells.Count; colIndex++)
+            //        {
+            //            var cell = row.Cells[colIndex];
+            //            var cellLayout = richEditControl.DocumentLayout.GetElement<LayoutTableCell>(cell.Range.Start);
+
+            //            if (cellLayout != null)
+            //            {
+            //                var cellWidth = cellLayout.Bounds.Width;
+
+            //                if (dictColumnWidths.TryGetValue(colIndex, out var dictWidth))
+            //                {
+            //                    if (cellWidth < dictWidth)
+            //                        dictColumnWidths[colIndex] = cellWidth;
+            //                }
+            //                else dictColumnWidths[colIndex] = cellWidth;
+            //            }
+            //        }
+            //    }
+            //}
+
+            return dictColumnWidths.Values.ToArray();
         }
 
         public void SetTableMetadata(TableMetadata tableMetadata)

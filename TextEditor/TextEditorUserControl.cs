@@ -188,11 +188,11 @@ namespace TextEditor
                         CellProcessor); // Устанавливаем серую заливку для соответствующих ячеек таблицы
 
                     // Устанавливаем ширину столбцов
-                    //for (var i = 0; i < firstTable.FirstRow.Cells.Count && i < tableMetadata.ColumnWidths.Count(); i++)
+                    //for (var i = 0; i < firstTable.FirstRow.Cells.Count && i < tableMetadata.OriginalColumnWidths.Count(); i++)
                     //{
                     //    foreach (var row in firstTable.Rows)
                     //    {
-                    //        row.Cells[i].PreferredWidth = tableMetadata.ColumnWidths.ElementAt(i);
+                    //        row.Cells[i].PreferredWidth = tableMetadata.OriginalColumnWidths.ElementAt(i);
                     //        row.Cells[i].PreferredWidthType = WidthType.Fixed;
                     //    }
                     //}
@@ -503,7 +503,13 @@ namespace TextEditor
         {
             var editorService = GetActiveEditorService();
 
-            var htmlData = editorService?.GetHtmlContent();
+            var jsonTransformViewParams =
+                jsonTransformParamsUserControl.GetClonedParameters<JsonTransformViewParameters>();
+
+            if (jsonTransformViewParams == null)
+                return;
+
+            var htmlData = editorService?.GetHtmlContent(!jsonTransformViewParams.KeepOriginalColumnWidths);
 
             if (htmlData == null)
                 return;
@@ -513,16 +519,11 @@ namespace TextEditor
             //    richTextEditorUserControl.GetTableMetadata(),
             //    richTextEditorUserControl.RichEditControl.Options.Export.Html);
 
-            var jsonTransformViewParams =
-                jsonTransformParamsUserControl.GetClonedParameters<JsonTransformViewParameters>();
 
-            if (jsonTransformViewParams != null)
-            {
-                jsonTransformViewParams.NeedDoubleTransformation = false;
-                var jsonData = Utils.TransformHtml2Json(htmlData, jsonTransformViewParams);
+            jsonTransformViewParams.NeedDoubleTransformation = false;
+            var jsonData = Utils.TransformHtml2Json(htmlData, jsonTransformViewParams);
 
-                InsertNewJsonData(jsonData, false);
-            }
+            InsertNewJsonData(jsonData, false);
         }
 
         public void InsertNewJsonData(string jsonData, bool updateTable,

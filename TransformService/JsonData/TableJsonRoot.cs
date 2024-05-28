@@ -11,15 +11,15 @@ namespace TransformService.JsonData
     {
         public override ContentType Type => ContentType.Table;
 
-        public static TableJsonRoot GetRootInstanceForTable(TableMetadata.TableMetadata tableMetadata) =>
+        public static TableJsonRoot GetRootInstanceForTable(string title, IEnumerable<int> columnWidths) =>
             new()
             {
                 Content = new TableRootContent
                 {
-                    Title = tableMetadata.Title,
+                    Title = title,
                     Table = new Table
                     {
-                        Widths = new List<int>(tableMetadata.ColumnWidths)
+                        Widths = new List<int>(columnWidths)
                         //Cells = new List<Cell>()
                     }
                 }

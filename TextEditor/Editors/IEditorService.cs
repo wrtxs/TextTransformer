@@ -23,7 +23,7 @@ namespace TextEditor.Editors
         /// Получить из редактора HTML представление содержимого
         /// </summary>
         /// <returns></returns>
-        string GetHtmlContent();
+        string GetHtmlContent(bool needActualColumnWidths = false);
 
         /// <summary>
         /// Признак наличия содерж

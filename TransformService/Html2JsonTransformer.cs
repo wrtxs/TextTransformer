@@ -92,7 +92,10 @@ namespace TransformService
             if (rows == null)
                 return null;
 
-            var root = TableJsonRoot.GetRootInstanceForTable(tableMetadata);
+            var root = TableJsonRoot.GetRootInstanceForTable(tableMetadata.Title,
+                (transformParams.KeepOriginalColumnWidths && tableMetadata.OriginalColumnWidths.Any())
+                    ? tableMetadata.OriginalColumnWidths
+                    : TableMetadataUtils.NormalizeColumnWidths(tableMetadata.ActualColumnWidths));
 
             var y = 0;
             var colSpanMap = new Dictionary<int, int>();
@@ -282,7 +285,7 @@ namespace TransformService
 
             var tableNode = new HtmlNode(HtmlNodeType.Element, docNode.OwnerDocument, 0) { Name = "table" };
             var colSpanMap = new Dictionary<int, int>(); // Tracks last column impacted by colspan for each row
-            var columnWidths = new SortedDictionary<int, int>();
+            var originalColumnWidths = new SortedDictionary<int, int>();
 
             foreach (var div in containerDiv.SelectNodes(".//div[contains(@style, 'grid-area')]"))
             {
@@ -301,7 +304,7 @@ namespace TransformService
                 var widthMatch = System.Text.RegularExpressions.Regex.Match(style, @"width:\s*([\d.]+)px;");
                 if (widthMatch.Success && int.TryParse(widthMatch.Groups[1].Value, out var width))
                 {
-                    columnWidths.TryAdd(x, width);
+                    originalColumnWidths.TryAdd(x, width);
                 }
 
                 while (tableNode.ChildNodes.Count < y)
@@ -331,15 +334,15 @@ namespace TransformService
             }
 
             // Вставляем недостающие размеры колонок
-            var maxColumnIndex = columnWidths.Keys.Any() ? columnWidths.Keys.Max() : 0;
+            var maxColumnIndex = originalColumnWidths.Keys.Any() ? originalColumnWidths.Keys.Max() : 0;
             for (var i = 1; i <= maxColumnIndex; i++)
             {
-                columnWidths.TryAdd(i, 200);
+                originalColumnWidths.TryAdd(i, 200);
             }
 
             return (tableNode,
                 new TableMetadata.TableMetadata(tableName,
-                    columnWidths.Values.ToArray())); // { TableName = tableName, TableHtml = table.OuterHtml };
+                    originalColumnWidths.Values.ToArray(), null)); // { TableName = tableName, TableHtml = table.OuterHtml };
         }
     }
 
@@ -398,7 +401,12 @@ namespace TransformService
         /// <summary>
         /// Многоуровневая нумерация для плоского списка
         /// </summary>
-        public virtual bool MultiLevelNumerationForFlattenList { get; set; } = false;
+        public virtual bool MultiLevelNumerationForFlattenList { get; set; } = false;        
+        
+        /// <summary>
+        /// Признак необходимости переноса в результирующий JSON исходных значений ширин колонок (полученных ранее из исходного JSON)
+        /// </summary>
+        public virtual bool KeepOriginalColumnWidths { get; set; } = true;
 
         //public virtual bool CopyJsonToClipboardAfterTransformation { get; set; } = true;
 

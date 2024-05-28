@@ -118,10 +118,21 @@ namespace TextEditor.TransformParameters
         }
 
         [Category(FromEditorCategoryName)]
-        [DisplayName("Преобразовывать списки в плоские")]
+        [DisplayName("Сохранять исходные размеры колонок таблиц")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(7)]
+        public bool KeepOriginalColumnWidths
+        {
+            get => _html2JsonParameters.KeepOriginalColumnWidths;
+            set => _html2JsonParameters.KeepOriginalColumnWidths = value;
+        }
+
+        [Category(FromEditorCategoryName)]
+        [DisplayName("Преобразовывать списки в плоские")]
+        [DefaultValue(true)]
+        [TypeConverter(typeof(YesNoValueTypeConverter))]
+        [PropertyOrder(8)]
         public bool MakeAllListsFlatten
         {
             get => _html2JsonParameters.MakeAllListsFlatten;
@@ -132,7 +143,7 @@ namespace TextEditor.TransformParameters
         [DisplayName("Многоуровневая нумерация для плоского списка")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoValueTypeConverter))]
-        [PropertyOrder(8)]
+        [PropertyOrder(9)]
         public bool MultiLevelNumerationForFlattenList
         {
             get => _html2JsonParameters.MultiLevelNumerationForFlattenList;
@@ -146,14 +157,14 @@ namespace TextEditor.TransformParameters
         [DisplayName("Копировать JSON в буфер обмена после преобразования")]
         [DefaultValue(true)]
         [TypeConverter(typeof(YesNoValueTypeConverter))]
-        [PropertyOrder(9)]
+        [PropertyOrder(10)]
         public bool CopyJsonToClipboardAfterTransformation { get; set; } = true;
 
         [Category(FromEditorCategoryName)]
         [DisplayName("Форматировать результирующий JSON")]
         [DefaultValue(false)]
         [TypeConverter(typeof(YesNoValueTypeConverter))]
-        [PropertyOrder(0)]
+        [PropertyOrder(11)]
         public bool NeedFormatJsonResult
         {
             get => _html2JsonParameters.NeedFormatJsonResult;

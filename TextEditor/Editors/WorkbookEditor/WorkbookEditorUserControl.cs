@@ -167,7 +167,7 @@ namespace TextEditor.Editors.WorkbookEditor
             }
         }
 
-        public string GetHtmlContent()
+        public string GetHtmlContent(bool needActualColumnWidths = false)
         {
             var workbook = spreadsheetControl.Document;
 
@@ -182,7 +182,7 @@ namespace TextEditor.Editors.WorkbookEditor
             var htmlContent = Encoding.UTF8.GetString(ms.ToArray());
 
             // Записываем метаданные таблицы
-            htmlContent = TableMetadataUtils.SetFirstTableMetadata(htmlContent, GetTableMetadata());
+            htmlContent = TableMetadataUtils.SetFirstTableMetadata(htmlContent, GetTableMetadata(needActualColumnWidths));
 
             return htmlContent;
         }
@@ -212,14 +212,21 @@ namespace TextEditor.Editors.WorkbookEditor
         #region ITableMetadataManager   
         private TableMetadata _tableMetadata = new();
 
-        public TableMetadata GetTableMetadata()
+        public TableMetadata GetTableMetadata(bool needActualColumnWidths = false) =>
+            new(barEditItemTableTitle.EditValue as string, _tableMetadata.OriginalColumnWidths,
+                needActualColumnWidths ? GetActualColumnWidths() : null);
+
+        private IEnumerable<int> GetActualColumnWidths()
         {
-            var title = barEditItemTableTitle.EditValue as string;
+            var activeSheet = spreadsheetControl.Document.Worksheets.ActiveWorksheet;
+            var columnWidths = new List<int>();
 
-            var tableMetadata = _tableMetadata.Clone();
-            tableMetadata.Title = title;
+            for (var colIndex = 0; colIndex <= activeSheet.Columns.LastUsedIndex; colIndex++)
+            {
+                columnWidths.Add((int)activeSheet.Columns[colIndex].Width);
+            }
 
-            return tableMetadata;
+            return columnWidths;
         }
 
         public void SetTableMetadata(TableMetadata tableMetadata)
