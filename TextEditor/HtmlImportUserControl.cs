@@ -11,7 +11,7 @@ namespace TextEditor
         public event EventHandler<JsonExportEventArgs> JsonToEditorEvent;
         public event EventHandler<HtmlExportEventArgs> HtmlToEditorEvent;
 
-        private const string ParamsSectionName = "HtmlImportParameters";
+        private const string ParamsSectionName = "HtmlImportUtilsParameters";
 
         public HtmlImportUserControl()
         {
@@ -217,16 +217,16 @@ namespace TextEditor
 
         #region IConfigurable
 
-        public void LoadParameters()
+        public void LoadParameters(bool enableWorkbookEditor)
         {
-            var jsonTransformViewParameters = Utils.LoadParameters<JsonTransformViewParameters>(ParamsSectionName);
-            transformParamsUserControl.SetParameters(jsonTransformViewParameters);
+            var htmlImportViewParameters = Utils.LoadParameters<HtmlImportViewParameters>(ParamsSectionName);
+            transformParamsUserControl.SetParameters(htmlImportViewParameters);
         }
 
         public void SaveParameters()
         {
-            var parameters = transformParamsUserControl.GetParameters();
-            Utils.SaveParameters(parameters, ParamsSectionName);
+            var htmlImportViewParameters = transformParamsUserControl.GetParameters();
+            Utils.SaveParameters(htmlImportViewParameters, ParamsSectionName);
         }
 
         #endregion

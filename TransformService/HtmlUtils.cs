@@ -1410,8 +1410,8 @@ namespace TransformService
 
         //    //return node;
         //}
-        public static bool IsCellHeader(HtmlNode cell, StyleClassesRegistry styleClassesRegistry,
-            Html2JsonTransformParameters transformParams)
+        public static bool IsCellHeader(HtmlNode cell, bool processGreyBackgroundColor,
+            StyleClassesRegistry styleClassesRegistry)
         {
             if (cell.Name.Equals("th", StringComparison.OrdinalIgnoreCase))
             {
@@ -1419,7 +1419,7 @@ namespace TransformService
             }
 
             // Обрабатываем заливку ячейки серым цветом
-            if (transformParams.ProcessGreyBackgroundColorForCells)
+            if (processGreyBackgroundColor)
             {
                 // Получаем наименования классов у ячейки и проверяем на выполнение одного из следующих условий:
                 // 1) Классы содержат названия "highlight-grey" и "confluenceTd"
@@ -1432,7 +1432,8 @@ namespace TransformService
 
                     if ((classNames.Contains("highlight-grey", StringComparer.OrdinalIgnoreCase) &&
                          classNames.Contains("confluenceTd", StringComparer.OrdinalIgnoreCase)) ||
-                        classNames.Any(className => HasBackgroundColorInStyleClass(className, styleClassesRegistry)))
+                        (styleClassesRegistry != null && classNames.Any(className =>
+                            HasBackgroundColorInStyleClass(className, styleClassesRegistry))))
                     {
                         return true;
                     }
@@ -1659,7 +1660,7 @@ namespace TransformService
         /// <param name="currentX"></param>
         /// <param name="colspanMap"></param>
         /// <returns></returns>
-        public static int GetXWithColspan(int currentY, int currentX, IReadOnlyDictionary<int, int> colspanMap)
+        public static int GetXWithColSpan(int currentY, int currentX, IReadOnlyDictionary<int, int> colspanMap)
         {
             var x = currentX;
 

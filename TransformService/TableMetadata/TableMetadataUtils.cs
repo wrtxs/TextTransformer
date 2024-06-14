@@ -1,4 +1,6 @@
 ﻿using HtmlAgilityPack;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TransformService.TableMetadata
 {
@@ -28,9 +30,15 @@ namespace TransformService.TableMetadata
         {
             var title = tableNode.GetAttributeValue(TableMetadata.TitleAttributeName, null)?.Replace("&nbsp;", " ")
                 .Replace("&quot;", "\"");
-            var colWidthsStr = tableNode.GetAttributeValue(TableMetadata.ColWidthsAttributeName, null);
 
-            var tableMetadata = new TableMetadata(title, colWidthsStr);
+            var originalColumnWidths =
+                GetColumnWidthsFromString(tableNode.GetAttributeValue(TableMetadata.OriginalColumnWidthsAttributeName,
+                    null));
+            var actualColumnWidths =
+                GetColumnWidthsFromString(tableNode.GetAttributeValue(TableMetadata.ActualColumnWidthsAttributeName,
+                    null));
+
+            var tableMetadata = new TableMetadata(title, originalColumnWidths, actualColumnWidths);
 
             return tableMetadata;
         }
@@ -44,17 +52,15 @@ namespace TransformService.TableMetadata
         public static string SetFirstTableMetadata(string htmlData, TableMetadata metadata)
         {
             var docNode = HtmlUtils.GetHtmlNodeFromText(htmlData);
+            var tableNode = docNode?.SelectSingleNode("//table");
 
-            if (docNode != null)
+            if (tableNode != null)
             {
-                var tableNode = docNode.SelectSingleNode("//table");
-
-                if (tableNode != null)
-                {
-                    tableNode.WriteOrRemoveAttribute(TableMetadata.TitleAttributeName, metadata.Title);
-                    tableNode.WriteOrRemoveAttribute(TableMetadata.ColWidthsAttributeName,
-                        metadata.GetColumnWidthsString());
-                }
+                tableNode.WriteOrRemoveAttribute(TableMetadata.TitleAttributeName, metadata.Title);
+                tableNode.WriteOrRemoveAttribute(TableMetadata.OriginalColumnWidthsAttributeName,
+                    GetStringFromColumnWidths(metadata.OriginalColumnWidths));      
+                tableNode.WriteOrRemoveAttribute(TableMetadata.ActualColumnWidthsAttributeName,
+                    GetStringFromColumnWidths(metadata.ActualColumnWidths));
             }
 
             return docNode?.OuterHtml;
@@ -66,6 +72,46 @@ namespace TransformService.TableMetadata
                 tableNode.SetAttributeValue(attributeName, attributeValue);
             else
                 tableNode.Attributes.Remove(attributeName);
+        }
+
+        /// <summary>
+        /// Получение массива значений ширин столбцов из строки
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static IEnumerable<int> GetColumnWidthsFromString(string values)
+        {
+            var colWidths = new List<int>();
+
+            try
+            {
+                if (!string.IsNullOrEmpty(values))
+                    colWidths.AddRange(values.Split(';').Select(int.Parse));
+            }
+            catch
+            {
+                //
+            }
+
+            return colWidths;
+        }
+
+        public static string GetStringFromColumnWidths(IEnumerable<int> columnWidths) => string.Join(";", columnWidths);
+
+        public static IEnumerable<int> NormalizeColumnWidths(IEnumerable<int> columnWidths)
+        {
+            var normalizeColumnWidths = columnWidths as int[] ?? columnWidths.ToArray();
+
+            if (!normalizeColumnWidths.Any())
+                return normalizeColumnWidths;
+
+            var maxColumnWidthSize = normalizeColumnWidths.Max();
+
+            if (maxColumnWidthSize <= 0)
+                return normalizeColumnWidths;
+
+            return normalizeColumnWidths.Select(currentWidth =>
+                currentWidth * TableMetadata.MaxColumnWidthSize / maxColumnWidthSize);
         }
     }
 }

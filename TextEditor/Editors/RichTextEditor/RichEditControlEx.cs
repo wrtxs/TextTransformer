@@ -7,7 +7,7 @@ using DevExpress.XtraRichEdit.Internal;
 using DevExpress.XtraRichEdit.Layout;
 using DevExpress.XtraRichEdit.Mouse;
 
-namespace TextEditor.Editors.RichTextEdit
+namespace TextEditor.Editors.RichTextEditor
 {
     internal class RichEditControlEx : RichEditControl
     {

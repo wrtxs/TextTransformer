@@ -4,7 +4,7 @@ using DevExpress.XtraRichEdit.Commands;
 using TransformService;
 using TransformService.RichText;
 
-namespace TextEditor.Editors.RichTextEdit.CustomCommands
+namespace TextEditor.Editors.RichTextEditor.CustomCommands
 {
     internal class CustomCopySelectionCommand : CopySelectionCommand
     {

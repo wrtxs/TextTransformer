@@ -6,7 +6,10 @@ namespace TransformService.TableMetadata
     public class TableMetadata
     {
         public static readonly string TitleAttributeName = "title";
-        public static readonly string ColWidthsAttributeName = "colWidths";
+        public static readonly string OriginalColumnWidthsAttributeName = "original-column-widths";
+        public static readonly string ActualColumnWidthsAttributeName = "actual-column-widths";
+        public static readonly int MaxColumnWidthSize = 400;
+
 
         /// <summary>
         /// Заголовок таблицы
@@ -14,47 +17,39 @@ namespace TransformService.TableMetadata
         public string Title { get; set; }
 
         /// <summary>
-        /// Ширины колонок таблицы
+        /// Исходные размеры ширин колонок таблицы (полученные из JSON файла)
         /// </summary>
-        public IEnumerable<int> ColumnWidths { get; private set; }
+        public IEnumerable<int> OriginalColumnWidths { get; private set; }
 
-        public TableMetadata() : this(null)
-        {
-        }
+        /// <summary>
+        /// Измененные размеры ширин колонок таблицы (заданные в визуальных редакторах)
+        /// </summary>
+        public IEnumerable<int> ActualColumnWidths { get; private set; }
 
-        public TableMetadata(string title) : this(title, (IEnumerable<int>)null)
-        {
-        }
+        //public TableMetadata() : this()
+        //{
+        //}
 
-        public TableMetadata(string title, string colWidthsStrValues) : this(title, GetColumnWidths(colWidthsStrValues))
-        {
-        }
+        //public TableMetadata(string title) : this(title, null, null)
+        //{
+        //}
 
-        public TableMetadata(string title, IEnumerable<int> columnWidths)
+        //public TableMetadata(string title, string colWidthsStrValues) : this(title, GetColumnWidthsFromString(colWidthsStrValues), null)
+        //{
+        //}
+
+        public TableMetadata(string title = null, IEnumerable<int> originalColumnWidths = null,
+            IEnumerable<int> actualColumnWidths = null)
         {
             Title = title;
-            ColumnWidths = columnWidths ?? System.Array.Empty<int>();
+            OriginalColumnWidths = originalColumnWidths != null
+                ? new List<int>(originalColumnWidths)
+                : System.Array.Empty<int>();
+            ActualColumnWidths = actualColumnWidths != null
+                ? new List<int>(actualColumnWidths)
+                : System.Array.Empty<int>();
         }
 
-        public string GetColumnWidthsString() => string.Join(";", ColumnWidths);
-
-        public TableMetadata Clone() => new(Title, new List<int>(ColumnWidths));
-
-        private static IList<int> GetColumnWidths(string values)
-        {
-            var colWidths = new List<int>();
-
-            try
-            {
-                if (!string.IsNullOrEmpty(values))
-                    colWidths.AddRange(values.Split(';').Select(int.Parse));
-            }
-            catch
-            {
-                //
-            }
-
-            return colWidths;
-        }
+        public TableMetadata Clone() => new(Title, OriginalColumnWidths, ActualColumnWidths);
     }
 }

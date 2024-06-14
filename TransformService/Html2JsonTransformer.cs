@@ -22,14 +22,15 @@ namespace TransformService
             if (string.IsNullOrEmpty(htmlData.Trim()))
                 return null;
 
-            var docNode = HtmlUtils.GetHtmlNodeFromText(htmlData); 
+            var docNode = HtmlUtils.GetHtmlNodeFromText(htmlData);
 
             _styleClassesRegistry =
                 new StyleClassesRegistry(docNode); // Создаем объект-обработчик стилей документа
 
             HtmlNode mainTable;
-            var tableMetadata = new TableMetadata.TableMetadata();
+            TableMetadata.TableMetadata tableMetadata = null;
 
+            // 1-й этап -> ищем тег table
             if (docNode.FirstChild.Name.Equals("tbody",
                     StringComparison.OrdinalIgnoreCase)) // Получаем тело таблицы, если первым не идет тег tbody
             {
@@ -47,7 +48,22 @@ namespace TransformService
                 }
             }
 
-            var root = mainTable != null ? CreateJsonTable(mainTable, tableMetadata, transformParams) : CreateJsonText(docNode, transformParams);
+            // 2-й этап -> ищем div таблицу, и если находим, то преобразуем ее в обычную table таблицу
+            if (mainTable == null)
+            {
+                var tableFromDivResult = TryGetTableFromDivGrid(docNode);
+
+                if (tableFromDivResult.HasValue)
+                {
+                    mainTable = tableFromDivResult.Value.tableNode;
+                    tableMetadata = tableFromDivResult.Value.tableMetadata;
+                }
+            }
+
+            // 3-й этап преобразуем найденный html в json
+            var root = mainTable != null
+                ? CreateJsonTable(mainTable, tableMetadata ?? new TableMetadata.TableMetadata(), transformParams)
+                : CreateJsonText(docNode, transformParams);
 
             if (root == null)
                 return null;
@@ -71,15 +87,18 @@ namespace TransformService
         private JsonRootBase CreateJsonTable(HtmlNode mainTable, TableMetadata.TableMetadata tableMetadata,
             Html2JsonTransformParameters transformParams)
         {
-            var rows = mainTable.SelectNodes("//tr");
+            var rows = mainTable.SelectNodes(".//tr");
 
             if (rows == null)
                 return null;
 
-            var root = TableJsonRoot.GetRootInstanceForTable(tableMetadata);
+            var root = TableJsonRoot.GetRootInstanceForTable(tableMetadata.Title,
+                (transformParams.KeepOriginalColumnWidths && tableMetadata.OriginalColumnWidths.Any())
+                    ? tableMetadata.OriginalColumnWidths
+                    : TableMetadataUtils.NormalizeColumnWidths(tableMetadata.ActualColumnWidths));
 
             var y = 0;
-            var colspanMap = new Dictionary<int, int>();
+            var colSpanMap = new Dictionary<int, int>();
 
             foreach (var row in rows)
             {
@@ -117,11 +136,10 @@ namespace TransformService
                         continue;
 
                     //string cellValue = GetCellValue(cell, cellValueFormat); // Формируем значение ячейки
-                    var isHeaderCell =
-                        HtmlUtils.IsCellHeader(cell,
-                            _styleClassesRegistry, transformParams); // Определяем является ли ячейка заголовком таблицы
+                    var isHeaderCell = HtmlUtils.IsCellHeader(cell, transformParams.ProcessGreyBackgroundColorForCells,
+                        _styleClassesRegistry); // Определяем является ли ячейка заголовком таблицы
                     string cellValue = null;
-                    
+
                     // Обработка автонумерации строк
                     var isAutoNumberedCell = false;
                     var autoNumber = 1;
@@ -142,25 +160,29 @@ namespace TransformService
 
                     // Формирование значения ячейки
                     if (string.IsNullOrEmpty(cellValue))
-                        cellValue = HtmlUtils.GetNodeCleanValue(cell, isHeaderCell, transformParams, _styleClassesRegistry);
+                        cellValue = HtmlUtils.GetNodeCleanValue(cell, isHeaderCell, transformParams,
+                            _styleClassesRegistry);
 
-                    var colSpan = 1;
-                    var rowSpan = 1;
-
-                    var colspanAttribute = cell.Attributes["colspan"];
-                    if (colspanAttribute != null && int.TryParse(colspanAttribute.Value, out var colspanValue))
-                    {
-                        colSpan = colspanValue;
-                    }
-
-                    var rowSpanAttribute = cell.Attributes["rowspan"];
-                    if (rowSpanAttribute != null && int.TryParse(rowSpanAttribute.Value, out var rowSpanValue))
-                    {
-                        rowSpan = rowSpanValue;
-                    }
+                    var rowSpan = int.Parse(cell.GetAttributeValue("rowspan", "1"));
+                    var colSpan = int.Parse(cell.GetAttributeValue("colspan", "1"));
 
                     // Вычисляем значение x с учетом объединенных ячеек
-                    x = HtmlUtils.GetXWithColspan(y, x, colspanMap);
+                    x = HtmlUtils.GetXWithColSpan(y, x, colSpanMap);
+
+                    //var colSpan = 1;
+                    //var rowSpan = 1;
+
+                    //var colSpanAttribute = cell.Attributes["colspan"];
+                    //if (colSpanAttribute != null && int.TryParse(colSpanAttribute.Value, out var colSpanValue))
+                    //{
+                    //    colSpan = colSpanValue;
+                    //}
+
+                    //var rowSpanAttribute = cell.Attributes["rowspan"];
+                    //if (rowSpanAttribute != null && int.TryParse(rowSpanAttribute.Value, out var rowSpanValue))
+                    //{
+                    //    rowSpan = rowSpanValue;
+                    //}
 
                     var cellData = new Cell
                     {
@@ -184,13 +206,14 @@ namespace TransformService
                         }
                     };
 
+                    root.Content.Table.Cells.Add(cellData);
+
                     // Обновляем карту объединенных ячеек для текущей строки
                     for (var i = x; i < x + colSpan; i++)
                     {
-                        colspanMap[i] = y + rowSpan;
+                        colSpanMap[i] = y + rowSpan;
                     }
 
-                    root.Content.Table.Cells.Add(cellData);
                     x += colSpan;
                 }
 
@@ -242,6 +265,84 @@ namespace TransformService
 
             // Вторая трансформация HTML -> JSON
             return new Html2JsonTransformer().Transform(htmlData, transformParams);
+        }
+
+        private static (HtmlNode tableNode, TableMetadata.TableMetadata tableMetadata)? TryGetTableFromDivGrid(
+            HtmlNode docNode)
+        {
+            var firstGridDiv = docNode.SelectSingleNode("//div[contains(@style, 'grid-area')]");
+
+            if (firstGridDiv == null || firstGridDiv.GetAttributeValue("class", null)?.StartsWith("sc-") != true)
+                return null; //new TableData{TableHtml = html};
+
+            var containerDiv = firstGridDiv;
+            for (var i = 0; i < 3; i++)
+                if (containerDiv.ParentNode?.Name == "div")
+                    containerDiv = containerDiv.ParentNode;
+
+            var titleSpan = containerDiv.SelectSingleNode(".//span");
+            var tableName = titleSpan?.InnerText.Trim();
+
+            var tableNode = new HtmlNode(HtmlNodeType.Element, docNode.OwnerDocument, 0) { Name = "table" };
+            var colSpanMap = new Dictionary<int, int>(); // Tracks last column impacted by colspan for each row
+            var originalColumnWidths = new SortedDictionary<int, int>();
+
+            foreach (var div in containerDiv.SelectNodes(".//div[contains(@style, 'grid-area')]"))
+            {
+                var style = div.GetAttributeValue("style", "");
+                var match = System.Text.RegularExpressions.Regex.Match(style,
+                    @"grid-area:\s*(\d+)\s*/\s*(\d+)\s*/\s*span\s*(\d+)\s*/\s*span\s*(\d+);");
+
+                if (!match.Success)
+                    continue;
+
+                if (!int.TryParse(match.Groups[1].Value, out var y)) y = 0;
+                if (!int.TryParse(match.Groups[2].Value, out var x)) x = 0;
+                if (!int.TryParse(match.Groups[3].Value, out var rowSpan)) rowSpan = 1;
+                if (!int.TryParse(match.Groups[4].Value, out var colSpan)) colSpan = 1;
+
+                var widthMatch = System.Text.RegularExpressions.Regex.Match(style, @"width:\s*([\d.]+)px;");
+                if (widthMatch.Success && int.TryParse(widthMatch.Groups[1].Value, out var width))
+                {
+                    originalColumnWidths.TryAdd(x, width);
+                }
+
+                while (tableNode.ChildNodes.Count < y)
+                    tableNode.AppendChild(docNode.OwnerDocument.CreateElement("tr"));
+
+                var row = tableNode.ChildNodes[y - 1];
+                x = HtmlUtils.GetXWithColSpan(y, x, colSpanMap); // Вычисляем значение x с учетом объединенных ячеек
+
+                //while (row.ChildNodes.Count < colStart - 1)
+                //    row.AppendChild(doc.CreateElement("td"));
+
+                var cell = docNode.OwnerDocument.CreateElement("td");
+                cell.SetAttributeValue("rowspan", rowSpan.ToString());
+                cell.SetAttributeValue("colspan", colSpan.ToString());
+                cell.InnerHtml = div.InnerHtml;
+
+                if (row.ChildNodes.Count >= x - 1)
+                    row.ChildNodes.Insert(x - 1, cell);
+                else
+                    row.AppendChild(cell);
+
+                // Обновляем карту объединенных ячеек для текущей строки
+                for (var i = x; i < x + colSpan; i++)
+                {
+                    colSpanMap[i] = y + rowSpan;
+                }
+            }
+
+            // Вставляем недостающие размеры колонок
+            var maxColumnIndex = originalColumnWidths.Keys.Any() ? originalColumnWidths.Keys.Max() : 0;
+            for (var i = 1; i <= maxColumnIndex; i++)
+            {
+                originalColumnWidths.TryAdd(i, 200);
+            }
+
+            return (tableNode,
+                new TableMetadata.TableMetadata(tableName,
+                    originalColumnWidths.Values.ToArray(), null)); // { TableName = tableName, TableHtml = table.OuterHtml };
         }
     }
 
@@ -300,7 +401,12 @@ namespace TransformService
         /// <summary>
         /// Многоуровневая нумерация для плоского списка
         /// </summary>
-        public virtual bool MultiLevelNumerationForFlattenList { get; set; } = false;
+        public virtual bool MultiLevelNumerationForFlattenList { get; set; } = false;        
+        
+        /// <summary>
+        /// Признак необходимости переноса в результирующий JSON исходных значений ширин колонок (полученных ранее из исходного JSON)
+        /// </summary>
+        public virtual bool KeepOriginalColumnWidths { get; set; } = true;
 
         //public virtual bool CopyJsonToClipboardAfterTransformation { get; set; } = true;
 

@@ -33,34 +33,33 @@ namespace TextEditor
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            tabPaneMain = new XtraTabControl();
-            tnpEditor = new XtraTabPage();
+            tabControlMain = new XtraTabControl();
+            tabPageEditor = new XtraTabPage();
             textEditorUserControl = new TextEditorUserControl();
-            tnpImportFromHtml = new XtraTabPage();
-            ((System.ComponentModel.ISupportInitialize)tabPaneMain).BeginInit();
-            tabPaneMain.SuspendLayout();
-            tnpEditor.SuspendLayout();
+            tabPageImportFromHtml = new XtraTabPage();
+            ((System.ComponentModel.ISupportInitialize)tabControlMain).BeginInit();
+            tabControlMain.SuspendLayout();
+            tabPageEditor.SuspendLayout();
             SuspendLayout();
             // 
-            // tabPaneMain
+            // tabControlMain
             // 
-            tabPaneMain.AllowDrop = true;
-            tabPaneMain.Dock = DockStyle.Fill;
-            tabPaneMain.Location = new Point(0, 0);
-            tabPaneMain.Name = "tabPaneMain";
-            tabPaneMain.SelectedTabPage = tnpEditor;
-            tabPaneMain.Size = new Size(1139, 568);
-            tabPaneMain.TabIndex = 4;
-            tabPaneMain.TabPages.AddRange(new XtraTabPage[] { tnpEditor, tnpImportFromHtml });
+            tabControlMain.Dock = DockStyle.Fill;
+            tabControlMain.Location = new Point(0, 0);
+            tabControlMain.Name = "tabControlMain";
+            tabControlMain.SelectedTabPage = tabPageEditor;
+            tabControlMain.Size = new Size(1139, 568);
+            tabControlMain.TabIndex = 4;
+            tabControlMain.TabPages.AddRange(new XtraTabPage[] { tabPageEditor, tabPageImportFromHtml });
             // 
-            // tnpEditor
+            // tabPageEditor
             // 
-            tnpEditor.Controls.Add(textEditorUserControl);
-            tnpEditor.ImageOptions.Image = (Image)resources.GetObject("tnpEditor.ImageOptions.Image");
-            tnpEditor.ImageOptions.SvgImageSize = new Size(16, 16);
-            tnpEditor.Name = "tnpEditor";
-            tnpEditor.Size = new Size(1137, 540);
-            tnpEditor.Text = "Преобразование через редактор";
+            tabPageEditor.Controls.Add(textEditorUserControl);
+            tabPageEditor.ImageOptions.Image = (Image)resources.GetObject("tabPageEditor.ImageOptions.Image");
+            tabPageEditor.ImageOptions.SvgImageSize = new Size(16, 16);
+            tabPageEditor.Name = "tabPageEditor";
+            tabPageEditor.Size = new Size(1137, 540);
+            tabPageEditor.Text = "Преобразование через редактор";
             // 
             // textEditorUserControl
             // 
@@ -70,37 +69,37 @@ namespace TextEditor
             textEditorUserControl.Size = new Size(1137, 540);
             textEditorUserControl.TabIndex = 0;
             // 
-            // tnpImportFromHtml
+            // tabPageImportFromHtml
             // 
-            tnpImportFromHtml.ImageOptions.Image = (Image)resources.GetObject("tnpImportFromHtml.ImageOptions.Image");
-            tnpImportFromHtml.ImageOptions.SvgImageSize = new Size(16, 16);
-            tnpImportFromHtml.Name = "tnpImportFromHtml";
-            tnpImportFromHtml.Size = new Size(1137, 540);
-            tnpImportFromHtml.Text = "Преобразование без редактора";
+            tabPageImportFromHtml.ImageOptions.Image = (Image)resources.GetObject("tabPageImportFromHtml.ImageOptions.Image");
+            tabPageImportFromHtml.ImageOptions.SvgImageSize = new Size(16, 16);
+            tabPageImportFromHtml.Name = "tabPageImportFromHtml";
+            tabPageImportFromHtml.Size = new Size(1137, 540);
+            tabPageImportFromHtml.Text = "Преобразование без редактора";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1139, 568);
-            Controls.Add(tabPaneMain);
+            Controls.Add(tabControlMain);
             IconOptions.Image = (Image)resources.GetObject("MainForm.IconOptions.Image");
             IconOptions.LargeImage = Properties.Resources.tablelayout_32x32;
             Name = "MainForm";
             Text = "TextEditor";
             WindowState = FormWindowState.Maximized;
             Load += MainForm_Load;
-            ((System.ComponentModel.ISupportInitialize)tabPaneMain).EndInit();
-            tabPaneMain.ResumeLayout(false);
-            tnpEditor.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)tabControlMain).EndInit();
+            tabControlMain.ResumeLayout(false);
+            tabPageEditor.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
-        //private DevExpress.XtraBars.Navigation.TabPane tabPaneMain;
-        private DevExpress.XtraTab.XtraTabControl tabPaneMain;
-        private DevExpress.XtraTab.XtraTabPage tnpImportFromHtml;
-        private DevExpress.XtraTab.XtraTabPage tnpEditor;
+        //private DevExpress.XtraBars.Navigation.TabPane tabControlMain;
+        private DevExpress.XtraTab.XtraTabControl tabControlMain;
+        private DevExpress.XtraTab.XtraTabPage tabPageImportFromHtml;
+        private DevExpress.XtraTab.XtraTabPage tabPageEditor;
         private TextEditorUserControl textEditorUserControl;
     }
 }

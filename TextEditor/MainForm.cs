@@ -1,8 +1,6 @@
 ﻿using System.Reflection;
 using DevExpress.Utils;
-using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraTab;
 
 namespace TextEditor
 {
@@ -14,7 +12,15 @@ namespace TextEditor
 
         public class MainParameters
         {
-            public bool ShowHtmlImportTab { get; set; } = false;
+            /// <summary>
+            /// Признак доступности утилиты трансформации из HTML в JSON и обратно
+            /// </summary>
+            public bool EnableHtmlImportUtils { get; set; } = false;
+
+            /// <summary>
+            /// Признак доступносии табличного редактора
+            /// </summary>
+            public bool EnableWorkbookEditor { get; set; } = true; 
         }
 
         private MainParameters _mainParameters;
@@ -32,67 +38,59 @@ namespace TextEditor
 
             Text += @$" v.{GetAssemblyVersion()}"; // Устанавливаем заголовок приложения
 
+            textEditorUserControl.SetWorkbookEditorVisibility(_mainParameters.EnableWorkbookEditor);
             ProcessHtmlImportTabVisibility();
-            ProcessTabPaneMainVisibility();
+            //ProcessTabPaneMainVisibility();
 
-            ((IConfigurable)textEditorUserControl)?.LoadParameters();
-            ((IConfigurable)_htmlImportUserControl)?.LoadParameters();
+            ((IConfigurable)textEditorUserControl)?.LoadParameters(_mainParameters.EnableWorkbookEditor);
+            ((IConfigurable)_htmlImportUserControl)?.LoadParameters(_mainParameters.EnableWorkbookEditor);
 
             FormClosed += OnFormClosed;
         }
 
         private void ProcessHtmlImportTabVisibility()
         {
-            if (_mainParameters.ShowHtmlImportTab) // Необходимо отобразить вкладку импорта
+            if (_mainParameters.EnableHtmlImportUtils) // Необходимо отобразить вкладку импорта
             {
                 _htmlImportUserControl = new HtmlImportUserControl();
-
-                tnpImportFromHtml.Controls.Add(_htmlImportUserControl);
-
+                tabPageImportFromHtml.Controls.Add(_htmlImportUserControl);
                 _htmlImportUserControl.Dock = DockStyle.Fill;
-                _htmlImportUserControl.Location = new Point(0, 0);
-                _htmlImportUserControl.Name = "htmlImportUserControl";
-                _htmlImportUserControl.Size = new Size(1135, 531);
-                _htmlImportUserControl.TabIndex = 0;
-
                 _htmlImportUserControl.JsonToEditorEvent += HtmlImportUserControlJsonToEditorEvent;
                 _htmlImportUserControl.HtmlToEditorEvent += HtmlImportUserControlHtmlToEditorEvent;
             }
             else // Вкладка импорта не отображается (удаляется)
             {
-                tabPaneMain.TabPages.Remove(tnpImportFromHtml);
+                tabControlMain.TabPages.Remove(tabPageImportFromHtml);
             }
-        }
 
-        private void ProcessTabPaneMainVisibility()
-        {
             //#if DEBUG
-            //            tnpImportFromHtml.Enabled = true;
+            //            tabPageImportFromHtml.Enabled = true;
             //#else
-            //            tnpImportFromHtml.Enabled = false;
+            //            tabPageImportFromHtml.Enabled = false;
             //#endif
-            if (tabPaneMain.TabPages.Count == 0)
+            if (tabControlMain.TabPages.Count == 0)
                 return;
 
-            if (tabPaneMain.TabPages.Count == 1)
+            if (tabControlMain.TabPages.Count == 1)
             {
-                var tabNavigationPage = tabPaneMain.TabPages[0];
-                tabPaneMain.ShowTabHeader = DefaultBoolean.False;
-                tabPaneMain.BorderStyle = BorderStyles.NoBorder;
-                tabPaneMain.BorderStylePage = BorderStyles.NoBorder;
-                tabPaneMain.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat;
-                tabPaneMain.LookAndFeel.UseDefaultLookAndFeel = false;
+                //var tabNavigationPage = tabControlMain.TabPages[0];
+                tabControlMain.ShowTabHeader = DefaultBoolean.False;
+                tabControlMain.BorderStyle = BorderStyles.NoBorder;
+                tabControlMain.BorderStylePage = BorderStyles.NoBorder;
+                tabControlMain.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat;
+                tabControlMain.LookAndFeel.UseDefaultLookAndFeel = false;
 
                 //var control = tabNavigationPage.Controls[0];
                 //control.Dock = DockStyle.Fill;
-                //Controls.Remove(tabPaneMain);
+                //Controls.Remove(tabControlMain);
                 //Controls.Add(control);
-                //tabPaneMain.Hide();
+                //tabControlMain.Hide();
             }
-            else if (tabPaneMain.TabPages.Count > 1)
+            else if (tabControlMain.TabPages.Count > 1)
             {
-                tabPaneMain.DragOver += TabPaneMain_DragOver;
-                tabPaneMain.TabPages[0].Select();
+                tabControlMain.AllowDrop = true;
+                tabControlMain.DragOver += TabControlMainDragOver;
+                tabControlMain.TabPages[0].Select();
             }
         }
 
@@ -129,7 +127,7 @@ namespace TextEditor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TabPaneMain_DragOver(object sender, DragEventArgs e)
+        private void TabControlMainDragOver(object sender, DragEventArgs e)
         {
             //if (hitInfo != null)
             //{
@@ -137,28 +135,28 @@ namespace TextEditor
             //    if (tcg.SelectedTabPageIndex != hitInfo.TabPageIndex)
             //        tcg.SelectedTabPageIndex = hitInfo.TabPageIndex;
             //}
-            var s = tabPaneMain.CalcHitInfo(tabPaneMain.PointToClient(new Point
+            var s = tabControlMain.CalcHitInfo(tabControlMain.PointToClient(new Point
             {
                 X = e.X,
                 Y = e.Y
             }));
 
-            var tnp = s.Page;
+            var tabPage = s.Page;
 
-            if (tnp != null)
+            if (tabPage != null)
             {
-                if (tabPaneMain.SelectedTabPage != tnp && tnp.Enabled)
-                    tabPaneMain.SelectedTabPage = tnp;
+                if (tabControlMain.SelectedTabPage != tabPage && tabPage.Enabled)
+                    tabControlMain.SelectedTabPage = tabPage;
             }
 
-            //if (tabPaneMain.CalcHitInfo(tabPaneMain.PointToClient(new System.Drawing.Point
+            //if (tabControlMain.CalcHitInfo(tabControlMain.PointToClient(new System.Drawing.Point
             //    {
             //        X = e.X,
             //        Y = e.Y
             //    })) is TabNavigationPage tnp)
             //{
-            //    if (tabPaneMain.SelectedPage != tnp && tnp.Enabled)
-            //        tabPaneMain.SelectedPage = tnp;
+            //    if (tabControlMain.SelectedPage != tnp && tnp.Enabled)
+            //        tabControlMain.SelectedPage = tnp;
             //}
         }
 
@@ -166,13 +164,13 @@ namespace TextEditor
             HtmlImportUserControl.JsonExportEventArgs e)
         {
             textEditorUserControl.InsertNewJsonData(e.JsonData, true);
-            tabPaneMain.SelectedTabPage = tnpEditor;
+            tabControlMain.SelectedTabPage = tabPageEditor;
         }
 
         private void HtmlImportUserControlHtmlToEditorEvent(object sender, HtmlImportUserControl.HtmlExportEventArgs e)
         {
             textEditorUserControl.InsertNewHtmlData(e.HtmlData, true);
-            tabPaneMain.SelectedTabPage = tnpEditor;
+            tabControlMain.SelectedTabPage = tabPageEditor;
         }
 
         private void MainForm_Load(object sender, EventArgs e)

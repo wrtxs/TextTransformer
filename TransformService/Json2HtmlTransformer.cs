@@ -75,7 +75,7 @@ namespace TransformService
                 
                 // Формируем метаданные таблицы
                 var tableMetadataAttrValue = string.Empty;
-                var tableMetadata = new TableMetadata.TableMetadata(tableRoot.Title, tableRoot.Table.Widths);
+                var tableMetadata = new TableMetadata.TableMetadata(tableRoot.Title, tableRoot.Table.Widths, null);
 
                 // Добавляем заголовок (наименование) таблицы
                 if (!string.IsNullOrEmpty(tableMetadata.Title))
@@ -84,7 +84,7 @@ namespace TransformService
                 // Добавляем ширины столбцов таблицы
                 if (tableRoot.Table.Widths != null && tableRoot.Table.Widths.Count != 0)
                     tableMetadataAttrValue = AddPrefixWhitespace(tableMetadataAttrValue) +
-                                    $"{TableMetadata.TableMetadata.ColWidthsAttributeName}=\"{tableMetadata.GetColumnWidthsString()}\"";
+                                             $"{TableMetadata.TableMetadata.OriginalColumnWidthsAttributeName}=\"{TableMetadata.TableMetadataUtils.GetStringFromColumnWidths(tableMetadata.OriginalColumnWidths)}\"";
 
                 htmlBuilder.Append($"<table{AddPrefixWhitespace(tableMetadataAttrValue) + tableMetadataAttrValue}>");
 

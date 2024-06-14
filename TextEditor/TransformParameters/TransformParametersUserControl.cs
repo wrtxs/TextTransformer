@@ -78,6 +78,7 @@ namespace TextEditor.TransformParameters
             //}
 
             propertyGridControl.SelectedObject = parameters;
+            //propertyGridControl.ExpandAllRows();
             //propertyGridControl.BestFit();
         }
 

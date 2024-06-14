@@ -4,7 +4,7 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>1.0.27</Version>
+		<Version>1.1.2</Version>
 		<ApplicationIcon>Resources\app.ico</ApplicationIcon>
 		<AssemblyName>TextEditor.v$(Version)</AssemblyName>
 		<!--<AssemblyProduct>TextEditor.v$(Version)</AssemblyProduct>
@@ -29,6 +29,12 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\TransformService\TransformService.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="DevExpress.Docs.v23.1">
+	    <HintPath>..\..\..\..\..\..\Program Files\DevExpress 23.1\Components\Offline Packages\devexpress.document.processor\23.1.5\lib\net452\DevExpress.Docs.v23.1.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -62,6 +68,9 @@
 		<None Update="ru\DevExpress.RichEdit.v23.1.Core.resources.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="ru\DevExpress.Spreadsheet.v23.1.Core.resources.dll">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="ru\DevExpress.Utils.v23.1.resources.dll">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
@@ -75,7 +84,10 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="ru\DevExpress.XtraRichEdit.v23.1.resources.dll">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ru\DevExpress.XtraSpreadsheet.v23.1.resources.dll">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 

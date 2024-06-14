@@ -2,7 +2,7 @@
 {
     public interface IConfigurable
     {
-        public void LoadParameters();
+        public void LoadParameters(bool enableWorkbookEditor);
         public void SaveParameters();
     }
 }

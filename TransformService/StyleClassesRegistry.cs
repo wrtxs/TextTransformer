@@ -7,8 +7,7 @@ namespace TransformService
     public class StyleClassesRegistry
     {
         private Dictionary<string, StyleClass> _styleClasses;
-
-        private HtmlNode _htmlRoot;
+        private readonly HtmlNode _htmlRoot;
 
         public IDictionary<string, StyleClass> Items
         {

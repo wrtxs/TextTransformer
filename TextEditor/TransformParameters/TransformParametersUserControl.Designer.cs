@@ -41,6 +41,7 @@
             propertyGridControl.OptionsBehavior.AllowSort = false;
             propertyGridControl.OptionsBehavior.PropertySort = DevExpress.XtraVerticalGrid.PropertySort.NoSort;
             propertyGridControl.OptionsBehavior.ResizeRowHeaders = false;
+            propertyGridControl.OptionsBehavior.ValueDisplayMode = DevExpress.XtraVerticalGrid.PropertyGridValueDisplayMode.TypeConverter;
             propertyGridControl.OptionsView.AllowReadOnlyRowAppearance = DevExpress.Utils.DefaultBoolean.True;
             propertyGridControl.RecordWidth = 50;
             propertyGridControl.RowHeaderWidth = 150;
