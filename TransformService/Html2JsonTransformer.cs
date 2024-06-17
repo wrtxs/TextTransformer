@@ -396,7 +396,7 @@ namespace TransformService
         /// <summary>
         /// Признак перевода всех списков в плоские 
         /// </summary>
-        public virtual bool MakeAllListsFlatten { get; set; } = true;
+        public virtual bool MakeAllListsFlatten { get; set; } = false;
 
         /// <summary>
         /// Многоуровневая нумерация для плоского списка

@@ -41,7 +41,9 @@ namespace TransformService.JsonData
                 }
             }
 
-            throw new InvalidOperationException("Invalid JSON content");
+            return null;
+
+            //throw new InvalidOperationException("Invalid JSON content");
         }
     }
 }

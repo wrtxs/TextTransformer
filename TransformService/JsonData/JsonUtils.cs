@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace TransformService.JsonData
 {
@@ -6,12 +8,16 @@ namespace TransformService.JsonData
     {
         public static JsonRootBase DeserializeObject(string jsonData)
         {
-            return JsonConvert.DeserializeObject<JsonRootBase>(jsonData, new JsonRootConverter());
+            var result = JsonConvert.DeserializeObject<List<JsonRootBase>>(jsonData, new JsonRootConverter());
+            var jsonObject = result.FirstOrDefault(item => item is { Type: ContentType.Table }) ??
+                             result.FirstOrDefault(item => item != null);
+
+            return jsonObject;
         }
 
         public static string SerializeObject(JsonRootBase jsonObject, Formatting formatting)
         {
-            return JsonConvert.SerializeObject(jsonObject, formatting, new JsonSerializerSettings()
+            return JsonConvert.SerializeObject(new List<JsonRootBase> { jsonObject }, formatting, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });

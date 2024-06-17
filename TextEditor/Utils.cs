@@ -78,7 +78,7 @@ namespace TextEditor
 
             try
             {
-                var singleLineText = JObject.Parse(jsonData).ToString(Formatting.None);
+                var singleLineText = JArray.Parse(jsonData).ToString(Formatting.None);
 
                 if (!string.IsNullOrEmpty(singleLineText))
                     Clipboard.SetText(singleLineText);

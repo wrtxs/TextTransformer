@@ -3,7 +3,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<SatelliteResourceLanguages>ru</SatelliteResourceLanguages>
 		<ResourceLanguages>ru</ResourceLanguages>
-		<Version>1.1.2</Version>
+		<Version>1.1.5</Version>
 		<AssemblyName>TransformService.v$(Version)</AssemblyName>
 	</PropertyGroup>
 	<ItemGroup>

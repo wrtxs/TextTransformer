@@ -130,7 +130,7 @@ namespace TextEditor.TransformParameters
 
         [Category(FromEditorCategoryName)]
         [DisplayName("Преобразовывать списки в плоские")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         [TypeConverter(typeof(YesNoValueTypeConverter))]
         [PropertyOrder(8)]
         public bool MakeAllListsFlatten
